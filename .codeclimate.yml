@@ -6,8 +6,9 @@ engines:
         enabled: false
   duplication:
     enabled: true
-    languages:
-    - javascript
+    config:
+      languages:
+      - javascript
     checks:
       Similar code:
         enabled: false
