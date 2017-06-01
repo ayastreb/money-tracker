@@ -6,6 +6,8 @@ engines:
         enabled: false
   duplication:
     enabled: true
+    languages:
+    - javascript
     checks:
       Similar code:
         enabled: false
