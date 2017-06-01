@@ -1,0 +1,16 @@
+engines:
+  eslint:
+    enabled: true
+    checks:
+      fatal:
+        enabled: false
+  duplication:
+    enabled: true
+    checks:
+      Similar code:
+        enabled: false
+  fixme:
+    enabled: true
+    checks:
+      XXX:
+        enabled: false
