@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   changeBaseCurrency,
-  changeSecondaryCurrency
-} from '../actions/currency'
-import { changeStep } from '../actions/step'
-import { STEPS } from '../constants/'
+  changeSecondaryCurrency,
+  changeStep
+} from '../actions'
+import { STEPS } from '../constants'
 import { Header } from 'semantic-ui-react'
 import CurrencyForm from '../components/CurrencyForm'
 

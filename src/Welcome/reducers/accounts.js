@@ -1,4 +1,4 @@
-import { CREATE_ACCOUNT } from '../constants/accounts'
+import { CREATE_ACCOUNT } from '../constants'
 
 export default function accounts(state = [], action) {
   switch (action.type) {

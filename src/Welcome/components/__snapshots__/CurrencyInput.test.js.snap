@@ -20,7 +20,7 @@ exports[`should render currency input 1`] = `
           "numeralDecimalScale": 2,
         },
         undefined,
-        undefined,
+        [Function],
         undefined,
         undefined,
       ]

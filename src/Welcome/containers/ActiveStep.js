@@ -1,5 +1,5 @@
 import React from 'react'
-import { STEPS } from '../constants/step'
+import { STEPS } from '../constants'
 import { connect } from 'react-redux'
 import CurrencyStep from './CurencyStep'
 import AccountStep from './AccountStep'

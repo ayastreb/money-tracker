@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
 import AccountForm from '../components/AccountForm'
-import { createAccount } from '../actions/accounts'
+import { createAccount } from '../actions'
 
 const mapStateToProps = state => ({
   currencies: [state.currency.base, ...state.currency.secondary],

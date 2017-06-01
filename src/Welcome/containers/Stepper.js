@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { STEPS } from '../constants/step'
+import { STEPS } from '../constants'
 import { Step } from 'semantic-ui-react'
 import { changeStep } from '../actions/step'
 
