@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import CurrencyTable from './AccountForm/CurrencyTable'
 import { accountTypesAsDropdownOptions } from '../../data/accountType'
 

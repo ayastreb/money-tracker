@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { currencySymbol, currencyExponent } from '../../data/currency'
+import { currencyExponent, currencySymbol } from '../../data/currency'
 import { Input, Label } from 'semantic-ui-react'
 import Cleave from 'cleave.js/react'
 

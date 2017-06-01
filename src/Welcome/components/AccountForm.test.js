@@ -1,6 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import AccountForm from './AccountForm'
+
 global.navigator = {
   userAgent: 'node.js'
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Card } from 'semantic-ui-react'
+import { Card, Container } from 'semantic-ui-react'
 import Stepper from './containers/Stepper'
 import ActiveStep from './containers/ActiveStep'
 

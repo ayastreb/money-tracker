@@ -1,6 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import CurrencyTable from './CurrencyTable'
+
 global.navigator = {
   userAgent: 'node.js'
 }

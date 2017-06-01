@@ -1,8 +1,8 @@
 import {
   currenciesAsDropdownOptions,
+  currencyExponent,
   currencyName,
-  currencySymbol,
-  currencyExponent
+  currencySymbol
 } from './currency'
 
 it('should return list of currencies in dropdown options format', () => {

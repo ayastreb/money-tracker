@@ -1,7 +1,7 @@
 import React from 'react'
 import CurrencyInput from '../CurrencyInput'
 import { currencyName } from '../../../data/currency'
-import { Table, Checkbox } from 'semantic-ui-react'
+import { Checkbox, Table } from 'semantic-ui-react'
 
 const CurrencyTable = ({ currencies, balance, onChecked, updateBalance }) => (
   <Table basic="very" celled>

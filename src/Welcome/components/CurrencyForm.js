@@ -1,6 +1,6 @@
 import React from 'react'
 import { currenciesAsDropdownOptions } from '../../data/currency'
-import { Form, Dropdown, Button } from 'semantic-ui-react'
+import { Button, Dropdown, Form } from 'semantic-ui-react'
 
 const CurrencyForm = ({
   base,

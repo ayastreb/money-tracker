@@ -1,6 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import CurrencyForm from './CurrencyForm'
+
 global.navigator = {
   userAgent: 'node.js'
 }

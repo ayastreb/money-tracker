@@ -1,4 +1,4 @@
-import { STEPS, CHANGE_STEP } from '../constants'
+import { CHANGE_STEP, STEPS } from '../constants'
 
 export default function step(state = STEPS.CURRENCY, action) {
   switch (action.type) {
