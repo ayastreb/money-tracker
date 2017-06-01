@@ -3,13 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "cleave.js": "^0.7.17",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.4"
   },
   "devDependencies": {
-    "react-scripts": "1.0.7"
+    "react-scripts": "1.0.7",
+    "react-test-renderer": "^15.5.4"
   },
   "scripts": {
     "start": "react-scripts start",

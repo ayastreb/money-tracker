@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render currency input 1`] = `
+<div
+  className="ui fluid left labeled input"
+>
+  <div
+    className="ui label"
+    onClick={[Function]}
+  >
+    $
+  </div>
+  <input
+    data-cleave-ignore={
+      Array [
+        100,
+        Object {
+          "initValue": 100,
+          "numeral": true,
+          "numeralDecimalScale": 2,
+        },
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+      ]
+    }
+    name="USD"
+    onChange={[Function]}
+    onKeyDown={[Function]}
+    type="text"
+    value="100"
+  />
+</div>
+`;
