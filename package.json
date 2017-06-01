@@ -16,6 +16,7 @@
     "react-test-renderer": "^15.5.4"
   },
   "scripts": {
+    "pretty": "prettier --write --single-quote --no-semi 'src/**/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
