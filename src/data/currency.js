@@ -154,7 +154,7 @@ const currencies = {
 
 export function currenciesAsDropdownOptions() {
   const options = []
-  for (let code in currencies) {
+  for (let code of Object.keys(currencies)) {
     options.push({
       key: code,
       value: code,

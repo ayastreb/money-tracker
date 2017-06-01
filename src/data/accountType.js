@@ -8,7 +8,7 @@ const types = {
 
 export function accountTypesAsDropdownOptions() {
   const options = []
-  for (let key in types) {
+  for (let key of Object.keys(types)) {
     options.push({
       key,
       value: key,
