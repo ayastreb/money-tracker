@@ -1,15 +1,16 @@
 import reducer from './step'
-import { CHANGE_STEP, STEPS } from '../constants/'
+import { STEP } from '../constants'
+import { CHANGE_STEP } from '../actions'
 
 it('should return initial state', () => {
-  expect(reducer(undefined, {})).toEqual(STEPS.CURRENCY)
+  expect(reducer(undefined, {})).toEqual(STEP.CURRENCY)
 })
 
 it('should handle step change', () => {
   expect(
     reducer(
-      { step: STEPS.CURRENCY },
-      { type: CHANGE_STEP, nextStep: STEPS.ACCOUNT }
+      { step: STEP.CURRENCY },
+      { type: CHANGE_STEP, nextStep: STEP.ACCOUNT }
     )
-  ).toEqual(STEPS.ACCOUNT)
+  ).toEqual(STEP.ACCOUNT)
 })

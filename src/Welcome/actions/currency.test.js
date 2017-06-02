@@ -1,5 +1,9 @@
-import { CHANGE_BASE_CURRENCY, CHANGE_SECONDARY_CURRENCY } from '../constants/'
-import { changeBaseCurrency, changeSecondaryCurrency } from './currency'
+import {
+  changeBaseCurrency,
+  changeSecondaryCurrency,
+  CHANGE_BASE_CURRENCY,
+  CHANGE_SECONDARY_CURRENCY
+} from './currency'
 
 it('should generate change base currency action', () => {
   const actual = changeBaseCurrency('USD')

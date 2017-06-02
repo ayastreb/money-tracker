@@ -1,7 +1,5 @@
-import {
-  CHANGE_BASE_CURRENCY,
-  CHANGE_SECONDARY_CURRENCY
-} from '../constants/currency'
+export const CHANGE_BASE_CURRENCY = 'CHANGE_BASE_CURRENCY'
+export const CHANGE_SECONDARY_CURRENCY = 'CHANGE_SECONDARY_CURRENCY'
 
 export function changeBaseCurrency(code) {
   return {

@@ -1,5 +1,5 @@
 import reducer from './currency'
-import { CHANGE_BASE_CURRENCY, CHANGE_SECONDARY_CURRENCY } from '../constants/'
+import { CHANGE_BASE_CURRENCY, CHANGE_SECONDARY_CURRENCY } from '../actions'
 
 it('should return initial state', () => {
   expect(reducer(undefined, {})).toEqual({ base: 'USD', secondary: [] })

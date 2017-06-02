@@ -1,4 +1,4 @@
-import { CHANGE_BASE_CURRENCY, CHANGE_SECONDARY_CURRENCY } from '../constants'
+import { CHANGE_BASE_CURRENCY, CHANGE_SECONDARY_CURRENCY } from '../actions'
 
 const initialState = { base: 'USD', secondary: [] }
 export default function currency(state = initialState, action) {

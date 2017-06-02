@@ -1,10 +1,14 @@
-import { currencyExponent } from '../../data/currency'
-import { CREATE_ACCOUNT, REMOVE_ACCOUNT } from '../constants/accounts'
+import { CURRENCY } from '../constants'
+
+export const CREATE_ACCOUNT = 'CREATE_ACCOUNT'
+export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT'
 
 export function createAccount(data) {
   const balance = {}
   for (let code of Object.keys(data.balance)) {
-    balance[code] = data.balance[code] * Math.pow(10, currencyExponent(code))
+    if (data.balance[code] !== undefined) {
+      balance[code] = data.balance[code] * Math.pow(10, CURRENCY[code].exp)
+    }
   }
 
   return {
