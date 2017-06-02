@@ -4,3 +4,15 @@ body {
   background-color: ghostwhite;
   font-family: sans-serif;
 }
+
+.mono {
+  font-family: Inconsolata, Monaco, monospace;
+}
+
+.positive {
+  color: #21BA45;
+}
+
+.negative {
+  color: #DB2828;
+}

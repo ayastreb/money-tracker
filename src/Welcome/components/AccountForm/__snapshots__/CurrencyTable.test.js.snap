@@ -63,10 +63,10 @@ exports[`should render currency table with given currencies 1`] = `
           className="ui fluid left labeled input"
         >
           <div
-            className="ui label"
+            className="ui label mono"
             onClick={[Function]}
           >
-            $
+            USD
           </div>
           <input
             data-cleave-ignore={
@@ -125,10 +125,10 @@ exports[`should render currency table with given currencies 1`] = `
           className="ui fluid left labeled input"
         >
           <div
-            className="ui label"
+            className="ui label mono"
             onClick={[Function]}
           >
-            ¥
+            JPY
           </div>
           <input
             data-cleave-ignore={

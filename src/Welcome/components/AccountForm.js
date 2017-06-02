@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import CurrencyTable from './AccountForm/CurrencyTable'
-import { accountTypesAsDropdownOptions } from '../../data/accountType'
+import { accountTypesAsDropdownOptions } from '../constants/account'
 
 class AccountForm extends Component {
   constructor(props) {
@@ -78,7 +78,7 @@ class AccountForm extends Component {
           onChecked={this.onUsedCurrencyChange}
           updateBalance={this.updateInitialBalance}
         />
-        <Button primary content="Create Account" floated="right" />
+        <Form.Button content="Create Account" floated="right" />
       </Form>
     )
   }

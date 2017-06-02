@@ -5,7 +5,7 @@ import {
   changeSecondaryCurrency,
   changeStep
 } from '../actions'
-import { STEPS } from '../constants'
+import { STEP } from '../constants'
 import { Header } from 'semantic-ui-react'
 import CurrencyForm from '../components/CurrencyForm'
 
@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(changeSecondaryCurrency(value)),
   onSubmit: event => {
     event.preventDefault()
-    dispatch(changeStep(STEPS.ACCOUNT))
+    dispatch(changeStep(STEP.ACCOUNT))
   }
 })
 

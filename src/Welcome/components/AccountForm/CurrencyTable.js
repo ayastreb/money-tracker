@@ -1,6 +1,6 @@
 import React from 'react'
 import CurrencyInput from '../CurrencyInput'
-import { currencyName } from '../../../data/currency'
+import { CURRENCY } from '../../constants'
 import { Checkbox, Table } from 'semantic-ui-react'
 
 const CurrencyTable = ({ currencies, balance, onChecked, updateBalance }) => (
@@ -22,7 +22,7 @@ const CurrencyTable = ({ currencies, balance, onChecked, updateBalance }) => (
                 checked={balance[code] !== undefined}
                 onChange={onChecked}
                 value={code}
-                label={currencyName(code)}
+                label={CURRENCY[code].name}
               />
             </Table.Cell>
             <Table.Cell>

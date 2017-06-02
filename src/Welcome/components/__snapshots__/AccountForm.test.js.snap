@@ -71,7 +71,7 @@ exports[`should render account form 1`] = `
           <option
             value="bank"
           >
-            Bank Account
+            Bank
           </option>
           <option
             value="deposit"
@@ -136,7 +136,7 @@ exports[`should render account form 1`] = `
             <span
               className="text"
             >
-              Bank Account
+              Bank
             </span>
           </div>
           <div
@@ -262,10 +262,10 @@ exports[`should render account form 1`] = `
             className="ui fluid left labeled input"
           >
             <div
-              className="ui label"
+              className="ui label mono"
               onClick={[Function]}
             >
-              $
+              USD
             </div>
             <input
               data-cleave-ignore={
@@ -324,10 +324,10 @@ exports[`should render account form 1`] = `
             className="ui fluid left labeled input"
           >
             <div
-              className="ui label"
+              className="ui label mono"
               onClick={[Function]}
             >
-              ¥
+              JPY
             </div>
             <input
               data-cleave-ignore={
@@ -355,12 +355,18 @@ exports[`should render account form 1`] = `
       </tr>
     </tbody>
   </table>
-  <button
-    className="ui primary button right floated"
-    onClick={[Function]}
-    tabIndex={undefined}
+  <div
+    className="field"
   >
-    Create Account
-  </button>
+    <button
+      className="ui button right floated"
+      onClick={[Function]}
+      required={undefined}
+      tabIndex={undefined}
+      type={undefined}
+    >
+      Create Account
+    </button>
+  </div>
 </form>
 `;

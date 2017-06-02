@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { STEPS } from '../constants'
+import { STEP } from '../constants'
 import { Step } from 'semantic-ui-react'
 import { changeStep } from '../actions/step'
 
@@ -19,16 +19,16 @@ const Stepper = ({ currentStep, changeStep }) => {
   return (
     <Step.Group fluid>
       <Step
-        active={currentStep === STEPS.CURRENCY}
+        active={currentStep === STEP.CURRENCY}
         icon="dollar"
         title="Currency"
-        onClick={switchStep(STEPS.CURRENCY)}
+        onClick={switchStep(STEP.CURRENCY)}
       />
       <Step
-        active={currentStep === STEPS.ACCOUNT}
+        active={currentStep === STEP.ACCOUNT}
         icon="credit card"
         title="Account"
-        onClick={switchStep(STEPS.ACCOUNT)}
+        onClick={switchStep(STEP.ACCOUNT)}
       />
     </Step.Group>
   )
