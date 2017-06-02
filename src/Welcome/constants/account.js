@@ -7,14 +7,9 @@ export const ACCOUNT_TYPE = {
 }
 
 export function accountTypesAsDropdownOptions() {
-  const options = []
-  for (let key of Object.keys(ACCOUNT_TYPE)) {
-    options.push({
-      key,
-      value: key,
-      text: ACCOUNT_TYPE[key]
-    })
-  }
-
-  return options
+  return Object.keys(ACCOUNT_TYPE).map(key => ({
+    key,
+    value: key,
+    text: ACCOUNT_TYPE[key]
+  }))
 }

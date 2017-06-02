@@ -153,14 +153,9 @@ export const CURRENCY = {
 }
 
 export function currenciesAsDropdownOptions() {
-  const options = []
-  for (let code of Object.keys(CURRENCY)) {
-    options.push({
-      key: code,
-      value: code,
-      text: `${code}, ${CURRENCY[code].name}`
-    })
-  }
-
-  return options
+  return Object.keys(CURRENCY).map(code => ({
+    key: code,
+    value: code,
+    text: `${code}, ${CURRENCY[code].name}`
+  }))
 }

@@ -21,20 +21,17 @@ class AccountForm extends Component {
 
   onUsedCurrencyChange = (e, { checked, value }) => {
     this.setState(prevState => {
+      const prevBalance = prevState.balance
       if (!checked) {
-        /**
-         * At least one checkbox should always be selected,
-         * this will prevent user from switching off the last checked box.
-         */
-        let checkedBoxes = 0
-        for (let code of Object.keys(prevState.balance)) {
-          if (prevState.balance[code] !== undefined) checkedBoxes++
-        }
-        if (checkedBoxes === 1) return
+        // Prevent switching off the last active checkbox
+        let activeBoxes = Object.keys(prevBalance).reduce((active, code) => {
+          return prevBalance[code] !== undefined ? ++active : active
+        }, 0)
+        if (activeBoxes === 1) return
       }
 
       return {
-        balance: { ...prevState.balance, [value]: checked ? '' : undefined }
+        balance: { ...prevBalance, [value]: checked ? '' : undefined }
       }
     })
   }
