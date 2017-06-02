@@ -1,7 +1,7 @@
-import { accountTypesAsDropdownOptions } from './accountType'
+import { currenciesAsDropdownOptions } from './currency'
 
-it('should return list of account types in dropdown options format', () => {
-  const options = accountTypesAsDropdownOptions()
+it('should return list of currencies in dropdown options format', () => {
+  const options = currenciesAsDropdownOptions()
 
   expect(Array.isArray(options)).toBeTruthy()
   expect(options.length).toBeGreaterThanOrEqual(1)

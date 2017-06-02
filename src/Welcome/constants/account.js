@@ -1,6 +1,6 @@
-const types = {
+export const ACCOUNT_TYPE = {
   cash: 'Cash',
-  bank: 'Bank Account',
+  bank: 'Bank',
   deposit: 'Deposit',
   credit: 'Credit',
   asset: 'Asset'
@@ -8,11 +8,11 @@ const types = {
 
 export function accountTypesAsDropdownOptions() {
   const options = []
-  for (let key of Object.keys(types)) {
+  for (let key of Object.keys(ACCOUNT_TYPE)) {
     options.push({
       key,
       value: key,
-      text: types[key]
+      text: ACCOUNT_TYPE[key]
     })
   }
 

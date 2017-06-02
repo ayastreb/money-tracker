@@ -1,5 +1,4 @@
-export const CHANGE_STEP = 'CHANGE_STEP'
-export const STEPS = {
+export const STEP = {
   CURRENCY: 'CURRENCY',
   ACCOUNT: 'ACCOUNT'
 }

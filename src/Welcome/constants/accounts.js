@@ -1,2 +1,0 @@
-export const CREATE_ACCOUNT = 'CREATE_ACCOUNT'
-export const REMOVE_ACCOUNT = 'REMOVE_ACCOUNT'
