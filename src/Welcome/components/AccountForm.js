@@ -36,7 +36,7 @@ class AccountForm extends Component {
     })
   }
 
-  updateInitialBalance = (code, value) => {
+  updateBalance = (code, value) => {
     this.setState(prevState => ({
       balance: { ...prevState.balance, [code]: value }
     }))
@@ -73,7 +73,7 @@ class AccountForm extends Component {
           currencies={this.props.currencies}
           balance={this.state.balance}
           onChecked={this.onUsedCurrencyChange}
-          updateBalance={this.updateInitialBalance}
+          updateBalance={this.updateBalance}
         />
         <Form.Button content="Create Account" floated="right" />
       </Form>
