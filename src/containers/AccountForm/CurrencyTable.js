@@ -11,14 +11,22 @@ import {
 
 class CurrencyTable extends React.Component {
   componentWillMount() {
-    if (Object.keys(this.props.balance).length === 0) {
-      this.props.changeCurrencyCheckbox(this.props.base, true)
-    }
+    this.updateCurrencyList(this.props.base, this.props.secondary)
+    this.setInitialBalanceCheckbox(this.props.base, this.props.balance)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (Object.keys(nextProps.balance).length === 0) {
-      this.props.changeCurrencyCheckbox(nextProps.base, true)
+    this.updateCurrencyList(nextProps.base, nextProps.secondary)
+    this.setInitialBalanceCheckbox(nextProps.base, nextProps.balance)
+  }
+
+  updateCurrencyList(base, secondary) {
+    this.currencies = [base, ...secondary]
+  }
+
+  setInitialBalanceCheckbox(base, balance) {
+    if (Object.keys(balance).length === 0) {
+      this.props.changeCurrencyCheckbox(base, true)
     }
   }
 
@@ -31,7 +39,6 @@ class CurrencyTable extends React.Component {
   }
 
   render() {
-    const currencies = [this.props.base, ...this.props.secondary]
     return (
       <Table basic="very" celled>
         <Table.Header>
@@ -43,7 +50,7 @@ class CurrencyTable extends React.Component {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {currencies.map(code => {
+          {this.currencies.map(code => {
             return (
               <Table.Row key={code}>
                 <Table.Cell>
