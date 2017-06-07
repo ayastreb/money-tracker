@@ -9,9 +9,9 @@ export function createAccount(name, group, balance) {
       id: `A/${Date.now()}`,
       name,
       group,
-      balance: Object.keys(balance).reduce((result, code) => {
-        result[code] = balance[code] * Math.pow(10, CURRENCY[code].exp)
-        return result
+      balance: Object.keys(balance).reduce((balanceInCents, code) => {
+        balanceInCents[code] = balance[code] * Math.pow(10, CURRENCY[code].exp)
+        return balanceInCents
       }, {})
     }
     dispatch({ type: CREATE_ACCOUNT, account })
