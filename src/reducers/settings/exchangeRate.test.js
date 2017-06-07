@@ -1,12 +1,12 @@
 import { UPDATE_EXCHANGE_RATE_SUCCESS } from '../../actions/settings'
 import reducer from './exchangeRate'
 
-it('should return initial state', () => {
+it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({ USD: 1.0 })
 })
 
 describe('updating exchange rate', () => {
-  it('should update without initial state', () => {
+  it('updates without initial state', () => {
     expect(
       reducer(undefined, {
         type: UPDATE_EXCHANGE_RATE_SUCCESS,
@@ -15,7 +15,7 @@ describe('updating exchange rate', () => {
     ).toEqual({ EUR: 1.0, JPY: 120.223 })
   })
 
-  it('should update with initial state', () => {
+  it('updates with initial state', () => {
     expect(
       reducer(
         { EUR: 1.0, JPY: 120.223 },

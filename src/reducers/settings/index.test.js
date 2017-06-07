@@ -1,6 +1,6 @@
 import reducer from './'
 
-it('should return initial state', () => {
+it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
     isLoaded: false,
     isSetupComplete: false,

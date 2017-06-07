@@ -1,4 +1,4 @@
-import { retrieveSettings, persistSettings } from '../storage/settings'
+import { retrieveSettings, persistSettings } from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 
 export const LOAD_SETTINGS_REQUEST = 'LOAD_SETTINGS_REQUEST'
@@ -40,7 +40,7 @@ export function updateExchangeRate(base, secondary) {
     try {
       const exchangeRate = await fetchExchangeRates(base, secondary)
       dispatch({ type: UPDATE_EXCHANGE_RATE_SUCCESS, exchangeRate })
-      dispatch(updateSettings({ currency: { base, secondary, exchangeRate } }))
+      dispatch(updateSettings({ currency: { base, secondary }, exchangeRate }))
     } catch (error) {
       dispatch({ type: UPDATE_EXCHANGE_RATE_FAILURE, error })
     }

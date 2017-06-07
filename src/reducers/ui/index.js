@@ -1,4 +1,6 @@
 import { combineReducers } from 'redux'
-import welcome from './welcome'
+import accountForm from './accountForm'
 
-export default combineReducers({ welcome })
+export default combineReducers({
+  accountForm
+})

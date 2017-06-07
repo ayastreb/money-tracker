@@ -1,0 +1,103 @@
+import {
+  CREATE_ACCOUNT,
+  CREATE_ACCOUNT_FAILURE,
+  REMOVE_ACCOUNT,
+  REMOVE_ACCOUNT_FAILURE,
+  createAccount,
+  removeAccount
+} from './accounts'
+import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
+import * as accounts from '../util/storage/accounts'
+
+let store
+
+beforeEach(() => (store = mockStore()))
+
+describe('creating account', () => {
+  it('creates CREATE_ACCOUNT action', () => {
+    accounts.persistAccount = jest.fn(resolvePromise(true))
+
+    return store
+      .dispatch(createAccount('foo', 'cash', { USD: 100 }))
+      .then(() => {
+        expect(
+          store.getActions().find(action => action.type === CREATE_ACCOUNT)
+        ).toBeTruthy()
+      })
+  })
+
+  it('converts balance to smaller unit', () => {
+    accounts.persistAccount = jest.fn(resolvePromise(true))
+
+    return store
+      .dispatch(createAccount('foo', 'cash', { USD: 125.59, JPY: 2218 }))
+      .then(() => {
+        const action = store
+          .getActions()
+          .find(action => action.type === CREATE_ACCOUNT)
+        expect(action.account.balance).toEqual({
+          USD: 12559, // $125.59 becomes 12559 cents
+          JPY: 2218 // 2218 yen stays 2218 because yen does not have smaller units
+        })
+      })
+  })
+
+  it('generates ID based on current timestamp', () => {
+    accounts.persistAccount = jest.fn(resolvePromise(true))
+    Date.now = jest.fn(() => 12345)
+
+    return store
+      .dispatch(createAccount('foo', 'cash', { USD: 125.59 }))
+      .then(() => {
+        const action = store
+          .getActions()
+          .find(action => action.type === CREATE_ACCOUNT)
+        expect(action.account.id).toEqual('A/12345')
+      })
+  })
+
+  it('creates CREATE_ACCOUNT_FAILURE when failed to persist account', () => {
+    const error = new Error()
+    accounts.persistAccount = jest.fn(rejectPromise(error))
+
+    return store
+      .dispatch(createAccount('foo', 'cash', { USD: 125.59 }))
+      .then(() => {
+        expect(
+          store.getActions().find(action => action.type === CREATE_ACCOUNT)
+        ).toBeTruthy()
+        const failureAction = store
+          .getActions()
+          .find(action => action.type === CREATE_ACCOUNT_FAILURE)
+        expect(failureAction).toBeTruthy()
+        expect(failureAction.error).toEqual(error)
+        expect(failureAction.name).toEqual('foo')
+        expect(failureAction.group).toEqual('cash')
+        expect(failureAction.balance).toEqual({ USD: 125.59 })
+      })
+  })
+})
+
+describe('removing account', () => {
+  it('creates REMOVE_ACCOUNT action', () => {
+    accounts.deleteAccount = jest.fn(resolvePromise(true))
+
+    return store.dispatch(removeAccount('A/12345')).then(() => {
+      expect(store.getActions()).toEqual([
+        { type: REMOVE_ACCOUNT, id: 'A/12345' }
+      ])
+    })
+  })
+
+  it('creates REMOVE_ACCOUNT_FAILURE when failed to delete account', () => {
+    const error = new Error()
+    accounts.deleteAccount = jest.fn(rejectPromise(error))
+
+    return store.dispatch(removeAccount('A/12345')).then(() => {
+      expect(store.getActions()).toEqual([
+        { type: REMOVE_ACCOUNT, id: 'A/12345' },
+        { type: REMOVE_ACCOUNT_FAILURE, error }
+      ])
+    })
+  })
+})

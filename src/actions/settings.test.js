@@ -16,19 +16,13 @@ import {
   CHANGE_CURRENCY,
   changeCurrency
 } from './settings'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import * as settings from '../storage/settings'
+import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
+import * as settings from '../util/storage/settings'
 import * as currency from '../util/currency'
 
-const mockStore = configureMockStore([thunk])
-const rejectPromise = error => () => new Promise((_, reject) => reject(error))
-const resolvePromise = data => () => new Promise(resolve => resolve(data))
 let store
 
-beforeEach(() => {
-  store = mockStore()
-})
+beforeEach(() => (store = mockStore()))
 
 describe('Loading settings', () => {
   it('creates LOAD_SETTINGS_SUCCESS after loading settings', () => {

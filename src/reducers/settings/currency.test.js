@@ -1,15 +1,16 @@
 import reducer from './currency'
 import { CHANGE_CURRENCY } from '../../actions/settings'
+import { DEFAULT_BASE_CURRENCY } from '../../constants/currency'
 
-it('should return initial state', () => {
+it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
-    base: 'USD',
+    base: DEFAULT_BASE_CURRENCY,
     secondary: []
   })
 })
 
 describe('changing currency', () => {
-  it('should change without initial state', () => {
+  it('changes without initial state', () => {
     expect(
       reducer(undefined, {
         type: CHANGE_CURRENCY,
@@ -19,7 +20,7 @@ describe('changing currency', () => {
     ).toEqual({ base: 'EUR', secondary: ['JPY'] })
   })
 
-  it('should change with initial state', () => {
+  it('changes with initial state', () => {
     expect(
       reducer(
         { base: 'EUR', secondary: ['JPY'] },
