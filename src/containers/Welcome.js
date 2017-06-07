@@ -8,9 +8,7 @@ import AccountList from './AccountList'
 import { completeSetup } from '../actions/settings'
 
 class Welcome extends React.Component {
-  handleFinish = () => {
-    this.props.completeSetup()
-  }
+  handleFinish = () => this.props.completeSetup()
 
   render() {
     return (

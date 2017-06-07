@@ -7,6 +7,8 @@ import { removeAccount } from '../actions/accounts'
 import { ACCOUNT_GROUP } from '../constants/account'
 
 class AccountList extends React.Component {
+  handleRemove = id => () => this.props.removeAccount(id)
+
   render() {
     if (this.props.allIds.length === 0) return false
 
@@ -22,11 +24,7 @@ class AccountList extends React.Component {
     return (
       <List.Item key={id}>
         <List.Content floated="left">
-          <Label
-            as="a"
-            pointing="right"
-            onClick={() => this.props.removeAccount(id)}
-          >
+          <Label as="a" pointing="right" onClick={this.handleRemove(id)}>
             <Icon name="trash" />{ACCOUNT_GROUP[account.group]}
           </Label>
           {account.name}
