@@ -10,6 +10,15 @@ class CurrencyForm extends React.Component {
     super(props)
 
     this.options = currencyAsDropdownOptions()
+    this.updateSecondaryOptions(props.base)
+  }
+
+  componentWillReceiveProps(props) {
+    this.updateSecondaryOptions(props.base)
+  }
+
+  updateSecondaryOptions(base) {
+    this.secondaryOptions = this.options.filter(option => option.key !== base)
   }
 
   handleBaseChange = (event, { value }) => {
@@ -44,9 +53,7 @@ class CurrencyForm extends React.Component {
             renderLabel={item => item.key}
             minCharacters={0}
             onChange={this.handleSecondaryChange}
-            options={this.options.filter(
-              option => option.key !== this.props.base
-            )}
+            options={this.secondaryOptions}
             value={this.props.secondary}
           />
         </Form.Field>
