@@ -1,17 +1,18 @@
-import SettingsDB from './db/settings'
+import Storage from './pouchdb'
 
 export async function retrieveSettings() {
-  return SettingsDB.get('settings').catch(err => {
+  return Storage.settingsDB().get('settings').catch(err => {
     if (err.status !== 404) throw err
     return false
   })
 }
 
 export async function persistSettings(settings) {
-  return SettingsDB.get('settings')
-    .then(doc => SettingsDB.put({ ...doc, ...settings }))
+  return Storage.settingsDB()
+    .get('settings')
+    .then(doc => Storage.settingsDB().put({ ...doc, ...settings }))
     .catch(err => {
       if (err.status !== 404) throw err
-      return SettingsDB.put({ _id: 'settings', ...settings })
+      return Storage.settingsDB().put({ _id: 'settings', ...settings })
     })
 }

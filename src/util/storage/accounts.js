@@ -1,23 +1,25 @@
-import AccountsDB from './db/accounts'
+import Storage from './pouchdb'
 
 export async function retrieveAccounts() {
-  return AccountsDB.allDocs({ include_docs: true }).then(
-    response => response.rows.map(row => row.doc)
-  )
+  return Storage.accountsDB()
+    .allDocs({ include_docs: true })
+    .then(response => response.rows.map(row => row.doc))
 }
 
 export async function persistAccount(account) {
-  return AccountsDB.get(account.id)
-    .then(doc => AccountsDB.put({ ...doc, ...account }))
+  return Storage.accountsDB()
+    .get(account.id)
+    .then(doc => Storage.accountsDB().put({ ...doc, ...account }))
     .catch(err => {
       if (err.status !== 404) throw err
-      return AccountsDB.put({ _id: account.id, ...account })
+      return Storage.accountsDB().put({ _id: account.id, ...account })
     })
 }
 
 export async function deleteAccount(id) {
-  return AccountsDB.get(id)
-    .then(doc => AccountsDB.put({ ...doc, _deleted: true }))
+  return Storage.accountsDB()
+    .get(id)
+    .then(doc => Storage.accountsDB().put({ ...doc, _deleted: true }))
     .catch(err => {
       if (err.status !== 404) throw err
       return true
