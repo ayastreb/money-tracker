@@ -1,12 +1,21 @@
 import omit from 'lodash/omit'
 import {
+  LOAD_ACCOUNTS_SUCCESS,
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
   REMOVE_ACCOUNT
 } from '../../actions/accounts'
 
-export default function accounts(state = { byId: {}, allIds: [] }, action) {
+export default function(state = { byId: {}, allIds: [] }, action) {
   switch (action.type) {
+    case LOAD_ACCOUNTS_SUCCESS:
+      return {
+        byId: action.accounts.reduce((result, account) => {
+          result[account.id] = account
+          return result
+        }, {}),
+        allIds: action.accounts.map(account => account.id)
+      }
     case CREATE_ACCOUNT:
       return {
         byId: { ...state.byId, [action.account.id]: action.account },

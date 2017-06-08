@@ -10,7 +10,7 @@ import {
 } from '../../../actions/accounts'
 import { CHANGE_CURRENCY } from '../../../actions/settings'
 
-export default function name(state = {}, action) {
+export default function(state = {}, action) {
   switch (action.type) {
     case CHANGE_CURRENCY_CHECKBOX:
       if (!action.isChecked && Object.keys(state).length === 1) return state

@@ -1,9 +1,17 @@
+import SettingsDB from './db/settings'
+
 export async function retrieveSettings() {
-  // TODO: implement reading settings from PouchDB
-  return new Promise(resolve => resolve(true))
+  return SettingsDB.get('settings').catch(err => {
+    if (err.status !== 404) throw err
+    return false
+  })
 }
 
 export async function persistSettings(settings) {
-  // TODO: implement saving settings to PouchDB
-  return new Promise(resolve => resolve(settings))
+  return SettingsDB.get('settings')
+    .then(doc => SettingsDB.put({ ...doc, ...settings }))
+    .catch(err => {
+      if (err.status !== 404) throw err
+      return SettingsDB.put({ _id: 'settings', ...settings })
+    })
 }

@@ -4,7 +4,7 @@ import {
   CREATE_ACCOUNT_FAILURE
 } from '../../../actions/accounts'
 
-export default function name(state = '', action) {
+export default function(state = '', action) {
   switch (action.type) {
     case CREATE_ACCOUNT_FAILURE:
     case CHANGE_NAME:

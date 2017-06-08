@@ -3,11 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Label, List, Icon } from 'semantic-ui-react'
 import Amount from '../components/Amount'
-import { removeAccount } from '../actions/accounts'
+import { loadAccounts, removeAccount } from '../actions/accounts'
 import { ACCOUNT_GROUP } from '../constants/account'
 
 class AccountList extends React.Component {
   handleRemove = id => () => this.props.removeAccount(id)
+
+  componentDidMount() {
+    this.props.loadAccounts()
+  }
 
   render() {
     if (this.props.allIds.length === 0) return false
@@ -48,6 +52,7 @@ class AccountList extends React.Component {
 AccountList.propTypes = {
   byId: PropTypes.objectOf(PropTypes.object),
   allIds: PropTypes.arrayOf(PropTypes.string),
+  loadAccounts: PropTypes.func,
   removeAccount: PropTypes.func
 }
 
@@ -56,4 +61,6 @@ const mapStateToProps = state => ({
   allIds: state.accounts.allIds
 })
 
-export default connect(mapStateToProps, { removeAccount })(AccountList)
+export default connect(mapStateToProps, { loadAccounts, removeAccount })(
+  AccountList
+)

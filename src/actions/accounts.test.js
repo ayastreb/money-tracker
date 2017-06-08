@@ -1,8 +1,11 @@
 import {
+  LOAD_ACCOUNTS_SUCCESS,
+  LOAD_ACCOUNTS_FAILURE,
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
   REMOVE_ACCOUNT,
   REMOVE_ACCOUNT_FAILURE,
+  loadAccounts,
   createAccount,
   removeAccount
 } from './accounts'
@@ -12,6 +15,31 @@ import * as accounts from '../util/storage/accounts'
 let store
 
 beforeEach(() => (store = mockStore()))
+
+describe('loading accounts', () => {
+  it('creates LOAD_ACCOUNTS_SUCCESS action', () => {
+    const expectedAccounts = [{ id: 'A/12345' }, { id: 'A/12346' }]
+    accounts.retrieveAccounts = jest.fn(resolvePromise(expectedAccounts))
+
+    return store.dispatch(loadAccounts()).then(() => {
+      const action = store
+        .getActions()
+        .find(action => action.type === LOAD_ACCOUNTS_SUCCESS)
+      expect(action.accounts).toEqual(expectedAccounts)
+    })
+  })
+
+  it('creates LOAD_ACCOUNTS_FAILURE action when failed to load accounts', () => {
+    const error = new Error()
+    accounts.retrieveAccounts = jest.fn(rejectPromise(error))
+
+    return store.dispatch(loadAccounts()).then(() => {
+      expect(store.getActions()).toEqual([
+        { type: LOAD_ACCOUNTS_FAILURE, error }
+      ])
+    })
+  })
+})
 
 describe('creating account', () => {
   it('creates CREATE_ACCOUNT action', () => {

@@ -32,31 +32,33 @@ class CurrencyForm extends React.Component {
   render() {
     return (
       <Form>
-        <Form.Field>
-          <label>Base Currency</label>
-          <Dropdown
-            search
-            selection
-            minCharacters={0}
-            onChange={this.handleBaseChange}
-            options={this.options}
-            value={this.props.base}
-          />
-        </Form.Field>
-        <Form.Field>
-          <label>Additional Currencies (optional)</label>
-          <Dropdown
-            placeholder="Select additional currencies"
-            search
-            selection
-            multiple
-            renderLabel={item => item.key}
-            minCharacters={0}
-            onChange={this.handleSecondaryChange}
-            options={this.secondaryOptions}
-            value={this.props.secondary}
-          />
-        </Form.Field>
+        <Form.Group widths="equal">
+          <Form.Field>
+            <label>Base Currency</label>
+            <Dropdown
+              search
+              selection
+              minCharacters={0}
+              onChange={this.handleBaseChange}
+              options={this.options}
+              value={this.props.base}
+            />
+          </Form.Field>
+          <Form.Field>
+            <label>Additional Currencies (optional)</label>
+            <Dropdown
+              placeholder="Select additional currencies"
+              search
+              selection
+              multiple
+              renderLabel={item => item.key}
+              minCharacters={0}
+              onChange={this.handleSecondaryChange}
+              options={this.secondaryOptions}
+              value={this.props.secondary}
+            />
+          </Form.Field>
+        </Form.Group>
       </Form>
     )
   }

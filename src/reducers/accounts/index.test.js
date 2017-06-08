@@ -2,11 +2,38 @@ import reducer from './'
 import {
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
+  LOAD_ACCOUNTS_SUCCESS,
   REMOVE_ACCOUNT
 } from '../../actions/accounts'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({ byId: {}, allIds: [] })
+})
+
+describe('loading accounts', () => {
+  it('loads accounts', () => {
+    expect(
+      reducer(undefined, {
+        type: LOAD_ACCOUNTS_SUCCESS,
+        accounts: [
+          { id: 'A/12345', name: 'foo' },
+          { id: 'A/12346', name: 'bar' }
+        ]
+      })
+    ).toEqual({
+      byId: {
+        'A/12345': {
+          id: 'A/12345',
+          name: 'foo'
+        },
+        'A/12346': {
+          id: 'A/12346',
+          name: 'bar'
+        }
+      },
+      allIds: ['A/12345', 'A/12346']
+    })
+  })
 })
 
 describe('creating account', () => {

@@ -5,7 +5,7 @@ import {
 } from '../../../actions/accounts'
 import { DEFAULT_GROUP } from '../../../constants/account'
 
-export default function group(state = DEFAULT_GROUP, action) {
+export default function(state = DEFAULT_GROUP, action) {
   switch (action.type) {
     case CREATE_ACCOUNT_FAILURE:
     case CHANGE_GROUP:

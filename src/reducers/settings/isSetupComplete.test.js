@@ -1,8 +1,26 @@
 import reducer from './isSetupComplete'
-import { COMPLETE_SETUP } from '../../actions/settings'
+import { LOAD_SETTINGS_SUCCESS, COMPLETE_SETUP } from '../../actions/settings'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual(false)
+})
+
+describe('loading settings', () => {
+  it('returns original state if loaded settings are empty', () => {
+    const state = false
+    expect(
+      reducer(state, { type: LOAD_SETTINGS_SUCCESS, settings: false })
+    ).toEqual(state)
+  })
+
+  it('updates settings from loaded data', () => {
+    expect(
+      reducer(undefined, {
+        type: LOAD_SETTINGS_SUCCESS,
+        settings: { isSetupComplete: true }
+      })
+    ).toEqual(true)
+  })
 })
 
 describe('completing setup', () => {

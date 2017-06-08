@@ -1,5 +1,22 @@
 import { CURRENCY } from '../constants/currency'
-import { persistAccount, deleteAccount } from '../util/storage/accounts'
+import {
+  retrieveAccounts,
+  persistAccount,
+  deleteAccount
+} from '../util/storage/accounts'
+
+export const LOAD_ACCOUNTS_SUCCESS = 'LOAD_ACCOUNTS_SUCCESS'
+export const LOAD_ACCOUNTS_FAILURE = 'LOAD_ACCOUNTS_FAILURE'
+export function loadAccounts() {
+  return async dispatch => {
+    try {
+      const accounts = await retrieveAccounts()
+      dispatch({ type: LOAD_ACCOUNTS_SUCCESS, accounts })
+    } catch (error) {
+      dispatch({ type: LOAD_ACCOUNTS_FAILURE, error })
+    }
+  }
+}
 
 export const CREATE_ACCOUNT = 'CREATE_ACCOUNT'
 export const CREATE_ACCOUNT_FAILURE = 'CREATE_ACCOUNT_FAILURE'
