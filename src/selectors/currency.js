@@ -2,12 +2,10 @@ import { createSelector } from 'reselect'
 
 const accountsSelector = state => state.accounts.byId
 
-export const getUsedCurrency = createSelector(accountsSelector, accounts =>
-  Object.keys(accounts).reduce(
-    (acc, id) =>
-      acc.concat(
-        Object.keys(accounts[id].balance).filter(code => !acc.includes(code))
-      ),
-    []
-  )
-)
+export const getUsedCurrency = createSelector(accountsSelector, accounts => {
+  const used = new Set()
+  Object.keys(accounts).forEach(id => {
+    Object.keys(accounts[id].balance).forEach(code => used.add(code))
+  })
+  return [...used]
+})
