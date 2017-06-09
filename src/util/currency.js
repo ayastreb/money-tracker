@@ -8,14 +8,16 @@ export async function fetchExchangeRates(base, target) {
   }
 
   return fetch(`https://query.yahooapis.com/v1/public/yql?${encode(params)}`)
-    .then(response => response.json())
-    .then(data =>
-      data.query.results.rate.reduce((result, item) => {
+    .then(body => body.json())
+    .then(response => {
+      const exchangeRate = {}
+      for (let item of response.query.results.rate){
         const code = item['Name'].split('/')[1]
-        result[code] = parseFloat(item['Rate'])
-        return result
-      }, {})
-    )
+        exchangeRate[code] = parseFloat(item['Rate'])
+      }
+
+      return exchangeRate
+    })
 }
 
 function buildQuery(base, target) {
