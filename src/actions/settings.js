@@ -1,3 +1,4 @@
+import union from 'lodash/union'
 import { retrieveSettings, persistSettings } from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 
@@ -34,13 +35,14 @@ export function updateSettings(settings) {
 export const UPDATE_EXCHANGE_RATE_REQUEST = 'UPDATE_EXCHANGE_RATE_REQUEST'
 export const UPDATE_EXCHANGE_RATE_SUCCESS = 'UPDATE_EXCHANGE_RATE_SUCCESS'
 export const UPDATE_EXCHANGE_RATE_FAILURE = 'UPDATE_EXCHANGE_RATE_FAILURE'
-export function updateExchangeRate(base, secondary) {
+export function updateExchangeRate(base, secondary, used) {
   return async dispatch => {
-    dispatch({ type: UPDATE_EXCHANGE_RATE_REQUEST })
+    const target = union([base], secondary, used)
+    dispatch({ type: UPDATE_EXCHANGE_RATE_REQUEST, base, target })
     try {
-      const exchangeRate = await fetchExchangeRates(base, secondary)
+      const exchangeRate = await fetchExchangeRates(base, target)
       dispatch({ type: UPDATE_EXCHANGE_RATE_SUCCESS, exchangeRate })
-      dispatch(updateSettings({ currency: { base, secondary }, exchangeRate }))
+      dispatch(updateSettings({ exchangeRate }))
     } catch (error) {
       dispatch({ type: UPDATE_EXCHANGE_RATE_FAILURE, error })
     }
@@ -64,6 +66,8 @@ export function changeCurrency(base, secondary) {
       base,
       secondary: secondaryWithoutBase
     })
-    dispatch(updateExchangeRate(base, secondaryWithoutBase))
+    dispatch(
+      updateSettings({ currency: { base, secondary: secondaryWithoutBase } })
+    )
   }
 }

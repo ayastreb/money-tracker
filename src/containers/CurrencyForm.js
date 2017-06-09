@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dropdown, Form } from 'semantic-ui-react'
-import { changeCurrency } from '../actions/settings'
+import { getUsedCurrency } from '../selectors/currency'
+import { changeCurrency, updateExchangeRate } from '../actions/settings'
 import { currencyAsDropdownOptions } from '../constants/currency'
 
 class CurrencyForm extends React.Component {
@@ -23,10 +24,20 @@ class CurrencyForm extends React.Component {
 
   handleBaseChange = (event, { value }) => {
     this.props.changeCurrency(value, this.props.secondary)
+    this.props.updateExchangeRate(
+      value,
+      this.props.secondary,
+      this.props.usedCurrency
+    )
   }
 
   handleSecondaryChange = (event, { value }) => {
     this.props.changeCurrency(this.props.base, value)
+    this.props.updateExchangeRate(
+      this.props.base,
+      value,
+      this.props.usedCurrency
+    )
   }
 
   render() {
@@ -67,12 +78,19 @@ class CurrencyForm extends React.Component {
 CurrencyForm.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
-  changeCurrency: PropTypes.func
+  usedCurrency: PropTypes.arrayOf(PropTypes.string),
+  exchangeRate: PropTypes.objectOf(PropTypes.number),
+  changeCurrency: PropTypes.func,
+  updateExchangeRate: PropTypes.func
 }
 
 const mapStateToProps = state => ({
   base: state.settings.currency.base,
-  secondary: state.settings.currency.secondary
+  secondary: state.settings.currency.secondary,
+  usedCurrency: getUsedCurrency(state),
+  exchangeRate: state.settings.exchangeRate
 })
 
-export default connect(mapStateToProps, { changeCurrency })(CurrencyForm)
+export default connect(mapStateToProps, { changeCurrency, updateExchangeRate })(
+  CurrencyForm
+)

@@ -75,32 +75,44 @@ describe('Updating settings', () => {
 })
 
 describe('Updating exchange rates', () => {
-  it('creates UPDATE_EXCHANGE_RATE_SUCCESS after fetching rates', () => {
-    currency.fetchExchangeRates = jest.fn(resolvePromise({ USD: 1, EUR: 0.75 }))
+  it('merges secondary and used currency codes', () => {
+    settings.persistSettings = jest.fn(resolvePromise(true))
+    currency.fetchExchangeRates = jest.fn(
+      resolvePromise({ USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 })
+    )
 
-    return store.dispatch(updateExchangeRate('USD', ['EUR'])).then(() => {
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([
-          { type: UPDATE_EXCHANGE_RATE_REQUEST },
-          {
-            type: UPDATE_EXCHANGE_RATE_SUCCESS,
-            exchangeRate: { USD: 1, EUR: 0.75 }
-          },
-          { type: UPDATE_SETTINGS_REQUEST }
-        ])
+    return store
+      .dispatch(
+        updateExchangeRate('USD', ['EUR', 'CAD'], ['USD', 'EUR', 'JPY'])
       )
-    })
+      .then(() => {
+        const updateAction = store
+          .getActions()
+          .find(action => action.type === UPDATE_EXCHANGE_RATE_REQUEST)
+        expect(updateAction.target).toEqual(
+          expect.arrayContaining(['USD', 'EUR', 'CAD', 'JPY'])
+        )
+        expect(store.getActions()).toEqual(
+          expect.arrayContaining([
+            {
+              type: UPDATE_EXCHANGE_RATE_SUCCESS,
+              exchangeRate: { USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 }
+            },
+            { type: UPDATE_SETTINGS_REQUEST },
+            { type: UPDATE_SETTINGS_SUCCESS }
+          ])
+        )
+      })
   })
 
   it('creates UPDATE_EXCHANGE_RATE_FAILURE when failed to fetch rates', () => {
     const error = new Error()
     currency.fetchExchangeRates = jest.fn(rejectPromise(error))
 
-    return store.dispatch(updateExchangeRate('USD', ['EUR'])).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: UPDATE_EXCHANGE_RATE_REQUEST },
-        { type: UPDATE_EXCHANGE_RATE_FAILURE, error }
-      ])
+    return store.dispatch(updateExchangeRate('USD', [], {})).then(() => {
+      expect(store.getActions()).toEqual(
+        expect.arrayContaining([{ type: UPDATE_EXCHANGE_RATE_FAILURE, error }])
+      )
     })
   })
 })
@@ -131,17 +143,5 @@ describe('Changing base currency', () => {
         expect(changeAction.base).toEqual('EUR')
         expect(changeAction.secondary).toEqual(['USD', 'JPY'])
       })
-  })
-
-  it('creates UPDATE_EXCHANGE_RATE_SUCCESS action after fetching rates', () => {
-    settings.persistSettings = jest.fn(resolvePromise(true))
-    currency.fetchExchangeRates = jest.fn(resolvePromise({ USD: 1, EUR: 0.75 }))
-
-    return store.dispatch(changeCurrency('USD', ['EUR'])).then(() => {
-      const updateRatesAction = store
-        .getActions()
-        .find(action => action.type === UPDATE_EXCHANGE_RATE_SUCCESS)
-      expect(updateRatesAction.exchangeRate).toEqual({ USD: 1, EUR: 0.75 })
-    })
   })
 })
