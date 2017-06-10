@@ -40,7 +40,7 @@ class CurrencyTable extends React.Component {
 
   render() {
     return (
-      <Table basic="very" celled>
+      <Table basic="very" singleLine>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell style={{ width: '50%' }}>

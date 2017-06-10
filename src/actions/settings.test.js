@@ -132,16 +132,15 @@ describe('Completing initial setup', () => {
 describe('Changing base currency', () => {
   it('filters base currency from secondary currencies', () => {
     settings.persistSettings = jest.fn(resolvePromise(true))
-    currency.fetchExchangeRates = jest.fn(resolvePromise({}))
 
     return store
-      .dispatch(changeCurrency('EUR', ['USD', 'EUR', 'JPY']))
+      .dispatch(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD'))
       .then(() => {
         const changeAction = store
           .getActions()
           .find(action => action.type === CHANGE_CURRENCY)
         expect(changeAction.base).toEqual('EUR')
-        expect(changeAction.secondary).toEqual(['USD', 'JPY'])
+        expect(changeAction.secondary).toEqual(['USD', 'JPY', 'CAD'])
       })
   })
 })

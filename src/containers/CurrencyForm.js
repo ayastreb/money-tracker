@@ -23,7 +23,7 @@ class CurrencyForm extends React.Component {
   }
 
   handleBaseChange = (event, { value }) => {
-    this.props.changeCurrency(value, this.props.secondary)
+    this.props.changeCurrency(value, this.props.secondary, this.props.base)
     this.props.updateExchangeRate(
       value,
       this.props.secondary,

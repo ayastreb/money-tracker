@@ -58,16 +58,18 @@ export function completeSetup() {
 }
 
 export const CHANGE_CURRENCY = 'CHANGE_CURRENCY'
-export function changeCurrency(base, secondary) {
+export function changeCurrency(nextBase, secondary, currentBase) {
   return async dispatch => {
-    const secondaryWithoutBase = secondary.filter(code => code !== base)
+    const nextSecondary = secondary.includes(nextBase)
+      ? secondary.concat(currentBase).filter(code => code !== nextBase)
+      : secondary
     dispatch({
       type: CHANGE_CURRENCY,
-      base,
-      secondary: secondaryWithoutBase
+      base: nextBase,
+      secondary: nextSecondary
     })
     dispatch(
-      updateSettings({ currency: { base, secondary: secondaryWithoutBase } })
+      updateSettings({ currency: { base: nextBase, secondary: nextSecondary } })
     )
   }
 }

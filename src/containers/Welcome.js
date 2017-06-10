@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Button, Card, Container, Divider, Header } from 'semantic-ui-react'
 import CurrencyForm from './CurrencyForm'
 import AccountForm from './AccountForm'
-import AccountList from './AccountList'
+import AccountTable from './AccountTable'
 import { completeSetup } from '../actions/settings'
 
 class Welcome extends React.Component {
@@ -20,7 +20,7 @@ class Welcome extends React.Component {
             <Header as="h3">Create Accounts</Header>
             <AccountForm />
             <Divider clearing hidden />
-            <AccountList />
+            <AccountTable />
             {this.props.accounts.length > 0
               ? <Button
                   primary
