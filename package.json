@@ -22,13 +22,15 @@
   "devDependencies": {
     "react-scripts": "1.0.7",
     "react-test-renderer": "^15.5.4",
-    "redux-mock-store": "^1.2.3"
+    "redux-mock-store": "^1.2.3",
+    "surge": "^0.19.0"
   },
   "scripts": {
     "pretty": "prettier --write --single-quote --no-semi 'src/**/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "npm run build && cd build && mv index.html 200.html && surge"
   }
 }
