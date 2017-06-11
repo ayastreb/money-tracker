@@ -72,7 +72,7 @@ class AccountTable extends React.Component {
 
 AccountTable.propTypes = {
   baseCurrency: PropTypes.string,
-  groups: PropTypes.objectOf(PropTypes.array),
+  groups: PropTypes.objectOf(PropTypes.object),
   loadAccounts: PropTypes.func,
   removeAccount: PropTypes.func
 }
