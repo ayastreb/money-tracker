@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter, Route } from 'react-router-dom'
-import { Loader } from 'semantic-ui-react'
+import { Loader, Menu, Sidebar, Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import NavLink from '../components/NavLink'
 import Welcome from './Welcome'
 import Dashboard from './Dashboard'
 import { loadSettings } from '../actions/settings'
@@ -18,9 +19,33 @@ class App extends React.Component {
 
     return (
       <BrowserRouter>
-        <div>
-          <Route exact path="/" component={Dashboard} />
-        </div>
+        <Sidebar.Pushable>
+          <Sidebar
+            as={Menu}
+            animation="push"
+            width="thin"
+            color="blue"
+            vertical
+            visible
+            icon="labeled"
+          >
+            <NavLink label="Dashboard" to="/" icon="home" exact={true} />
+            <NavLink label="Transactions" to="/transactions" icon="exchange" />
+            <NavLink label="Accounts" to="/accounts" icon="credit card" />
+            <NavLink label="Reports" to="/reports" icon="line chart" />
+            <NavLink
+              label="Settings"
+              to="/settings"
+              icon="options"
+              exact={true}
+            />
+          </Sidebar>
+          <Sidebar.Pusher>
+            <Segment basic>
+              <Route exact path="/" component={Dashboard} />
+            </Segment>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </BrowserRouter>
     )
   }

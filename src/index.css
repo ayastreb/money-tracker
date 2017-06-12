@@ -1,7 +1,13 @@
 body {
+  height: 100%;
   margin: 0;
   background-color: ghostwhite;
   font-family: sans-serif;
+}
+
+.full-screen {
+  height: 100%;
+  width: 100%;
 }
 
 .container-raised-desktop {
@@ -16,7 +22,7 @@ body {
 
 @media (min-width: 600px) {
   body {
-    padding: 2em 0 2em 0;
+    padding: 0;
   }
 
   .container-raised-desktop {
