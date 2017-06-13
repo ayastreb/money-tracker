@@ -2,24 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'semantic-ui-react'
-import { toggleSidebar } from '../actions/ui/sidebar'
+import { toggleSidebar } from '../../actions/ui/sidebar'
 import './header.css'
 
-class AppHeader extends React.Component {
-  handleToggle = () => this.props.toggleSidebar()
-
-  render() {
-    return (
-      <header>
-        <Header>
-          {this.props.isMobile &&
-            <Icon name="bars" onClick={this.handleToggle} />}
-          <Header.Content as="h2">{this.props.label}</Header.Content>
-        </Header>
-      </header>
-    )
-  }
-}
+const AppHeader = ({ label, isMobile, toggleSidebar }) => (
+  <header>
+    <Header>
+      {isMobile && <Icon name="bars" onClick={toggleSidebar} />}
+      <Header.Content as="h2">{label}</Header.Content>
+    </Header>
+  </header>
+)
 
 AppHeader.propTypes = {
   label: PropTypes.string.isRequired,

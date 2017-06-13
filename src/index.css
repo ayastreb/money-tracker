@@ -12,19 +12,13 @@ body {
 
 @media (min-width: 768px) {
   .ui.visible.thin.left.sidebar ~ .pusher {
-    max-width: calc(100% - 150px)
+    max-width: calc(100% - 150px);
   }
 }
 
 .ui.push.sidebar {
   z-index: 2;
   border: none;
-}
-
-@media (max-width: 767px) {
-  .ui.thin.left.sidebar {
-    width: 65%;
-  }
 }
 
 .container-raised-desktop {
