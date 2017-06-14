@@ -32,6 +32,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && cd build && mv index.html 200.html && surge"
+    "deploy": "npm run build && cd build && mv index.html 200.html && surge ./"
   }
 }
