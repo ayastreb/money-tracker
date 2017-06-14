@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { Icon, Menu, Sidebar } from 'semantic-ui-react'
 import Logo from '../components/Logo/index'
-import routes from '../routes'
+import routes from '../router/routes'
 import { toggleSidebar } from '../actions/ui/sidebar'
 
 const SidebarMenu = ({ isMobile, isSidebarOpen, toggleSidebar }) => (

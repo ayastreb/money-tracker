@@ -1,8 +1,8 @@
-import Dashboard from './containers/Dashboard'
-import Transactions from './containers/Transactions'
-import Accounts from './containers/Accounts'
-import Reports from './containers/Reports'
-import Settings from './containers/Settings'
+import Dashboard from '../containers/Dashboard'
+import Transactions from '../containers/Transactions'
+import Accounts from '../containers/Accounts'
+import Reports from '../containers/Reports'
+import Settings from '../containers/Settings'
 
 export default [
   {
