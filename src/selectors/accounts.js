@@ -28,3 +28,10 @@ export const getGroupedAccounts = createSelector(
       return result
     }, {})
 )
+
+export const getNetWorth = createSelector(getGroupedAccounts, groups =>
+  Object.keys(groups).reduce(
+    (total, group) => total + groups[group].total * 50,
+    0
+  )
+)

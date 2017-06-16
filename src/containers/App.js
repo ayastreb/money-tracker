@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Router, Route } from 'react-router-dom'
-import { Loader, Sidebar } from 'semantic-ui-react'
+import { Dimmer, Loader, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import routes from '../router/routes'
 import SidebarMenu from './SidebarMenu'
 import SidebarDimmer from './SidebarDimmer'
 import Welcome from './Welcome'
 import { loadSettings } from '../actions/settings'
+import { loadAccounts } from '../actions/accounts'
 
 class App extends React.Component {
   componentDidMount() {
     this.props.loadSettings()
+    this.props.loadAccounts()
   }
 
   render() {
@@ -23,8 +25,10 @@ class App extends React.Component {
         <Sidebar.Pushable>
           <SidebarMenu />
           <Sidebar.Pusher>
-            <SidebarDimmer />
-            {routes.map(route => <Route key={route.path} {...route} />)}
+            <Dimmer.Dimmable>
+              <SidebarDimmer />
+              {routes.map(route => <Route key={route.path} {...route} />)}
+            </Dimmer.Dimmable>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Router>
@@ -36,7 +40,8 @@ App.propTypes = {
   history: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
   isSetupComplete: PropTypes.bool,
-  loadSettings: PropTypes.func
+  loadSettings: PropTypes.func,
+  loadAccounts: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -45,4 +50,4 @@ const mapStateToProps = (state, ownProps) => ({
   isSetupComplete: state.settings.isSetupComplete
 })
 
-export default connect(mapStateToProps, { loadSettings })(App)
+export default connect(mapStateToProps, { loadSettings, loadAccounts })(App)

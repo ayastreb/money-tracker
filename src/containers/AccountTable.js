@@ -4,15 +4,11 @@ import { connect } from 'react-redux'
 import { Button, Table, List } from 'semantic-ui-react'
 import Amount from '../components/Amount'
 import { getGroupedAccounts } from '../selectors/accounts'
-import { loadAccounts, removeAccount } from '../actions/accounts'
+import { removeAccount } from '../actions/accounts'
 import { ACCOUNT_GROUP } from '../constants/account'
 
 class AccountTable extends React.Component {
   handleRemove = id => () => this.props.removeAccount(id)
-
-  componentDidMount() {
-    this.props.loadAccounts()
-  }
 
   render() {
     const groups = Object.keys(this.props.groups)
@@ -73,7 +69,6 @@ class AccountTable extends React.Component {
 AccountTable.propTypes = {
   baseCurrency: PropTypes.string,
   groups: PropTypes.objectOf(PropTypes.object),
-  loadAccounts: PropTypes.func,
   removeAccount: PropTypes.func
 }
 
@@ -82,6 +77,6 @@ const mapStateToProps = state => ({
   groups: getGroupedAccounts(state)
 })
 
-export default connect(mapStateToProps, { loadAccounts, removeAccount })(
+export default connect(mapStateToProps, { removeAccount })(
   AccountTable
 )
