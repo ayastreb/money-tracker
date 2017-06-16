@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { CURRENCY } from '../constants/currency'
 
 const Amount = ({ value, code }) => (
@@ -13,5 +14,10 @@ const Amount = ({ value, code }) => (
     {code}
   </span>
 )
+
+Amount.propTypes = {
+  value: PropTypes.number,
+  code: PropTypes.string
+}
 
 export default Amount
