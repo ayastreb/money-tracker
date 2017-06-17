@@ -5,14 +5,14 @@ import './style.css'
 
 const NetWorth = ({ baseCurrency, netWorth }) => (
   <div className="net-worth">
-    <div className="net-worth-label">NET WORTH</div>
-    <Amount value={netWorth} code={baseCurrency} />
+    <div className="net-worth__label">NET WORTH</div>
+    <div className="net-worth__total"><Amount value={netWorth} code={baseCurrency} /></div>
   </div>
 )
 
 NetWorth.propTypes = {
-  baseCurrency: PropTypes.string,
-  netWorth: PropTypes.number
+  baseCurrency: PropTypes.string.isRequired,
+  netWorth: PropTypes.number.isRequired
 }
 
 export default NetWorth
