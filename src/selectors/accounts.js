@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
 import { CURRENCY } from '../constants/currency'
+import { ACCOUNT_GROUP } from '../constants/account'
 
 const baseCurrencySelector = state => state.settings.currency.base
 const exchangeRateSelector = state => state.settings.exchangeRate
@@ -13,7 +14,9 @@ export const getGroupedAccounts = createSelector(
     Object.keys(accounts).reduce((result, id) => {
       const account = accounts[id]
       const group = account.group
-      if (!result[group]) result[group] = { accounts: [], total: 0 }
+      if (!result[group]) {
+        result[group] = { name: ACCOUNT_GROUP[group], accounts: [], total: 0 }
+      }
 
       result[group].accounts.push(account)
       result[group].total = Object.keys(account.balance).reduce(
@@ -21,7 +24,7 @@ export const getGroupedAccounts = createSelector(
           total +
           account.balance[code] /
             exchangeRate[code] *
-            Math.pow(10, CURRENCY[base].exp - CURRENCY[code].exp),
+            Math.pow(10, CURRENCY[base].exp - CURRENCY[code].exp) | 0,
         result[group].total
       )
 

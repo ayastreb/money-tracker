@@ -48,6 +48,7 @@ it('groups accounts', () => {
   }
   expect(getGroupedAccounts(state)).toEqual({
     cash: {
+      name: 'Cash',
       accounts: [
         {
           group: 'cash',
@@ -68,6 +69,7 @@ it('groups accounts', () => {
       total: 15100
     },
     bank: {
+      name: 'Bank',
       accounts: [
         {
           group: 'bank',

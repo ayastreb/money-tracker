@@ -16,8 +16,8 @@ const Amount = ({ value, code }) => (
 )
 
 Amount.propTypes = {
-  value: PropTypes.number,
-  code: PropTypes.string
+  value: PropTypes.number.isRequired,
+  code: PropTypes.string.isRequired
 }
 
 export default Amount

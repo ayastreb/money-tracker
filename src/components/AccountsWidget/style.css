@@ -1,0 +1,40 @@
+.account-widget-group__header {
+  display: table;
+  width: 100%;
+}
+
+.account-widget-group__name, .account-widget-group__total  {
+  display: table-cell;
+  font-weight: 700;
+  background-color: rgba(34, 36, 38, 0.05);
+  padding: 0.5em;
+}
+
+.account-widget-group__name {
+  width: 1px;
+  white-space: nowrap;
+}
+
+.account-widget-group__total {
+  text-align: right;
+}
+
+.account-widget-account {
+  width: 100%;
+  display: table;
+}
+
+.account-widget-account__name, .account-widget-account__balance {
+  display: table-cell;
+  padding: 0.5em 0.5em 0.5em 1em;
+}
+
+.account-widget-account__name {
+  width: 1px;
+  white-space: nowrap;
+}
+
+.account-widget-account__balance {
+  text-align: right;
+  white-space: nowrap;
+}
