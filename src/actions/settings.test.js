@@ -109,7 +109,7 @@ describe('Updating exchange rates', () => {
     const error = new Error()
     currency.fetchExchangeRates = jest.fn(rejectPromise(error))
 
-    return store.dispatch(updateExchangeRate('USD', [], {})).then(() => {
+    return store.dispatch(updateExchangeRate('USD', [], [])).then(() => {
       expect(store.getActions()).toEqual(
         expect.arrayContaining([{ type: UPDATE_EXCHANGE_RATE_FAILURE, error }])
       )
