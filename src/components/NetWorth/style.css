@@ -1,0 +1,14 @@
+.net-worth {
+  display: block;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.net-worth .net-worth-label {
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+.net-worth .mono {
+  font-size: 1.3em;
+}

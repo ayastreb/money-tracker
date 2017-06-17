@@ -1,10 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Statistic, Grid } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import Header from '../components/Header'
-import Amount from '../components/Amount'
-import { getNetWorth } from '../selectors/accounts'
+import NetWorth from './NetWorth'
 
 class Dashboard extends React.Component {
   render() {
@@ -15,17 +12,7 @@ class Dashboard extends React.Component {
           <Grid>
             <Grid.Row>
               <Grid.Column computer={5} mobile={16}>
-                <div className="placeholder" height={100}>
-                  <Statistic size="mini">
-                    <Statistic.Label>Net Worth</Statistic.Label>
-                    <Statistic.Value>
-                      <Amount
-                        value={this.props.netWorth}
-                        code={this.props.baseCurrency}
-                      />
-                    </Statistic.Value>
-                  </Statistic>
-                </div>
+                <NetWorth />
                 <div className="placeholder" style={{ height: '250px' }}>
                   Account List
                 </div>
@@ -40,21 +27,10 @@ class Dashboard extends React.Component {
               </Grid.Column>
             </Grid.Row>
           </Grid>
-
         </div>
       </div>
     )
   }
 }
 
-Dashboard.propTypes = {
-  baseCurrency: PropTypes.string,
-  netWorth: PropTypes.number
-}
-
-const mapStateToProps = state => ({
-  baseCurrency: state.settings.currency.base,
-  netWorth: getNetWorth(state)
-})
-
-export default connect(mapStateToProps)(Dashboard)
+export default Dashboard
