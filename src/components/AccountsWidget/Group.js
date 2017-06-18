@@ -4,9 +4,9 @@ import Account from './Account'
 import Amount from '../Amount'
 import './style.css'
 
-const Group = ({ baseCurrency, group }) => (
+const Group = ({ baseCurrency, group, isCollapsed, toggleGroupCollapse }) => (
   <div className="account-widget-group">
-    <div className="account-widget-group__header">
+    <div className="account-widget-group__header" onClick={toggleGroupCollapse}>
       <span className="account-widget-group__name">
         {group.name}
       </span>
@@ -14,9 +14,10 @@ const Group = ({ baseCurrency, group }) => (
         <Amount value={group.total} code={baseCurrency} />
       </span>
     </div>
-    {group.accounts.map(account => (
-      <Account key={account.id} account={account} />
-    ))}
+    {!isCollapsed &&
+      group.accounts.map(account => (
+        <Account key={account.id} account={account} />
+      ))}
   </div>
 )
 
@@ -26,7 +27,9 @@ Group.propTypes = {
     name: PropTypes.string.isRequired,
     accounts: PropTypes.arrayOf(PropTypes.object).isRequired,
     total: PropTypes.number.isRequired
-  }).isRequired
+  }).isRequired,
+  isCollapsed: PropTypes.bool.isRequired,
+  toggleGroupCollapse: PropTypes.func.isRequired
 }
 
 export default Group

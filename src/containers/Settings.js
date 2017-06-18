@@ -8,7 +8,7 @@ class Settings extends React.Component {
       <div>
         <Header label="Settings" />
         <Segment basic padded textAlign="center">
-          <Icon name="hourglass half" size="massive"/>
+          <Icon name="hourglass half" size="massive" />
           <h3>Work in progress</h3>
         </Segment>
       </div>

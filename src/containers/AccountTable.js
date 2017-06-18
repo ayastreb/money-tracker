@@ -77,6 +77,4 @@ const mapStateToProps = state => ({
   groups: getGroupedAccounts(state)
 })
 
-export default connect(mapStateToProps, { removeAccount })(
-  AccountTable
-)
+export default connect(mapStateToProps, { removeAccount })(AccountTable)

@@ -21,10 +21,11 @@ export const getGroupedAccounts = createSelector(
       result[group].accounts.push(account)
       result[group].total = Object.keys(account.balance).reduce(
         (total, code) =>
-          total +
-          account.balance[code] /
-            exchangeRate[code] *
-            Math.pow(10, CURRENCY[base].exp - CURRENCY[code].exp) | 0,
+          (total +
+            account.balance[code] /
+              exchangeRate[code] *
+              Math.pow(10, CURRENCY[base].exp - CURRENCY[code].exp)) |
+          0,
         result[group].total
       )
 

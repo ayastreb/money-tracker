@@ -1,7 +1,13 @@
 .net-worth {
   display: table;
   width: 100%;
-  margin-bottom: 1em;
+  padding: 0 1em 1em 1em;
+}
+
+@media (min-width: 768px) {
+  .net-worth {
+    padding: 0  0 1em 0;
+  }
 }
 
 .net-worth__label {

@@ -6,7 +6,9 @@ import './style.css'
 const NetWorth = ({ baseCurrency, netWorth }) => (
   <div className="net-worth">
     <div className="net-worth__label">NET WORTH</div>
-    <div className="net-worth__total"><Amount value={netWorth} code={baseCurrency} /></div>
+    <div className="net-worth__total">
+      <Amount value={netWorth} code={baseCurrency} />
+    </div>
   </div>
 )
 

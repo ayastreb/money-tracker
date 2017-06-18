@@ -1,4 +1,4 @@
-import {TOGGLE_SIDEBAR} from "../../actions/ui/sidebar"
+import { TOGGLE_SIDEBAR } from '../../actions/ui/sidebar'
 
 export default function(state = false, action) {
   switch (action.type) {
