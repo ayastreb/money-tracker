@@ -1,18 +1,14 @@
 import PouchDB from 'pouchdb'
 
-export default (() => {
-  const instancePool = {}
+const instancePool = {}
 
-  function instance(name) {
-    if (instancePool[name] === undefined) {
-      instancePool[name] = new PouchDB(name, { auto_compaction: true })
-    }
-
-    return instancePool[name]
+function instance(name) {
+  if (instancePool[name] === undefined) {
+    instancePool[name] = new PouchDB(name, { auto_compaction: true })
   }
 
-  return {
-    settingsDB: () => instance('settings'),
-    accountsDB: () => instance('accounts')
-  }
-})()
+  return instancePool[name]
+}
+
+export const settingsDB = () => instance('settings')
+export const accountsDB = () => instance('accounts')
