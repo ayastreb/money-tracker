@@ -64,6 +64,7 @@ class CurrencyForm extends React.Component {
               multiple
               renderLabel={item => item.key}
               minCharacters={0}
+              closeOnChange
               onChange={this.handleSecondaryChange}
               options={this.secondaryOptions}
               value={this.props.secondary}
