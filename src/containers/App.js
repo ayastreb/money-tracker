@@ -3,14 +3,20 @@ import PropTypes from 'prop-types'
 import { Router, Route } from 'react-router-dom'
 import { Dimmer, Loader, Sidebar } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import throttle from 'lodash/throttle'
 import routes from '../router/routes'
 import SidebarMenu from './SidebarMenu'
 import SidebarDimmer from './SidebarDimmer'
 import Welcome from './Welcome'
 import { loadSettings } from '../actions/settings'
 import { loadAccounts } from '../actions/accounts'
+import { windowResize } from '../actions/ui/windowResize'
 
 class App extends React.Component {
+  componentWillMount() {
+    window.addEventListener('resize', throttle(this.props.windowResize, 500))
+  }
+
   componentDidMount() {
     this.props.loadSettings()
     this.props.loadAccounts()
@@ -41,7 +47,8 @@ App.propTypes = {
   isLoaded: PropTypes.bool,
   isSetupComplete: PropTypes.bool,
   loadSettings: PropTypes.func,
-  loadAccounts: PropTypes.func
+  loadAccounts: PropTypes.func,
+  windowResize: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -50,4 +57,8 @@ const mapStateToProps = (state, ownProps) => ({
   isSetupComplete: state.settings.isSetupComplete
 })
 
-export default connect(mapStateToProps, { loadSettings, loadAccounts })(App)
+export default connect(mapStateToProps, {
+  loadSettings,
+  loadAccounts,
+  windowResize
+})(App)
