@@ -6,7 +6,7 @@ const Account = ({ account }) => (
   <div className="account-widget-account">
     <div className="account-widget-account__name">{account.name}</div>
     <div className="account-widget-account__balance">
-      {Object.keys(account.balance).map(code => (
+      {account.currencies.map(code => (
         <div key={code}>
           <Amount value={account.balance[code]} code={code} />
         </div>

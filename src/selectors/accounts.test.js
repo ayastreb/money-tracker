@@ -1,4 +1,35 @@
-import { getGroupedAccounts, getNetWorth } from './accounts'
+import { getAccountsAsOptions, getGroupedAccounts, getNetWorth } from './accounts'
+
+it('returns accounts list as dropdown options', () => {
+  const state = {
+    accounts: {
+      allIds: ['A/12345', 'A/12346'],
+      byId: {
+        'A/12345': {
+          group: 'cash',
+          name: 'foo',
+        },
+        'A/12346': {
+          group: 'bank',
+          name: 'bar',
+        }
+      }
+    }
+  }
+
+  expect(getAccountsAsOptions(state)).toEqual([
+    {
+      key: 'A/12345',
+      value: 'A/12345',
+      text: 'foo'
+    },
+    {
+      key: 'A/12346',
+      value: 'A/12346',
+      text: 'bar'
+    }
+  ])
+})
 
 it('groups accounts', () => {
   const state = {
@@ -13,10 +44,12 @@ it('groups accounts', () => {
       }
     },
     accounts: {
+      allIds: ['A/12345', 'A/12346', 'A/12347', 'A/12348'],
       byId: {
         'A/12345': {
           group: 'cash',
           name: 'foo',
+          currencies: ['USD', 'JPY'],
           balance: {
             USD: 10000,
             JPY: 110
@@ -25,6 +58,7 @@ it('groups accounts', () => {
         'A/12346': {
           group: 'bank',
           name: 'bar',
+          currencies: ['JPY'],
           balance: {
             JPY: 110 // = $1.00
           }
@@ -32,13 +66,15 @@ it('groups accounts', () => {
         'A/12347': {
           group: 'bank',
           name: 'baz',
+          currencies: ['EUR'],
           balance: {
-            EUR: 7500 // = $100.00
+            EUR: 7500
           }
         },
         'A/12348': {
           group: 'cash',
           name: 'bad',
+          currencies: ['USD'],
           balance: {
             USD: 5000
           }
@@ -53,6 +89,7 @@ it('groups accounts', () => {
         {
           group: 'cash',
           name: 'foo',
+          currencies: ['USD', 'JPY'],
           balance: {
             USD: 10000,
             JPY: 110
@@ -61,6 +98,7 @@ it('groups accounts', () => {
         {
           group: 'cash',
           name: 'bad',
+          currencies: ['USD'],
           balance: {
             USD: 5000
           }
@@ -74,6 +112,7 @@ it('groups accounts', () => {
         {
           group: 'bank',
           name: 'bar',
+          currencies: ['JPY'],
           balance: {
             JPY: 110
           }
@@ -81,6 +120,7 @@ it('groups accounts', () => {
         {
           group: 'bank',
           name: 'baz',
+          currencies: ['EUR'],
           balance: {
             EUR: 7500
           }
@@ -104,10 +144,12 @@ it('calculates net worth', () => {
       }
     },
     accounts: {
+      allIds: ['A/12345', 'A/12346', 'A/12347', 'A/12348'],
       byId: {
         'A/12345': {
           group: 'cash',
           name: 'foo',
+          currencies: ['USD', 'JPY'],
           balance: {
             USD: 10000,
             JPY: 110
@@ -116,6 +158,7 @@ it('calculates net worth', () => {
         'A/12346': {
           group: 'bank',
           name: 'bar',
+          currencies: ['JPY'],
           balance: {
             JPY: 110 // = $1.00
           }
@@ -123,13 +166,15 @@ it('calculates net worth', () => {
         'A/12347': {
           group: 'bank',
           name: 'baz',
+          currencies: ['EUR'],
           balance: {
-            EUR: 7500 // = $100.00
+            EUR: 7500
           }
         },
         'A/12348': {
           group: 'cash',
           name: 'bad',
+          currencies: ['USD'],
           balance: {
             USD: 5000
           }

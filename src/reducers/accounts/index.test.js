@@ -16,19 +16,23 @@ describe('loading accounts', () => {
       reducer(undefined, {
         type: LOAD_ACCOUNTS_SUCCESS,
         accounts: [
-          { id: 'A/12345', name: 'foo' },
-          { id: 'A/12346', name: 'bar' }
+          { id: 'A/12345', name: 'foo', balance: { USD: 100 } },
+          { id: 'A/12346', name: 'bar', balance: { EUR: 10, JPY: 15 } }
         ]
       })
     ).toEqual({
       byId: {
         'A/12345': {
           id: 'A/12345',
-          name: 'foo'
+          name: 'foo',
+          balance: { USD: 100 },
+          currencies: ['USD']
         },
         'A/12346': {
           id: 'A/12346',
-          name: 'bar'
+          name: 'bar',
+          balance: { EUR: 10, JPY: 15 },
+          currencies: ['EUR', 'JPY']
         }
       },
       allIds: ['A/12345', 'A/12346']
@@ -54,7 +58,8 @@ describe('creating account', () => {
           id: 'A/12345',
           name: 'foo',
           group: 'cash',
-          balance: { USD: 12500 }
+          balance: { USD: 12500 },
+          currencies: ['USD']
         }
       },
       allIds: ['A/12345']
@@ -68,7 +73,8 @@ describe('creating account', () => {
               id: 'A/12345',
               name: 'foo',
               group: 'cash',
-              balance: { USD: 12500 }
+              balance: { USD: 12500 },
+              currencies: ['USD']
             }
           },
           allIds: ['A/12345']
@@ -79,7 +85,7 @@ describe('creating account', () => {
             id: 'A/12346',
             name: 'bar',
             group: 'bank',
-            balance: { USD: 205 }
+            balance: { EUR: 205 }
           }
         }
       )
@@ -89,13 +95,15 @@ describe('creating account', () => {
           id: 'A/12345',
           name: 'foo',
           group: 'cash',
-          balance: { USD: 12500 }
+          balance: { USD: 12500 },
+          currencies: ['USD']
         },
         'A/12346': {
           id: 'A/12346',
           name: 'bar',
           group: 'bank',
-          balance: { USD: 205 }
+          balance: { EUR: 205 },
+          currencies: ['EUR']
         }
       },
       allIds: ['A/12345', 'A/12346']
@@ -111,13 +119,15 @@ describe('creating account', () => {
               id: 'A/12345',
               name: 'foo',
               group: 'cash',
-              balance: { USD: 12500 }
+              balance: { USD: 12500 },
+              currencies: ['USD']
             },
             'A/12346': {
               id: 'A/12346',
               name: 'bar',
               group: 'bank',
-              balance: { USD: 205 }
+              balance: { USD: 205 },
+              currencies: ['USD']
             }
           },
           allIds: ['A/12345', 'A/12346']
@@ -133,7 +143,8 @@ describe('creating account', () => {
           id: 'A/12346',
           name: 'bar',
           group: 'bank',
-          balance: { USD: 205 }
+          balance: { USD: 205 },
+          currencies: ['USD']
         }
       },
       allIds: ['A/12346']

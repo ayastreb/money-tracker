@@ -53,7 +53,7 @@ class AccountTable extends React.Component {
       </Table.Cell>
       <Table.Cell textAlign="right">
         <List style={{ padding: 0 }}>
-          {Object.keys(account.balance).map(currency => (
+          {account.currencies.map(currency => (
             <List.Item key={currency}>
               <List.Content floated="right">
                 <Amount code={currency} value={account.balance[currency]} />

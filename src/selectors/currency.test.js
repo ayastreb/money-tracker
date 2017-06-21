@@ -3,18 +3,13 @@ import { getUsedCurrency } from './currency'
 it('returns used currency from accounts', () => {
   const state = {
     accounts: {
+      allIds: ['A/12345', 'A/12346'],
       byId: {
         'A/12345': {
-          balance: {
-            USD: 123,
-            EUR: 456
-          }
+          currencies: ['USD', 'EUR']
         },
         'A/12346': {
-          balance: {
-            EUR: 457,
-            JPY: 890
-          }
+          currencies: ['EUR', 'JPY']
         }
       }
     }
