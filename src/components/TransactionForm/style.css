@@ -1,0 +1,32 @@
+@media (max-width: 767px) {
+  .transaction-form__header {
+    padding-left: 1em;
+    box-sizing: border-box;
+  }
+
+  .ui[class*="top attached"].menu {
+    border-radius: 0!important;
+    border-left: none!important;
+    border-right: none!important;
+  }
+
+  .ui.segment[class*="bottom attached"] {
+    border-radius: 0!important;
+    border-left: none!important;
+    border-right: none!important;
+    padding-top: 0!important;
+  }
+
+  .mobile-with-margin {
+    margin-top: 1em!important;
+  }
+}
+
+.transaction-form .ui.attached.segment {
+  margin: 0!important;;
+}
+
+.transaction-form__header h3 {
+  font-size: 1.3em;
+  line-height: 1.5;
+}

@@ -4,6 +4,7 @@ import { Grid } from 'semantic-ui-react'
 import Header from '../components/Header'
 import NetWorth from '../components/NetWorth'
 import AccountsWidget from '../components/AccountsWidget'
+import TransactionForm from './TransactionForm'
 import { getGroupedAccounts, getNetWorth } from '../selectors/accounts'
 import { toggleGroupCollapse } from '../actions/ui/accountsWidget'
 
@@ -15,7 +16,7 @@ class Dashboard extends React.Component {
         <div className="container-full-page">
           <Grid>
             <Grid.Row>
-              <Grid.Column computer={6} largeScreen={5} mobile={16}>
+              <Grid.Column computer={6} mobile={16}>
                 <NetWorth
                   baseCurrency={this.props.baseCurrency}
                   netWorth={this.props.netWorth}
@@ -27,11 +28,9 @@ class Dashboard extends React.Component {
                   toggleGroupCollapse={this.props.toggleGroupCollapse}
                 />
               </Grid.Column>
-              <Grid.Column computer={10} largeScreen={11} mobile={16}>
-                <div className="placeholder" style={{ height: '250px' }}>
-                  New Transaction
-                </div>
-                <div className="placeholder" style={{ height: '300px' }}>
+              <Grid.Column computer={10} mobile={16}>
+                <TransactionForm/>
+                <div className="placeholder" style={{ height: '300px', marginTop: '1em' }}>
                   Transaction List
                 </div>
               </Grid.Column>
