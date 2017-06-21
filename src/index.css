@@ -62,7 +62,8 @@ body {
   }
 
   .container-full-page {
-    margin: 1.5em;
+    max-width: 1024px;
+    margin: 1.5em auto;
     padding: 1em;
     border: solid 1px rgba(0, 0, 0, 0.15);
     border-radius: 0.28571429rem;
@@ -83,6 +84,10 @@ header .ui.header {
   color: white;
 }
 
+header .ui.header h2 {
+  font-weight: 300;
+}
+
 .ui.header:first-child {
   margin-top: 0;
 }
@@ -100,9 +105,18 @@ header .ui.header {
   color: #3F51B5!important;
 }
 
+.ui.primary.button {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: #3F51B5!important;
+}
+
+.ui.menu .active.item {
+  box-shadow: inset 0 2px 5px 0 rgba(34, 36, 38, 0.12)!important;
+}
+
 h1, h2, h3, h4, h5 {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 300;
+  font-weight: 700;
   margin: 0;
 }
 
