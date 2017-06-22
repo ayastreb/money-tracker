@@ -1,28 +1,57 @@
 import { connect } from 'react-redux'
 import TransactionForm from '../components/TransactionForm'
-import { changeTransactionKind } from '../actions/ui/transactionForm'
 import { getAccountsAsOptions } from '../selectors/accounts'
+import {
+  getAccountId,
+  getCurrencies,
+  getCurrency,
+  getLinkedAccountId,
+  getLinkedCurrencies,
+  getLinkedCurrency,
+  getTagOptions
+} from '../selectors/ui/transactionForm'
+import {
+  changeTransactionKind,
+  changeAccount,
+  changeAmount,
+  changeCurrency,
+  changeLinkedAccount,
+  changeLinkedAmount,
+  changeLinkedCurrency,
+  addTag,
+  changeTags,
+  changeDate,
+  changeNote
+} from '../actions/ui/transactionForm'
 
-const mapStateToProps = state => {
-  const id = state.ui.transactionForm.accountId || state.accounts.allIds[0]
-  const currencies = (id && state.accounts.byId[id].currencies) || []
-  const currency = currencies.includes(state.settings.currency.base)
-    ? state.settings.currency.base
-    : currencies[0]
-  return {
-    isMobile: state.ui.isMobile,
-    kind: state.ui.transactionForm.kind,
-    accountId: id,
-    currencies: currencies.map(code => ({
-      key: code,
-      value: code,
-      text: code
-    })),
-    accounts: getAccountsAsOptions(state),
-    currency
-  }
-}
+const mapStateToProps = state => ({
+  isMobile: state.ui.isMobile,
+  kind: state.ui.transactionForm.kind,
+  amount: state.ui.transactionForm.amount,
+  linkedAmount: state.ui.transactionForm.linkedAmount,
+  tags: state.ui.transactionForm.tags,
+  date: state.ui.transactionForm.date,
+  note: state.ui.transactionForm.note,
+  accounts: getAccountsAsOptions(state),
+  accountId: getAccountId(state),
+  currencies: getCurrencies(state),
+  currency: getCurrency(state),
+  linkedAccountId: getLinkedAccountId(state),
+  linkedCurrencies: getLinkedCurrencies(state),
+  linkedCurrency: getLinkedCurrency(state),
+  tagOptions: getTagOptions(state)
+})
 
-export default connect(mapStateToProps, { changeTransactionKind })(
-  TransactionForm
-)
+export default connect(mapStateToProps, {
+  changeTransactionKind,
+  changeAccount,
+  changeAmount,
+  changeCurrency,
+  changeLinkedAccount,
+  changeLinkedAmount,
+  changeLinkedCurrency,
+  addTag,
+  changeTags,
+  changeDate,
+  changeNote
+})(TransactionForm)

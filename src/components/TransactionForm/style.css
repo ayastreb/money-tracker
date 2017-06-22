@@ -30,3 +30,17 @@
   font-size: 1.3em;
   line-height: 1.5;
 }
+
+.input-right input {
+  text-align: right!important;
+  font-family: "Roboto Mono", monospace!important;
+}
+
+.transaction-form .ui.labeled.input .label {
+  width: 4.9em!important;
+  font-family: "Roboto Mono", monospace!important;
+}
+
+.transaction-form button {
+  text-transform: capitalize!important;
+}
