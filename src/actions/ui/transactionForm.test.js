@@ -31,9 +31,9 @@ it('creates CHANGE_TRANSACTION_KIND action', () => {
 })
 
 it('creates CHANGE_ACCOUNT action', () => {
-  expect(changeAccount('A/12345')).toEqual({
+  expect(changeAccount('A12345')).toEqual({
     type: CHANGE_ACCOUNT,
-    accountId: 'A/12345'
+    accountId: 'A12345'
   })
 })
 
@@ -52,9 +52,9 @@ it('creates CHANGE_TRANSACTION_CURRENCY action', () => {
 })
 
 it('creates CHANGE_LINKED_ACCOUNT action', () => {
-  expect(changeLinkedAccount('A/12345')).toEqual({
+  expect(changeLinkedAccount('A12345')).toEqual({
     type: CHANGE_LINKED_ACCOUNT,
-    accountId: 'A/12345'
+    accountId: 'A12345'
   })
 })
 
