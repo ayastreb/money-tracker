@@ -49,7 +49,6 @@ class CurrencyForm extends React.Component {
             <Dropdown
               search
               selection
-              minCharacters={0}
               onChange={this.handleBaseChange}
               options={this.options}
               value={this.props.base}
@@ -63,7 +62,6 @@ class CurrencyForm extends React.Component {
               selection
               multiple
               renderLabel={item => item.key}
-              minCharacters={0}
               closeOnChange
               onChange={this.handleSecondaryChange}
               options={this.secondaryOptions}
