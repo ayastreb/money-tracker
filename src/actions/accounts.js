@@ -2,7 +2,8 @@ import { CURRENCY } from '../constants/currency'
 import {
   retrieveAccounts,
   persistAccount,
-  deleteAccount
+  deleteAccount,
+  persistBalanceChange
 } from '../util/storage/accounts'
 
 export const LOAD_ACCOUNTS_SUCCESS = 'LOAD_ACCOUNTS_SUCCESS'
@@ -23,7 +24,7 @@ export const CREATE_ACCOUNT_FAILURE = 'CREATE_ACCOUNT_FAILURE'
 export function createAccount(name, group, balance) {
   return async dispatch => {
     const account = {
-      id: `A/${Date.now()}`,
+      id: `A${Date.now()}`,
       name,
       group,
       balance: Object.keys(balance).reduce((balanceInCents, code) => {
@@ -56,6 +57,24 @@ export function removeAccount(id) {
       await deleteAccount(id)
     } catch (error) {
       dispatch({ type: REMOVE_ACCOUNT_FAILURE, error })
+    }
+  }
+}
+
+export const CHANGE_ACCOUNT_BALANCE = 'CHANGE_ACCOUNT_BALANCE'
+export const CHANGE_ACCOUNT_BALANCE_FAILURE = 'CHANGE_ACCOUNT_BALANCE_FAILURE'
+export function changeAccountBalance(id, currency, amount) {
+  return async dispatch => {
+    dispatch({
+      type: CHANGE_ACCOUNT_BALANCE,
+      id,
+      currency,
+      amount
+    })
+    try {
+      await persistBalanceChange(id, currency, amount)
+    } catch (error) {
+      dispatch({ type: CHANGE_ACCOUNT_BALANCE_FAILURE, error })
     }
   }
 }

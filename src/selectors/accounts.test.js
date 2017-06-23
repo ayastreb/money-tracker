@@ -3,13 +3,13 @@ import { getAccountsAsOptions, getGroupedAccounts, getNetWorth } from './account
 it('returns accounts list as dropdown options', () => {
   const state = {
     accounts: {
-      allIds: ['A/12345', 'A/12346'],
+      allIds: ['A12345', 'A12346'],
       byId: {
-        'A/12345': {
+        'A12345': {
           group: 'cash',
           name: 'foo',
         },
-        'A/12346': {
+        'A12346': {
           group: 'bank',
           name: 'bar',
         }
@@ -19,13 +19,13 @@ it('returns accounts list as dropdown options', () => {
 
   expect(getAccountsAsOptions(state)).toEqual([
     {
-      key: 'A/12345',
-      value: 'A/12345',
+      key: 'A12345',
+      value: 'A12345',
       text: 'foo'
     },
     {
-      key: 'A/12346',
-      value: 'A/12346',
+      key: 'A12346',
+      value: 'A12346',
       text: 'bar'
     }
   ])
@@ -44,9 +44,9 @@ it('groups accounts', () => {
       }
     },
     accounts: {
-      allIds: ['A/12345', 'A/12346', 'A/12347', 'A/12348'],
+      allIds: ['A12345', 'A12346', 'A12347', 'A12348'],
       byId: {
-        'A/12345': {
+        'A12345': {
           group: 'cash',
           name: 'foo',
           currencies: ['USD', 'JPY'],
@@ -55,7 +55,7 @@ it('groups accounts', () => {
             JPY: 110
           }
         },
-        'A/12346': {
+        'A12346': {
           group: 'bank',
           name: 'bar',
           currencies: ['JPY'],
@@ -63,7 +63,7 @@ it('groups accounts', () => {
             JPY: 110 // = $1.00
           }
         },
-        'A/12347': {
+        'A12347': {
           group: 'bank',
           name: 'baz',
           currencies: ['EUR'],
@@ -71,7 +71,7 @@ it('groups accounts', () => {
             EUR: 7500
           }
         },
-        'A/12348': {
+        'A12348': {
           group: 'cash',
           name: 'bad',
           currencies: ['USD'],
@@ -144,9 +144,9 @@ it('calculates net worth', () => {
       }
     },
     accounts: {
-      allIds: ['A/12345', 'A/12346', 'A/12347', 'A/12348'],
+      allIds: ['A12345', 'A12346', 'A12347', 'A12348'],
       byId: {
-        'A/12345': {
+        'A12345': {
           group: 'cash',
           name: 'foo',
           currencies: ['USD', 'JPY'],
@@ -155,7 +155,7 @@ it('calculates net worth', () => {
             JPY: 110
           }
         },
-        'A/12346': {
+        'A12346': {
           group: 'bank',
           name: 'bar',
           currencies: ['JPY'],
@@ -163,7 +163,7 @@ it('calculates net worth', () => {
             JPY: 110 // = $1.00
           }
         },
-        'A/12347': {
+        'A12347': {
           group: 'bank',
           name: 'baz',
           currencies: ['EUR'],
@@ -171,7 +171,7 @@ it('calculates net worth', () => {
             EUR: 7500
           }
         },
-        'A/12348': {
+        'A12348': {
           group: 'cash',
           name: 'bad',
           currencies: ['USD'],

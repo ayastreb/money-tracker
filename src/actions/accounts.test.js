@@ -5,9 +5,12 @@ import {
   CREATE_ACCOUNT_FAILURE,
   REMOVE_ACCOUNT,
   REMOVE_ACCOUNT_FAILURE,
+  CHANGE_ACCOUNT_BALANCE,
+  CHANGE_ACCOUNT_BALANCE_FAILURE,
   loadAccounts,
   createAccount,
-  removeAccount
+  removeAccount,
+  changeAccountBalance
 } from './accounts'
 import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
 import * as accounts from '../util/storage/accounts'
@@ -18,7 +21,7 @@ beforeEach(() => (store = mockStore()))
 
 describe('loading accounts', () => {
   it('creates LOAD_ACCOUNTS_SUCCESS action', () => {
-    const expectedAccounts = [{ id: 'A/12345' }, { id: 'A/12346' }]
+    const expectedAccounts = [{ id: 'A12345' }, { id: 'A12346' }]
     accounts.retrieveAccounts = jest.fn(resolvePromise(expectedAccounts))
 
     return store.dispatch(loadAccounts()).then(() => {
@@ -80,7 +83,7 @@ describe('creating account', () => {
         const action = store
           .getActions()
           .find(action => action.type === CREATE_ACCOUNT)
-        expect(action.account.id).toEqual('A/12345')
+        expect(action.account.id).toEqual('A12345')
       })
   })
 
@@ -110,9 +113,9 @@ describe('removing account', () => {
   it('creates REMOVE_ACCOUNT action', () => {
     accounts.deleteAccount = jest.fn(resolvePromise(true))
 
-    return store.dispatch(removeAccount('A/12345')).then(() => {
+    return store.dispatch(removeAccount('A12345')).then(() => {
       expect(store.getActions()).toEqual([
-        { type: REMOVE_ACCOUNT, id: 'A/12345' }
+        { type: REMOVE_ACCOUNT, id: 'A12345' }
       ])
     })
   })
@@ -121,11 +124,49 @@ describe('removing account', () => {
     const error = new Error()
     accounts.deleteAccount = jest.fn(rejectPromise(error))
 
-    return store.dispatch(removeAccount('A/12345')).then(() => {
+    return store.dispatch(removeAccount('A12345')).then(() => {
       expect(store.getActions()).toEqual([
-        { type: REMOVE_ACCOUNT, id: 'A/12345' },
+        { type: REMOVE_ACCOUNT, id: 'A12345' },
         { type: REMOVE_ACCOUNT_FAILURE, error }
       ])
     })
+  })
+})
+
+describe('changing balance', () => {
+  it('creates CHANGE_ACCOUNT_BALANCE action', () => {
+    accounts.persistBalanceChange = jest.fn(resolvePromise(true))
+
+    return store
+      .dispatch(changeAccountBalance('A12345', 'USD', -100))
+      .then(() => {
+        expect(store.getActions()).toEqual([
+          {
+            type: CHANGE_ACCOUNT_BALANCE,
+            id: 'A12345',
+            currency: 'USD',
+            amount: -100
+          }
+        ])
+      })
+  })
+
+  it('creates CHANGE_ACCOUNT_BALANCE_FAILURE when failed to persist balance change', () => {
+    const error = new Error()
+    accounts.persistBalanceChange = jest.fn(rejectPromise(error))
+
+    return store
+      .dispatch(changeAccountBalance('A12345', 'USD', 150))
+      .then(() => {
+        expect(store.getActions()).toEqual([
+          {
+            type: CHANGE_ACCOUNT_BALANCE,
+            id: 'A12345',
+            currency: 'USD',
+            amount: 150
+          },
+          { type: CHANGE_ACCOUNT_BALANCE_FAILURE, error }
+        ])
+      })
   })
 })
