@@ -11,7 +11,13 @@ import {
   CHANGE_DATE,
   CHANGE_NOTE
 } from '../../../actions/ui/transactionForm'
+import {
+  CREATE_TRANSACTION_REQUEST,
+  CREATE_TRANSACTION_SUCCESS,
+  CREATE_TRANSACTION_FAILURE
+} from '../../../actions/transactions'
 import { DEFAULT_TRANSACTION_KIND } from '../../../constants/transaction'
+import { formatInternal } from '../../../util/date'
 
 export default function(state = initialState(), action) {
   switch (action.type) {
@@ -37,25 +43,28 @@ export default function(state = initialState(), action) {
       return { ...state, date: action.date }
     case CHANGE_NOTE:
       return { ...state, note: action.note }
+    case CREATE_TRANSACTION_REQUEST:
+      return { ...state, isLoading: true }
+    case CREATE_TRANSACTION_SUCCESS:
+      return initialState()
+    case CREATE_TRANSACTION_FAILURE:
+      return { ...state, isLoading: false }
     default:
       return state
   }
 }
 
-const initialState = () => {
-  const pad = value => (value < 10 ? `0${value}` : value)
-  const now = new Date()
-  return {
-    kind: DEFAULT_TRANSACTION_KIND,
-    accountId: null,
-    amount: '',
-    currency: null,
-    linkedAccountId: null,
-    linkedAmount: '',
-    linkedCurrency: null,
-    tagOptions: [],
-    tags: [],
-    date: `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`,
-    note: ''
-  }
-}
+const initialState = () => ({
+  kind: DEFAULT_TRANSACTION_KIND,
+  accountId: null,
+  amount: '',
+  currency: null,
+  linkedAccountId: null,
+  linkedAmount: '',
+  linkedCurrency: null,
+  tagOptions: [],
+  tags: [],
+  date: formatInternal(new Date()),
+  note: '',
+  isLoading: false
+})

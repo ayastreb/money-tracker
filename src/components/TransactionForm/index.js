@@ -11,6 +11,22 @@ import {
 import './style.css'
 
 class TransactionForm extends React.Component {
+  handle = handler => (event, { value }) => handler(value)
+  handleSubmit = event => {
+    event.preventDefault()
+    this.props.createTransaction({
+      accountId: this.props.accountId,
+      amount: this.props.kind === INCOME_TRANSACTION
+        ? this.props.amount
+        : -1 * this.props.amount,
+      currency: this.props.currency,
+      tags: this.props.tags,
+      date: this.props.date,
+      note: this.props.note
+    })
+    // TODO: handle transfer transactions
+  }
+
   render() {
     return (
       <div className="transaction-form">
@@ -22,7 +38,7 @@ class TransactionForm extends React.Component {
           changeTransactionKind={this.props.changeTransactionKind}
         />
         <Segment attached="bottom">
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <Account
               label={this.props.kind === INCOME_TRANSACTION ? 'To' : 'From'}
               accountId={this.props.accountId}
@@ -163,8 +179,6 @@ class TransactionForm extends React.Component {
       </Button>
     )
   }
-
-  handle = handler => (event, { value }) => handler(value)
 }
 
 const dropdownOption = PropTypes.shape({
@@ -198,7 +212,8 @@ TransactionForm.propTypes = {
   addTag: PropTypes.func,
   changeTags: PropTypes.func,
   changeDate: PropTypes.func,
-  changeNote: PropTypes.func
+  changeNote: PropTypes.func,
+  createTransaction: PropTypes.func
 }
 
 export default TransactionForm

@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import NetWorth from '../components/NetWorth'
 import AccountsWidget from '../components/AccountsWidget'
 import TransactionForm from './TransactionForm'
+import RecentTransactions from './RecentTransactions'
 import { getGroupedAccounts, getNetWorth } from '../selectors/accounts'
 import { toggleGroupCollapse } from '../actions/ui/accountsWidget'
 
@@ -29,10 +30,8 @@ class Dashboard extends React.Component {
                 />
               </Grid.Column>
               <Grid.Column computer={10} mobile={16}>
-                <TransactionForm/>
-                <div className="placeholder" style={{ height: '300px', marginTop: '1em' }}>
-                  Transaction List
-                </div>
+                <TransactionForm />
+                <RecentTransactions />
               </Grid.Column>
             </Grid.Row>
           </Grid>

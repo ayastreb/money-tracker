@@ -29,7 +29,7 @@ export async function retrieveRecentTransactions(limit) {
  *
  * @returns {object} newly created transaction
  */
-export async function persistNewTransaction({
+export async function persistTransaction({
   date,
   accountId,
   currency,

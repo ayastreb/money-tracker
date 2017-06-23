@@ -10,6 +10,7 @@ import {
   getLinkedCurrency,
   getTagOptions
 } from '../selectors/ui/transactionForm'
+import {createTransaction} from "../actions/transactions"
 import {
   changeTransactionKind,
   changeAccount,
@@ -53,5 +54,6 @@ export default connect(mapStateToProps, {
   addTag,
   changeTags,
   changeDate,
-  changeNote
+  changeNote,
+  createTransaction
 })(TransactionForm)
