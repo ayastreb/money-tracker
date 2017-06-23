@@ -12,3 +12,4 @@ function instance(name) {
 
 export const settingsDB = () => instance('settings')
 export const accountsDB = () => instance('accounts')
+export const transactionsDB = () => instance('transactions')
