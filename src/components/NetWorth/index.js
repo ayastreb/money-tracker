@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Amount from '../Amount'
-import './style.css'
+import './index.css'
 
 const NetWorth = ({ baseCurrency, netWorth }) => (
   <div className="net-worth">

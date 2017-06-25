@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 import Transaction from './Transaction'
+import './index.css'
 
 class TransactionList extends React.Component {
   render() {
@@ -9,7 +10,11 @@ class TransactionList extends React.Component {
       <Table singleLine>
         <Table.Body>
           {this.props.transactions.map(transaction => (
-            <Transaction key={transaction.id} {...transaction} />
+            <Transaction
+              key={transaction.id}
+              isMobile={this.props.isMobile}
+              {...transaction}
+            />
           ))}
         </Table.Body>
       </Table>
@@ -18,6 +23,7 @@ class TransactionList extends React.Component {
 }
 
 TransactionList.propTypes = {
+  isMobile: PropTypes.bool,
   transactions: PropTypes.arrayOf(PropTypes.object)
 }
 

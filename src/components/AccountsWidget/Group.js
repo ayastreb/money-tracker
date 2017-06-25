@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Account from './Account'
 import Amount from '../Amount'
-import './style.css'
 
 const Group = ({ baseCurrency, group, isCollapsed, toggleGroupCollapse }) => (
   <div className="account-widget-group">

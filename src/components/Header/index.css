@@ -9,3 +9,10 @@ header {
   box-shadow: 0 2px 6px 0 rgba(34, 36, 38, 0.15), 0 2px 18px 0 rgba(34, 36, 38, 0.17);
   z-index: 1;
 }
+
+@media (max-width: 767px) {
+  header {
+    padding: 10px;
+    height: 50px;
+  }
+}

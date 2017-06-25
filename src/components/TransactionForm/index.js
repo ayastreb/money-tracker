@@ -8,7 +8,7 @@ import {
   INCOME_TRANSACTION,
   TRANSFER_TRANSACTION
 } from '../../constants/transaction'
-import './style.css'
+import './index.css'
 
 class TransactionForm extends React.Component {
   handle = handler => (event, { value }) => handler(value)

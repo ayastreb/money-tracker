@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Table, Label } from 'semantic-ui-react'
+import { Icon, Table, Label } from 'semantic-ui-react'
 import Amount from '../Amount'
 import { formatShort } from '../../util/date'
 
@@ -19,6 +19,8 @@ class Transaction extends React.Component {
         </Table.Cell>
         <Table.Cell width={4} textAlign="right">
           <Amount value={this.props.amount} code={this.props.currency} />
+          {' '}
+          <Icon style={{cursor: 'pointer'}} name="delete" color="grey" onClick={() => console.log('a')} />
         </Table.Cell>
       </Table.Row>
     )
@@ -26,6 +28,7 @@ class Transaction extends React.Component {
 }
 
 Transaction.propTypes = {
+  isMobile: PropTypes.bool,
   timestamp: PropTypes.number,
   accountId: PropTypes.string,
   accountName: PropTypes.string,

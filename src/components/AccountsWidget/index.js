@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Group from './Group'
+import './index.css'
 
 class AccountsWidget extends React.Component {
   toggleGroupCollapse = group => () => this.props.toggleGroupCollapse(group)

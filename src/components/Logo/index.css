@@ -5,6 +5,13 @@
   height: 62px;
 }
 
+@media (max-width: 767px) {
+  .logo {
+    padding: 9px;
+    height: 50px;
+  }
+}
+
 .logo img {
   height: 32px;
 }

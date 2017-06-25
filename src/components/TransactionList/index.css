@@ -1,0 +1,19 @@
+@media (max-width: 767px) {
+  .transactions-list__header {
+    padding-left: 1em;
+    box-sizing: border-box;
+  }
+
+  .transactions-list .ui.table {
+    border-radius: 0!important;
+    border-left: none!important;
+    border-right: none!important;
+    border-bottom: none!important;
+  }
+}
+
+.transactions-list__header h3 {
+  font-size: 1.1em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
