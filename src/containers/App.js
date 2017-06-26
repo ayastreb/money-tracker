@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Router, Route } from 'react-router-dom'
-import { Dimmer, Loader, Sidebar } from 'semantic-ui-react'
+import { Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import throttle from 'lodash/throttle'
 import routes from '../router/routes'
@@ -28,15 +28,19 @@ class App extends React.Component {
 
     return (
       <Router history={this.props.history}>
-        <Sidebar.Pushable>
+        <div
+          className={
+            this.props.isSidebarOpen || !this.props.isMobile
+              ? 'openSidebar'
+              : 'closedSidebar'
+          }
+        >
           <SidebarMenu />
-          <Sidebar.Pusher>
-            <Dimmer.Dimmable>
-              <SidebarDimmer />
-              {routes.map(route => <Route key={route.path} {...route} />)}
-            </Dimmer.Dimmable>
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
+          <Dimmer.Dimmable className="container">
+            <SidebarDimmer />
+            {routes.map(route => <Route key={route.path} {...route} />)}
+          </Dimmer.Dimmable>
+        </div>
       </Router>
     )
   }
@@ -46,6 +50,8 @@ App.propTypes = {
   history: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
   isSetupComplete: PropTypes.bool,
+  isMobile: PropTypes.bool,
+  isSidebarOpen: PropTypes.bool,
   loadSettings: PropTypes.func,
   loadAccounts: PropTypes.func,
   windowResize: PropTypes.func
@@ -54,7 +60,9 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   history: ownProps.history,
   isLoaded: state.settings.isLoaded,
-  isSetupComplete: state.settings.isSetupComplete
+  isSetupComplete: state.settings.isSetupComplete,
+  isMobile: state.ui.isMobile,
+  isSidebarOpen: state.ui.isSidebarOpen
 })
 
 export default connect(mapStateToProps, {

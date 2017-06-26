@@ -11,15 +11,21 @@ class RecentTransactions extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: '1em' }}>
-        <h3>Recent Transactions</h3>
-        <TransactionList transactions={this.props.transactions} />
+      <div className="transactions-list">
+        <div className="transactions-list__header">
+          <h3>Recent Transactions</h3>
+        </div>
+        <TransactionList
+          isMobile={this.props.isMobile}
+          transactions={this.props.transactions}
+        />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
+  isMobile: state.ui.isMobile,
   transactions: getRecentTransactions(state)
 })
 
