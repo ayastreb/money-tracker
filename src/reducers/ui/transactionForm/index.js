@@ -11,11 +11,7 @@ import {
   CHANGE_DATE,
   CHANGE_NOTE
 } from '../../../actions/ui/transactionForm'
-import {
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_FAILURE
-} from '../../../actions/transactions'
+import { CREATE_TRANSACTION } from '../../../actions/transactions'
 import { DEFAULT_TRANSACTION_KIND } from '../../../constants/transaction'
 import { formatInternal } from '../../../util/date'
 
@@ -43,12 +39,8 @@ export default function(state = initialState(), action) {
       return { ...state, date: action.date }
     case CHANGE_NOTE:
       return { ...state, note: action.note }
-    case CREATE_TRANSACTION_REQUEST:
-      return { ...state, isLoading: true }
-    case CREATE_TRANSACTION_SUCCESS:
+    case CREATE_TRANSACTION:
       return initialState()
-    case CREATE_TRANSACTION_FAILURE:
-      return { ...state, isLoading: false }
     default:
       return state
   }
@@ -65,6 +57,5 @@ const initialState = () => ({
   tagOptions: [],
   tags: [],
   date: formatInternal(new Date()),
-  note: '',
-  isLoading: false
+  note: ''
 })

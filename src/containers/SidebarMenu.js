@@ -36,4 +36,8 @@ SidebarMenu.propTypes = {
   toggleSidebar: PropTypes.func
 }
 
-export default connect(undefined, { toggleSidebar })(SidebarMenu)
+const mapStateToProps = state => ({
+  isSidebarOpen: state.ui.isSidebarOpen
+})
+
+export default connect(mapStateToProps, { toggleSidebar })(SidebarMenu)

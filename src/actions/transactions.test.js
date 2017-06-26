@@ -1,8 +1,7 @@
 import {
   LOAD_RECENT_TRANSACTIONS,
   LOAD_TRANSACTIONS_FAILURE,
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
+  CREATE_TRANSACTION,
   loadRecentTransactions,
   createTransaction
 } from './transactions'
@@ -43,20 +42,18 @@ describe('loading recent transactions', () => {
 })
 
 describe('creating transaction', () => {
-  it('creates CREATE_TRANSACTION_SUCCESS action when done', () => {
+  it('creates CREATE_TRANSACTION action ', () => {
+    Date.now = jest.fn(() => '67890')
     const expectedTransaction = {
-      id: '12345/A12345/USD',
-      timestamp: 12345,
+      id: 'A12345/67890',
       accountId: 'A12345',
-      amount: 10000,
+      amount: 10000, // converted to cents
       currency: 'USD',
       tags: ['foo'],
       date: '2017-06-22',
       note: 'text'
     }
-    transactions.persistTransaction = jest.fn(
-      resolvePromise(expectedTransaction)
-    )
+    transactions.persistTransaction = jest.fn(resolvePromise(true))
     accounts.persistBalanceChange = jest.fn(resolvePromise(true))
 
     return store
@@ -72,16 +69,15 @@ describe('creating transaction', () => {
       )
       .then(() => {
         expect(store.getActions()).toEqual([
-          { type: CREATE_TRANSACTION_REQUEST },
+          {
+            type: CREATE_TRANSACTION,
+            transaction: expectedTransaction
+          },
           {
             type: CHANGE_ACCOUNT_BALANCE,
             id: 'A12345',
             currency: 'USD',
             amount: 10000
-          },
-          {
-            type: CREATE_TRANSACTION_SUCCESS,
-            transaction: expectedTransaction
           }
         ])
       })

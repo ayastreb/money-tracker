@@ -12,11 +12,7 @@ import {
   CHANGE_LINKED_AMOUNT,
   CHANGE_LINKED_CURRENCY
 } from '../../../actions/ui/transactionForm'
-import {
-  CREATE_TRANSACTION_REQUEST,
-  CREATE_TRANSACTION_SUCCESS,
-  CREATE_TRANSACTION_FAILURE
-} from '../../../actions/transactions'
+import { CREATE_TRANSACTION } from '../../../actions/transactions'
 import {
   DEFAULT_TRANSACTION_KIND,
   EXPENSE_TRANSACTION,
@@ -43,8 +39,7 @@ it('returns default state for month before October', () => {
     tagOptions: [],
     tags: [],
     date: '2017-06-21',
-    note: '',
-    isLoading: false
+    note: ''
   })
 })
 
@@ -68,8 +63,7 @@ it('returns default state for month after October', () => {
     tagOptions: [],
     tags: [],
     date: '2017-10-01',
-    note: '',
-    isLoading: false
+    note: ''
   })
 })
 
@@ -159,18 +153,6 @@ it('changes note', () => {
   })
 })
 
-it('switches on loading when create action started', () => {
-  expect(
-    reducer({ isLoading: false }, { type: CREATE_TRANSACTION_REQUEST })
-  ).toEqual({ isLoading: true })
-})
-
-it('switches off loading when create action failed', () => {
-  expect(
-    reducer({ isLoading: true }, { type: CREATE_TRANSACTION_FAILURE })
-  ).toEqual({ isLoading: false })
-})
-
 it('returns default state when create action succeed', () => {
   const realTime = new Date().getTime()
   Date = jest.fn(() => ({
@@ -180,7 +162,7 @@ it('returns default state when create action succeed', () => {
     getTime: () => realTime
   }))
 
-  expect(reducer({}, { type: CREATE_TRANSACTION_SUCCESS })).toEqual({
+  expect(reducer({}, { type: CREATE_TRANSACTION })).toEqual({
     kind: DEFAULT_TRANSACTION_KIND,
     accountId: null,
     amount: '',
@@ -191,7 +173,6 @@ it('returns default state when create action succeed', () => {
     tagOptions: [],
     tags: [],
     date: '2017-06-21',
-    note: '',
-    isLoading: false
+    note: ''
   })
 })

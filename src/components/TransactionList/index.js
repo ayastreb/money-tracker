@@ -9,17 +9,23 @@ class TransactionList extends React.Component {
     return (
       <Table singleLine>
         <Table.Body>
-          {this.props.transactions.map(transaction => (
-            <Transaction
-              key={transaction.id}
-              isMobile={this.props.isMobile}
-              {...transaction}
-            />
-          ))}
+          {this.props.transactions.length > 0
+            ? this.props.transactions.map(this.renderTransaction)
+            : <div className="transactions-list__empty">
+                You don't have any transactions yet
+              </div>}
         </Table.Body>
       </Table>
     )
   }
+
+  renderTransaction = transaction => (
+    <Transaction
+      key={transaction.id}
+      isMobile={this.props.isMobile}
+      {...transaction}
+    />
+  )
 }
 
 TransactionList.propTypes = {

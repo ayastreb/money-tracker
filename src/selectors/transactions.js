@@ -10,10 +10,8 @@ export const getRecentTransactions = createSelector(
   recentTransactionsIdsSelector,
   accountsIdsSelector,
   (byId, allIds, accounts) =>
-    allIds
-      .slice(0, RECENT_TRANSACTIONS_LIMIT)
-      .map(id => ({
-        ...byId[id],
-        accountName: accounts[byId[id].accountId].name
-      }))
+    allIds.slice(0, RECENT_TRANSACTIONS_LIMIT).map(id => ({
+      ...byId[id],
+      accountName: accounts[byId[id].accountId].name
+    }))
 )

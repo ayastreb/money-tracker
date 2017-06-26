@@ -9,7 +9,7 @@ class Transaction extends React.Component {
     return (
       <Table.Row>
         <Table.Cell width={2}>
-          {formatShort(new Date(this.props.timestamp))}
+          {formatShort(new Date(this.props.date))}
         </Table.Cell>
         <Table.Cell>
           {this.props.accountName}
@@ -20,7 +20,7 @@ class Transaction extends React.Component {
         <Table.Cell width={4} textAlign="right">
           <Amount value={this.props.amount} code={this.props.currency} />
           {' '}
-          <Icon style={{cursor: 'pointer'}} name="delete" color="grey" onClick={() => console.log('a')} />
+          <Icon style={{cursor: 'pointer'}} name="trash" color="grey" onClick={() => console.log('a')} />
         </Table.Cell>
       </Table.Row>
     )
@@ -29,11 +29,12 @@ class Transaction extends React.Component {
 
 Transaction.propTypes = {
   isMobile: PropTypes.bool,
-  timestamp: PropTypes.number,
+  id: PropTypes.string,
   accountId: PropTypes.string,
   accountName: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   note: PropTypes.string,
+  date: PropTypes.string,
   amount: PropTypes.number,
   currency: PropTypes.string
 }

@@ -17,3 +17,8 @@
   line-height: 1.5;
   text-transform: uppercase;
 }
+
+.transactions-list__empty {
+  padding: 1em;
+  text-align: center;
+}

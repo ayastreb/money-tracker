@@ -25,9 +25,14 @@ export function loadRecentTransactions(limit = RECENT_TRANSACTIONS_LIMIT) {
   }
 }
 
-export const CREATE_TRANSACTION_REQUEST = 'CREATE_TRANSACTION_REQUEST'
-export const CREATE_TRANSACTION_SUCCESS = 'CREATE_TRANSACTION_SUCCESS'
+export const CREATE_TRANSACTION = 'CREATE_TRANSACTION'
 export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE'
+
+/**
+ * Build document ID based on transaction created at timestamp and account ID
+ * for easier sorting and filtering.
+ * @see https://pouchdb.com/2014/05/01/secondary-indexes-have-landed-in-pouchdb.html
+ */
 export function createTransaction({
   accountId,
   amount,
@@ -37,20 +42,19 @@ export function createTransaction({
   note
 }) {
   return async dispatch => {
-    dispatch({ type: CREATE_TRANSACTION_REQUEST })
+    const transaction = {
+      id: `${accountId}/${Date.now()}`,
+      accountId,
+      amount: amount * Math.pow(10, CURRENCY[currency].exp),
+      currency,
+      tags,
+      date,
+      note
+    }
+    dispatch({ type: CREATE_TRANSACTION, transaction })
+    dispatch(changeAccountBalance(accountId, currency, transaction.amount))
     try {
-      const amountInCents = amount * Math.pow(10, CURRENCY[currency].exp)
-      const request = {
-        accountId,
-        amount: amountInCents,
-        currency,
-        tags,
-        date,
-        note
-      }
-      const transaction = await persistTransaction(request)
-      dispatch(changeAccountBalance(accountId, currency, amountInCents))
-      dispatch({ type: CREATE_TRANSACTION_SUCCESS, transaction })
+      await persistTransaction(transaction)
     } catch (error) {
       dispatch({ type: CREATE_TRANSACTION_FAILURE, error })
     }
