@@ -11,6 +11,10 @@ import {
 import './index.css'
 
 class TransactionForm extends React.Component {
+  componentDidMount() {
+    this.props.loadMostUsedTags()
+  }
+
   handle = handler => (event, { value }) => handler(value)
   handleSubmit = event => {
     event.preventDefault()
@@ -213,6 +217,7 @@ TransactionForm.propTypes = {
   changeTags: PropTypes.func,
   changeDate: PropTypes.func,
   changeNote: PropTypes.func,
+  loadMostUsedTags: PropTypes.func,
   createTransaction: PropTypes.func
 }
 

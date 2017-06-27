@@ -4,7 +4,6 @@ import {
   CHANGE_ACCOUNT,
   CHANGE_AMOUNT,
   CHANGE_TRANSACTION_CURRENCY,
-  ADD_TAG,
   CHANGE_TAGS,
   CHANGE_DATE,
   CHANGE_NOTE,
@@ -36,7 +35,6 @@ it('returns default state for month before October', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tagOptions: [],
     tags: [],
     date: '2017-06-21',
     note: ''
@@ -60,7 +58,6 @@ it('returns default state for month after October', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tagOptions: [],
     tags: [],
     date: '2017-10-01',
     note: ''
@@ -133,14 +130,6 @@ it('changes date', () => {
   ).toEqual({ date: '2017-07-01' })
 })
 
-it('adds new tag', () => {
-  expect(
-    reducer({ tagOptions: ['food'] }, { type: ADD_TAG, tag: 'beer' })
-  ).toEqual({
-    tagOptions: ['food', 'beer']
-  })
-})
-
 it('changes tags', () => {
   expect(
     reducer({ tags: ['food'] }, { type: CHANGE_TAGS, tags: ['food', 'beer'] })
@@ -170,7 +159,6 @@ it('returns default state when create action succeed', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tagOptions: [],
     tags: [],
     date: '2017-06-21',
     note: ''

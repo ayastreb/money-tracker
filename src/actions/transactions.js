@@ -3,6 +3,7 @@ import {
   retrieveRecentTransactions
 } from '../util/storage/transactions'
 import { changeAccountBalance } from './accounts'
+import { useTag } from './tags'
 import { CURRENCY } from '../constants/currency'
 import { RECENT_TRANSACTIONS_LIMIT } from '../constants/transaction'
 
@@ -43,7 +44,7 @@ export function createTransaction({
 }) {
   return async dispatch => {
     const transaction = {
-      id: `${accountId}/${Date.now()}`,
+      id: `T${Date.now()}`,
       accountId,
       amount: amount * Math.pow(10, CURRENCY[currency].exp),
       currency,
@@ -55,6 +56,7 @@ export function createTransaction({
     dispatch(changeAccountBalance(accountId, currency, transaction.amount))
     try {
       await persistTransaction(transaction)
+      transaction.tags.forEach(tag => dispatch(useTag(tag)))
     } catch (error) {
       dispatch({ type: CREATE_TRANSACTION_FAILURE, error })
     }

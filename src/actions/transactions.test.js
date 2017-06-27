@@ -45,7 +45,7 @@ describe('creating transaction', () => {
   it('creates CREATE_TRANSACTION action ', () => {
     Date.now = jest.fn(() => '67890')
     const expectedTransaction = {
-      id: 'A12345/67890',
+      id: 'T67890',
       accountId: 'A12345',
       amount: 10000, // converted to cents
       currency: 'USD',

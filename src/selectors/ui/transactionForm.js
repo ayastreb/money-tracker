@@ -4,6 +4,7 @@ const formSelector = state => state.ui.transactionForm
 const baseCurrencySelector = state => state.settings.currency.base
 const defaultAccountSelector = state => state.accounts.allIds[0]
 const accountsSelector = state => state.accounts.byId
+const tagsSelector = state => state.tags.mostUsed
 const arrayToOptions = code => ({
   key: code,
   value: code,
@@ -63,6 +64,6 @@ export const getLinkedCurrency = createSelector(
   }
 )
 
-export const getTagOptions = createSelector(formSelector, form =>
-  form.tagOptions.map(arrayToOptions)
+export const getTagOptions = createSelector(tagsSelector, tags =>
+  tags.map(arrayToOptions)
 )

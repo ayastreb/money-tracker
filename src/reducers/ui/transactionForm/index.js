@@ -6,17 +6,23 @@ import {
   CHANGE_LINKED_ACCOUNT,
   CHANGE_LINKED_AMOUNT,
   CHANGE_LINKED_CURRENCY,
-  ADD_TAG,
   CHANGE_TAGS,
   CHANGE_DATE,
   CHANGE_NOTE
 } from '../../../actions/ui/transactionForm'
+import { LOAD_MOST_USED_TAGS, USE_TAG } from '../../../actions/tags'
 import { CREATE_TRANSACTION } from '../../../actions/transactions'
 import { DEFAULT_TRANSACTION_KIND } from '../../../constants/transaction'
 import { formatInternal } from '../../../util/date'
 
 export default function(state = initialState(), action) {
   switch (action.type) {
+    case LOAD_MOST_USED_TAGS:
+      return { ...state, tagOptions: action.tags }
+    case USE_TAG:
+      return state.tagOptions.includes(action.tag)
+        ? state
+        : { ...state, tagOptions: state.tagOptions.concat(action.tag) }
     case CHANGE_TRANSACTION_KIND:
       return { ...state, kind: action.kind }
     case CHANGE_ACCOUNT:
@@ -31,8 +37,6 @@ export default function(state = initialState(), action) {
       return { ...state, linkedAmount: action.amount }
     case CHANGE_LINKED_CURRENCY:
       return { ...state, linkedCurrency: action.currency }
-    case ADD_TAG:
-      return { ...state, tagOptions: state.tagOptions.concat(action.tag) }
     case CHANGE_TAGS:
       return { ...state, tags: action.tags }
     case CHANGE_DATE:
@@ -54,7 +58,6 @@ const initialState = () => ({
   linkedAccountId: null,
   linkedAmount: '',
   linkedCurrency: null,
-  tagOptions: [],
   tags: [],
   date: formatInternal(new Date()),
   note: ''
