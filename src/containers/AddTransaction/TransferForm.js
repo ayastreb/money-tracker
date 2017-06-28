@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import TransferTransaction
-  from '../../components/TransactionForm/TransferTransaction'
+import TransactionForm from '../../components/TransactionForm'
 import { getAccountsAsOptions } from '../../selectors/accounts'
 import {
   getAccountId,
@@ -23,6 +22,7 @@ import {
 } from '../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
+  label: 'From',
   buttonLabel: 'Add Transfer',
   accountId: getAccountId(state),
   accountOptions: getAccountsAsOptions(state),
@@ -47,4 +47,4 @@ export default connect(mapStateToProps, {
   changeDate,
   changeNote,
   saveTransaction: saveExpenseTransaction
-})(TransferTransaction)
+})(TransactionForm)

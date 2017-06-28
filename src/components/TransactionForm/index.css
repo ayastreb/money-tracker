@@ -1,22 +1,3 @@
-@media (max-width: 767px) {
-  .ui[class*="top attached"].menu {
-    border-radius: 0!important;
-    border-left: none!important;
-    border-right: none!important;
-  }
-
-  .ui.segment[class*="bottom attached"] {
-    border-radius: 0!important;
-    border-left: none!important;
-    border-right: none!important;
-    padding-top: 0!important;
-  }
-
-  .mobile-with-margin {
-    margin-top: 1em!important;
-  }
-}
-
 .transaction-form .ui.attached.segment {
   margin: 0!important;
 }
@@ -59,6 +40,10 @@
 }
 
 @media (min-width: 768px) {
+  .input-right .input {
+    margin-top: 1.65em;
+  }
+
   .transaction-form-grid__column-wide {
     width: 68.75%;
     padding-right: .3em;
@@ -100,5 +85,22 @@
   .transaction-form-grid__column-narrow .transaction-form-grid__field {
     margin-top: 1em;
     flex-grow: 1;
+  }
+
+  .ui[class*="top attached"].menu {
+    border-radius: 0!important;
+    border-left: none!important;
+    border-right: none!important;
+  }
+
+  .ui.segment[class*="bottom attached"] {
+    border-radius: 0!important;
+    border-left: none!important;
+    border-right: none!important;
+    padding-top: 0!important;
+  }
+
+  .mobile-with-margin {
+    margin-top: 1em!important;
   }
 }

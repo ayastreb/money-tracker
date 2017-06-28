@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import SimpleTransaction
-  from '../../components/TransactionForm/SimpleTransaction'
+import TransactionForm from '../../components/TransactionForm'
 import { getAccountsAsOptions } from '../../selectors/accounts'
 import {
   getAccountId,
@@ -45,4 +44,4 @@ export default connect(mapStateToProps, {
   changeTags: changeExpenseTags,
   loadTagsOptions: loadExpenseTags,
   saveTransaction: saveExpenseTransaction
-})(SimpleTransaction)
+})(TransactionForm)

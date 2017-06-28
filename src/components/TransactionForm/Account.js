@@ -17,7 +17,6 @@ const Account = props => (
       />
     </Form.Field>
     <Form.Field width={5} className="mobile-with-margin input-right">
-      <label>Amount</label>
       <Input
         required
         type="number"
