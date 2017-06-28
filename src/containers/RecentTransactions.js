@@ -11,8 +11,8 @@ class RecentTransactions extends React.Component {
 
   render() {
     return (
-      <div className="transactions-list">
-        <div className="transactions-list__header">
+      <div className="section">
+        <div className="section__header small">
           <h3>Recent Transactions</h3>
         </div>
         <TransactionList

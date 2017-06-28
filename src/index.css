@@ -172,3 +172,28 @@ h1, h2, h3, h4, h5 {
     padding: 0;
   }
 }
+
+.section {
+  margin-bottom: 1em;
+}
+
+.section__header h3 {
+  font-size: 1.25em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.section__header.small h3 {
+  font-size: 1.1em;
+}
+
+@media (max-width: 767px) {
+  .section__header {
+    padding-left: 1em;
+    box-sizing: border-box;
+  }
+
+  .section__header h3 {
+    font-size: 1.1em;
+  }
+}

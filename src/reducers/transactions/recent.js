@@ -1,5 +1,5 @@
 import {
-  CREATE_TRANSACTION,
+  SAVE_TRANSACTION,
   LOAD_RECENT_TRANSACTIONS
 } from '../../actions/transactions'
 
@@ -13,7 +13,7 @@ export default function(state = { byId: {}, allIds: [] }, action) {
         }, {}),
         allIds: action.transactions.map(transaction => transaction.id)
       }
-    case CREATE_TRANSACTION:
+    case SAVE_TRANSACTION:
       return {
         byId: { ...state.byId, [action.transaction.id]: action.transaction },
         allIds: [action.transaction.id, ...state.allIds]

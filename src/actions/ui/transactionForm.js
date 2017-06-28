@@ -62,18 +62,34 @@ export function changeDate(date) {
   }
 }
 
-export const ADD_TAG = 'ADD_TAG'
-export function addTag(tag) {
+export const ADD_EXPENSE_TAG = 'ADD_EXPENSE_TAG'
+export function addExpenseTag(tag) {
   return {
-    type: ADD_TAG,
+    type: ADD_EXPENSE_TAG,
     tag
   }
 }
 
-export const CHANGE_TAGS = 'CHANGE_TAGS'
-export function changeTags(tags) {
+export const ADD_INCOME_TAG = 'ADD_INCOME_TAG'
+export function addIncomeTag(tag) {
   return {
-    type: CHANGE_TAGS,
+    type: ADD_INCOME_TAG,
+    tag
+  }
+}
+
+export const CHANGE_EXPENSE_TAGS = 'CHANGE_EXPENSE_TAGS'
+export function changeExpenseTags(tags) {
+  return {
+    type: CHANGE_EXPENSE_TAGS,
+    tags
+  }
+}
+
+export const CHANGE_INCOME_TAGS = 'CHANGE_INCOME_TAGS'
+export function changeIncomeTags(tags) {
+  return {
+    type: CHANGE_INCOME_TAGS,
     tags
   }
 }

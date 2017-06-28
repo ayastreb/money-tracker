@@ -1,13 +1,4 @@
-.transaction-form {
-  margin-bottom: 1em;
-}
-
 @media (max-width: 767px) {
-  .transaction-form__header {
-    padding-left: 1em;
-    box-sizing: border-box;
-  }
-
   .ui[class*="top attached"].menu {
     border-radius: 0!important;
     border-left: none!important;
@@ -27,19 +18,7 @@
 }
 
 .transaction-form .ui.attached.segment {
-  margin: 0!important;;
-}
-
-.transaction-form__header h3 {
-  font-size: 1.3em;
-  line-height: 1.5;
-  text-transform: uppercase;
-}
-
-@media (max-width: 767px) {
-  .transaction-form__header h3 {
-    font-size: 1.1em;
-  }
+  margin: 0!important;
 }
 
 .input-right input {
@@ -52,6 +31,74 @@
   font-family: "Roboto Mono", monospace!important;
 }
 
-.transaction-form button {
-  text-transform: capitalize!important;
+.transaction-form-grid {
+  display: flex;
+  flex-direction: row;
+}
+
+.transaction-form-grid .transaction-form-grid__field {
+  width: 100%;
+}
+
+.transaction-form-grid .transaction-form-grid__field:last-child {
+  margin-top: 1em;
+}
+
+.transaction-form-grid__column-narrow .transaction-form-grid__field {
+  width: 100%;
+  margin-top: 1.65em;
+}
+
+.transaction-form-grid__column-narrow .transaction-form-grid__field:last-child {
+  margin-top: 1em;
+  padding-top: .1em;
+}
+
+.transaction-form-grid.single-line {
+  margin-top: 0;
+}
+
+@media (min-width: 768px) {
+  .transaction-form-grid__column-wide {
+    width: 68.75%;
+    padding-right: .3em;
+  }
+
+  .transaction-form-grid__column-narrow {
+    width: 31.25%;
+    padding-left: .7em;
+  }
+
+  .transaction-form-grid.single-line .transaction-form-grid__field {
+    margin-top: 0;
+  }
+
+  .transaction-form-grid.single-line .transaction-form-grid__column-narrow .transaction-form-grid__field:last-child {
+    margin-top: 1em;
+  }
+}
+
+@media (max-width: 767px) {
+  .transaction-form-grid {
+    margin-top: 1em;
+    flex-direction: column;
+  }
+
+  .transaction-form-grid__column-wide {
+    width: 100%;
+  }
+
+  .transaction-form-grid__column-narrow {
+    width: 100%;
+    display: flex;
+  }
+
+  .transaction-form-grid__column-narrow .transaction-form-grid__field:first-child {
+    padding-right: 1.5em;
+  }
+
+  .transaction-form-grid__column-narrow .transaction-form-grid__field {
+    margin-top: 1em;
+    flex-grow: 1;
+  }
 }

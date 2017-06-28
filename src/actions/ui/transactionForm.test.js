@@ -15,10 +15,14 @@ import {
   changeLinkedCurrency,
   CHANGE_DATE,
   changeDate,
-  ADD_TAG,
-  addTag,
-  CHANGE_TAGS,
-  changeTags,
+  ADD_EXPENSE_TAG,
+  addExpenseTag,
+  ADD_INCOME_TAG,
+  addIncomeTag,
+  CHANGE_EXPENSE_TAGS,
+  changeExpenseTags,
+  CHANGE_INCOME_TAGS,
+  changeIncomeTags,
   CHANGE_NOTE,
   changeNote
 } from './transactionForm'
@@ -79,20 +83,33 @@ it('creates CHANGE_DATE action', () => {
   })
 })
 
-it('creates ADD_TAG action', () => {
-  expect(addTag('food')).toEqual({
-    type: ADD_TAG,
+it('creates ADD_EXPENSE_TAG action', () => {
+  expect(addExpenseTag('food')).toEqual({
+    type: ADD_EXPENSE_TAG,
     tag: 'food'
   })
 })
 
-it('creates CHANGE_TAGS action', () => {
-  expect(changeTags(['food'])).toEqual({
-    type: CHANGE_TAGS,
+it('creates ADD_INCOME_TAG action', () => {
+  expect(addIncomeTag('salary')).toEqual({
+    type: ADD_INCOME_TAG,
+    tag: 'salary'
+  })
+})
+
+it('creates CHANGE_EXPENSE_TAGS action', () => {
+  expect(changeExpenseTags(['food'])).toEqual({
+    type: CHANGE_EXPENSE_TAGS,
     tags: ['food']
   })
 })
 
+it('creates CHANGE_INCOME_TAGS action', () => {
+  expect(changeIncomeTags(['salary'])).toEqual({
+    type: CHANGE_INCOME_TAGS,
+    tags: ['salary']
+  })
+})
 it('creates CHANGE_NOTE action', () => {
   expect(changeNote('foo')).toEqual({
     type: CHANGE_NOTE,

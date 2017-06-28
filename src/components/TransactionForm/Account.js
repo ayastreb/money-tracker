@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown, Form, Input } from 'semantic-ui-react'
+import { DropdownOption } from '../types'
 
 const Account = props => (
   <Form.Group>
@@ -10,7 +11,7 @@ const Account = props => (
       </label>
       <Dropdown
         selection
-        options={props.accounts}
+        options={props.accountOptions}
         value={props.accountId}
         onChange={props.onAccountChange}
       />
@@ -24,10 +25,10 @@ const Account = props => (
         onChange={props.onAmountChange}
         labelPosition="right"
         label={
-          props.currencies.length === 1
-            ? props.currencies[0].text
+          props.currencyOptions.length === 1
+            ? props.currencyOptions[0].text
             : <Dropdown
-                options={props.currencies}
+                options={props.currencyOptions}
                 value={props.currency}
                 onChange={props.onCurrencyChange}
               />
@@ -37,18 +38,13 @@ const Account = props => (
   </Form.Group>
 )
 
-const dropdownOption = PropTypes.shape({
-  key: PropTypes.string,
-  value: PropTypes.string,
-  text: PropTypes.string
-})
 Account.propTypes = {
   label: PropTypes.string,
   accountId: PropTypes.string,
-  accounts: PropTypes.arrayOf(dropdownOption),
+  accountOptions: PropTypes.arrayOf(DropdownOption),
   amount: PropTypes.string,
   currency: PropTypes.string,
-  currencies: PropTypes.arrayOf(dropdownOption),
+  currencyOptions: PropTypes.arrayOf(DropdownOption),
   onAccountChange: PropTypes.func,
   onAmountChange: PropTypes.func,
   onCurrencyChange: PropTypes.func

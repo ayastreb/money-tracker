@@ -3,7 +3,7 @@ import {
   retrieveRecentTransactions
 } from '../util/storage/transactions'
 import { changeAccountBalance } from './accounts'
-import { useTag } from './tags'
+import { useExpenseTag, useIncomeTag } from './tags'
 import { CURRENCY } from '../constants/currency'
 import { RECENT_TRANSACTIONS_LIMIT } from '../constants/transaction'
 
@@ -26,15 +26,38 @@ export function loadRecentTransactions(limit = RECENT_TRANSACTIONS_LIMIT) {
   }
 }
 
-export const CREATE_TRANSACTION = 'CREATE_TRANSACTION'
-export const CREATE_TRANSACTION_FAILURE = 'CREATE_TRANSACTION_FAILURE'
+export const SAVE_TRANSACTION = 'SAVE_TRANSACTION'
+export const SAVE_TRANSACTION_FAILURE = 'SAVE_TRANSACTION_FAILURE'
+export function saveExpenseTransaction({
+  accountId,
+  amount,
+  currency,
+  tags,
+  date,
+  note
+}) {
+  return async dispatch => {
+    const transaction = {
+      id: `T${Date.now()}`,
+      accountId,
+      amount: amount * Math.pow(10, CURRENCY[currency].exp) * -1,
+      currency,
+      tags,
+      date,
+      note
+    }
+    dispatch({ type: SAVE_TRANSACTION, transaction })
+    dispatch(changeAccountBalance(accountId, currency, transaction.amount))
+    try {
+      await persistTransaction(transaction)
+      transaction.tags.forEach(tag => dispatch(useExpenseTag(tag)))
+    } catch (error) {
+      dispatch({ type: SAVE_TRANSACTION_FAILURE, error })
+    }
+  }
+}
 
-/**
- * Build document ID based on transaction created at timestamp and account ID
- * for easier sorting and filtering.
- * @see https://pouchdb.com/2014/05/01/secondary-indexes-have-landed-in-pouchdb.html
- */
-export function createTransaction({
+export function saveIncomeTransaction({
   accountId,
   amount,
   currency,
@@ -52,13 +75,13 @@ export function createTransaction({
       date,
       note
     }
-    dispatch({ type: CREATE_TRANSACTION, transaction })
+    dispatch({ type: SAVE_TRANSACTION, transaction })
     dispatch(changeAccountBalance(accountId, currency, transaction.amount))
     try {
       await persistTransaction(transaction)
-      transaction.tags.forEach(tag => dispatch(useTag(tag)))
+      transaction.tags.forEach(tag => dispatch(useIncomeTag(tag)))
     } catch (error) {
-      dispatch({ type: CREATE_TRANSACTION_FAILURE, error })
+      dispatch({ type: SAVE_TRANSACTION_FAILURE, error })
     }
   }
 }

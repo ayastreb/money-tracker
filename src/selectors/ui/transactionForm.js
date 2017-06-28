@@ -1,10 +1,14 @@
 import { createSelector } from 'reselect'
+import {
+  EXPENSE_TRANSACTION,
+  INCOME_TRANSACTION
+} from '../../constants/transaction'
 
 const formSelector = state => state.ui.transactionForm
 const baseCurrencySelector = state => state.settings.currency.base
 const defaultAccountSelector = state => state.accounts.allIds[0]
 const accountsSelector = state => state.accounts.byId
-const tagsSelector = state => state.tags.mostUsed
+const tagsSelector = state => state.tags
 const arrayToOptions = code => ({
   key: code,
   value: code,
@@ -26,13 +30,13 @@ export const getLinkedAccountId = createSelector(
 const currenciesArray = (accountId, accounts) =>
   (accountId && accounts[accountId].currencies.map(arrayToOptions)) || []
 
-export const getCurrencies = createSelector(
+export const getCurrencyOptions = createSelector(
   getAccountId,
   accountsSelector,
   currenciesArray
 )
 
-export const getLinkedCurrencies = createSelector(
+export const getLinkedCurrencyOptions = createSelector(
   getLinkedAccountId,
   accountsSelector,
   currenciesArray
@@ -40,7 +44,7 @@ export const getLinkedCurrencies = createSelector(
 
 export const getCurrency = createSelector(
   formSelector,
-  getCurrencies,
+  getCurrencyOptions,
   baseCurrencySelector,
   (form, currencies, base) => {
     const defaultCurrency = currencies.length > 0
@@ -53,7 +57,7 @@ export const getCurrency = createSelector(
 
 export const getLinkedCurrency = createSelector(
   formSelector,
-  getLinkedCurrencies,
+  getLinkedCurrencyOptions,
   baseCurrencySelector,
   (form, currencies, base) => {
     const defaultCurrency = currencies.length > 0
@@ -64,6 +68,10 @@ export const getLinkedCurrency = createSelector(
   }
 )
 
-export const getTagOptions = createSelector(tagsSelector, tags =>
-  tags.map(arrayToOptions)
+export const getExpenseTagOptions = createSelector(tagsSelector, tags =>
+  tags[EXPENSE_TRANSACTION].map(arrayToOptions)
+)
+
+export const getIncomeTagOptions = createSelector(tagsSelector, tags =>
+  tags[INCOME_TRANSACTION].map(arrayToOptions)
 )

@@ -6,23 +6,21 @@ import {
   CHANGE_LINKED_ACCOUNT,
   CHANGE_LINKED_AMOUNT,
   CHANGE_LINKED_CURRENCY,
-  CHANGE_TAGS,
+  CHANGE_EXPENSE_TAGS,
+  CHANGE_INCOME_TAGS,
   CHANGE_DATE,
   CHANGE_NOTE
 } from '../../../actions/ui/transactionForm'
-import { LOAD_MOST_USED_TAGS, USE_TAG } from '../../../actions/tags'
-import { CREATE_TRANSACTION } from '../../../actions/transactions'
-import { DEFAULT_TRANSACTION_KIND } from '../../../constants/transaction'
+import { SAVE_TRANSACTION } from '../../../actions/transactions'
+import {
+  EXPENSE_TRANSACTION,
+  INCOME_TRANSACTION,
+  DEFAULT_TRANSACTION_KIND
+} from '../../../constants/transaction'
 import { formatInternal } from '../../../util/date'
 
 export default function(state = initialState(), action) {
   switch (action.type) {
-    case LOAD_MOST_USED_TAGS:
-      return { ...state, tagOptions: action.tags }
-    case USE_TAG:
-      return state.tagOptions.includes(action.tag)
-        ? state
-        : { ...state, tagOptions: state.tagOptions.concat(action.tag) }
     case CHANGE_TRANSACTION_KIND:
       return { ...state, kind: action.kind }
     case CHANGE_ACCOUNT:
@@ -37,13 +35,21 @@ export default function(state = initialState(), action) {
       return { ...state, linkedAmount: action.amount }
     case CHANGE_LINKED_CURRENCY:
       return { ...state, linkedCurrency: action.currency }
-    case CHANGE_TAGS:
-      return { ...state, tags: action.tags }
+    case CHANGE_EXPENSE_TAGS:
+      return {
+        ...state,
+        tags: { ...state.tags, [EXPENSE_TRANSACTION]: action.tags }
+      }
+    case CHANGE_INCOME_TAGS:
+      return {
+        ...state,
+        tags: { ...state.tags, [INCOME_TRANSACTION]: action.tags }
+      }
     case CHANGE_DATE:
       return { ...state, date: action.date }
     case CHANGE_NOTE:
       return { ...state, note: action.note }
-    case CREATE_TRANSACTION:
+    case SAVE_TRANSACTION:
       return initialState()
     default:
       return state
@@ -58,7 +64,10 @@ const initialState = () => ({
   linkedAccountId: null,
   linkedAmount: '',
   linkedCurrency: null,
-  tags: [],
+  tags: {
+    [EXPENSE_TRANSACTION]: [],
+    [INCOME_TRANSACTION]: []
+  },
   date: formatInternal(new Date()),
   note: ''
 })

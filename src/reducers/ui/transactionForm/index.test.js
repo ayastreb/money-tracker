@@ -4,14 +4,15 @@ import {
   CHANGE_ACCOUNT,
   CHANGE_AMOUNT,
   CHANGE_TRANSACTION_CURRENCY,
-  CHANGE_TAGS,
+  CHANGE_EXPENSE_TAGS,
+  CHANGE_INCOME_TAGS,
   CHANGE_DATE,
   CHANGE_NOTE,
   CHANGE_LINKED_ACCOUNT,
   CHANGE_LINKED_AMOUNT,
   CHANGE_LINKED_CURRENCY
 } from '../../../actions/ui/transactionForm'
-import { CREATE_TRANSACTION } from '../../../actions/transactions'
+import { SAVE_TRANSACTION } from '../../../actions/transactions'
 import {
   DEFAULT_TRANSACTION_KIND,
   EXPENSE_TRANSACTION,
@@ -35,7 +36,10 @@ it('returns default state for month before October', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tags: [],
+    tags: {
+      [EXPENSE_TRANSACTION]: [],
+      [INCOME_TRANSACTION]: []
+    },
     date: '2017-06-21',
     note: ''
   })
@@ -58,7 +62,10 @@ it('returns default state for month after October', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tags: [],
+    tags: {
+      [EXPENSE_TRANSACTION]: [],
+      [INCOME_TRANSACTION]: []
+    },
     date: '2017-10-01',
     note: ''
   })
@@ -130,10 +137,22 @@ it('changes date', () => {
   ).toEqual({ date: '2017-07-01' })
 })
 
-it('changes tags', () => {
+it('changes expense tags', () => {
   expect(
-    reducer({ tags: ['food'] }, { type: CHANGE_TAGS, tags: ['food', 'beer'] })
-  ).toEqual({ tags: ['food', 'beer'] })
+    reducer(
+      { tags: { [EXPENSE_TRANSACTION]: ['food'] } },
+      { type: CHANGE_EXPENSE_TAGS, tags: ['food', 'beer'] }
+    )
+  ).toEqual({ tags: { [EXPENSE_TRANSACTION]: ['food', 'beer'] } })
+})
+
+it('changes income tags', () => {
+  expect(
+    reducer(
+      { tags: { [INCOME_TRANSACTION]: ['salary'] } },
+      { type: CHANGE_INCOME_TAGS, tags: ['salary', 'dividends'] }
+    )
+  ).toEqual({ tags: { [INCOME_TRANSACTION]: ['salary', 'dividends'] } })
 })
 
 it('changes note', () => {
@@ -151,7 +170,7 @@ it('returns default state when create action succeed', () => {
     getTime: () => realTime
   }))
 
-  expect(reducer({}, { type: CREATE_TRANSACTION })).toEqual({
+  expect(reducer({}, { type: SAVE_TRANSACTION })).toEqual({
     kind: DEFAULT_TRANSACTION_KIND,
     accountId: null,
     amount: '',
@@ -159,7 +178,10 @@ it('returns default state when create action succeed', () => {
     linkedAccountId: null,
     linkedAmount: '',
     linkedCurrency: null,
-    tags: [],
+    tags: {
+      [EXPENSE_TRANSACTION]: [],
+      [INCOME_TRANSACTION]: []
+    },
     date: '2017-06-21',
     note: ''
   })
