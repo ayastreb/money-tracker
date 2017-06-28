@@ -20,7 +20,12 @@ class Transaction extends React.Component {
         <Table.Cell width={4} textAlign="right">
           <Amount value={this.props.amount} code={this.props.currency} />
           {' '}
-          <Icon style={{cursor: 'pointer'}} name="trash" color="grey" onClick={() => console.log('a')} />
+          <Icon
+            style={{ cursor: 'pointer' }}
+            name="trash"
+            color="grey"
+            onClick={() => console.log('TODO: implement remove')}
+          />
         </Table.Cell>
       </Table.Row>
     )

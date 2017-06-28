@@ -13,8 +13,8 @@ import {
 } from '../../../actions/ui/transactionForm'
 import { SAVE_TRANSACTION } from '../../../actions/transactions'
 import {
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION,
+  EXPENSE,
+  INCOME,
   DEFAULT_TRANSACTION_KIND
 } from '../../../constants/transaction'
 import { formatInternal } from '../../../util/date'
@@ -38,12 +38,12 @@ export default function(state = initialState(), action) {
     case CHANGE_EXPENSE_TAGS:
       return {
         ...state,
-        tags: { ...state.tags, [EXPENSE_TRANSACTION]: action.tags }
+        tags: { ...state.tags, [EXPENSE]: action.tags }
       }
     case CHANGE_INCOME_TAGS:
       return {
         ...state,
-        tags: { ...state.tags, [INCOME_TRANSACTION]: action.tags }
+        tags: { ...state.tags, [INCOME]: action.tags }
       }
     case CHANGE_DATE:
       return { ...state, date: action.date }
@@ -65,8 +65,8 @@ const initialState = () => ({
   linkedAmount: '',
   linkedCurrency: null,
   tags: {
-    [EXPENSE_TRANSACTION]: [],
-    [INCOME_TRANSACTION]: []
+    [EXPENSE]: [],
+    [INCOME]: []
   },
   date: formatInternal(new Date()),
   note: ''

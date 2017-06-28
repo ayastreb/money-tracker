@@ -23,7 +23,7 @@ class TransferTransaction extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit}>
         <Account
-          label='From'
+          label="From"
           accountId={this.props.accountId}
           accountOptions={this.props.accountOptions}
           amount={this.props.amount}
@@ -34,7 +34,7 @@ class TransferTransaction extends React.Component {
           onCurrencyChange={this.handle(this.props.changeCurrency)}
         />
         <Account
-          label='To'
+          label="To"
           accountId={this.props.linkedAccountId}
           accountOptions={this.props.accountOptions}
           amount={this.props.linkedAmount}

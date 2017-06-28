@@ -4,59 +4,56 @@ import {
   ADD_INCOME_TAG,
   ADD_EXPENSE_TAG
 } from '../../actions/ui/transactionForm'
-import {
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION
-} from '../../constants/transaction'
+import { EXPENSE, INCOME } from '../../constants/transaction'
 
 it('returns default state', () => {
   expect(reducer(undefined, {})).toEqual({
-    [EXPENSE_TRANSACTION]: [],
-    [INCOME_TRANSACTION]: []
+    [EXPENSE]: [],
+    [INCOME]: []
   })
 })
 
 it('loads expense tags', () => {
   expect(
     reducer(
-      { [EXPENSE_TRANSACTION]: [] },
+      { [EXPENSE]: [] },
       { type: LOAD_EXPENSE_TAGS, tags: ['food', 'groceries'] }
     )
-  ).toEqual({ [EXPENSE_TRANSACTION]: ['food', 'groceries'] })
+  ).toEqual({ [EXPENSE]: ['food', 'groceries'] })
 })
 
 it('loads income tags', () => {
   expect(
     reducer(
-      { [INCOME_TRANSACTION]: [] },
+      { [INCOME]: [] },
       { type: LOAD_INCOME_TAGS, tags: ['salary', 'dividends'] }
     )
-  ).toEqual({ [INCOME_TRANSACTION]: ['salary', 'dividends'] })
+  ).toEqual({ [INCOME]: ['salary', 'dividends'] })
 })
 
 it('adds tag to expense tags', () => {
   expect(
     reducer(
-      { [EXPENSE_TRANSACTION]: ['food', 'groceries'] },
+      { [EXPENSE]: ['food', 'groceries'] },
       { type: ADD_EXPENSE_TAG, tag: 'rent' }
     )
-  ).toEqual({ [EXPENSE_TRANSACTION]: ['food', 'groceries', 'rent'] })
+  ).toEqual({ [EXPENSE]: ['food', 'groceries', 'rent'] })
 })
 
 it('adds tag to income tags', () => {
   expect(
     reducer(
-      { [INCOME_TRANSACTION]: ['salary'] },
+      { [INCOME]: ['salary'] },
       { type: ADD_INCOME_TAG, tag: 'dividends' }
     )
-  ).toEqual({ [INCOME_TRANSACTION]: ['salary', 'dividends'] })
+  ).toEqual({ [INCOME]: ['salary', 'dividends'] })
 })
 
 it('does not add used tag if it is already there', () => {
   expect(
     reducer(
-      { [EXPENSE_TRANSACTION]: ['food', 'groceries'] },
+      { [EXPENSE]: ['food', 'groceries'] },
       { type: ADD_EXPENSE_TAG, tag: 'food' }
     )
-  ).toEqual({ [EXPENSE_TRANSACTION]: ['food', 'groceries'] })
+  ).toEqual({ [EXPENSE]: ['food', 'groceries'] })
 })

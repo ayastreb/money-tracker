@@ -8,7 +8,7 @@ import {
   getCurrency,
   getLinkedAccountId,
   getLinkedCurrencyOptions,
-  getLinkedCurrency,
+  getLinkedCurrency
 } from '../../selectors/ui/transactionForm'
 import { saveExpenseTransaction } from '../../actions/transactions'
 import {

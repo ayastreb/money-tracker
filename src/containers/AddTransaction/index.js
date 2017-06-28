@@ -5,10 +5,10 @@ import ExpenseForm from './ExpenseForm'
 import TransferForm from './TransferForm'
 import IncomeForm from './IncomeForm'
 import {
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION,
-  TRANSACTION_KINDS,
-  TRANSFER_TRANSACTION
+  EXPENSE,
+  TRANSFER,
+  INCOME,
+  TRANSACTION_KINDS
 } from '../../constants/transaction'
 import { changeTransactionKind } from '../../actions/ui/transactionForm'
 
@@ -30,9 +30,9 @@ class AddTransaction extends React.Component {
           ))}
         </Menu>
         <Segment attached="bottom">
-          {this.props.kind === EXPENSE_TRANSACTION && <ExpenseForm />}
-          {this.props.kind === TRANSFER_TRANSACTION && <TransferForm />}
-          {this.props.kind === INCOME_TRANSACTION && <IncomeForm />}
+          {this.props.kind === EXPENSE && <ExpenseForm />}
+          {this.props.kind === TRANSFER && <TransferForm />}
+          {this.props.kind === INCOME && <IncomeForm />}
         </Segment>
       </div>
     )

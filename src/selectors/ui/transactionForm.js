@@ -1,8 +1,5 @@
 import { createSelector } from 'reselect'
-import {
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION
-} from '../../constants/transaction'
+import { EXPENSE, INCOME } from '../../constants/transaction'
 
 const formSelector = state => state.ui.transactionForm
 const baseCurrencySelector = state => state.settings.currency.base
@@ -69,9 +66,9 @@ export const getLinkedCurrency = createSelector(
 )
 
 export const getExpenseTagOptions = createSelector(tagsSelector, tags =>
-  tags[EXPENSE_TRANSACTION].map(arrayToOptions)
+  tags[EXPENSE].map(arrayToOptions)
 )
 
 export const getIncomeTagOptions = createSelector(tagsSelector, tags =>
-  tags[INCOME_TRANSACTION].map(arrayToOptions)
+  tags[INCOME].map(arrayToOptions)
 )

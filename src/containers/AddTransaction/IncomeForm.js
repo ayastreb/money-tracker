@@ -8,7 +8,7 @@ import {
   getCurrency,
   getIncomeTagOptions
 } from '../../selectors/ui/transactionForm'
-import { INCOME_TRANSACTION } from '../../constants/transaction'
+import { INCOME } from '../../constants/transaction'
 import { saveIncomeTransaction } from '../../actions/transactions'
 import { loadIncomeTags } from '../../actions/tags'
 import {
@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
   amount: state.ui.transactionForm.amount,
   currency: getCurrency(state),
   currencyOptions: getCurrencyOptions(state),
-  tags: state.ui.transactionForm.tags[INCOME_TRANSACTION],
+  tags: state.ui.transactionForm.tags[INCOME],
   tagsOptions: getIncomeTagOptions(state),
   date: state.ui.transactionForm.date,
   note: state.ui.transactionForm.note

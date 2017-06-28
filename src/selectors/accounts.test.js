@@ -1,17 +1,21 @@
-import { getAccountsAsOptions, getGroupedAccounts, getNetWorth } from './accounts'
+import {
+  getAccountsAsOptions,
+  getGroupedAccounts,
+  getNetWorth
+} from './accounts'
 
 it('returns accounts list as dropdown options', () => {
   const state = {
     accounts: {
       allIds: ['A12345', 'A12346'],
       byId: {
-        'A12345': {
+        A12345: {
           group: 'cash',
-          name: 'foo',
+          name: 'foo'
         },
-        'A12346': {
+        A12346: {
           group: 'bank',
-          name: 'bar',
+          name: 'bar'
         }
       }
     }
@@ -46,7 +50,7 @@ it('groups accounts', () => {
     accounts: {
       allIds: ['A12345', 'A12346', 'A12347', 'A12348'],
       byId: {
-        'A12345': {
+        A12345: {
           group: 'cash',
           name: 'foo',
           currencies: ['USD', 'JPY'],
@@ -55,7 +59,7 @@ it('groups accounts', () => {
             JPY: 110
           }
         },
-        'A12346': {
+        A12346: {
           group: 'bank',
           name: 'bar',
           currencies: ['JPY'],
@@ -63,7 +67,7 @@ it('groups accounts', () => {
             JPY: 110 // = $1.00
           }
         },
-        'A12347': {
+        A12347: {
           group: 'bank',
           name: 'baz',
           currencies: ['EUR'],
@@ -71,7 +75,7 @@ it('groups accounts', () => {
             EUR: 7500
           }
         },
-        'A12348': {
+        A12348: {
           group: 'cash',
           name: 'bad',
           currencies: ['USD'],
@@ -146,7 +150,7 @@ it('calculates net worth', () => {
     accounts: {
       allIds: ['A12345', 'A12346', 'A12347', 'A12348'],
       byId: {
-        'A12345': {
+        A12345: {
           group: 'cash',
           name: 'foo',
           currencies: ['USD', 'JPY'],
@@ -155,7 +159,7 @@ it('calculates net worth', () => {
             JPY: 110
           }
         },
-        'A12346': {
+        A12346: {
           group: 'bank',
           name: 'bar',
           currencies: ['JPY'],
@@ -163,7 +167,7 @@ it('calculates net worth', () => {
             JPY: 110 // = $1.00
           }
         },
-        'A12347': {
+        A12347: {
           group: 'bank',
           name: 'baz',
           currencies: ['EUR'],
@@ -171,7 +175,7 @@ it('calculates net worth', () => {
             EUR: 7500
           }
         },
-        'A12348': {
+        A12348: {
           group: 'cash',
           name: 'bad',
           currencies: ['USD'],

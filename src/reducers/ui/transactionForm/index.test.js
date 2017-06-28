@@ -15,8 +15,8 @@ import {
 import { SAVE_TRANSACTION } from '../../../actions/transactions'
 import {
   DEFAULT_TRANSACTION_KIND,
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION
+  EXPENSE,
+  INCOME
 } from '../../../constants/transaction'
 
 it('returns default state for month before October', () => {
@@ -37,8 +37,8 @@ it('returns default state for month before October', () => {
     linkedAmount: '',
     linkedCurrency: null,
     tags: {
-      [EXPENSE_TRANSACTION]: [],
-      [INCOME_TRANSACTION]: []
+      [EXPENSE]: [],
+      [INCOME]: []
     },
     date: '2017-06-21',
     note: ''
@@ -63,8 +63,8 @@ it('returns default state for month after October', () => {
     linkedAmount: '',
     linkedCurrency: null,
     tags: {
-      [EXPENSE_TRANSACTION]: [],
-      [INCOME_TRANSACTION]: []
+      [EXPENSE]: [],
+      [INCOME]: []
     },
     date: '2017-10-01',
     note: ''
@@ -74,13 +74,13 @@ it('returns default state for month after October', () => {
 it('changes transaction type', () => {
   expect(
     reducer(
-      { kind: EXPENSE_TRANSACTION },
+      { kind: EXPENSE },
       {
         type: CHANGE_TRANSACTION_KIND,
-        kind: INCOME_TRANSACTION
+        kind: INCOME
       }
     )
-  ).toEqual({ kind: INCOME_TRANSACTION })
+  ).toEqual({ kind: INCOME })
 })
 
 it('changes account id', () => {
@@ -140,19 +140,19 @@ it('changes date', () => {
 it('changes expense tags', () => {
   expect(
     reducer(
-      { tags: { [EXPENSE_TRANSACTION]: ['food'] } },
+      { tags: { [EXPENSE]: ['food'] } },
       { type: CHANGE_EXPENSE_TAGS, tags: ['food', 'beer'] }
     )
-  ).toEqual({ tags: { [EXPENSE_TRANSACTION]: ['food', 'beer'] } })
+  ).toEqual({ tags: { [EXPENSE]: ['food', 'beer'] } })
 })
 
 it('changes income tags', () => {
   expect(
     reducer(
-      { tags: { [INCOME_TRANSACTION]: ['salary'] } },
+      { tags: { [INCOME]: ['salary'] } },
       { type: CHANGE_INCOME_TAGS, tags: ['salary', 'dividends'] }
     )
-  ).toEqual({ tags: { [INCOME_TRANSACTION]: ['salary', 'dividends'] } })
+  ).toEqual({ tags: { [INCOME]: ['salary', 'dividends'] } })
 })
 
 it('changes note', () => {
@@ -179,8 +179,8 @@ it('returns default state when create action succeed', () => {
     linkedAmount: '',
     linkedCurrency: null,
     tags: {
-      [EXPENSE_TRANSACTION]: [],
-      [INCOME_TRANSACTION]: []
+      [EXPENSE]: [],
+      [INCOME]: []
     },
     date: '2017-06-21',
     note: ''

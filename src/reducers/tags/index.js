@@ -3,24 +3,18 @@ import {
   ADD_EXPENSE_TAG,
   ADD_INCOME_TAG
 } from '../../actions/ui/transactionForm'
-import {
-  EXPENSE_TRANSACTION,
-  INCOME_TRANSACTION
-} from '../../constants/transaction'
+import { EXPENSE, INCOME } from '../../constants/transaction'
 
-export default function(
-  state = { [EXPENSE_TRANSACTION]: [], [INCOME_TRANSACTION]: [] },
-  action
-) {
+export default function(state = { [EXPENSE]: [], [INCOME]: [] }, action) {
   switch (action.type) {
     case LOAD_EXPENSE_TAGS:
-      return { ...state, [EXPENSE_TRANSACTION]: action.tags }
+      return { ...state, [EXPENSE]: action.tags }
     case LOAD_INCOME_TAGS:
-      return { ...state, [INCOME_TRANSACTION]: action.tags }
+      return { ...state, [INCOME]: action.tags }
     case ADD_EXPENSE_TAG:
-      return addTagIfNotUsed(state, EXPENSE_TRANSACTION, action.tag)
+      return addTagIfNotUsed(state, EXPENSE, action.tag)
     case ADD_INCOME_TAG:
-      return addTagIfNotUsed(state, INCOME_TRANSACTION, action.tag)
+      return addTagIfNotUsed(state, INCOME, action.tag)
     default:
       return state
   }

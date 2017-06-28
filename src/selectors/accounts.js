@@ -51,9 +51,9 @@ const accountBaseTotal = (account, base, exchangeRate) =>
     (total, foreign) =>
       Math.floor(
         total +
-        account.balance[foreign] /
-        exchangeRate[foreign] *
-        Math.pow(10, CURRENCY[base].exp - CURRENCY[foreign].exp)
+          account.balance[foreign] /
+            exchangeRate[foreign] *
+            Math.pow(10, CURRENCY[base].exp - CURRENCY[foreign].exp)
       ),
     0
   )
