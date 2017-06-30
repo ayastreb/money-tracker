@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "cleave.js": "^0.7.17",
+    "date-fns": "^1.28.5",
     "history": "^4.6.1",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.4",

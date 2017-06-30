@@ -2,18 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon, Table, Label } from 'semantic-ui-react'
 import Amount from '../Amount'
-import { formatShort } from '../../util/date'
+import format from 'date-fns/format'
 
 class Transaction extends React.Component {
   render() {
     return (
       <Table.Row>
         <Table.Cell width={2}>
-          {formatShort(new Date(this.props.date))}
+          {format(new Date(this.props.date), 'DD MMM')}
         </Table.Cell>
         <Table.Cell>
           {this.props.accountName}
-          {' → '}
+          {this.props.amount > 0 ? ' ← ' : ' → '}
           {this.props.tags.map(tag => <Label key={tag}>{tag}</Label>)}
           {this.props.note}
         </Table.Cell>

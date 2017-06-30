@@ -17,7 +17,7 @@ import {
   INCOME,
   DEFAULT_TRANSACTION_KIND
 } from '../../../constants/transaction'
-import { formatInternal } from '../../../util/date'
+import format from 'date-fns/format'
 
 export default function(state = initialState(), action) {
   switch (action.type) {
@@ -68,6 +68,6 @@ const initialState = () => ({
     [EXPENSE]: [],
     [INCOME]: []
   },
-  date: formatInternal(new Date()),
+  date: format(new Date(), 'YYYY-MM-DD'),
   note: ''
 })

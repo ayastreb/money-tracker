@@ -18,16 +18,9 @@ import {
   EXPENSE,
   INCOME
 } from '../../../constants/transaction'
+import format from 'date-fns/format'
 
-it('returns default state for month before October', () => {
-  const realTime = new Date().getTime()
-  Date = jest.fn(() => ({
-    getFullYear: () => 2017,
-    getMonth: () => 5,
-    getDate: () => 21,
-    getTime: () => realTime
-  }))
-
+it('returns default state', () => {
   expect(reducer(undefined, {})).toEqual({
     kind: DEFAULT_TRANSACTION_KIND,
     accountId: null,
@@ -40,33 +33,7 @@ it('returns default state for month before October', () => {
       [EXPENSE]: [],
       [INCOME]: []
     },
-    date: '2017-06-21',
-    note: ''
-  })
-})
-
-it('returns default state for month after October', () => {
-  const realTime = new Date().getTime()
-  Date = jest.fn(() => ({
-    getFullYear: () => 2017,
-    getMonth: () => 9,
-    getDate: () => 1,
-    getTime: () => realTime
-  }))
-
-  expect(reducer(undefined, {})).toEqual({
-    kind: DEFAULT_TRANSACTION_KIND,
-    accountId: null,
-    amount: '',
-    currency: null,
-    linkedAccountId: null,
-    linkedAmount: '',
-    linkedCurrency: null,
-    tags: {
-      [EXPENSE]: [],
-      [INCOME]: []
-    },
-    date: '2017-10-01',
+    date: format(new Date(), 'YYYY-MM-DD'),
     note: ''
   })
 })
@@ -162,14 +129,6 @@ it('changes note', () => {
 })
 
 it('returns default state when create action succeed', () => {
-  const realTime = new Date().getTime()
-  Date = jest.fn(() => ({
-    getFullYear: () => 2017,
-    getMonth: () => 5,
-    getDate: () => 21,
-    getTime: () => realTime
-  }))
-
   expect(reducer({}, { type: SAVE_TRANSACTION })).toEqual({
     kind: DEFAULT_TRANSACTION_KIND,
     accountId: null,
@@ -182,7 +141,7 @@ it('returns default state when create action succeed', () => {
       [EXPENSE]: [],
       [INCOME]: []
     },
-    date: '2017-06-21',
+    date: format(new Date(), 'YYYY-MM-DD'),
     note: ''
   })
 })
