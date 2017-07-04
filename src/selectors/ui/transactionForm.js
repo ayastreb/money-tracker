@@ -24,44 +24,55 @@ export const getLinkedAccountId = createSelector(
   (form, defaultAccountId) => form.linkedAccountId || defaultAccountId
 )
 
-const currenciesArray = (accountId, accounts) =>
-  (accountId && accounts[accountId].currencies.map(arrayToOptions)) || []
-
-export const getCurrencyOptions = createSelector(
+const getAccountCurrenciesSelector = createSelector(
   getAccountId,
   accountsSelector,
-  currenciesArray
+  (accountId, accounts) => (accountId && accounts[accountId].currencies) || []
+)
+
+const getLinkedAccountCurrenciesSelector = createSelector(
+  getLinkedAccountId,
+  accountsSelector,
+  (accountId, accounts) => (accountId && accounts[accountId].currencies) || []
+)
+
+export const getCurrencyOptions = createSelector(
+  getAccountCurrenciesSelector,
+  currencies => currencies.map(arrayToOptions)
 )
 
 export const getLinkedCurrencyOptions = createSelector(
-  getLinkedAccountId,
-  accountsSelector,
-  currenciesArray
+  getLinkedAccountCurrenciesSelector,
+  currencies => currencies.map(arrayToOptions)
 )
 
 export const getCurrency = createSelector(
   formSelector,
-  getCurrencyOptions,
+  getAccountCurrenciesSelector,
   baseCurrencySelector,
   (form, currencies, base) => {
     const defaultCurrency = currencies.length > 0
-      ? currencies.includes(base) ? base : currencies[0].text
+      ? currencies.includes(base) ? base : currencies[0]
       : ''
+    if (!form.currency) return defaultCurrency
 
-    return form.currency || defaultCurrency
+    return currencies.includes(form.currency) ? form.currency : defaultCurrency
   }
 )
 
 export const getLinkedCurrency = createSelector(
   formSelector,
-  getLinkedCurrencyOptions,
+  getLinkedAccountCurrenciesSelector,
   baseCurrencySelector,
   (form, currencies, base) => {
     const defaultCurrency = currencies.length > 0
-      ? currencies.includes(base) ? base : currencies[0].text
+      ? currencies.includes(base) ? base : currencies[0]
       : ''
+    if (!form.linkedCurrency) return defaultCurrency
 
-    return form.linkedCurrency || defaultCurrency
+    return currencies.includes(form.linkedCurrency)
+      ? form.linkedCurrency
+      : defaultCurrency
   }
 )
 
