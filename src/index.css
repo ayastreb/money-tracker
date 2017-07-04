@@ -95,17 +95,22 @@ nav .menu .item:last-child {
   line-height: 1.5;
 }
 
-@media (min-width: 768px) and (max-width:1173px) {
+@media (min-width: 768px) and (max-width:1193px) {
+  html, body {
+    background-color: white;
+  }
+
   nav {
     box-shadow: none;
   }
 
   .container-full-page {
     padding: 1em;
+    margin-left: 3px;
   }
 }
 
-@media (min-width: 1174px) {
+@media (min-width: 1194px) {
   .container-raised-desktop {
     margin: 2em auto;
     border: solid 1px rgba(0, 0, 0, 0.15);
