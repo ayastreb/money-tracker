@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Icon, Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import Amount from '../Amount'
 import format from 'date-fns/format'
 
