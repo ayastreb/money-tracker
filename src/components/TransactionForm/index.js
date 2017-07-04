@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'semantic-ui-react'
+import { Form, Button, Dropdown, Input } from 'semantic-ui-react'
 import Account from './Account'
-import Footer from './Footer'
 import { DropdownOption } from '../types'
 import './index.css'
 
@@ -21,29 +20,69 @@ class TransactionForm extends React.Component {
           onAmountChange={this.handle(this.props.changeAmount)}
           onCurrencyChange={this.handle(this.props.changeCurrency)}
         />
-        {this.props.linkedAccountId !== undefined &&
+        {this.props.linkedAccountId &&
           <Account
             label="To"
             accountId={this.props.linkedAccountId}
             accountOptions={this.props.accountOptions}
-            amount={this.props.linkedAmount}
+            amount={
+              this.props.currency === this.props.linkedCurrency
+                ? this.props.amount
+                : this.props.linkedAmount
+            }
             currency={this.props.linkedCurrency}
             currencyOptions={this.props.linkedCurrencyOptions}
             onAccountChange={this.handle(this.props.changeLinkedAccount)}
             onAmountChange={this.handle(this.props.changeLinkedAmount)}
             onCurrencyChange={this.handle(this.props.changeLinkedCurrency)}
           />}
-        <Footer
-          buttonLabel={this.props.buttonLabel}
-          tags={this.props.tags}
-          tagsOptions={this.props.tagsOptions}
-          note={this.props.note}
-          date={this.props.date}
-          onTagsChange={this.handle(this.props.changeTags)}
-          onAddTag={this.handle(this.props.addTag)}
-          onNoteChange={this.handle(this.props.changeNote)}
-          onDateChange={this.handle(this.props.changeDate)}
-        />
+        <div className={this.gridClassName()}>
+          <div className="transaction-form-grid__column-wide">
+            {this.props.tags !== undefined &&
+              <div className="transaction-form-grid__field">
+                <Form.Field>
+                  <label>Tags</label>
+                  <Dropdown
+                    multiple
+                    selection
+                    search
+                    allowAdditions
+                    closeOnChange
+                    placeholder="Choose existing tags or add new"
+                    value={this.props.tags}
+                    options={this.props.tagsOptions}
+                    onChange={this.handle(this.props.changeTags)}
+                    onAddItem={this.handle(this.props.addTag)}
+                  />
+                </Form.Field>
+              </div>}
+            <div className="transaction-form-grid__field">
+              <Form.Field>
+                <Input
+                  placeholder="Note"
+                  value={this.props.note}
+                  onChange={this.handle(this.props.changeNote)}
+                />
+              </Form.Field>
+            </div>
+          </div>
+          <div className="transaction-form-grid__column-narrow">
+            <div className="transaction-form-grid__field">
+              <Form.Field>
+                <Input
+                  required
+                  fluid
+                  type="date"
+                  value={this.props.date}
+                  onChange={this.handle(this.props.changeDate)}
+                />
+              </Form.Field>
+            </div>
+            <div className="transaction-form-grid__field">
+              <Button primary fluid>{this.props.buttonLabel}</Button>
+            </div>
+          </div>
+        </div>
       </Form>
     )
   }
@@ -52,6 +91,10 @@ class TransactionForm extends React.Component {
     if (this.props.loadTagsOptions) this.props.loadTagsOptions()
   }
 
+  gridClassName = () =>
+    this.props.tags === undefined
+      ? 'transaction-form-grid single-line'
+      : 'transaction-form-grid'
   handle = handler => (event, { value }) => handler(value)
   handleSubmit = event => {
     event.preventDefault()
@@ -85,7 +128,7 @@ TransactionForm.propTypes = {
   changeTags: PropTypes.func,
   changeDate: PropTypes.func.isRequired,
   changeNote: PropTypes.func.isRequired,
-  loadTagsOptions: PropTypes.func.isRequired,
+  loadTagsOptions: PropTypes.func,
   saveTransaction: PropTypes.func.isRequired
 }
 

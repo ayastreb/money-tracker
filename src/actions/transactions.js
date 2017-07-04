@@ -85,3 +85,44 @@ export function saveIncomeTransaction({
     }
   }
 }
+
+export function saveTransferTransaction({
+  accountId,
+  amount,
+  currency,
+  linkedAccountId,
+  linkedAmount,
+  linkedCurrency,
+  date,
+  note
+}) {
+  return async dispatch => {
+    const transaction = {
+      id: `T${Date.now()}`,
+      accountId,
+      amount: amount * Math.pow(10, CURRENCY[currency].exp),
+      currency,
+      linkedAccountId,
+      linkedAmount: linkedCurrency === currency
+        ? amount * Math.pow(10, CURRENCY[currency].exp)
+        : linkedAmount * Math.pow(10, CURRENCY[linkedCurrency].exp),
+      linkedCurrency,
+      date,
+      note
+    }
+    dispatch({ type: SAVE_TRANSACTION, transaction })
+    dispatch(changeAccountBalance(accountId, currency, -1 * transaction.amount))
+    dispatch(
+      changeAccountBalance(
+        linkedAccountId,
+        linkedCurrency,
+        transaction.linkedAmount
+      )
+    )
+    try {
+      await persistTransaction(transaction)
+    } catch (error) {
+      dispatch({ type: SAVE_TRANSACTION_FAILURE, error })
+    }
+  }
+}
