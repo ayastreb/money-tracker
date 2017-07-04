@@ -8,6 +8,7 @@ it('returns initial state', () => {
       base: 'USD',
       secondary: []
     },
-    exchangeRate: { USD: 1.0 }
+    exchangeRate: { USD: 1.0 },
+    collapsedSections: []
   })
 })

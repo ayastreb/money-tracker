@@ -10,14 +10,7 @@ class RecentTransactions extends React.Component {
   }
 
   render() {
-    return (
-      <div className="section transactions-list">
-        <div className="section__header small">
-          <h3>Recent Transactions</h3>
-        </div>
-        <TransactionList transactions={this.props.transactions} />
-      </div>
-    )
+    return <TransactionList transactions={this.props.transactions} />
   }
 }
 

@@ -1,7 +1,6 @@
 .transactions-list__wrapper {
   border: solid 1px #D4D4D5;
   border-radius: .28571429rem;
-  margin-top: 1em;
   display: flex;
   flex-flow: row wrap;
   font-size: 1.14285714rem;
@@ -56,6 +55,7 @@
     border-radius: 0;
     border-left: none;
     border-right: none;
+    border-bottom: none;
   }
 
   .transaction-item {

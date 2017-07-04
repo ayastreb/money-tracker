@@ -73,3 +73,13 @@ export function changeCurrency(nextBase, secondary, currentBase) {
     )
   }
 }
+
+export const TOGGLE_SECTION_COLLAPSE = 'TOGGLE_SECTION_COLLAPSE'
+export function toggleSectionCollapse(section) {
+  return async dispatch => {
+    dispatch({
+      type: TOGGLE_SECTION_COLLAPSE,
+      section
+    })
+  }
+}

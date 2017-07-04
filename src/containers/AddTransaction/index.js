@@ -15,10 +15,7 @@ import { changeTransactionKind } from '../../actions/ui/transactionForm'
 class AddTransaction extends React.Component {
   render() {
     return (
-      <div className="section transaction-form">
-        <div className="section__header">
-          <h3>Add Transaction</h3>
-        </div>
+      <div>
         <Menu attached="top" widths={TRANSACTION_KINDS.length}>
           {TRANSACTION_KINDS.map(kind => (
             <Menu.Item

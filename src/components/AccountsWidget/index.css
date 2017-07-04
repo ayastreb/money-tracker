@@ -1,8 +1,3 @@
-.account-widget {
-  border-bottom: solid 1px #D4D4D5;
-  margin-bottom: 1em;
-}
-
 @media (min-width: 768px) {
   .account-widget {
     border: solid 1px #D4D4D5;
