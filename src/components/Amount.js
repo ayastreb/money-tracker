@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CURRENCY } from '../constants/currency'
 
-const Amount = ({ value, code }) => (
-  <span className={value >= 0 ? 'mono positive' : 'mono negative'}>
+const Amount = ({ value, code, showColor = true }) => (
+  <span className={`mono ${showColor && (value >=0 ? 'positive': 'negative')}`}>
     {Number(
       value / Math.pow(10, CURRENCY[code].exp)
     ).toLocaleString(undefined, {
@@ -17,7 +17,8 @@ const Amount = ({ value, code }) => (
 
 Amount.propTypes = {
   value: PropTypes.number.isRequired,
-  code: PropTypes.string.isRequired
+  code: PropTypes.string.isRequired,
+  showColor: PropTypes.bool
 }
 
 export default Amount

@@ -15,17 +15,13 @@ class RecentTransactions extends React.Component {
         <div className="section__header small">
           <h3>Recent Transactions</h3>
         </div>
-        <TransactionList
-          isMobile={this.props.isMobile}
-          transactions={this.props.transactions}
-        />
+        <TransactionList transactions={this.props.transactions} />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  isMobile: state.ui.isMobile,
   transactions: getRecentTransactions(state)
 })
 
