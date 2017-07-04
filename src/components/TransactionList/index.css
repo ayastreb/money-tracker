@@ -36,6 +36,10 @@
   padding-left: 0.5em;
 }
 
+.transaction-item .arrow {
+  margin: 0 0.3em!important;
+}
+
 .transaction-item__info__note {
   padding-left: 0.5em;
   color: #929293;

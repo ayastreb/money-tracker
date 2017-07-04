@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Label } from 'semantic-ui-react'
+import { Icon, Label } from 'semantic-ui-react'
 import Amount from '../Amount'
 import format from 'date-fns/format'
 
@@ -13,7 +13,7 @@ class Transaction extends React.Component {
         </div>
         <div className="transaction-item__info">
           {this.props.accountName}
-          {this.props.amount > 0 && !this.props.linkedAccountId ? ' ← ' : ' → '}
+          {this.renderArrow()}
           {this.props.linkedAccountName && this.props.linkedAccountName}
           {this.props.tags &&
             this.props.tags.map(tag => <Label key={tag}>{tag}</Label>)}
@@ -33,13 +33,29 @@ class Transaction extends React.Component {
     )
   }
 
+  renderArrow() {
+    const { linkedAccountId, tags, note, amount } = this.props
+    if (!linkedAccountId && !tags.length && !note.length) return
+
+    return (
+      <Icon
+        color="grey"
+        name={
+          amount > 0 && !linkedAccountId
+            ? 'long arrow left'
+            : 'long arrow right'
+        }
+      />
+    )
+  }
+
   renderLinkedAmount() {
     const { linkedAmount, linkedCurrency, currency } = this.props
-    if (!linkedCurrency || linkedCurrency === currency) return ''
+    if (!linkedCurrency || linkedCurrency === currency) return
 
     return (
       <span>
-        {' → '}
+        <Icon color="grey" name="long arrow right" />
         <Amount value={linkedAmount} code={linkedCurrency} showColor={false} />
       </span>
     )
