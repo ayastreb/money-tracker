@@ -3,10 +3,6 @@ import {
   LOAD_SETTINGS_SUCCESS,
   LOAD_SETTINGS_FAILURE,
   loadSettings,
-  UPDATE_SETTINGS_REQUEST,
-  UPDATE_SETTINGS_SUCCESS,
-  UPDATE_SETTINGS_FAILURE,
-  updateSettings,
   UPDATE_EXCHANGE_RATE_REQUEST,
   UPDATE_EXCHANGE_RATE_SUCCESS,
   UPDATE_EXCHANGE_RATE_FAILURE,
@@ -14,7 +10,9 @@ import {
   COMPLETE_SETUP,
   completeSetup,
   CHANGE_CURRENCY,
-  changeCurrency
+  changeCurrency,
+  TOGGLE_SECTION_COLLAPSE,
+  toggleSectionCollapse
 } from './settings'
 import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
 import * as settings from '../util/storage/settings'
@@ -49,34 +47,8 @@ describe('Loading settings', () => {
   })
 })
 
-describe('Updating settings', () => {
-  it('creates UPDATE_SETTINGS_SUCCESS after persisting settings', () => {
-    settings.persistSettings = jest.fn(resolvePromise(true))
-
-    return store.dispatch(updateSettings({ foo: 'bar' })).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: UPDATE_SETTINGS_REQUEST },
-        { type: UPDATE_SETTINGS_SUCCESS }
-      ])
-    })
-  })
-
-  it('creates UPDATE_SETTINGS_FAILURE when failed to persist settings', () => {
-    const error = new Error()
-    settings.persistSettings = jest.fn(rejectPromise(error))
-
-    return store.dispatch(updateSettings({ foo: 'bar' })).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: UPDATE_SETTINGS_REQUEST },
-        { type: UPDATE_SETTINGS_FAILURE, error }
-      ])
-    })
-  })
-})
-
 describe('Updating exchange rates', () => {
   it('merges secondary and used currency codes', () => {
-    settings.persistSettings = jest.fn(resolvePromise(true))
     currency.fetchExchangeRates = jest.fn(
       resolvePromise({ USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 })
     )
@@ -97,9 +69,7 @@ describe('Updating exchange rates', () => {
             {
               type: UPDATE_EXCHANGE_RATE_SUCCESS,
               exchangeRate: { USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 }
-            },
-            { type: UPDATE_SETTINGS_REQUEST },
-            { type: UPDATE_SETTINGS_SUCCESS }
+            }
           ])
         )
       })
@@ -119,28 +89,25 @@ describe('Updating exchange rates', () => {
 
 describe('Completing initial setup', () => {
   it('creates COMPLETE_SETUP action', () => {
-    settings.persistSettings = jest.fn(resolvePromise(true))
-
-    return store.dispatch(completeSetup()).then(() => {
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([{ type: COMPLETE_SETUP }])
-      )
-    })
+    expect(completeSetup()).toEqual({ type: COMPLETE_SETUP })
   })
 })
 
 describe('Changing base currency', () => {
   it('filters base currency from secondary currencies', () => {
-    settings.persistSettings = jest.fn(resolvePromise(true))
+    expect(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD')).toEqual({
+      type: CHANGE_CURRENCY,
+      base: 'EUR',
+      secondary: ['USD', 'JPY', 'CAD']
+    })
+  })
+})
 
-    return store
-      .dispatch(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD'))
-      .then(() => {
-        const changeAction = store
-          .getActions()
-          .find(action => action.type === CHANGE_CURRENCY)
-        expect(changeAction.base).toEqual('EUR')
-        expect(changeAction.secondary).toEqual(['USD', 'JPY', 'CAD'])
-      })
+describe('Toggling collapsed sections', () => {
+  it('creates TOGGLE_SECTION_COLLAPSE action', () => {
+    expect(toggleSectionCollapse('foo')).toEqual({
+      type: TOGGLE_SECTION_COLLAPSE,
+      section: 'foo'
+    })
   })
 })

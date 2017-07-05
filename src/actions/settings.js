@@ -1,5 +1,5 @@
 import union from 'lodash/union'
-import { retrieveSettings, persistSettings } from '../util/storage/settings'
+import { retrieveSettings } from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 
 export const LOAD_SETTINGS_REQUEST = 'LOAD_SETTINGS_REQUEST'
@@ -17,21 +17,6 @@ export function loadSettings() {
   }
 }
 
-export const UPDATE_SETTINGS_REQUEST = 'UPDATE_SETTINGS_REQUEST'
-export const UPDATE_SETTINGS_SUCCESS = 'UPDATE_SETTINGS_SUCCESS'
-export const UPDATE_SETTINGS_FAILURE = 'UPDATE_SETTINGS_FAILURE'
-export function updateSettings(settings) {
-  return async dispatch => {
-    dispatch({ type: UPDATE_SETTINGS_REQUEST })
-    try {
-      await persistSettings(settings)
-      dispatch({ type: UPDATE_SETTINGS_SUCCESS })
-    } catch (error) {
-      dispatch({ type: UPDATE_SETTINGS_FAILURE, error })
-    }
-  }
-}
-
 export const UPDATE_EXCHANGE_RATE_REQUEST = 'UPDATE_EXCHANGE_RATE_REQUEST'
 export const UPDATE_EXCHANGE_RATE_SUCCESS = 'UPDATE_EXCHANGE_RATE_SUCCESS'
 export const UPDATE_EXCHANGE_RATE_FAILURE = 'UPDATE_EXCHANGE_RATE_FAILURE'
@@ -41,8 +26,10 @@ export function updateExchangeRate(base, secondary, used) {
     dispatch({ type: UPDATE_EXCHANGE_RATE_REQUEST, base, target })
     try {
       const exchangeRate = await fetchExchangeRates(base, target)
-      dispatch({ type: UPDATE_EXCHANGE_RATE_SUCCESS, exchangeRate })
-      dispatch(updateSettings({ exchangeRate }))
+      dispatch({
+        type: UPDATE_EXCHANGE_RATE_SUCCESS,
+        exchangeRate
+      })
     } catch (error) {
       dispatch({ type: UPDATE_EXCHANGE_RATE_FAILURE, error })
     }
@@ -51,35 +38,27 @@ export function updateExchangeRate(base, secondary, used) {
 
 export const COMPLETE_SETUP = 'COMPLETE_SETUP'
 export function completeSetup() {
-  return async dispatch => {
-    dispatch({ type: COMPLETE_SETUP })
-    dispatch(updateSettings({ isSetupComplete: true }))
+  return {
+    type: COMPLETE_SETUP
   }
 }
 
 export const CHANGE_CURRENCY = 'CHANGE_CURRENCY'
 export function changeCurrency(nextBase, secondary, currentBase) {
-  return async dispatch => {
-    const nextSecondary = secondary.includes(nextBase)
-      ? secondary.concat(currentBase).filter(code => code !== nextBase)
-      : secondary
-    dispatch({
-      type: CHANGE_CURRENCY,
-      base: nextBase,
-      secondary: nextSecondary
-    })
-    dispatch(
-      updateSettings({ currency: { base: nextBase, secondary: nextSecondary } })
-    )
+  const nextSecondary = secondary.includes(nextBase)
+    ? secondary.concat(currentBase).filter(code => code !== nextBase)
+    : secondary
+  return {
+    type: CHANGE_CURRENCY,
+    base: nextBase,
+    secondary: nextSecondary
   }
 }
 
 export const TOGGLE_SECTION_COLLAPSE = 'TOGGLE_SECTION_COLLAPSE'
 export function toggleSectionCollapse(section) {
-  return async dispatch => {
-    dispatch({
-      type: TOGGLE_SECTION_COLLAPSE,
-      section
-    })
+  return {
+    type: TOGGLE_SECTION_COLLAPSE,
+    section
   }
 }

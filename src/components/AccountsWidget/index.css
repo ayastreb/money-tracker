@@ -19,6 +19,12 @@
   padding: 0.5em 1em;
 }
 
+@media (max-width: 767px) {
+  .account-widget-group__name, .account-widget-group__total  {
+    padding: 0.75em 1em;
+  }
+}
+
 .account-widget-group__total {
   width: 1px;
   white-space: nowrap;

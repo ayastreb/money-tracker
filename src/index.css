@@ -237,6 +237,7 @@ h1, h2, h3, h4, h5 {
   }
 
   .net-worth__total {
-    padding-right: 1em;
+    padding-right: 0.8em;
+    font-weight: 700;
   }
 }
