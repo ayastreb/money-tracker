@@ -95,6 +95,16 @@ nav .menu .item:last-child {
   line-height: 1.5;
 }
 
+.ui.message {
+  max-width: 1024px!important;
+  margin: 1em auto;
+  padding: 1em!important;
+}
+
+.ui.message .content {
+  margin-top: 0.5em;
+}
+
 @media (min-width: 768px) and (max-width:1193px) {
   html, body {
     background-color: white;
@@ -107,6 +117,10 @@ nav .menu .item:last-child {
   .container-full-page {
     padding: 0 1em 1em 1em;
     margin-left: 3px;
+  }
+
+  .ui.warning {
+    margin: 1em 1em 0!important;
   }
 }
 
@@ -181,6 +195,12 @@ h1, h2, h3, h4, h5 {
   .container-full-page .ui.grid .row {
     padding: 0;
     border-bottom: solid 1px rgba(0, 0, 0, 0.15);
+  }
+
+  .ui.warning {
+    margin: 0!important;
+    box-shadow: none!important;
+    padding: 1em!important;
   }
 }
 

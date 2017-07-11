@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Icon } from 'semantic-ui-react'
-import Header from '../components/Header'
 import Amount from '../components/Amount'
 import AccountsWidget from '../components/AccountsWidget'
 import AddTransaction from './AddTransaction'
@@ -20,21 +19,18 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
-        <Header label="Dashboard" />
-        <div className="container-full-page">
-          <Grid>
-            <Grid.Row>
-              <Grid.Column computer={6} mobile={16}>
-                {this.renderNetWorth()}
-              </Grid.Column>
-              <Grid.Column computer={10} mobile={16}>
-                {this.renderAddTransaction()}
-                {this.renderRecentTransactions()}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        </div>
+      <div className="container-full-page">
+        <Grid>
+          <Grid.Row>
+            <Grid.Column computer={6} mobile={16}>
+              {this.renderNetWorth()}
+            </Grid.Column>
+            <Grid.Column computer={10} mobile={16}>
+              {this.renderAddTransaction()}
+              {this.renderRecentTransactions()}
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
       </div>
     )
   }

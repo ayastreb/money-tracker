@@ -8,6 +8,8 @@ import routes from '../router/routes'
 import SidebarMenu from './SidebarMenu'
 import SidebarDimmer from './SidebarDimmer'
 import Welcome from './Welcome'
+import SyncWarning from './SyncWarning'
+import Header from '../components/Header'
 import { loadSettings } from '../actions/settings'
 import { loadAccounts } from '../actions/accounts'
 import { windowResize } from '../actions/ui/windowResize'
@@ -38,7 +40,20 @@ class App extends React.Component {
           <SidebarMenu />
           <Dimmer.Dimmable className="container">
             <SidebarDimmer />
-            {routes.map(route => <Route key={route.path} {...route} />)}
+            {routes.map(route => (
+              <Route
+                key={route.path}
+                path={route.path}
+                exact={route.exact}
+                render={() => (
+                  <div>
+                    <Header label={route.label} />
+                    <SyncWarning />
+                    <route.component />
+                  </div>
+                )}
+              />
+            ))}
           </Dimmer.Dimmable>
         </div>
       </Router>
