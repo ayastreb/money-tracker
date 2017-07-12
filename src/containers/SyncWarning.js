@@ -18,7 +18,7 @@ class SyncWarning extends React.Component {
           browser storage is cleared.
         </Message.Content>
         <Message.Content>
-          <Link to="signin">Sign in</Link>
+          <Link to="/auth">Sign in</Link>
           {' '}
           if you want to sync your data to the cloud and be able
           to access it from multiple devices.

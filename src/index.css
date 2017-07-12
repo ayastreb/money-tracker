@@ -82,7 +82,7 @@ nav .menu .item:last-child {
 .container-raised-desktop {
   display: block;
   background-color: white;
-  padding: 1em 1em 0;
+  padding: 1em;
   max-width: 700px;
   font-size: 1.14285714rem;
   line-height: 1.5;
@@ -162,6 +162,10 @@ header .ui.header h2 {
 .ui.primary.button {
   font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #3F51B5!important;
+}
+
+.ui.header {
+  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif!important;
 }
 
 h1, h2, h3, h4, h5 {

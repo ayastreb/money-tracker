@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "auth0-js": "^8.8.0",
     "cleave.js": "^0.7.17",
     "date-fns": "^1.28.5",
     "history": "^4.6.1",

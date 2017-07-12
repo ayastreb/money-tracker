@@ -9,6 +9,7 @@ import SidebarMenu from './SidebarMenu'
 import SidebarDimmer from './SidebarDimmer'
 import Welcome from './Welcome'
 import SyncWarning from './SyncWarning'
+import Auth from './Auth'
 import Header from '../components/Header'
 import { loadSettings } from '../actions/settings'
 import { loadAccounts } from '../actions/accounts'
@@ -30,33 +31,42 @@ class App extends React.Component {
 
     return (
       <Router history={this.props.history}>
-        <div
-          className={
-            this.props.isSidebarOpen || !this.props.isMobile
-              ? 'openSidebar'
-              : 'closedSidebar'
-          }
-        >
-          <SidebarMenu />
-          <Dimmer.Dimmable className="container">
-            <SidebarDimmer />
-            {routes.map(route => (
-              <Route
-                key={route.path}
-                path={route.path}
-                exact={route.exact}
-                render={() => (
-                  <div>
-                    <Header label={route.label} />
-                    <SyncWarning />
-                    <route.component />
-                  </div>
-                )}
-              />
-            ))}
-          </Dimmer.Dimmable>
+        <div>
+          <Route path="/auth" exact={true} component={Auth} />
+          {routes.map(this.renderNavigationRoute)}
         </div>
       </Router>
+    )
+  }
+
+  /**
+   * Navigation routes are the pages associated to navigation menu items,
+   * e.g. Dashboard, Transactions, Settings etc.
+   * They are rendered with common structure using sidebar menu and sticky header.
+   *
+   * @param {object} route item from ../router/routes.js
+   */
+  renderNavigationRoute = route => {
+    const wrapperClassName = this.props.isSidebarOpen || !this.props.isMobile
+      ? 'openSidebar'
+      : 'closedSidebar'
+    return (
+      <Route
+        key={route.path}
+        path={route.path}
+        exact={route.exact}
+        render={props => (
+          <div className={wrapperClassName}>
+            <SidebarMenu />
+            <Dimmer.Dimmable className="container">
+              <SidebarDimmer />
+              <Header label={route.label} />
+              <SyncWarning />
+              <route.component {...props} />
+            </Dimmer.Dimmable>
+          </div>
+        )}
+      />
     )
   }
 }
