@@ -9,6 +9,25 @@ header {
   z-index: 1;
 }
 
+header .ui.header {
+  display: flex!important;
+  flex-direction: row;
+  align-items: stretch;
+  vertical-align: middle;
+}
+
+header .content {
+  flex: 1;
+}
+
+header .ui.header .icon {
+  margin-top: 3px;
+}
+
+.ui.header .content {
+  padding-left: .5rem!important;
+}
+
 @media (max-width: 767px) {
   header {
     padding: 10px;

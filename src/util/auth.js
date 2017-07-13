@@ -35,11 +35,14 @@ export async function verifyAuthCode(email, verificationCode) {
   })
 }
 
-export async function parseAuthHash(hash) {
+export async function parseHash(hash) {
   return new Promise((resolve, reject) => {
-    auth0.parseHash(
-      hash,
-      (error, result) => (error ? reject(error) : resolve(result))
-    )
+    auth0.parseHash(hash, (error, authResult) => {
+      if (error) return reject(error)
+      auth0.client.userInfo(authResult.accessToken, (error, userInfo) => {
+        if (error) return reject(error)
+        resolve({ ...authResult, ...userInfo })
+      })
+    })
   })
 }

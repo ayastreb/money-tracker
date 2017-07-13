@@ -7,13 +7,13 @@ import {
   VERIFY_CODE_REQUEST,
   VERIFY_CODE_SUCCESS,
   VERIFY_CODE_FAILURE,
-  PARSE_HASH_SUCCESS,
-  PARSE_HASH_FAILURE,
+  FINISH_AUTH_SUCCESS,
+  FINISH_AUTH_FAILURE,
   changeEmail,
   changeCode,
   sendCode,
   verifyCode,
-  parseHash
+  finishAuth
 } from './auth'
 import {
   mockStore,
@@ -93,24 +93,24 @@ describe('verifying auth code', () => {
   })
 })
 
-describe('parsing auth hash', () => {
-  it('creates PARSE_HASH_SUCCESS action', () => {
-    auth.parseAuthHash = jest.fn(resolvePromise(true))
+describe('finishing auth', () => {
+  it('creates FINISH_AUTH_SUCCESS action', () => {
+    auth.parseHash = jest.fn(resolvePromise({ couchDB: {} }))
 
-    return store.dispatch(parseHash('foo')).then(() => {
+    return store.dispatch(finishAuth('foo', true)).then(() => {
       expect(store.getActions()).toEqual([
-        { type: PARSE_HASH_SUCCESS, response: true }
+        { type: FINISH_AUTH_SUCCESS, response: { couchDB: {} } }
       ])
     })
   })
 
-  it('creates PARSE_HASH_FAILURE when failed to parse hash', () => {
+  it('creates FINISH_AUTH_FAILURE when failed to parse hash', () => {
     const error = new Error('not parsed')
-    auth.parseAuthHash = jest.fn(rejectPromise(error))
+    auth.parseHash = jest.fn(rejectPromise(error))
 
-    return store.dispatch(parseHash('foo')).then(() => {
+    return store.dispatch(finishAuth('foo', true)).then(() => {
       expect(store.getActions()).toEqual([
-        { type: PARSE_HASH_FAILURE, error: 'not parsed' }
+        { type: FINISH_AUTH_FAILURE, error: 'not parsed' }
       ])
     })
   })

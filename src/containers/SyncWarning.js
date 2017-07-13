@@ -13,7 +13,6 @@ class SyncWarning extends React.Component {
       <Message warning size="large" onDismiss={this.props.dismissSyncWarning}>
         <Message.Header>No Synchronization</Message.Header>
         <Message.Content>
-          You are not signed in.
           Your data is only stored on this device and might be lost when
           browser storage is cleared.
         </Message.Content>
@@ -33,7 +32,7 @@ SyncWarning.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isVisible: !state.user.isAuthenticated && state.ui.isSyncWarningVisible
+  isVisible: !state.ui.isSyncRunning && state.ui.isSyncWarningVisible
 })
 
 export default connect(mapStateToProps, { dismissSyncWarning })(SyncWarning)
