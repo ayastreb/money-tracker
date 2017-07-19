@@ -16,6 +16,7 @@ class AccountsWidget extends React.Component {
             group={this.props.groups[group]}
             isCollapsed={this.props.collapsedGroups.includes(group)}
             toggleGroupCollapse={this.toggleGroupCollapse(group)}
+            removeAccount={this.props.removeAccount}
           />
         ))}
       </div>
@@ -27,7 +28,8 @@ AccountsWidget.propTypes = {
   baseCurrency: PropTypes.string.isRequired,
   groups: PropTypes.objectOf(PropTypes.object).isRequired,
   collapsedGroups: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleGroupCollapse: PropTypes.func.isRequired
+  toggleGroupCollapse: PropTypes.func.isRequired,
+  removeAccount: PropTypes.func
 }
 
 export default AccountsWidget

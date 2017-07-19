@@ -3,7 +3,13 @@ import PropTypes from 'prop-types'
 import Account from './Account'
 import Amount from '../Amount'
 
-const Group = ({ baseCurrency, group, isCollapsed, toggleGroupCollapse }) => (
+const Group = ({
+  baseCurrency,
+  group,
+  isCollapsed,
+  toggleGroupCollapse,
+  removeAccount
+}) => (
   <div className="account-widget-group">
     <div className="account-widget-group__header" onClick={toggleGroupCollapse}>
       <span className="account-widget-group__name">
@@ -15,7 +21,11 @@ const Group = ({ baseCurrency, group, isCollapsed, toggleGroupCollapse }) => (
     </div>
     {!isCollapsed &&
       group.accounts.map(account => (
-        <Account key={account.id} account={account} />
+        <Account
+          key={account.id}
+          account={account}
+          removeAccount={removeAccount}
+        />
       ))}
   </div>
 )
@@ -28,7 +38,8 @@ Group.propTypes = {
     total: PropTypes.number.isRequired
   }).isRequired,
   isCollapsed: PropTypes.bool.isRequired,
-  toggleGroupCollapse: PropTypes.func.isRequired
+  toggleGroupCollapse: PropTypes.func.isRequired,
+  removeAccount: PropTypes.func
 }
 
 export default Group
