@@ -45,7 +45,7 @@
 }
 
 @media (min-width: 768px) {
-  .input-right .input {
+  .input-right.no-label .input {
     margin-top: 1.65em;
   }
 

@@ -16,7 +16,7 @@ const Account = props => (
         onChange={props.onAccountChange}
       />
     </Form.Field>
-    <Form.Field width={5} className="mobile-with-margin input-right">
+    <Form.Field width={5} className="mobile-with-margin input-right no-label">
       <Input
         required
         type="number"
