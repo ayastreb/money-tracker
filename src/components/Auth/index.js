@@ -36,46 +36,48 @@ class Auth extends React.Component {
           ? this.renderSendCodeForm()
           : this.renderVerifyCodeForm()}
         <Divider />
-        <Link to="/">Back to Dashboard</Link>
+        <p><Link to="/">Back</Link></p>
       </div>
     )
   }
 
   renderSendCodeForm = () => (
-    <Form onSubmit={() => this.props.sendCode(this.props.email)}>
+    <div>
       <p>
         Please provide your email address and we will send you a
         verification code for sign in.
       </p>
-      <div className="auth--input-field">
-        <Input
-          fluid
-          required
-          placeholder="Email Address"
-          name="email"
-          type="email"
-          icon="mail outline"
-          iconPosition="left"
-          value={this.props.email}
-          onChange={this.handleChange(this.props.changeEmail)}
-          disabled={this.props.isSendingCode}
-          action={
-            <Button
-              primary
-              content="Send Code"
-              loading={this.props.isSendingCode}
-            />
-          }
-        />
-      </div>
-      <h3>Why do I need to sign in?</h3>
+      <Form onSubmit={() => this.props.sendCode(this.props.email)}>
+        <div className="auth--input-field">
+          <Input
+            fluid
+            required
+            placeholder="Email Address"
+            name="email"
+            type="email"
+            icon="mail outline"
+            iconPosition="left"
+            value={this.props.email}
+            onChange={this.handleChange(this.props.changeEmail)}
+            disabled={this.props.isSendingCode}
+            action={
+              <Button
+                primary
+                content="Send Code"
+                loading={this.props.isSendingCode}
+              />
+            }
+          />
+        </div>
+      </Form>
+      <Header as="h3">Why do I need to sign in?</Header>
       <p style={{ marginTop: '1em' }}>
         After you sign in for the first time we will create a new database
-        for you hosted at Cloudant.
+        for you hosted in the cloud.
         This database will be used to synchronize your data among different
         devices as well as for back up.
       </p>
-    </Form>
+    </div>
   )
 
   renderVerifyCodeForm = () => (
