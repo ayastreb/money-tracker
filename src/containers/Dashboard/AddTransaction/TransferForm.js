@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import TransactionForm from '../../components/TransactionForm'
-import { getAccountsAsOptions } from '../../selectors/accounts'
+import TransactionForm from '../../../components/TransactionForm'
+import { getAccountsAsOptions } from '../../../selectors/accounts'
 import {
   getAccountId,
   getCurrencyOptions,
@@ -8,8 +8,8 @@ import {
   getLinkedAccountId,
   getLinkedCurrencyOptions,
   getLinkedCurrency
-} from '../../selectors/ui/transactionForm'
-import { saveTransferTransaction } from '../../actions/transactions'
+} from '../../../selectors/ui/transactionForm'
+import { saveTransferTransaction } from '../../../actions/transactions'
 import {
   changeAccount,
   changeAmount,
@@ -19,7 +19,7 @@ import {
   changeLinkedCurrency,
   changeDate,
   changeNote
-} from '../../actions/ui/transactionForm'
+} from '../../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
   label: 'From',

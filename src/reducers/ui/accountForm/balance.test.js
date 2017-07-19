@@ -89,12 +89,6 @@ describe('changing currency balance', () => {
       USD: 200.56
     })
   })
-
-  it('ignores empty input', () => {
-    expect(
-      reducer({}, { type: CHANGE_CURRENCY_BALANCE, code: 'USD', balance: '' })
-    ).toEqual({})
-  })
 })
 
 describe('changing currency settings', () => {

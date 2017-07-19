@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import TransactionList from '../components/TransactionList'
-import { loadRecentTransactions } from '../actions/transactions'
-import { getRecentTransactions } from '../selectors/transactions'
+import TransactionList from '../../components/TransactionList'
+import { loadRecentTransactions } from '../../actions/transactions'
+import { getRecentTransactions } from '../../selectors/transactions'
 
 class RecentTransactions extends React.Component {
   componentDidMount() {

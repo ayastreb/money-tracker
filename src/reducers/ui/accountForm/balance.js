@@ -20,7 +20,6 @@ export default function(state = {}, action) {
     case CHANGE_CURRENCY:
       return pick(state, [action.base, ...action.secondary])
     case CHANGE_CURRENCY_BALANCE:
-      if (action.balance === '') return state
       return { ...state, [action.code]: action.balance }
     case CREATE_ACCOUNT:
       return {}

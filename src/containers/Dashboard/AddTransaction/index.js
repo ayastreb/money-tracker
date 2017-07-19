@@ -9,8 +9,8 @@ import {
   TRANSFER,
   INCOME,
   TRANSACTION_KINDS
-} from '../../constants/transaction'
-import { changeTransactionKind } from '../../actions/ui/transactionForm'
+} from '../../../constants/transaction'
+import { changeTransactionKind } from '../../../actions/ui/transactionForm'
 
 class AddTransaction extends React.Component {
   render() {

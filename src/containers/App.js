@@ -1,19 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Router, Route } from 'react-router-dom'
+import { Router, Route, Switch } from 'react-router-dom'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import throttle from 'lodash/throttle'
 import routes from '../router/routes'
-import SidebarMenu from './SidebarMenu'
-import SidebarDimmer from './SidebarDimmer'
-import Welcome from './Welcome'
-import SyncWarning from './SyncWarning'
 import Auth from './Auth'
+import InitialSetup from './InitialSetup'
+import SidebarMenu from './SidebarMenu'
 import Header from '../components/Header'
+import SyncWarning from './SyncWarning'
 import { loadSettings } from '../actions/settings'
 import { loadAccounts } from '../actions/accounts'
 import { windowResize } from '../actions/ui/windowResize'
+import { toggleSidebar } from '../actions/ui/sidebar'
 
 class App extends React.Component {
   componentWillMount() {
@@ -27,14 +27,15 @@ class App extends React.Component {
 
   render() {
     if (!this.props.isLoaded) return <Loader active />
-    if (!this.props.isSetupComplete) return <Welcome />
 
     return (
       <Router history={this.props.history}>
-        <div>
+        <Switch>
           <Route path="/auth" exact={true} component={Auth} />
-          {routes.map(this.renderNavigationRoute)}
-        </div>
+          {!this.props.isSetupComplete
+            ? <Route component={InitialSetup} />
+            : <Route render={this.renderNavigationRoutes} />}
+        </Switch>
       </Router>
     )
   }
@@ -42,31 +43,36 @@ class App extends React.Component {
   /**
    * Navigation routes are the pages associated to navigation menu items,
    * e.g. Dashboard, Transactions, Settings etc.
-   * They are rendered with common structure using sidebar menu and sticky header.
-   *
-   * @param {object} route item from ../router/routes.js
+   * They are rendered with common structure: sidebar menu and sticky header.
    */
-  renderNavigationRoute = route => {
+  renderNavigationRoutes = () => {
     const wrapperClassName = this.props.isSidebarOpen || !this.props.isMobile
       ? 'openSidebar'
       : 'closedSidebar'
     return (
-      <Route
-        key={route.path}
-        path={route.path}
-        exact={route.exact}
-        render={props => (
-          <div className={wrapperClassName}>
-            <SidebarMenu />
-            <Dimmer.Dimmable className="container">
-              <SidebarDimmer />
-              <Header label={route.label} />
-              <SyncWarning />
-              <route.component {...props} />
-            </Dimmer.Dimmable>
-          </div>
-        )}
-      />
+      <div className={wrapperClassName}>
+        <SidebarMenu />
+        <Dimmer.Dimmable className="container">
+          {routes.map(route => (
+            <Route
+              key={route.path}
+              path={route.path}
+              exact={route.exact}
+              render={props => (
+                <div>
+                  <Dimmer
+                    active={this.props.isMobile && this.props.isSidebarOpen}
+                    onClick={this.props.toggleSidebar}
+                  />
+                  <Header label={route.label} />
+                  <SyncWarning />
+                  <route.component {...props} />
+                </div>
+              )}
+            />
+          ))}
+        </Dimmer.Dimmable>
+      </div>
     )
   }
 }
@@ -79,7 +85,8 @@ App.propTypes = {
   isSidebarOpen: PropTypes.bool,
   loadSettings: PropTypes.func,
   loadAccounts: PropTypes.func,
-  windowResize: PropTypes.func
+  windowResize: PropTypes.func,
+  toggleSidebar: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -93,5 +100,6 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(mapStateToProps, {
   loadSettings,
   loadAccounts,
-  windowResize
+  windowResize,
+  toggleSidebar
 })(App)

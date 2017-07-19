@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
-import Auth from '../components/Auth/index'
+import Auth from '../../components/Auth/index'
 import {
   changeEmail,
   changeCode,
   sendCode,
   verifyCode,
   finishAuth
-} from '../actions/ui/auth'
+} from '../../actions/ui/auth'
 
 const mapStateToProps = state => ({
   isAuthenticated: state.user.isAuthenticated,

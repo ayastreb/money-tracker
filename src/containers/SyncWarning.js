@@ -13,13 +13,13 @@ class SyncWarning extends React.Component {
       <Message warning size="large" onDismiss={this.props.dismissSyncWarning}>
         <Message.Header>No Synchronization</Message.Header>
         <Message.Content>
-          Your data is only stored on this device and might be lost when
+          Your data is stored only on this device and might be lost when
           browser storage is cleared.
         </Message.Content>
         <Message.Content>
           <Link to="/auth">Sign in</Link>
           {' '}
-          if you want to sync your data to the cloud and be able
+          if you want to sync your data with the cloud and be able
           to access it from multiple devices.
         </Message.Content>
       </Message>

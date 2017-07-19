@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
-import CurrencyTable from './AccountForm/CurrencyTable'
-import { accountGroupAsDropdownOptions } from '../constants/account'
-import { changeName, changeGroup } from '../actions/ui/accountForm'
-import { createAccount } from '../actions/accounts'
+import CurrencyTable from './CurrencyTable'
+import { accountGroupAsDropdownOptions } from '../../constants/account'
+import { changeName, changeGroup } from '../../actions/ui/accountForm'
+import { createAccount } from '../../actions/accounts'
 
 class AccountForm extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class AccountForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} style={{ marginBottom: '1em' }}>
         <Form.Group widths="equal">
           <Form.Input
             label="Name"
@@ -45,7 +45,7 @@ class AccountForm extends React.Component {
           />
         </Form.Group>
         <CurrencyTable />
-        <Form.Button content="Create Account" floated="right" />
+        <Form.Button content="Create Account" />
       </Form>
     )
   }

@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Checkbox, Table } from 'semantic-ui-react'
-import CurrencyInput from '../../components/CurrencyInput'
+import { Checkbox, Input, Form } from 'semantic-ui-react'
 import { CURRENCY } from '../../constants/currency'
 import {
   changeCurrencyCheckbox,
@@ -34,45 +33,41 @@ class CurrencyTable extends React.Component {
     this.props.changeCurrencyCheckbox(value, checked)
   }
 
-  handleInput = code => event => {
-    this.props.changeCurrencyBalance(code, event.target.rawValue)
+  handleInput = code => (event, { value }) => {
+    this.props.changeCurrencyBalance(code, value)
   }
 
   render() {
     return (
-      <Table basic="very" singleLine>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell style={{ width: '50%' }}>
-              Currency
-            </Table.HeaderCell>
-            <Table.HeaderCell>Initial Balance</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {this.currencies.map(code => {
-            return (
-              <Table.Row key={code}>
-                <Table.Cell>
-                  <Checkbox
-                    checked={this.props.balance[code] !== undefined}
-                    onChange={this.handleCheckbox}
-                    value={code}
-                    label={CURRENCY[code].name}
-                  />
-                </Table.Cell>
-                <Table.Cell>
-                  <CurrencyInput
-                    value={this.props.balance[code]}
-                    code={code}
-                    onChange={this.handleInput(code)}
-                  />
-                </Table.Cell>
-              </Table.Row>
-            )
-          })}
-        </Table.Body>
-      </Table>
+      <div>
+        {this.currencies.map(code => {
+          return (
+            <Form.Group widths="equal" key={code}>
+              <Form.Field style={{ paddingTop: '0.5em' }}>
+                <Checkbox
+                  checked={this.props.balance[code] !== undefined}
+                  onChange={this.handleCheckbox}
+                  value={code}
+                  label={CURRENCY[code].name}
+                />
+              </Form.Field>
+              <Form.Field className="input-right">
+                <Input
+                  labelPosition="right"
+                  label={code}
+                  type="number"
+                  step="any"
+                  autoComplete={false}
+                  placeholder="Initial balance"
+                  value={this.props.balance[code] || ''}
+                  onChange={this.handleInput(code)}
+                  fluid
+                />
+              </Form.Field>
+            </Form.Group>
+          )
+        })}
+      </div>
     )
   }
 }
