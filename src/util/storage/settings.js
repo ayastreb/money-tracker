@@ -42,29 +42,22 @@ export async function persistSettings(settings) {
 }
 
 async function mergeSettings(local, remote) {
+  const base = remote.currency.base
+  const secondary = union(
+    local.currency.base,
+    local.currency.secondary,
+    remote.currency.secondary
+  ).filter(code => code !== base)
+
   const merged = {
     collapsedSections: union(local.collapsedSections, remote.collapsedSections),
-    currency: {
-      base: remote.currency.base,
-      secondary: union(local.currency.secondary, remote.currency.secondary)
-    },
+    currency: { base, secondary },
+    exchangeRate: local.currency.base === base
+      ? { ...local.exchangeRate, ...remote.exchangeRate }
+      : await fetchExchangeRates(base, secondary),
     isSetupComplete: remote.isSetupComplete
   }
-  if (local.currency.base !== remote.currency.base) {
-    merged.currency.secondary.push(local.currency.base)
-    merged.exchangeRate = await fetchExchangeRates(merged.currency.base, [
-      merged.currency.base,
-      ...merged.currency.secondary
-    ])
-  } else {
-    merged.exchangeRate = {
-      ...local.exchangeRate,
-      ...remote.exchangeRate
-    }
-  }
-  merged.currency.secondary = union(
-    merged.currency.secondary.filter(code => code !== merged.currency.base)
-  )
+
   if (!isEqual(pick(local, Object.keys(merged)), merged)) {
     await persistSettings(merged)
   }

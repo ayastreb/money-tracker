@@ -24,6 +24,7 @@ export async function fetchExchangeRates(base, target) {
 }
 
 function buildQuery(base, target) {
+  if (!target.includes(base)) target.push(base)
   const pairs = target.map(code => `${base}${code}`)
   return `SELECT id,Rate FROM yahoo.finance.xchange WHERE pair = "${pairs.join(',')}"`
 }

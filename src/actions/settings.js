@@ -22,7 +22,7 @@ export const UPDATE_EXCHANGE_RATE_SUCCESS = 'UPDATE_EXCHANGE_RATE_SUCCESS'
 export const UPDATE_EXCHANGE_RATE_FAILURE = 'UPDATE_EXCHANGE_RATE_FAILURE'
 export function updateExchangeRate(base, secondary, used) {
   return async dispatch => {
-    const target = union([base], secondary, used)
+    const target = union(secondary, used)
     dispatch({ type: UPDATE_EXCHANGE_RATE_REQUEST, base, target })
     try {
       const exchangeRate = await fetchExchangeRates(base, target)
