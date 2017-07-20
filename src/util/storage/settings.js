@@ -62,8 +62,8 @@ async function mergeSettings(local, remote) {
       ...remote.exchangeRate
     }
   }
-  merged.currency.secondary = merged.currency.secondary.filter(
-    code => code !== merged.currency.base
+  merged.currency.secondary = union(
+    merged.currency.secondary.filter(code => code !== merged.currency.base)
   )
   if (!isEqual(pick(local, Object.keys(merged)), merged)) {
     await persistSettings(merged)
