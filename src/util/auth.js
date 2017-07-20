@@ -40,17 +40,19 @@ export async function parseHash(hash) {
     auth0.parseHash(hash, (error, authResult) => {
       if (error) return reject(error)
 
-      const { accessToken } = authResult
-      auth0.client.userInfo(accessToken, (error, userInfo) => {
-        if (error) return reject(error)
+      resolve(authResult.accessToken)
+    })
+  }).then(getUserInfo)
+}
 
-        const { couchDB } = userInfo
-        localStorage.setItem(
-          'userInfo',
-          JSON.stringify({ accessToken, couchDB })
-        )
-        resolve()
-      })
+export async function getUserInfo(accessToken) {
+  return new Promise((resolve, reject) => {
+    auth0.client.userInfo(accessToken, (error, userInfo) => {
+      if (error) return reject(error)
+
+      const { couchDB } = userInfo
+      localStorage.setItem('userInfo', JSON.stringify({ accessToken, couchDB }))
+      resolve()
     })
   })
 }
