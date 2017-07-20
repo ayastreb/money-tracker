@@ -12,20 +12,26 @@ function instance(name) {
   return instancePool[name]
 }
 
+function remoteInstance(name) {
+  const instanceName = `remote_${name}`
+  if (instancePool[instanceName] === undefined) {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    if (userInfo && userInfo.couchDB && userInfo.couchDB[name]) {
+      instancePool[instanceName] = new PouchDB(userInfo.couchDB[name], {
+        skipSetup: true,
+        auth: {
+          username: userInfo.couchDB.username,
+          password: userInfo.couchDB.password
+        }
+      })
+    }
+  }
+
+  return instancePool[instanceName]
+}
+
 export const settingsDB = () => instance('settings')
+export const remoteSettingsDB = () => remoteInstance('settings')
 export const accountsDB = () => instance('accounts')
 export const transactionsDB = () => instance('transactions')
 export const tagsDB = () => instance('tags')
-export const sync = (name, remoteUrl, username, password) => {
-  const remoteDB = new PouchDB(remoteUrl, {
-    skipSetup: true,
-    auth: {
-      username,
-      password
-    }
-  })
-
-  instance(name)
-    .sync(remoteDB, { live: true })
-    .on('change', info => console.log(info))
-}

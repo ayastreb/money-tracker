@@ -14,7 +14,6 @@ const mapStateToProps = state => ({
   isCodeSent: state.ui.auth.isCodeSent,
   isVerifyingCode: state.ui.auth.isVerifyingCode,
   isCodeValid: state.ui.auth.isCodeValid,
-  isSyncRunning: state.ui.isSyncRunning,
   error: state.ui.auth.error,
   email: state.ui.auth.email,
   code: state.ui.auth.code

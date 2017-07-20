@@ -7,7 +7,7 @@ export default function(
 ) {
   switch (action.type) {
     case LOAD_SETTINGS_SUCCESS:
-      if (!action.settings) return state
+      if (!action.settings.currency) return state
       return {
         base: action.settings.currency.base,
         secondary: action.settings.currency.secondary

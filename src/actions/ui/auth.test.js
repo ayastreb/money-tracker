@@ -15,15 +15,14 @@ import {
   verifyCode,
   finishAuth
 } from './auth'
+import { LOAD_SETTINGS_SUCCESS } from '../settings'
 import {
   mockStore,
   rejectPromise,
   resolvePromise
 } from '../../util/test/helper'
 import * as auth from '../../util/auth'
-import { LocalStorageMock } from '../../util/test/helper'
-
-global.localStorage = new LocalStorageMock()
+import * as settings from '../../util/storage/settings'
 
 let store
 
@@ -95,11 +94,13 @@ describe('verifying auth code', () => {
 
 describe('finishing auth', () => {
   it('creates FINISH_AUTH_SUCCESS action', () => {
-    auth.parseHash = jest.fn(resolvePromise({ couchDB: {} }))
+    auth.parseHash = jest.fn(resolvePromise(true))
+    settings.retrieveSettings = jest.fn(resolvePromise({ foo: 'bar' }))
 
-    return store.dispatch(finishAuth('foo', true)).then(() => {
+    return store.dispatch(finishAuth('foo')).then(() => {
       expect(store.getActions()).toEqual([
-        { type: FINISH_AUTH_SUCCESS, response: { couchDB: {} } }
+        { type: LOAD_SETTINGS_SUCCESS, settings: { foo: 'bar' } },
+        { type: FINISH_AUTH_SUCCESS }
       ])
     })
   })
@@ -108,7 +109,7 @@ describe('finishing auth', () => {
     const error = new Error('not parsed')
     auth.parseHash = jest.fn(rejectPromise(error))
 
-    return store.dispatch(finishAuth('foo', true)).then(() => {
+    return store.dispatch(finishAuth('foo')).then(() => {
       expect(store.getActions()).toEqual([
         { type: FINISH_AUTH_FAILURE, error: 'not parsed' }
       ])

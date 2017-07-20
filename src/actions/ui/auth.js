@@ -1,5 +1,6 @@
 import { sendAuthCode, verifyAuthCode, parseHash } from '../../util/auth'
-import { updateSyncSettings } from '../settings'
+import { retrieveSettings } from '../../util/storage/settings'
+import { LOAD_SETTINGS_SUCCESS } from '../settings'
 
 export const CHANGE_EMAIL = 'CHANGE_EMAIL'
 export function changeEmail(email) {
@@ -43,7 +44,6 @@ export function verifyCode(email, code) {
     dispatch({ type: VERIFY_CODE_REQUEST })
     try {
       const response = await verifyAuthCode(email, code)
-      console.log(response)
       dispatch({ type: VERIFY_CODE_SUCCESS, response })
     } catch (error) {
       dispatch({
@@ -56,15 +56,13 @@ export function verifyCode(email, code) {
 
 export const FINISH_AUTH_SUCCESS = 'FINISH_AUTH_SUCCESS'
 export const FINISH_AUTH_FAILURE = 'FINISH_AUTH_FAILURE'
-export function finishAuth(hash, isSyncRunning) {
+export function finishAuth(hash) {
   return async dispatch => {
     try {
-      const response = await parseHash(hash)
-      localStorage.setItem('accessToken', response.accessToken)
-      if (!isSyncRunning && response.couchDB) {
-        dispatch(updateSyncSettings(response.couchDB))
-      }
-      dispatch({ type: FINISH_AUTH_SUCCESS, response })
+      await parseHash(hash)
+      const settings = await retrieveSettings()
+      dispatch({ type: LOAD_SETTINGS_SUCCESS, settings })
+      dispatch({ type: FINISH_AUTH_SUCCESS })
     } catch (error) {
       dispatch({
         type: FINISH_AUTH_FAILURE,

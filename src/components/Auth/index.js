@@ -15,7 +15,7 @@ import './index.css'
 class Auth extends React.Component {
   componentDidMount() {
     if (this.props.location.hash) {
-      this.props.finishAuth(this.props.location.hash, this.props.isSyncRunning)
+      this.props.finishAuth(this.props.location.hash)
     }
   }
 
@@ -117,7 +117,6 @@ Auth.propTypes = {
   isCodeSent: PropTypes.bool,
   isVerifyingCode: PropTypes.bool,
   isCodeValid: PropTypes.bool,
-  isSyncRunning: PropTypes.bool,
   error: PropTypes.string,
   email: PropTypes.string,
   code: PropTypes.string,

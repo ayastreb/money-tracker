@@ -42,11 +42,7 @@ class InitialSetup extends React.Component {
           <div>
             <AccountTable />
             <div className="form-submit">
-            <Button
-              primary
-              content="Finish"
-              onClick={this.handleFinish}
-            />
+              <Button primary content="Finish" onClick={this.handleFinish} />
             </div>
           </div>}
       </div>

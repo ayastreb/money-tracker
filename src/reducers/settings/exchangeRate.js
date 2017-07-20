@@ -7,8 +7,7 @@ import { DEFAULT_BASE_CURRENCY } from '../../constants/currency'
 export default function(state = { [DEFAULT_BASE_CURRENCY]: 1.0 }, action) {
   switch (action.type) {
     case LOAD_SETTINGS_SUCCESS:
-      if (!action.settings) return state
-      return action.settings.exchangeRate
+      return action.settings.exchangeRate || state
     case UPDATE_EXCHANGE_RATE_SUCCESS:
       return action.exchangeRate
     default:

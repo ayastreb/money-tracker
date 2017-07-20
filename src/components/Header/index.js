@@ -12,9 +12,7 @@ const AppHeader = ({ label, isMobile, isSyncRunning, toggleSidebar }) => (
       <Header.Content as="h2">{label}</Header.Content>
       <Popup
         hideOnScroll
-        trigger={
-          <Icon name={isSyncRunning ? 'world' : 'warning circle'} />
-        }
+        trigger={<Icon name={isSyncRunning ? 'world' : 'warning circle'} />}
         content={isSyncRunning ? 'Sync is online' : 'Sync is offline'}
       />
     </Header>

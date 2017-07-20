@@ -9,12 +9,6 @@ it('returns initial state', () => {
       secondary: []
     },
     exchangeRate: { USD: 1.0 },
-    collapsedSections: [],
-    sync: {
-      databases: {},
-      host: '',
-      key: '',
-      password: ''
-    }
+    collapsedSections: []
   })
 })

@@ -1,7 +1,6 @@
 import union from 'lodash/union'
 import { retrieveSettings } from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
-import { sync } from '../util/storage/pouchdb'
 
 export const LOAD_SETTINGS_REQUEST = 'LOAD_SETTINGS_REQUEST'
 export const LOAD_SETTINGS_SUCCESS = 'LOAD_SETTINGS_SUCCESS'
@@ -12,9 +11,6 @@ export function loadSettings() {
     try {
       const settings = await retrieveSettings()
       dispatch({ type: LOAD_SETTINGS_SUCCESS, settings })
-      if (settings.sync) {
-        dispatch(startSync(settings.sync))
-      }
     } catch (error) {
       dispatch({ type: LOAD_SETTINGS_FAILURE, error })
     }
@@ -76,17 +72,6 @@ export function updateSyncSettings(settings) {
 }
 
 export const START_SYNC = 'START_SYNC'
-export function startSync(settings) {
-  if (!settings.databases || !settings.host) return
-
-  Object.keys(settings.databases).forEach(database =>
-    sync(
-      database,
-      `${settings.host}${settings.databases[database]}`,
-      settings.key,
-      settings.password
-    )
-  )
-
+export function startSync() {
   return { type: START_SYNC }
 }
