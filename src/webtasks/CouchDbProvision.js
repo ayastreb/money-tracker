@@ -25,8 +25,7 @@ function CouchDbProvision(user, context, callback) {
           body: {
             name: configuration['CouchAdminUser'],
             password: configuration['CouchAdminPass']
-          },
-          resolveWithFullResponse: true
+          }
         },
         (err, response) => {
           if (err) return reject(err)
