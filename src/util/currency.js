@@ -9,8 +9,14 @@ export async function fetchExchangeRates(base, target) {
 
   return fetch(`https://query.yahooapis.com/v1/public/yql?${encode(params)}`)
     .then(body => body.json())
-    .then(response =>
-      response.query.results.rate.reduce((result, row) => {
+    .then(
+      response =>
+        response.query.results.rate.id !== undefined
+          ? [response.query.results.rate]
+          : response.query.results.rate
+    )
+    .then(rate =>
+      rate.reduce((result, row) => {
         result[row.id.substring(3)] = parseFloat(row['Rate'])
         return result
       }, {})
