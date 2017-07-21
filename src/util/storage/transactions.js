@@ -1,5 +1,13 @@
 import omit from 'lodash/omit'
-import { transactionsDB } from './pouchdb'
+import { transactionsDB, remoteTransactionsDB } from './pouchdb'
+
+export function syncTransactions(onChange) {
+  if (!remoteTransactionsDB()) return
+
+  transactionsDB()
+    .sync(remoteTransactionsDB(), { live: true, retry: true })
+    .on('change', onChange)
+}
 
 export async function retrieveRecentTransactions(limit) {
   return transactionsDB()

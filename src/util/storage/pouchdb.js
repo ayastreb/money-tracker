@@ -31,7 +31,9 @@ function remoteInstance(name) {
 }
 
 export const settingsDB = () => instance('settings')
-export const remoteSettingsDB = () => remoteInstance('settings')
 export const accountsDB = () => instance('accounts')
 export const transactionsDB = () => instance('transactions')
 export const tagsDB = () => instance('tags')
+export const remoteSettingsDB = () => remoteInstance('settings')
+export const remoteAccountsDB = () => remoteInstance('accounts')
+export const remoteTransactionsDB = () => remoteInstance('transactions')

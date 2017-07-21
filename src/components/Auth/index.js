@@ -88,7 +88,7 @@ class Auth extends React.Component {
           fluid
           required
           placeholder="Your Code"
-          type="text"
+          type="number"
           icon="lock"
           iconPosition="left"
           value={this.props.code}

@@ -21,6 +21,7 @@ beforeEach(() => (store = mockStore()))
 describe('loading recent transactions', () => {
   it('creates LOAD_RECENT_TRANSACTIONS action', () => {
     const expectedTransactions = [{ id: 'T12345' }, { id: 'T12346' }]
+    transactions.syncTransactions = jest.fn(cb => cb())
     transactions.retrieveRecentTransactions = jest.fn(
       resolvePromise(expectedTransactions)
     )
@@ -35,6 +36,7 @@ describe('loading recent transactions', () => {
 
   it('creates LOAD_TRANSACTIONS_FAILURE when failed to load recent transactions', () => {
     const error = new Error()
+    transactions.syncTransactions = jest.fn(cb => false)
     transactions.retrieveRecentTransactions = jest.fn(rejectPromise(error))
 
     return store.dispatch(loadRecentTransactions()).then(() => {

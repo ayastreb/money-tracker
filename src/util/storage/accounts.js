@@ -1,5 +1,13 @@
 import omit from 'lodash/omit'
-import { accountsDB } from './pouchdb'
+import { accountsDB, remoteAccountsDB } from './pouchdb'
+
+export function syncAccounts(onChange) {
+  if (!remoteAccountsDB()) return
+
+  accountsDB()
+    .sync(remoteAccountsDB(), { live: true, retry: true })
+    .on('change', onChange)
+}
 
 export async function retrieveAccounts() {
   return accountsDB().allDocs({ include_docs: true }).then(response =>

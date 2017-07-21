@@ -22,6 +22,7 @@ beforeEach(() => (store = mockStore()))
 describe('loading accounts', () => {
   it('creates LOAD_ACCOUNTS_SUCCESS action', () => {
     const expectedAccounts = [{ id: 'A12345' }, { id: 'A12346' }]
+    accounts.syncAccounts = jest.fn(cb => cb())
     accounts.retrieveAccounts = jest.fn(resolvePromise(expectedAccounts))
 
     return store.dispatch(loadAccounts()).then(() => {
@@ -34,6 +35,7 @@ describe('loading accounts', () => {
 
   it('creates LOAD_ACCOUNTS_FAILURE action when failed to load accounts', () => {
     const error = new Error()
+    accounts.syncAccounts = jest.fn(cb => false)
     accounts.retrieveAccounts = jest.fn(rejectPromise(error))
 
     return store.dispatch(loadAccounts()).then(() => {

@@ -1,27 +1,35 @@
 import {
   persistTransaction,
-  retrieveRecentTransactions
+  retrieveRecentTransactions,
+  syncTransactions
 } from '../util/storage/transactions'
 import { changeAccountBalance } from './accounts'
 import { useExpenseTag, useIncomeTag } from './tags'
 import { CURRENCY } from '../constants/currency'
 import { RECENT_TRANSACTIONS_LIMIT } from '../constants/transaction'
 
+export function loadRecentTransactions() {
+  return async dispatch => {
+    dispatch(loadRecentTransactionsFromStorage())
+
+    syncTransactions(info => {
+      console.log('transaction sync', info)
+      dispatch(loadRecentTransactionsFromStorage())
+    })
+  }
+}
+
 export const LOAD_RECENT_TRANSACTIONS = 'LOAD_RECENT_TRANSACTIONS'
 export const LOAD_TRANSACTIONS_FAILURE = 'LOAD_TRANSACTIONS_FAILURE'
-export function loadRecentTransactions(limit = RECENT_TRANSACTIONS_LIMIT) {
+export function loadRecentTransactionsFromStorage(
+  limit = RECENT_TRANSACTIONS_LIMIT
+) {
   return async dispatch => {
     try {
       const transactions = await retrieveRecentTransactions(limit)
-      dispatch({
-        type: LOAD_RECENT_TRANSACTIONS,
-        transactions
-      })
+      dispatch({ type: LOAD_RECENT_TRANSACTIONS, transactions })
     } catch (error) {
-      dispatch({
-        type: LOAD_TRANSACTIONS_FAILURE,
-        error
-      })
+      dispatch({ type: LOAD_TRANSACTIONS_FAILURE, error })
     }
   }
 }
