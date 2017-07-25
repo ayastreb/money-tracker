@@ -13,8 +13,9 @@ export function loadRecentTransactions() {
     dispatch(loadRecentTransactionsFromStorage())
 
     syncTransactions(info => {
-      console.log('transaction sync', info)
-      dispatch(loadRecentTransactionsFromStorage())
+      if (info.direction === 'pull') {
+        dispatch(loadRecentTransactionsFromStorage())
+      }
     })
   }
 }
