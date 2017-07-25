@@ -6,7 +6,9 @@ import { getRecentTransactions } from '../../selectors/transactions'
 
 class RecentTransactions extends React.Component {
   componentDidMount() {
-    this.props.loadRecentTransactions()
+    if (this.props.transactions.length === 0) {
+      this.props.loadRecentTransactions()
+    }
   }
 
   render() {
