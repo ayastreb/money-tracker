@@ -1,21 +1,70 @@
 import omit from 'lodash/omit'
 import { accountsDB, remoteAccountsDB } from './pouchdb'
 
-export function syncAccounts(onChange) {
+export async function syncAccounts(reload) {
   if (!remoteAccountsDB()) return
 
-  accountsDB()
-    .sync(remoteAccountsDB(), { live: true, retry: true })
-    .on('change', onChange)
+  const from = await accountsDB().replicate.from(remoteAccountsDB())
+  if (from.docs_written > 0) {
+    const accounts = await retrieveAccounts()
+    reload(accounts)
+    accounts.forEach(account => {
+      localStorage.setItem(account.id, JSON.stringify(account.balance))
+    })
+  }
+
+  const to = await accountsDB().replicate.to(remoteAccountsDB())
+  if (to.docs_written > 0) {
+    const accounts = await retrieveAccounts()
+    accounts.forEach(account => {
+      localStorage.setItem(account.id, JSON.stringify(account.balance))
+    })
+  }
 }
 
 export async function retrieveAccounts() {
-  return accountsDB().allDocs({ include_docs: true }).then(response =>
-    response.rows.map(row => ({
-      id: row.doc._id,
-      ...omit(row.doc, '_id', '_rev')
-    }))
+  return accountsDB()
+    .allDocs({ include_docs: true, conflicts: true })
+    .then(response => Promise.all(response.rows.map(resolveConflicts)))
+    .then(docs =>
+      docs.map(doc => ({
+        id: doc._id,
+        name: doc.name,
+        group: doc.group,
+        balance: doc.balance
+      }))
+    )
+}
+
+async function resolveConflicts(row) {
+  if (!row.doc._conflicts) return row.doc
+
+  const lastSyncedBalance = JSON.parse(localStorage.getItem(row.doc._id))
+  const conflictedBalances = await Promise.all(
+    row.doc._conflicts.map(async rev =>
+      accountsDB().get(row.doc._id, { rev }).then(doc => doc.balance)
+    )
   )
+  conflictedBalances.push(row.doc.balance)
+  row.doc.balance = resolveBalance(lastSyncedBalance, conflictedBalances)
+
+  return Promise.all(
+    row.doc._conflicts.map(async rev => accountsDB().remove(row.doc._id, rev))
+  )
+    .then(() => accountsDB().put(row.doc))
+    .then(() => row.doc)
+}
+
+function resolveBalance(lastSynced, conflictedBalances) {
+  return Object.keys(lastSynced).reduce((balance, code) => {
+    balance[code] =
+      lastSynced[code] +
+      conflictedBalances.reduce(
+        (delta, conflicted) => delta + (conflicted[code] - lastSynced[code]),
+        0
+      )
+    return balance
+  }, {})
 }
 
 export async function persistAccount(data) {

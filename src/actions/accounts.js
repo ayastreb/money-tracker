@@ -7,24 +7,16 @@ import {
   syncAccounts
 } from '../util/storage/accounts'
 
-export function loadAccounts() {
-  return async dispatch => {
-    dispatch(loadAccountsFromStorage())
-
-    syncAccounts(info => {
-      console.log('accounts sync', info)
-      dispatch(loadAccountsFromStorage())
-    })
-  }
-}
-
 export const LOAD_ACCOUNTS_SUCCESS = 'LOAD_ACCOUNTS_SUCCESS'
 export const LOAD_ACCOUNTS_FAILURE = 'LOAD_ACCOUNTS_FAILURE'
-function loadAccountsFromStorage() {
+export function loadAccounts() {
   return async dispatch => {
     try {
       const accounts = await retrieveAccounts()
       dispatch({ type: LOAD_ACCOUNTS_SUCCESS, accounts })
+      await syncAccounts(accounts =>
+        dispatch({ type: LOAD_ACCOUNTS_SUCCESS, accounts })
+      )
     } catch (error) {
       dispatch({ type: LOAD_ACCOUNTS_FAILURE, error })
     }
