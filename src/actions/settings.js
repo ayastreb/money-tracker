@@ -62,16 +62,3 @@ export function toggleSectionCollapse(section) {
     section
   }
 }
-
-export const UPDATE_SYNC_SETTINGS = 'UPDATE_SYNC_SETTINGS'
-export function updateSyncSettings(settings) {
-  return async dispatch => {
-    dispatch({ type: UPDATE_SYNC_SETTINGS, settings })
-    dispatch(startSync(settings))
-  }
-}
-
-export const START_SYNC = 'START_SYNC'
-export function startSync() {
-  return { type: START_SYNC }
-}

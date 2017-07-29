@@ -1,11 +1,11 @@
 import {
   SAVE_TRANSACTION,
-  LOAD_RECENT_TRANSACTIONS
+  UPDATE_RECENT_TRANSACTIONS
 } from '../../actions/transactions'
 
 export default function(state = { byId: {}, allIds: [] }, action) {
   switch (action.type) {
-    case LOAD_RECENT_TRANSACTIONS:
+    case UPDATE_RECENT_TRANSACTIONS:
       return {
         byId: action.transactions.reduce((result, transaction) => {
           result[transaction.id] = transaction

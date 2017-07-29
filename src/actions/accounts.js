@@ -3,23 +3,26 @@ import {
   retrieveAccounts,
   persistAccount,
   deleteAccount,
-  persistBalanceChange,
-  syncAccounts
+  persistBalanceChange
 } from '../util/storage/accounts'
 
-export const LOAD_ACCOUNTS_SUCCESS = 'LOAD_ACCOUNTS_SUCCESS'
 export const LOAD_ACCOUNTS_FAILURE = 'LOAD_ACCOUNTS_FAILURE'
 export function loadAccounts() {
   return async dispatch => {
     try {
       const accounts = await retrieveAccounts()
-      dispatch({ type: LOAD_ACCOUNTS_SUCCESS, accounts })
-      await syncAccounts(accounts =>
-        dispatch({ type: LOAD_ACCOUNTS_SUCCESS, accounts })
-      )
+      dispatch(updateAccountsList(accounts))
     } catch (error) {
       dispatch({ type: LOAD_ACCOUNTS_FAILURE, error })
     }
+  }
+}
+
+export const UPDATE_ACCOUNTS_LIST = 'UPDATE_ACCOUNTS_LIST'
+export function updateAccountsList(accounts) {
+  return {
+    type: UPDATE_ACCOUNTS_LIST,
+    accounts
   }
 }
 

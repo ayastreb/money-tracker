@@ -1,37 +1,28 @@
 import {
   persistTransaction,
-  retrieveRecentTransactions,
-  syncTransactions
+  retrieveRecentTransactions
 } from '../util/storage/transactions'
 import { changeAccountBalance } from './accounts'
 import { useExpenseTag, useIncomeTag } from './tags'
 import { CURRENCY } from '../constants/currency'
-import { RECENT_TRANSACTIONS_LIMIT } from '../constants/transaction'
 
+export const LOAD_TRANSACTIONS_FAILURE = 'LOAD_TRANSACTIONS_FAILURE'
 export function loadRecentTransactions() {
   return async dispatch => {
-    dispatch(loadRecentTransactionsFromStorage())
-
-    syncTransactions(info => {
-      if (info.direction === 'pull') {
-        dispatch(loadRecentTransactionsFromStorage())
-      }
-    })
-  }
-}
-
-export const LOAD_RECENT_TRANSACTIONS = 'LOAD_RECENT_TRANSACTIONS'
-export const LOAD_TRANSACTIONS_FAILURE = 'LOAD_TRANSACTIONS_FAILURE'
-export function loadRecentTransactionsFromStorage(
-  limit = RECENT_TRANSACTIONS_LIMIT
-) {
-  return async dispatch => {
     try {
-      const transactions = await retrieveRecentTransactions(limit)
-      dispatch({ type: LOAD_RECENT_TRANSACTIONS, transactions })
+      const transactions = await retrieveRecentTransactions()
+      dispatch(updateRecentTransactionsList(transactions))
     } catch (error) {
       dispatch({ type: LOAD_TRANSACTIONS_FAILURE, error })
     }
+  }
+}
+
+export const UPDATE_RECENT_TRANSACTIONS = 'UPDATE_RECENT_TRANSACTIONS'
+export function updateRecentTransactionsList(transactions) {
+  return {
+    type: UPDATE_RECENT_TRANSACTIONS,
+    transactions
   }
 }
 

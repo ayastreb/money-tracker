@@ -1,15 +1,22 @@
 import omit from 'lodash/omit'
 import { transactionsDB, remoteTransactionsDB } from './pouchdb'
+import { RECENT_TRANSACTIONS_LIMIT } from '../../constants/transaction'
 
-export function syncTransactions(onChange) {
+export async function syncTransactions() {
   if (!remoteTransactionsDB()) return
+  let transactions
 
-  transactionsDB()
-    .sync(remoteTransactionsDB(), { live: true, retry: true })
-    .on('change', onChange)
+  const from = await transactionsDB().replicate.from(remoteTransactionsDB())
+  if (from.docs_written > 0) transactions = await retrieveRecentTransactions()
+
+  await transactionsDB().replicate.to(remoteTransactionsDB())
+
+  return transactions
 }
 
-export async function retrieveRecentTransactions(limit) {
+export async function retrieveRecentTransactions(
+  limit = RECENT_TRANSACTIONS_LIMIT
+) {
   return transactionsDB()
     .allDocs({
       include_docs: true,

@@ -2,7 +2,7 @@ import reducer from './'
 import {
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
-  LOAD_ACCOUNTS_SUCCESS,
+  UPDATE_ACCOUNTS_LIST,
   REMOVE_ACCOUNT,
   CHANGE_ACCOUNT_BALANCE
 } from '../../actions/accounts'
@@ -15,7 +15,7 @@ describe('loading accounts', () => {
   it('loads accounts', () => {
     expect(
       reducer(undefined, {
-        type: LOAD_ACCOUNTS_SUCCESS,
+        type: UPDATE_ACCOUNTS_LIST,
         accounts: [
           { id: 'A12345', name: 'foo', balance: { USD: 100 } },
           { id: 'A12346', name: 'bar', balance: { EUR: 10, JPY: 15 } }

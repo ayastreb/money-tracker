@@ -12,10 +12,7 @@ import {
   CHANGE_CURRENCY,
   changeCurrency,
   TOGGLE_SECTION_COLLAPSE,
-  toggleSectionCollapse,
-  UPDATE_SYNC_SETTINGS,
-  updateSyncSettings,
-  START_SYNC
+  toggleSectionCollapse
 } from './settings'
 import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
 import * as settings from '../util/storage/settings'
@@ -112,23 +109,5 @@ describe('Toggling collapsed sections', () => {
       type: TOGGLE_SECTION_COLLAPSE,
       section: 'foo'
     })
-  })
-})
-
-describe('Updating sync settings', () => {
-  it('creates UPDATE_SYNC_SETTINGS and START_SYNC actions', () => {
-    return store
-      .dispatch(updateSyncSettings({ host: 'test', databases: {} }))
-      .then(() => {
-        expect(store.getActions()).toEqual([
-          {
-            type: UPDATE_SYNC_SETTINGS,
-            settings: { host: 'test', databases: {} }
-          },
-          {
-            type: START_SYNC
-          }
-        ])
-      })
   })
 })

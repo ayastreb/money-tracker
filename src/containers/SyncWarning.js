@@ -32,7 +32,7 @@ SyncWarning.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isVisible: !state.ui.isSyncRunning && state.ui.isSyncWarningVisible
+  isVisible: !state.user.isAuthenticated && state.ui.isSyncWarningVisible
 })
 
 export default connect(mapStateToProps, { dismissSyncWarning })(SyncWarning)

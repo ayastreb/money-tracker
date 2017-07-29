@@ -1,25 +1,29 @@
 import omit from 'lodash/omit'
 import { accountsDB, remoteAccountsDB } from './pouchdb'
 
-export async function syncAccounts(reload) {
+export async function syncAccounts() {
   if (!remoteAccountsDB()) return
+  let accounts
 
   const from = await accountsDB().replicate.from(remoteAccountsDB())
   if (from.docs_written > 0) {
-    const accounts = await retrieveAccounts()
-    reload(accounts)
-    accounts.forEach(account => {
-      localStorage.setItem(account.id, JSON.stringify(account.balance))
-    })
+    accounts = await retrieveAccounts()
+    updateLastSyncedBalance(accounts)
   }
 
   const to = await accountsDB().replicate.to(remoteAccountsDB())
   if (to.docs_written > 0) {
-    const accounts = await retrieveAccounts()
-    accounts.forEach(account => {
-      localStorage.setItem(account.id, JSON.stringify(account.balance))
-    })
+    accounts = await retrieveAccounts()
+    updateLastSyncedBalance(accounts)
   }
+
+  return accounts
+}
+
+function updateLastSyncedBalance(accounts) {
+  accounts.forEach(account => {
+    localStorage.setItem(account.id, JSON.stringify(account.balance))
+  })
 }
 
 export async function retrieveAccounts() {

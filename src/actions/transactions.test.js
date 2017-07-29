@@ -1,5 +1,5 @@
 import {
-  LOAD_RECENT_TRANSACTIONS,
+  UPDATE_RECENT_TRANSACTIONS,
   LOAD_TRANSACTIONS_FAILURE,
   SAVE_TRANSACTION,
   loadRecentTransactions,
@@ -29,7 +29,7 @@ describe('loading recent transactions', () => {
     return store.dispatch(loadRecentTransactions()).then(() => {
       const action = store
         .getActions()
-        .find(action => action.type === LOAD_RECENT_TRANSACTIONS)
+        .find(action => action.type === UPDATE_RECENT_TRANSACTIONS)
       expect(action.transactions).toEqual(expectedTransactions)
     })
   })

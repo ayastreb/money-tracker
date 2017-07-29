@@ -12,6 +12,7 @@ import Header from '../components/Header'
 import SyncWarning from './SyncWarning'
 import { loadSettings } from '../actions/settings'
 import { loadAccounts } from '../actions/accounts'
+import { startSync } from '../actions/sync'
 import { windowResize } from '../actions/ui/windowResize'
 import { toggleSidebar } from '../actions/ui/sidebar'
 
@@ -23,6 +24,7 @@ class App extends React.Component {
   componentDidMount() {
     this.props.loadSettings()
     this.props.loadAccounts()
+    this.props.startSync()
   }
 
   render() {
@@ -85,6 +87,7 @@ App.propTypes = {
   isSidebarOpen: PropTypes.bool,
   loadSettings: PropTypes.func,
   loadAccounts: PropTypes.func,
+  startSync: PropTypes.func,
   windowResize: PropTypes.func,
   toggleSidebar: PropTypes.func
 }
@@ -100,6 +103,7 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(mapStateToProps, {
   loadSettings,
   loadAccounts,
+  startSync,
   windowResize,
   toggleSidebar
 })(App)

@@ -1,5 +1,5 @@
 import {
-  LOAD_ACCOUNTS_SUCCESS,
+  UPDATE_ACCOUNTS_LIST,
   LOAD_ACCOUNTS_FAILURE,
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
@@ -28,7 +28,7 @@ describe('loading accounts', () => {
     return store.dispatch(loadAccounts()).then(() => {
       const action = store
         .getActions()
-        .find(action => action.type === LOAD_ACCOUNTS_SUCCESS)
+        .find(action => action.type === UPDATE_ACCOUNTS_LIST)
       expect(action.accounts).toEqual(expectedAccounts)
     })
   })

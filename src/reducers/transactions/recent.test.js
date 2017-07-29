@@ -1,6 +1,6 @@
 import reducer from './recent'
 import {
-  LOAD_RECENT_TRANSACTIONS,
+  UPDATE_RECENT_TRANSACTIONS,
   SAVE_TRANSACTION
 } from '../../actions/transactions'
 
@@ -11,7 +11,7 @@ it('returns initial state', () => {
 it('loads transactions', () => {
   expect(
     reducer(undefined, {
-      type: LOAD_RECENT_TRANSACTIONS,
+      type: UPDATE_RECENT_TRANSACTIONS,
       transactions: [
         { id: 'T12345', amount: 100 },
         { id: 'T12346', amount: 200 }

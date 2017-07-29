@@ -1,6 +1,6 @@
 import omit from 'lodash/omit'
 import {
-  LOAD_ACCOUNTS_SUCCESS,
+  UPDATE_ACCOUNTS_LIST,
   CREATE_ACCOUNT,
   CREATE_ACCOUNT_FAILURE,
   REMOVE_ACCOUNT,
@@ -9,7 +9,7 @@ import {
 
 export default function(state = { byId: {}, allIds: [] }, action) {
   switch (action.type) {
-    case LOAD_ACCOUNTS_SUCCESS:
+    case UPDATE_ACCOUNTS_LIST:
       return {
         byId: action.accounts.reduce((result, account) => {
           result[account.id] = account

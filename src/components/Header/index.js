@@ -1,20 +1,31 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Icon, Popup, Header } from 'semantic-ui-react'
+import { Icon, Header } from 'semantic-ui-react'
 import { toggleSidebar } from '../../actions/ui/sidebar'
+import { startSync } from '../../actions/sync'
 import './index.css'
 
-const AppHeader = ({ label, isMobile, isSyncRunning, toggleSidebar }) => (
+const AppHeader = ({
+  label,
+  isMobile,
+  isAuthenticated,
+  isSyncRunning,
+  toggleSidebar,
+  startSync
+}) => (
   <header>
     <Header>
       {isMobile && <Icon name="bars" onClick={toggleSidebar} />}
       <Header.Content as="h2">{label}</Header.Content>
-      <Popup
-        hideOnScroll
-        trigger={<Icon name={isSyncRunning ? 'world' : 'warning circle'} />}
-        content={isSyncRunning ? 'Sync is online' : 'Sync is offline'}
-      />
+      {isAuthenticated &&
+        (isSyncRunning
+          ? <Icon name="refresh" loading />
+          : <Icon
+              name="refresh"
+              onClick={startSync}
+              style={{ cursor: 'pointer' }}
+            />)}
     </Header>
   </header>
 )
@@ -22,14 +33,17 @@ const AppHeader = ({ label, isMobile, isSyncRunning, toggleSidebar }) => (
 AppHeader.propTypes = {
   label: PropTypes.string.isRequired,
   isMobile: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
   isSyncRunning: PropTypes.bool,
-  toggleSidebar: PropTypes.func
+  toggleSidebar: PropTypes.func,
+  startSync: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   isMobile: state.ui.isMobile,
+  isAuthenticated: state.user.isAuthenticated,
   isSyncRunning: state.ui.isSyncRunning
 })
 
-export default connect(mapStateToProps, { toggleSidebar })(AppHeader)
+export default connect(mapStateToProps, { toggleSidebar, startSync })(AppHeader)
