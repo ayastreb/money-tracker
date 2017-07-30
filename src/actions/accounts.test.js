@@ -20,7 +20,7 @@ let store
 beforeEach(() => (store = mockStore()))
 
 describe('loading accounts', () => {
-  it('creates LOAD_ACCOUNTS_SUCCESS action', () => {
+  it('creates UPDATE_ACCOUNTS_LIST action', () => {
     const expectedAccounts = [{ id: 'A12345' }, { id: 'A12346' }]
     accounts.syncAccounts = jest.fn(cb => cb())
     accounts.retrieveAccounts = jest.fn(resolvePromise(expectedAccounts))

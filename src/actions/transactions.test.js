@@ -19,7 +19,7 @@ let store
 beforeEach(() => (store = mockStore()))
 
 describe('loading recent transactions', () => {
-  it('creates LOAD_RECENT_TRANSACTIONS action', () => {
+  it('creates UPDATE_RECENT_TRANSACTIONS action', () => {
     const expectedTransactions = [{ id: 'T12345' }, { id: 'T12346' }]
     transactions.syncTransactions = jest.fn(cb => cb({ direction: 'push' }))
     transactions.retrieveRecentTransactions = jest.fn(
