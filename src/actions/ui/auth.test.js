@@ -18,11 +18,14 @@ import {
 import { LOAD_SETTINGS_SUCCESS } from '../settings'
 import {
   mockStore,
+  LocalStorageMock,
   rejectPromise,
   resolvePromise
 } from '../../util/test/helper'
 import * as auth from '../../util/auth'
 import * as settings from '../../util/storage/settings'
+
+global.localStorage = new LocalStorageMock()
 
 let store
 
@@ -95,6 +98,7 @@ describe('verifying auth code', () => {
 describe('finishing auth', () => {
   it('creates FINISH_AUTH_SUCCESS action', () => {
     auth.parseHash = jest.fn(resolvePromise(true))
+    auth.getSyncCredentials = jest.fn(resolvePromise(true))
     settings.retrieveSettings = jest.fn(resolvePromise({ foo: 'bar' }))
 
     return store.dispatch(finishAuth('foo')).then(() => {

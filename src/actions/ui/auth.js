@@ -1,4 +1,9 @@
-import { sendAuthCode, verifyAuthCode, parseHash } from '../../util/auth'
+import {
+  sendAuthCode,
+  verifyAuthCode,
+  parseHash,
+  getSyncCredentials
+} from '../../util/auth'
 import { retrieveSettings } from '../../util/storage/settings'
 import { LOAD_SETTINGS_SUCCESS } from '../settings'
 
@@ -59,7 +64,11 @@ export const FINISH_AUTH_FAILURE = 'FINISH_AUTH_FAILURE'
 export function finishAuth(hash) {
   return async dispatch => {
     try {
-      await parseHash(hash)
+      const accessToken = await parseHash(hash)
+      const couchDB = await getSyncCredentials(accessToken)
+
+      localStorage.setItem('userInfo', JSON.stringify({ accessToken, couchDB }))
+
       const settings = await retrieveSettings()
       dispatch({ type: LOAD_SETTINGS_SUCCESS, settings })
       dispatch({ type: FINISH_AUTH_SUCCESS })
