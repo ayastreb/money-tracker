@@ -5,6 +5,7 @@ import accounts from './accounts'
 import transactions from './transactions'
 import tags from './tags'
 import user from './user'
+import sync from './sync'
 
 export default combineReducers({
   ui,
@@ -12,5 +13,6 @@ export default combineReducers({
   accounts,
   transactions,
   tags,
-  user
+  user,
+  sync
 })

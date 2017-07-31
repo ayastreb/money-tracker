@@ -11,6 +11,7 @@ const AppHeader = ({
   isMobile,
   isAuthenticated,
   isSyncRunning,
+  hasPendingChanges,
   toggleSidebar,
   startSync
 }) => (
@@ -23,6 +24,7 @@ const AppHeader = ({
           ? <Icon name="refresh" loading />
           : <Icon
               name="refresh"
+              color={hasPendingChanges ? 'olive' : undefined}
               onClick={startSync}
               style={{ cursor: 'pointer' }}
             />)}
@@ -43,7 +45,8 @@ const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   isMobile: state.ui.isMobile,
   isAuthenticated: state.user.isAuthenticated,
-  isSyncRunning: state.ui.isSyncRunning
+  isSyncRunning: state.sync.isRunning,
+  hasPendingChanges: state.sync.hasPendingChanges
 })
 
 export default connect(mapStateToProps, { toggleSidebar, startSync })(AppHeader)

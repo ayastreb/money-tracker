@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Message } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { dismissSyncWarning } from '../actions/ui/syncWarning'
+import { dismissSyncWarning } from '../actions/sync'
 
 class SyncWarning extends React.Component {
   render() {
@@ -32,7 +32,7 @@ SyncWarning.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isVisible: !state.user.isAuthenticated && state.ui.isSyncWarningVisible
+  isVisible: !state.user.isAuthenticated && state.sync.isWarningVisible
 })
 
 export default connect(mapStateToProps, { dismissSyncWarning })(SyncWarning)

@@ -3,10 +3,11 @@ import { createStore, applyMiddleware } from 'redux'
 import {
   composeWithDevTools
 } from 'redux-devtools-extension/logOnlyInProduction'
-import persistSettings from '../middleware/persistSettings'
+import settings from '../middleware/settings'
+import sync from '../middleware/sync'
 import rootReducer from '../reducers'
 
-const enhancer = composeWithDevTools(applyMiddleware(thunk, persistSettings))
+const enhancer = composeWithDevTools(applyMiddleware(thunk, settings, sync))
 
 export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, enhancer)
