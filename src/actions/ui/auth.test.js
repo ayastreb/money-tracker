@@ -16,6 +16,7 @@ import {
   finishAuth
 } from './auth'
 import { LOAD_SETTINGS_SUCCESS } from '../settings'
+import { SYNC_REQUEST } from '../sync'
 import {
   mockStore,
   LocalStorageMock,
@@ -104,7 +105,8 @@ describe('finishing auth', () => {
     return store.dispatch(finishAuth('foo')).then(() => {
       expect(store.getActions()).toEqual([
         { type: LOAD_SETTINGS_SUCCESS, settings: { foo: 'bar' } },
-        { type: FINISH_AUTH_SUCCESS }
+        { type: FINISH_AUTH_SUCCESS },
+        { type: SYNC_REQUEST }
       ])
     })
   })

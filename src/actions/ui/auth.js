@@ -1,3 +1,4 @@
+import { startSync } from '../sync'
 import {
   sendAuthCode,
   verifyAuthCode,
@@ -72,6 +73,7 @@ export function finishAuth(hash) {
       const settings = await retrieveSettings()
       dispatch({ type: LOAD_SETTINGS_SUCCESS, settings })
       dispatch({ type: FINISH_AUTH_SUCCESS })
+      dispatch(startSync())
     } catch (error) {
       dispatch({
         type: FINISH_AUTH_FAILURE,

@@ -32,8 +32,8 @@ export function startSync() {
     dispatch({ type: SYNC_REQUEST })
     try {
       const accounts = await syncAccounts()
-      const transactions = await syncTransactions()
       if (accounts) dispatch(updateAccountsList(accounts))
+      const transactions = await syncTransactions()
       if (transactions) dispatch(updateRecentTransactionsList(transactions))
       dispatch({ type: SYNC_SUCCESS })
     } catch (error) {
