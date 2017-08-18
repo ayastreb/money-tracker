@@ -5,26 +5,21 @@ import union from 'lodash/union'
 import pick from 'lodash/pick'
 import isEqual from 'lodash/isEqual'
 
+const defaultLocalSettings = {
+  _id: '_local/settings',
+  collapsedSections: []
+}
 const defaultSettings = {
   _id: 'settings',
   currency: { base: DEFAULT_BASE_CURRENCY, secondary: [] },
   exchangeRate: { [DEFAULT_BASE_CURRENCY]: 1 }
 }
 
-export async function retrieveSettings() {
+export async function persistLocalSettings(settings) {
   return settingsDB()
-    .get('settings')
-    .then(local => local, err => defaultSettings)
-    .then(async local => {
-      if (!remoteSettingsDB()) return local
-
-      try {
-        const remote = await remoteSettingsDB().get('settings')
-        return mergeSettings(local, remote)
-      } catch (error) {
-        return local
-      }
-    })
+    .get('_local/settings')
+    .then(doc => doc, err => defaultLocalSettings)
+    .then(doc => settingsDB().put({ ...doc, ...settings }))
 }
 
 export async function persistSettings(settings) {
@@ -41,26 +36,43 @@ export async function persistSettings(settings) {
     .then(doc => settingsDB().put({ ...doc, ...settings }))
 }
 
-async function mergeSettings(local, remote) {
+export async function retrieveSettings() {
+  return settingsDB()
+    .get('_local/settings')
+    .then(local => local, err => defaultLocalSettings)
+    .then(local => mergeLocalWithSyncedSettings(local))
+}
+
+async function mergeLocalWithSyncedSettings(local) {
+  return settingsDB()
+    .get('settings')
+    .then(settings => settings, err => defaultSettings)
+    .then(settings => syncSettings(settings))
+    .then(settings => ({ ...settings, ...local }))
+}
+
+async function syncSettings(settings) {
+  if (!remoteSettingsDB()) return settings
+
+  const remote = await remoteSettingsDB().get('settings')
   const base = remote.currency.base
   const secondary = union(
-    local.currency.base,
-    local.currency.secondary,
+    settings.currency.base,
+    settings.currency.secondary,
     remote.currency.secondary
   ).filter(code => code !== base)
 
-  const merged = {
-    collapsedSections: union(local.collapsedSections, remote.collapsedSections),
+  const synced = {
     currency: { base, secondary },
-    exchangeRate: local.currency.base === base
-      ? { ...local.exchangeRate, ...remote.exchangeRate }
+    exchangeRate: settings.currency.base === base
+      ? { ...settings.exchangeRate, ...remote.exchangeRate }
       : await fetchExchangeRates(base, secondary),
     isSetupComplete: remote.isSetupComplete
   }
 
-  if (!isEqual(pick(local, Object.keys(merged)), merged)) {
-    await persistSettings(merged)
+  if (!isEqual(pick(settings, Object.keys(synced)), synced)) {
+    await persistSettings(synced)
   }
 
-  return merged
+  return synced
 }
