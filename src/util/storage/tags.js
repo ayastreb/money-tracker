@@ -1,4 +1,15 @@
-import { tagsDB } from './pouchdb'
+import { tagsDB, remoteTagsDB } from './pouchdb'
+
+export async function syncTags() {
+  let hasChanges = false
+  if (!remoteTagsDB()) return hasChanges
+
+  await tagsDB().replicate.to(remoteTagsDB())
+  const from = await tagsDB().replicate.from(remoteTagsDB())
+  if (from.docs_written > 0) hasChanges = true
+
+  return hasChanges
+}
 
 export async function retrieveTags(kind) {
   return tagsDB()

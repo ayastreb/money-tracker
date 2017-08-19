@@ -1,7 +1,9 @@
 import { syncAccounts } from '../util/storage/accounts'
 import { syncTransactions } from '../util/storage/transactions'
+import { syncTags } from '../util/storage/tags'
 import { updateAccountsList } from './accounts'
 import { updateRecentTransactionsList } from './transactions'
+import { loadExpenseTags, loadIncomeTags } from './tags'
 
 export const DISMISS_SYNC_WARNING = 'DISMISS_SYNC_WARNING'
 export function dismissSyncWarning() {
@@ -35,6 +37,11 @@ export function startSync() {
       if (accounts) dispatch(updateAccountsList(accounts))
       const transactions = await syncTransactions()
       if (transactions) dispatch(updateRecentTransactionsList(transactions))
+      const tagChanges = await syncTags()
+      if (tagChanges) {
+        dispatch(loadExpenseTags())
+        dispatch(loadIncomeTags())
+      }
       dispatch({ type: SYNC_SUCCESS })
     } catch (error) {
       dispatch({ type: SYNC_FAILURE, error })
