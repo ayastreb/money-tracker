@@ -11,6 +11,6 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  toggleGroupCollapse: toggleSectionCollapse,
+  toggleSectionCollapse,
   removeAccount
 })(AccountsWidget)
