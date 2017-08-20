@@ -1,12 +1,3 @@
-.transaction-form .ui.attached.segment {
-  margin: 0!important;
-  width: 100%!important;
-}
-
-.transaction-form .ui.attached.menu {
-  width: 100%!important;
-}
-
 .input-right input {
   text-align: right!important;
   font-family: "Roboto Mono", monospace!important;
