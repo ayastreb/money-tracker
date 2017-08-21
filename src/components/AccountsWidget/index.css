@@ -1,12 +1,19 @@
+.account-widget-group {
+  border-top: solid 1px #D4D4D5;
+}
+
 @media (min-width: 768px) {
   .account-widget {
     border: solid 1px #D4D4D5;
+    border-radius: .28571429rem;
+  }
+
+  .account-widget-group:first-child {
     border-top: none;
   }
 }
 
 .account-widget-group__header {
-  border-top: solid 1px #D4D4D5;
   display: table;
   width: 100%;
   cursor: pointer;
