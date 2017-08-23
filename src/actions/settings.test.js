@@ -1,113 +1,51 @@
 import {
-  LOAD_SETTINGS_REQUEST,
-  LOAD_SETTINGS_SUCCESS,
-  LOAD_SETTINGS_FAILURE,
   loadSettings,
-  UPDATE_EXCHANGE_RATE_REQUEST,
-  UPDATE_EXCHANGE_RATE_SUCCESS,
-  UPDATE_EXCHANGE_RATE_FAILURE,
-  updateExchangeRate,
-  COMPLETE_SETUP,
   completeSetup,
-  CHANGE_CURRENCY,
   changeCurrency,
-  TOGGLE_SECTION_COLLAPSE,
+  updateExchangeRate,
   toggleSectionCollapse
 } from './settings'
-import { mockStore, rejectPromise, resolvePromise } from '../util/test/helper'
-import * as settings from '../util/storage/settings'
-import * as currency from '../util/currency'
 
-let store
+jest.mock('../util/storage/settings', () => ({
+  load: jest.fn().mockReturnValueOnce('load promise')
+}))
+jest.mock('../util/currency', () => ({
+  fetchExchangeRates: jest.fn().mockReturnValueOnce('currency promise')
+}))
 
-beforeEach(() => (store = mockStore()))
-
-describe('Loading settings', () => {
-  it('creates LOAD_SETTINGS_SUCCESS after loading settings', () => {
-    settings.retrieveSettings = jest.fn(resolvePromise({ foo: 'bar' }))
-
-    return store.dispatch(loadSettings()).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: LOAD_SETTINGS_REQUEST },
-        { type: LOAD_SETTINGS_SUCCESS, settings: { foo: 'bar' } }
-      ])
-    })
-  })
-
-  it('creates LOAD_SETTINGS_FAILURE when failed to load settings', () => {
-    const error = new Error()
-    settings.retrieveSettings = jest.fn(rejectPromise(error))
-
-    return store.dispatch(loadSettings()).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: LOAD_SETTINGS_REQUEST },
-        { type: LOAD_SETTINGS_FAILURE, error }
-      ])
-    })
+it('creates load action', () => {
+  expect(loadSettings()).toEqual({
+    type: 'LOAD_SETTINGS',
+    payload: 'load promise'
   })
 })
 
-describe('Updating exchange rates', () => {
-  it('merges secondary and used currency codes', () => {
-    currency.fetchExchangeRates = jest.fn(
-      resolvePromise({ USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 })
-    )
-
-    return store
-      .dispatch(
-        updateExchangeRate('USD', ['EUR', 'CAD'], ['USD', 'EUR', 'JPY'])
-      )
-      .then(() => {
-        const updateAction = store
-          .getActions()
-          .find(action => action.type === UPDATE_EXCHANGE_RATE_REQUEST)
-        expect(updateAction.target).toEqual(
-          expect.arrayContaining(['USD', 'EUR', 'CAD', 'JPY'])
-        )
-        expect(store.getActions()).toEqual(
-          expect.arrayContaining([
-            {
-              type: UPDATE_EXCHANGE_RATE_SUCCESS,
-              exchangeRate: { USD: 1, EUR: 0.75, CAD: 1.351, JPY: 112.086 }
-            }
-          ])
-        )
-      })
-  })
-
-  it('creates UPDATE_EXCHANGE_RATE_FAILURE when failed to fetch rates', () => {
-    const error = new Error()
-    currency.fetchExchangeRates = jest.fn(rejectPromise(error))
-
-    return store.dispatch(updateExchangeRate('USD', [], [])).then(() => {
-      expect(store.getActions()).toEqual(
-        expect.arrayContaining([{ type: UPDATE_EXCHANGE_RATE_FAILURE, error }])
-      )
-    })
+it('creates complete setup action', () => {
+  expect(completeSetup()).toEqual({
+    type: 'COMPLETE_SETUP'
   })
 })
 
-describe('Completing initial setup', () => {
-  it('creates COMPLETE_SETUP action', () => {
-    expect(completeSetup()).toEqual({ type: COMPLETE_SETUP })
-  })
-})
-
-describe('Changing base currency', () => {
-  it('filters base currency from secondary currencies', () => {
-    expect(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD')).toEqual({
-      type: CHANGE_CURRENCY,
+it('filters base currency from secondary currencies', () => {
+  expect(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD')).toEqual({
+    type: 'CHANGE_CURRENCY',
+    payload: {
       base: 'EUR',
       secondary: ['USD', 'JPY', 'CAD']
-    })
+    }
   })
 })
 
-describe('Toggling collapsed sections', () => {
-  it('creates TOGGLE_SECTION_COLLAPSE action', () => {
-    expect(toggleSectionCollapse('foo')).toEqual({
-      type: TOGGLE_SECTION_COLLAPSE,
-      section: 'foo'
-    })
+it('creates update exchange rate action', () => {
+  expect(updateExchangeRate('USD', ['EUR'])).toEqual({
+    type: 'UPDATE_EXCHANGE_RATE',
+    payload: 'currency promise'
+  })
+})
+
+it('creates toggle section action', () => {
+  expect(toggleSectionCollapse('foo')).toEqual({
+    type: 'TOGGLE_SECTION_COLLAPSE',
+    payload: 'foo'
   })
 })

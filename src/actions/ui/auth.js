@@ -5,8 +5,7 @@ import {
   parseHash,
   getSyncCredentials
 } from '../../util/auth'
-import { retrieveSettings } from '../../util/storage/settings'
-import { LOAD_SETTINGS_SUCCESS } from '../settings'
+import { loadSettings } from '../settings'
 
 export const CHANGE_EMAIL = 'CHANGE_EMAIL'
 export function changeEmail(email) {
@@ -70,10 +69,10 @@ export function finishAuth(hash) {
 
       localStorage.setItem('userInfo', JSON.stringify({ accessToken, couchDB }))
 
-      const settings = await retrieveSettings()
-      dispatch({ type: LOAD_SETTINGS_SUCCESS, settings })
-      dispatch({ type: FINISH_AUTH_SUCCESS })
-      dispatch(startSync())
+      dispatch(loadSettings()).then(() => {
+        dispatch({ type: FINISH_AUTH_SUCCESS })
+        dispatch(startSync())
+      })
     } catch (error) {
       dispatch({
         type: FINISH_AUTH_FAILURE,

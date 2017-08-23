@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import union from 'lodash/union'
 import { connect } from 'react-redux'
 import { Dropdown, Form } from 'semantic-ui-react'
 import { getUsedCurrency } from '../../selectors/currency'
@@ -26,8 +27,7 @@ class CurrencyForm extends React.Component {
     this.props.changeCurrency(value, this.props.secondary, this.props.base)
     this.props.updateExchangeRate(
       value,
-      this.props.secondary,
-      this.props.usedCurrency
+      union(this.props.secondary, this.props.usedCurrency)
     )
   }
 
@@ -35,8 +35,7 @@ class CurrencyForm extends React.Component {
     this.props.changeCurrency(this.props.base, value)
     this.props.updateExchangeRate(
       this.props.base,
-      value,
-      this.props.usedCurrency
+      union(value, this.props.usedCurrency)
     )
   }
 
