@@ -1,12 +1,12 @@
-import reducer from './'
-import { REQUEST, SUCCESS, FAILURE } from '../../middleware/promise'
+import reducer from './accounts'
+import { REQUEST, SUCCESS, FAILURE } from '../middleware/promise'
 import {
   loadAccounts,
   saveAccount,
   removeAccount,
   changeBalance
-} from '../../actions/accounts'
-import Account from '../../models/Account'
+} from '../actions/accounts'
+import Account from '../models/Account'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({ byId: {}, allIds: [] })

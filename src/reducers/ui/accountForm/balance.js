@@ -6,7 +6,7 @@ import {
   CHANGE_CURRENCY_BALANCE
 } from '../../../actions/ui/accountForm'
 import { saveAccount } from '../../../actions/accounts'
-import { CHANGE_CURRENCY } from '../../../actions/settings'
+import { changeCurrency } from '../../../actions/settings'
 
 export default function(state = {}, action) {
   switch (action.type) {
@@ -15,8 +15,8 @@ export default function(state = {}, action) {
       return action.isChecked
         ? { ...state, [action.code]: '' }
         : omit(state, action.code)
-    case CHANGE_CURRENCY:
-      return pick(state, [action.base, ...action.secondary])
+    case changeCurrency.toString():
+      return pick(state, [action.payload.base, ...action.payload.secondary])
     case CHANGE_CURRENCY_BALANCE:
       return { ...state, [action.code]: action.balance }
     case `${saveAccount}_${REQUEST}`:
