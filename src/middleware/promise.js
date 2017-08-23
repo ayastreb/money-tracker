@@ -15,5 +15,8 @@ export default store => next => action => {
 
   return action.payload
     .then(payload => dispatch({ type: `${type}_${SUCCESS}`, meta, payload }))
-    .catch(error => dispatch({ type: `${type}_${FAILURE}`, meta, error }))
+    .catch(error => {
+      dispatch({ type: `${type}_${FAILURE}`, meta, error })
+      throw error
+    })
 }
