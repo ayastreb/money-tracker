@@ -1,43 +1,44 @@
 import omit from 'lodash/omit'
+import { REQUEST, SUCCESS, FAILURE } from '../../middleware/promise'
 import {
-  UPDATE_ACCOUNTS_LIST,
-  CREATE_ACCOUNT,
-  CREATE_ACCOUNT_FAILURE,
-  REMOVE_ACCOUNT,
-  CHANGE_ACCOUNT_BALANCE
+  loadAccounts,
+  syncAccounts,
+  saveAccount,
+  changeBalance,
+  removeAccount
 } from '../../actions/accounts'
 
 export default function(state = { byId: {}, allIds: [] }, action) {
   switch (action.type) {
-    case UPDATE_ACCOUNTS_LIST:
+    case `${loadAccounts}_${SUCCESS}`:
+    case `${syncAccounts}_${SUCCESS}`:
+      if (!action.payload) return state
       return {
-        byId: action.accounts.reduce((result, account) => {
-          result[account.id] = account
-          result[account.id]['currencies'] = Object.keys(account.balance)
+        byId: action.payload.reduce((result, account) => {
+          result[account.id] = account.toState()
           return result
         }, {}),
-        allIds: action.accounts.map(account => account.id)
+        allIds: action.payload.map(account => account.id)
       }
-    case CREATE_ACCOUNT:
+    case `${saveAccount}_${REQUEST}`:
+      const account = action.meta.account
       return {
-        byId: {
-          ...state.byId,
-          [action.account.id]: {
-            ...action.account,
-            currencies: Object.keys(action.account.balance)
-          }
-        },
-        allIds: state.allIds.concat(action.account.id)
+        byId: { ...state.byId, [account.id]: account.toState() },
+        allIds: state.allIds.concat(account.id)
       }
-    case REMOVE_ACCOUNT:
-    case CREATE_ACCOUNT_FAILURE:
+    case `${saveAccount}_${FAILURE}`:
       return {
-        byId: omit(state.byId, action.id),
-        allIds: state.allIds.filter(id => id !== action.id)
+        byId: omit(state.byId, action.meta.account.id),
+        allIds: state.allIds.filter(id => id !== action.meta.account.id)
       }
-    case CHANGE_ACCOUNT_BALANCE:
-      const id = action.id
-      const currency = action.currency
+    case `${removeAccount}_${REQUEST}`:
+      return {
+        byId: omit(state.byId, action.meta.id),
+        allIds: state.allIds.filter(id => id !== action.meta.id)
+      }
+    case `${changeBalance}_${REQUEST}`:
+      const id = action.meta.id
+      const currency = action.meta.currency
       return {
         byId: {
           ...state.byId,
@@ -46,7 +47,7 @@ export default function(state = { byId: {}, allIds: [] }, action) {
             balance: {
               ...state.byId[id].balance,
               [currency]: parseInt(state.byId[id].balance[currency], 10) +
-                action.amount
+                action.meta.amount
             }
           }
         },

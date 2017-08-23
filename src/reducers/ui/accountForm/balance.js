@@ -1,13 +1,11 @@
 import omit from 'lodash/omit'
 import pick from 'lodash/pick'
+import { REQUEST, FAILURE } from '../../../middleware/promise'
 import {
   CHANGE_CURRENCY_CHECKBOX,
   CHANGE_CURRENCY_BALANCE
 } from '../../../actions/ui/accountForm'
-import {
-  CREATE_ACCOUNT,
-  CREATE_ACCOUNT_FAILURE
-} from '../../../actions/accounts'
+import { saveAccount } from '../../../actions/accounts'
 import { CHANGE_CURRENCY } from '../../../actions/settings'
 
 export default function(state = {}, action) {
@@ -21,10 +19,10 @@ export default function(state = {}, action) {
       return pick(state, [action.base, ...action.secondary])
     case CHANGE_CURRENCY_BALANCE:
       return { ...state, [action.code]: action.balance }
-    case CREATE_ACCOUNT:
+    case `${saveAccount}_${REQUEST}`:
       return {}
-    case CREATE_ACCOUNT_FAILURE:
-      return action.balance
+    case `${saveAccount}_${FAILURE}`:
+      return action.meta.account.balanceToForm()
     default:
       return state
   }

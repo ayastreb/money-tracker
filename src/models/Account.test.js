@@ -1,7 +1,7 @@
-import { accountGroupAsDropdownOptions } from './account'
+import Account from './Account'
 
 it('should return list of account groups in dropdown options format', () => {
-  const options = accountGroupAsDropdownOptions()
+  const options = Account.groupAsDropdownOptions()
 
   expect(Array.isArray(options)).toBeTruthy()
   expect(options.length).toBeGreaterThanOrEqual(1)

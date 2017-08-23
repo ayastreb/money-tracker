@@ -1,43 +1,82 @@
-import omit from 'lodash/omit'
 import { accountsDB, remoteAccountsDB } from './pouchdb'
+import Account from '../../models/Account'
 
-export async function syncAccounts() {
+export default {
+  sync,
+  loadAll,
+  save,
+  changeBalance,
+  remove
+}
+
+async function sync() {
   if (!remoteAccountsDB()) return
   let accounts
 
   const from = await accountsDB().replicate.from(remoteAccountsDB())
   if (from.docs_written > 0) {
-    accounts = await retrieveAccounts()
+    accounts = await loadAll()
     updateLastSyncedBalance(accounts)
   }
 
   const to = await accountsDB().replicate.to(remoteAccountsDB())
   if (to.docs_written > 0) {
-    accounts = await retrieveAccounts()
+    accounts = await loadAll()
     updateLastSyncedBalance(accounts)
   }
 
   return accounts
 }
 
+function loadAll() {
+  return accountsDB()
+    .allDocs({ include_docs: true, conflicts: true })
+    .then(response => Promise.all(response.rows.map(resolveConflicts)))
+    .then(docs => docs.map(doc => new Account({ id: doc._id, ...doc })))
+}
+
+function save(account) {
+  return accountsDB()
+    .get(account.id)
+    .then(doc => accountsDB().put({ ...doc, ...account.toJSON() }))
+    .catch(err => {
+      if (err.status !== 404) throw err
+      return accountsDB().put({ _id: account.id, ...account.toJSON() })
+    })
+}
+
+function changeBalance(id, currency, amount) {
+  return accountsDB()
+    .get(id)
+    .then(doc =>
+      accountsDB().put({
+        ...doc,
+        balance: {
+          ...doc.balance,
+          [currency]: parseInt(doc.balance[currency], 10) + amount
+        }
+      })
+    )
+    .catch(err => {
+      if (err.status !== 404) throw err
+      return true
+    })
+}
+
+function remove(id) {
+  return accountsDB()
+    .get(id)
+    .then(doc => accountsDB().put({ ...doc, _deleted: true }))
+    .catch(err => {
+      if (err.status !== 404) throw err
+      return true
+    })
+}
+
 function updateLastSyncedBalance(accounts) {
   accounts.forEach(account => {
     localStorage.setItem(account.id, JSON.stringify(account.balance))
   })
-}
-
-export async function retrieveAccounts() {
-  return accountsDB()
-    .allDocs({ include_docs: true, conflicts: true })
-    .then(response => Promise.all(response.rows.map(resolveConflicts)))
-    .then(docs =>
-      docs.map(doc => ({
-        id: doc._id,
-        name: doc.name,
-        group: doc.group,
-        balance: doc.balance
-      }))
-    )
 }
 
 async function resolveConflicts(row) {
@@ -69,43 +108,4 @@ function resolveBalance(lastSynced, conflictedBalances) {
       )
     return balance
   }, {})
-}
-
-export async function persistAccount(data) {
-  const account = omit(data, 'id')
-  return accountsDB()
-    .get(data.id)
-    .then(doc => accountsDB().put({ ...doc, ...account }))
-    .catch(err => {
-      if (err.status !== 404) throw err
-      return accountsDB().put({ _id: data.id, ...account })
-    })
-}
-
-export async function deleteAccount(id) {
-  return accountsDB()
-    .get(id)
-    .then(doc => accountsDB().put({ ...doc, _deleted: true }))
-    .catch(err => {
-      if (err.status !== 404) throw err
-      return true
-    })
-}
-
-export async function persistBalanceChange(id, currency, amount) {
-  return accountsDB()
-    .get(id)
-    .then(doc =>
-      accountsDB().put({
-        ...doc,
-        balance: {
-          ...doc.balance,
-          [currency]: parseInt(doc.balance[currency], 10) + amount
-        }
-      })
-    )
-    .catch(err => {
-      if (err.status !== 404) throw err
-      return true
-    })
 }

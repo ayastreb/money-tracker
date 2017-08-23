@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
-import { accountGroupAsDropdownOptions } from '../../constants/account'
+import Account from '../../models/Account'
 import { changeName, changeGroup } from '../../actions/ui/accountForm'
-import { createAccount } from '../../actions/accounts'
+import { saveAccount } from '../../actions/accounts'
 
 class AccountForm extends React.Component {
   constructor(props) {
     super(props)
 
-    this.groups = accountGroupAsDropdownOptions()
+    this.groups = Account.groupAsDropdownOptions()
   }
 
   handleNameChange = (event, { value }) => this.props.changeName(value)
@@ -19,11 +19,7 @@ class AccountForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    this.props.createAccount(
-      this.props.name,
-      this.props.group,
-      this.props.balance
-    )
+    this.props.saveAccount(Account.fromForm(this.props))
   }
 
   render() {
@@ -57,7 +53,7 @@ AccountForm.propTypes = {
   balance: PropTypes.objectOf(PropTypes.string),
   changeName: PropTypes.func,
   changeGroup: PropTypes.func,
-  createAccount: PropTypes.func
+  saveAccount: PropTypes.func
 }
 
 const mapStateToProps = state => ({
@@ -69,5 +65,5 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   changeName,
   changeGroup,
-  createAccount
+  saveAccount
 })(AccountForm)
