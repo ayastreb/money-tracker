@@ -1,10 +1,10 @@
 import reducer from './accounts'
-import { REQUEST, SUCCESS, FAILURE } from '../middleware/promise'
 import {
-  loadAccounts,
-  saveAccount,
-  removeAccount,
-  changeBalance
+  loadAccountsSuccess,
+  saveAccountRequest,
+  saveAccountFailure,
+  removeAccountRequest,
+  changeBalanceRequest
 } from '../actions/accounts'
 import Account from '../models/Account'
 
@@ -15,17 +15,17 @@ it('returns initial state', () => {
 describe('loading accounts', () => {
   it('loads accounts', () => {
     expect(
-      reducer(undefined, {
-        type: `${loadAccounts}_${SUCCESS}`,
-        payload: [
+      reducer(
+        undefined,
+        loadAccountsSuccess([
           new Account({ id: 'A12345', name: 'foo', balance: { USD: 100 } }),
           new Account({
             id: 'A12346',
             name: 'bar',
             balance: { EUR: 10, JPY: 15 }
           })
-        ]
-      })
+        ])
+      )
     ).toEqual({
       byId: {
         A12345: {
@@ -49,17 +49,17 @@ describe('loading accounts', () => {
 describe('saving account', () => {
   it('adds account to the list', () => {
     expect(
-      reducer(undefined, {
-        type: `${saveAccount}_${REQUEST}`,
-        meta: {
-          account: new Account({
+      reducer(
+        undefined,
+        saveAccountRequest(
+          new Account({
             id: 'A12345',
             name: 'foo',
             group: 'cash',
             balance: { USD: 12500 }
           })
-        }
-      })
+        )
+      )
     ).toEqual({
       byId: {
         A12345: {
@@ -87,17 +87,14 @@ describe('saving account', () => {
           },
           allIds: ['A12345']
         },
-        {
-          type: `${saveAccount}_${REQUEST}`,
-          meta: {
-            account: new Account({
-              id: 'A12346',
-              name: 'bar',
-              group: 'bank',
-              balance: { EUR: 205 }
-            })
-          }
-        }
+        saveAccountRequest(
+          new Account({
+            id: 'A12346',
+            name: 'bar',
+            group: 'bank',
+            balance: { EUR: 205 }
+          })
+        )
       )
     ).toEqual({
       byId: {
@@ -142,10 +139,7 @@ describe('saving account', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        {
-          type: `${saveAccount}_${FAILURE}`,
-          meta: { account: { id: 'A12345' } }
-        }
+        saveAccountFailure('A12345')
       )
     ).toEqual({
       byId: {
@@ -183,10 +177,7 @@ describe('removing account', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        {
-          type: `${removeAccount}_${REQUEST}`,
-          meta: { id: 'A12346' }
-        }
+        removeAccountRequest('A12346')
       )
     ).toEqual({
       byId: {
@@ -223,14 +214,7 @@ describe('changing balance', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        {
-          type: `${changeBalance}_${REQUEST}`,
-          meta: {
-            id: 'A12346',
-            currency: 'JPY',
-            amount: -200
-          }
-        }
+        changeBalanceRequest('A12346', 'JPY', -200)
       )
     ).toEqual({
       byId: {
@@ -271,14 +255,7 @@ describe('changing balance', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        {
-          type: `${changeBalance}_${REQUEST}`,
-          meta: {
-            id: 'A12346',
-            currency: 'USD',
-            amount: 100
-          }
-        }
+        changeBalanceRequest('A12346', 'USD', 100)
       )
     ).toEqual({
       byId: {
