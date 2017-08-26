@@ -1,50 +1,32 @@
-import { syncAccounts } from '../util/storage/accounts'
-import { syncTransactions } from '../util/storage/transactions'
-import { syncTags } from '../util/storage/tags'
-import { updateAccountsList } from './accounts'
-import { updateRecentTransactionsList } from './transactions'
-import { loadExpenseTags, loadIncomeTags } from './tags'
+import { createActions } from 'redux-actions'
+import { syncAccounts } from './accounts'
+import { syncTransactions } from './transactions'
+import { syncTags } from './tags'
 
-export const DISMISS_SYNC_WARNING = 'DISMISS_SYNC_WARNING'
-export function dismissSyncWarning() {
-  return {
-    type: DISMISS_SYNC_WARNING
-  }
-}
+export const {
+  dismissSyncWarning,
+  setPendingChangesFlag,
+  syncRequest,
+  syncSuccess,
+  syncFailure
+} = createActions(
+  'DISMISS_SYNC_WARNING',
+  'SET_PENDING_CHANGES_FLAG',
+  'SYNC_REQUEST',
+  'SYNC_SUCCESS',
+  'SYNC_FAILURE'
+)
 
-export const SET_PENDING_CHANGES_FLAG = 'SET_PENDING_CHANGES_FLAG'
-export function setPendingChangesFlag() {
-  return {
-    type: SET_PENDING_CHANGES_FLAG
-  }
-}
+export function sync() {
+  return dispatch => {
+    dispatch(syncRequest())
 
-export const UNSET_PENDING_CHANGES_FLAG = 'UNSET_PENDING_CHANGES_FLAG'
-export function unsetPendingChangesFlag() {
-  return {
-    type: UNSET_PENDING_CHANGES_FLAG
-  }
-}
-
-export const SYNC_REQUEST = 'SYNC_REQUEST'
-export const SYNC_SUCCESS = 'SYNC_SUCCESS'
-export const SYNC_FAILURE = 'SYNC_FAILURE'
-export function startSync() {
-  return async dispatch => {
-    dispatch({ type: SYNC_REQUEST })
-    try {
-      const accounts = await syncAccounts()
-      if (accounts) dispatch(updateAccountsList(accounts))
-      const transactions = await syncTransactions()
-      if (transactions) dispatch(updateRecentTransactionsList(transactions))
-      const tagChanges = await syncTags()
-      if (tagChanges) {
-        dispatch(loadExpenseTags())
-        dispatch(loadIncomeTags())
-      }
-      dispatch({ type: SYNC_SUCCESS })
-    } catch (error) {
-      dispatch({ type: SYNC_FAILURE, error })
-    }
+    return Promise.all([
+      dispatch(syncAccounts()),
+      dispatch(syncTransactions()),
+      dispatch(syncTags())
+    ])
+      .then(() => dispatch(syncSuccess()))
+      .catch(error => dispatch(syncFailure(error)))
   }
 }
