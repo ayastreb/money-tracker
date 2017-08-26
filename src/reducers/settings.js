@@ -1,22 +1,22 @@
 import pick from 'lodash/pick'
 import { handleActions } from 'redux-actions'
-import { SUCCESS } from '../middleware/promise'
 import {
-  loadSettings,
-  completeSetup,
   changeCurrency,
-  updateExchangeRate,
-  toggleSectionCollapse
+  loadSettingsSuccess,
+  updateExchangeRateSuccess,
+  toggleSectionCollapse,
+  completeSetup
 } from '../actions/settings'
 import { DEFAULT_BASE_CURRENCY } from '../constants/currency'
 
 export default handleActions(
   {
-    [`${loadSettings}_${SUCCESS}`]: (state, action) => ({
+    [loadSettingsSuccess]: (state, action) => ({
+      ...state,
       isLoaded: true,
       ...pick(action.payload, Object.keys(state))
     }),
-    [`${updateExchangeRate}_${SUCCESS}`]: (state, action) => ({
+    [updateExchangeRateSuccess]: (state, action) => ({
       ...state,
       exchangeRate: action.payload
     }),

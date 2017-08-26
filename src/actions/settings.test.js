@@ -1,30 +1,10 @@
 import {
-  loadSettings,
-  completeSetup,
   changeCurrency,
-  updateExchangeRate,
-  toggleSectionCollapse
+  loadSettingsSuccess,
+  updateExchangeRateSuccess,
+  toggleSectionCollapse,
+  completeSetup
 } from './settings'
-
-jest.mock('../util/storage/settings', () => ({
-  load: jest.fn().mockReturnValueOnce('load promise')
-}))
-jest.mock('../util/currency', () => ({
-  fetchExchangeRates: jest.fn().mockReturnValueOnce('currency promise')
-}))
-
-it('creates load action', () => {
-  expect(loadSettings()).toEqual({
-    type: 'LOAD_SETTINGS',
-    payload: 'load promise'
-  })
-})
-
-it('creates complete setup action', () => {
-  expect(completeSetup()).toEqual({
-    type: 'COMPLETE_SETUP'
-  })
-})
 
 it('filters base currency from secondary currencies', () => {
   expect(changeCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD')).toEqual({
@@ -36,10 +16,17 @@ it('filters base currency from secondary currencies', () => {
   })
 })
 
-it('creates update exchange rate action', () => {
-  expect(updateExchangeRate('USD', ['EUR'])).toEqual({
-    type: 'UPDATE_EXCHANGE_RATE',
-    payload: 'currency promise'
+it('creates load success action', () => {
+  expect(loadSettingsSuccess('foo')).toEqual({
+    type: 'LOAD_SETTINGS_SUCCESS',
+    payload: 'foo'
+  })
+})
+
+it('creates update exchange rate success action', () => {
+  expect(updateExchangeRateSuccess('foo')).toEqual({
+    type: 'UPDATE_EXCHANGE_RATE_SUCCESS',
+    payload: 'foo'
   })
 })
 
@@ -47,5 +34,11 @@ it('creates toggle section action', () => {
   expect(toggleSectionCollapse('foo')).toEqual({
     type: 'TOGGLE_SECTION_COLLAPSE',
     payload: 'foo'
+  })
+})
+
+it('creates complete setup action', () => {
+  expect(completeSetup()).toEqual({
+    type: 'COMPLETE_SETUP'
   })
 })

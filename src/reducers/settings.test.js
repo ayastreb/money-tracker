@@ -1,12 +1,11 @@
 import reducer from './settings'
 import {
-  loadSettings,
-  completeSetup,
   changeCurrency,
-  updateExchangeRate,
-  toggleSectionCollapse
+  loadSettingsSuccess,
+  updateExchangeRateSuccess,
+  toggleSectionCollapse,
+  completeSetup
 } from '../actions/settings'
-import { SUCCESS } from '../middleware/promise'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
@@ -21,26 +20,23 @@ it('returns initial state', () => {
   })
 })
 
-it('handles without initial state', () => {
-  expect(reducer(undefined, { type: `${loadSettings}_${SUCCESS}` })).toEqual({
-    isLoaded: true
-  })
-})
-
-it('handles with initial state', () => {
+it('handles load settings success', () => {
   expect(
-    reducer({ isLoaded: false }, { type: `${loadSettings}_${SUCCESS}` })
-  ).toEqual({ isLoaded: true })
+    reducer(
+      { isLoaded: false, isSetupComplete: false },
+      loadSettingsSuccess({ isSetupComplete: true })
+    )
+  ).toEqual({ isLoaded: true, isSetupComplete: true })
 })
 
 it('completes with not completed initial state', () => {
-  expect(reducer({ isSetupComplete: false }, { type: completeSetup })).toEqual({
+  expect(reducer({ isSetupComplete: false }, completeSetup())).toEqual({
     isSetupComplete: true
   })
 })
 
 it('completes with completed initial state', () => {
-  expect(reducer({ isSetupComplete: true }, { type: completeSetup })).toEqual({
+  expect(reducer({ isSetupComplete: true }, completeSetup())).toEqual({
     isSetupComplete: true
   })
 })
@@ -49,13 +45,7 @@ it('changes currency with initial state', () => {
   expect(
     reducer(
       { currency: { base: 'EUR', secondary: ['JPY'] } },
-      {
-        type: changeCurrency,
-        payload: {
-          base: 'GBP',
-          secondary: ['AUD', 'CAD']
-        }
-      }
+      changeCurrency('GBP', ['AUD', 'CAD'])
     )
   ).toEqual({ currency: { base: 'GBP', secondary: ['AUD', 'CAD'] } })
 })
@@ -64,26 +54,17 @@ it('updates exchange rate with initial state', () => {
   expect(
     reducer(
       { exchangeRate: { EUR: 1.0, JPY: 120.223 } },
-      {
-        type: `${updateExchangeRate}_${SUCCESS}`,
-        payload: { USD: 1.0, JPY: 112.562 }
-      }
+      updateExchangeRateSuccess({ USD: 1.0, JPY: 112.562 })
     )
   ).toEqual({ exchangeRate: { USD: 1.0, JPY: 112.562 } })
 })
 
 it('collapses section if it is not yet collapsed', () => {
   expect(
-    reducer(
-      { collapsedSections: [] },
-      { type: toggleSectionCollapse, payload: 'cash' }
-    )
+    reducer({ collapsedSections: [] }, toggleSectionCollapse('cash'))
   ).toEqual({ collapsedSections: ['cash'] })
   expect(
-    reducer(
-      { collapsedSections: ['bank'] },
-      { type: toggleSectionCollapse, payload: 'cash' }
-    )
+    reducer({ collapsedSections: ['bank'] }, toggleSectionCollapse('cash'))
   ).toEqual({ collapsedSections: ['bank', 'cash'] })
 })
 
@@ -91,10 +72,7 @@ it('un-collapses section if it is already collapsed', () => {
   expect(
     reducer(
       { collapsedSections: ['bank', 'cash'] },
-      {
-        type: toggleSectionCollapse,
-        payload: 'bank'
-      }
+      toggleSectionCollapse('bank')
     )
   ).toEqual({ collapsedSections: ['cash'] })
 })
