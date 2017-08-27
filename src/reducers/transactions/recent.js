@@ -1,24 +1,25 @@
+import { handleActions } from 'redux-actions'
 import {
-  SAVE_TRANSACTION,
-  UPDATE_RECENT_TRANSACTIONS
+  saveTransactionRequest,
+  loadRecentTransactionsSuccess
 } from '../../actions/transactions'
 
-export default function(state = { byId: {}, allIds: [] }, action) {
-  switch (action.type) {
-    case UPDATE_RECENT_TRANSACTIONS:
-      return {
-        byId: action.transactions.reduce((result, transaction) => {
-          result[transaction.id] = transaction
-          return result
-        }, {}),
-        allIds: action.transactions.map(transaction => transaction.id)
-      }
-    case SAVE_TRANSACTION:
-      return {
-        byId: { ...state.byId, [action.transaction.id]: action.transaction },
-        allIds: [action.transaction.id, ...state.allIds]
-      }
-    default:
-      return state
-  }
-}
+export default handleActions(
+  {
+    [loadRecentTransactionsSuccess]: (state, action) => ({
+      byId: action.payload.reduce((result, transaction) => {
+        result[transaction.id] = transaction
+        return result
+      }, {}),
+      allIds: action.payload.map(transaction => transaction.id)
+    }),
+    [saveTransactionRequest]: (state, action) => ({
+      byId: {
+        ...state.byId,
+        [action.payload.id]: action.payload
+      },
+      allIds: [action.payload.id, ...state.allIds]
+    })
+  },
+  { byId: {}, allIds: [] }
+)

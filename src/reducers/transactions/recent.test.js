@@ -1,7 +1,7 @@
 import reducer from './recent'
 import {
-  UPDATE_RECENT_TRANSACTIONS,
-  SAVE_TRANSACTION
+  saveTransactionRequest,
+  loadRecentTransactionsSuccess
 } from '../../actions/transactions'
 
 it('returns initial state', () => {
@@ -10,13 +10,13 @@ it('returns initial state', () => {
 
 it('loads transactions', () => {
   expect(
-    reducer(undefined, {
-      type: UPDATE_RECENT_TRANSACTIONS,
-      transactions: [
+    reducer(
+      undefined,
+      loadRecentTransactionsSuccess([
         { id: 'T12345', amount: 100 },
         { id: 'T12346', amount: 200 }
-      ]
-    })
+      ])
+    )
   ).toEqual({
     byId: {
       T12345: { id: 'T12345', amount: 100 },
@@ -36,13 +36,10 @@ it('adds new transaction to the beginning of the list', () => {
         },
         allIds: ['T12345', 'T12346']
       },
-      {
-        type: SAVE_TRANSACTION,
-        transaction: {
-          id: 'T12347',
-          amount: 300
-        }
-      }
+      saveTransactionRequest({
+        id: 'T12347',
+        amount: 300
+      })
     )
   ).toEqual({
     byId: {
