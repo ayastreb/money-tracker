@@ -1,31 +1,25 @@
 import reducer from './group'
 import Account from '../../../models/Account'
-import { CHANGE_GROUP } from '../../../actions/ui/accountForm'
-import { saveAccount } from '../../../actions/accounts'
-import { FAILURE, REQUEST } from '../../../middleware/promise'
+import { changeGroup } from '../../../actions/ui/accountForm'
+import {
+  saveAccountRequest,
+  saveAccountFailure
+} from '../../../actions/accounts'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual(Account.defaultGroup)
 })
 
 it('changes account form group', () => {
-  expect(reducer('cash', { type: CHANGE_GROUP, group: 'bank' })).toEqual('bank')
+  expect(reducer('cash', changeGroup('bank'))).toEqual('bank')
 })
 
 it('resets to initial state when account is created', () => {
-  expect(reducer('bank', { type: `${saveAccount}_${REQUEST}` })).toEqual(
-    Account.defaultGroup
-  )
+  expect(reducer('bank', saveAccountRequest())).toEqual(Account.defaultGroup)
 })
 
 it('restores form value when failed to persist account', () => {
   expect(
-    reducer(
-      {},
-      {
-        type: `${saveAccount}_${FAILURE}`,
-        meta: { account: { group: 'bank' } }
-      }
-    )
+    reducer({}, saveAccountFailure(new Account({ group: 'bank' })))
   ).toEqual('bank')
 })
