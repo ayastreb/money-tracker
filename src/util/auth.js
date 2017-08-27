@@ -9,7 +9,14 @@ const auth0 = new WebAuth({
   responseType: 'token'
 })
 
-export async function sendAuthCode(email) {
+export default {
+  sendCode,
+  verifyCode,
+  parseHash,
+  getUserInfo
+}
+
+function sendCode(email) {
   return new Promise((resolve, reject) => {
     auth0.passwordlessStart(
       {
@@ -22,7 +29,7 @@ export async function sendAuthCode(email) {
   })
 }
 
-export async function verifyAuthCode(email, verificationCode) {
+function verifyCode(email, verificationCode) {
   return new Promise((resolve, reject) => {
     auth0.passwordlessVerify(
       {
@@ -35,7 +42,7 @@ export async function verifyAuthCode(email, verificationCode) {
   })
 }
 
-export async function parseHash(hash) {
+function parseHash(hash) {
   return new Promise((resolve, reject) => {
     auth0.parseHash(hash, (error, authResult) => {
       if (error) return reject(error)
@@ -45,12 +52,12 @@ export async function parseHash(hash) {
   })
 }
 
-export async function getSyncCredentials(accessToken) {
+function getUserInfo(accessToken) {
   return new Promise((resolve, reject) => {
     auth0.client.userInfo(accessToken, (error, userInfo) => {
       if (error) return reject(error)
 
-      resolve(userInfo.couchDB)
+      resolve({ accessToken, couchDB: userInfo.couchDB })
     })
   })
 }

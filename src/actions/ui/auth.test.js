@@ -1,124 +1,67 @@
 import {
-  CHANGE_EMAIL,
-  CHANGE_CODE,
-  SEND_CODE_REQUEST,
-  SEND_CODE_SUCCESS,
-  SEND_CODE_FAILURE,
-  VERIFY_CODE_REQUEST,
-  VERIFY_CODE_SUCCESS,
-  VERIFY_CODE_FAILURE,
-  FINISH_AUTH_SUCCESS,
-  FINISH_AUTH_FAILURE,
   changeEmail,
   changeCode,
-  sendCode,
-  verifyCode,
-  finishAuth
+  sendCodeRequest,
+  sendCodeSuccess,
+  sendCodeFailure,
+  verifyCodeRequest,
+  verifyCodeSuccess,
+  verifyCodeFailure,
+  authSuccess
 } from './auth'
-import { LOAD_SETTINGS_SUCCESS } from '../settings'
-import { SYNC_REQUEST } from '../sync'
-import {
-  mockStore,
-  LocalStorageMock,
-  rejectPromise,
-  resolvePromise
-} from '../../util/test/helper'
-import * as auth from '../../util/auth'
-import * as settings from '../../util/storage/settings'
 
-global.localStorage = new LocalStorageMock()
-
-let store
-
-beforeEach(() => (store = mockStore()))
-
-it('creates CHANGE_EMAIL action', () => {
+it('creates change email action', () => {
   expect(changeEmail('foo@example.org')).toEqual({
-    type: CHANGE_EMAIL,
-    email: 'foo@example.org'
+    type: 'CHANGE_EMAIL',
+    payload: 'foo@example.org'
   })
 })
 
-it('creates CHANGE_CODE action', () => {
+it('creates change code action', () => {
   expect(changeCode('bar')).toEqual({
-    type: CHANGE_CODE,
-    code: 'bar'
+    type: 'CHANGE_CODE',
+    payload: 'bar'
   })
 })
 
-describe('sending auth code', () => {
-  it('creates SEND_CODE_SUCCESS action', () => {
-    auth.sendAuthCode = jest.fn(resolvePromise(true))
-
-    return store.dispatch(sendCode('foo@example.org')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: SEND_CODE_REQUEST },
-        { type: SEND_CODE_SUCCESS, response: true }
-      ])
-    })
-  })
-
-  it('creates SEND_CODE_FAILURE action when failed to send code', () => {
-    const error = new Error('not sent')
-    auth.sendAuthCode = jest.fn(rejectPromise(error))
-
-    return store.dispatch(sendCode('foo@example.org')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: SEND_CODE_REQUEST },
-        { type: SEND_CODE_FAILURE, error: 'not sent' }
-      ])
-    })
+it('creates send code request action', () => {
+  expect(sendCodeRequest()).toEqual({
+    type: 'SEND_CODE_REQUEST'
   })
 })
 
-describe('verifying auth code', () => {
-  it('creates VERIFY_CODE_SUCCESS action', () => {
-    auth.verifyAuthCode = jest.fn(resolvePromise(true))
-
-    return store.dispatch(verifyCode('foo@example.org', 'bar')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: VERIFY_CODE_REQUEST },
-        { type: VERIFY_CODE_SUCCESS, response: true }
-      ])
-    })
-  })
-
-  it('creates VERIFY_CODE_FAILURE action when failed to verify code', () => {
-    const error = new Error('not verified')
-    auth.verifyAuthCode = jest.fn(rejectPromise(error))
-
-    return store.dispatch(verifyCode('foo@example.org', 'bar')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: VERIFY_CODE_REQUEST },
-        { type: VERIFY_CODE_FAILURE, error: 'not verified' }
-      ])
-    })
+it('creates send code success action', () => {
+  expect(sendCodeSuccess()).toEqual({
+    type: 'SEND_CODE_SUCCESS'
   })
 })
 
-describe('finishing auth', () => {
-  it('creates FINISH_AUTH_SUCCESS action', () => {
-    auth.parseHash = jest.fn(resolvePromise(true))
-    auth.getSyncCredentials = jest.fn(resolvePromise(true))
-    settings.retrieveSettings = jest.fn(resolvePromise({ foo: 'bar' }))
-
-    return store.dispatch(finishAuth('foo')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: LOAD_SETTINGS_SUCCESS, settings: { foo: 'bar' } },
-        { type: FINISH_AUTH_SUCCESS },
-        { type: SYNC_REQUEST }
-      ])
-    })
+it('creates send code failure action', () => {
+  expect(sendCodeFailure()).toEqual({
+    type: 'SEND_CODE_FAILURE'
   })
+})
 
-  it('creates FINISH_AUTH_FAILURE when failed to parse hash', () => {
-    const error = new Error('not parsed')
-    auth.parseHash = jest.fn(rejectPromise(error))
+it('creates verify code request action', () => {
+  expect(verifyCodeRequest()).toEqual({
+    type: 'VERIFY_CODE_REQUEST'
+  })
+})
 
-    return store.dispatch(finishAuth('foo')).then(() => {
-      expect(store.getActions()).toEqual([
-        { type: FINISH_AUTH_FAILURE, error: 'not parsed' }
-      ])
-    })
+it('creates verify code success action', () => {
+  expect(verifyCodeSuccess()).toEqual({
+    type: 'VERIFY_CODE_SUCCESS'
+  })
+})
+
+it('creates verify code failure action', () => {
+  expect(verifyCodeFailure()).toEqual({
+    type: 'VERIFY_CODE_FAILURE'
+  })
+})
+
+it('creates auth success action', () => {
+  expect(authSuccess()).toEqual({
+    type: 'AUTH_SUCCESS'
   })
 })

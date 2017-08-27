@@ -1,83 +1,59 @@
-import { startSync } from '../sync'
-import {
-  sendAuthCode,
-  verifyAuthCode,
-  parseHash,
-  getSyncCredentials
-} from '../../util/auth'
+import { createActions } from 'redux-actions'
 import { loadSettings } from '../settings'
+import { sync } from '../sync'
+import auth from '../../util/auth'
 
-export const CHANGE_EMAIL = 'CHANGE_EMAIL'
-export function changeEmail(email) {
-  return {
-    type: CHANGE_EMAIL,
-    email
-  }
-}
+export const {
+  changeEmail,
+  changeCode,
+  sendCodeRequest,
+  sendCodeSuccess,
+  sendCodeFailure,
+  verifyCodeRequest,
+  verifyCodeSuccess,
+  verifyCodeFailure,
+  authSuccess
+} = createActions(
+  'CHANGE_EMAIL',
+  'CHANGE_CODE',
+  'SEND_CODE_REQUEST',
+  'SEND_CODE_SUCCESS',
+  'SEND_CODE_FAILURE',
+  'VERIFY_CODE_REQUEST',
+  'VERIFY_CODE_SUCCESS',
+  'VERIFY_CODE_FAILURE',
+  'AUTH_SUCCESS'
+)
 
-export const CHANGE_CODE = 'CHANGE_CODE'
-export function changeCode(code) {
-  return {
-    type: CHANGE_CODE,
-    code
-  }
-}
-
-export const SEND_CODE_REQUEST = 'SEND_CODE_REQUEST'
-export const SEND_CODE_SUCCESS = 'SEND_CODE_SUCCESS'
-export const SEND_CODE_FAILURE = 'SEND_CODE_FAILURE'
 export function sendCode(email) {
-  return async dispatch => {
-    dispatch({ type: SEND_CODE_REQUEST })
-    try {
-      const response = await sendAuthCode(email)
-      dispatch({ type: SEND_CODE_SUCCESS, response })
-    } catch (error) {
-      dispatch({
-        type: SEND_CODE_FAILURE,
-        error: error.description || error.message
-      })
-    }
+  return dispatch => {
+    dispatch(sendCodeRequest())
+
+    return auth
+      .sendCode(email)
+      .then(() => dispatch(sendCodeSuccess()))
+      .catch(error => dispatch(sendCodeFailure(error)))
   }
 }
 
-export const VERIFY_CODE_REQUEST = 'VERIFY_CODE_REQUEST'
-export const VERIFY_CODE_SUCCESS = 'VERIFY_CODE_SUCCESS'
-export const VERIFY_CODE_FAILURE = 'VERIFY_CODE_FAILURE'
 export function verifyCode(email, code) {
-  return async dispatch => {
-    dispatch({ type: VERIFY_CODE_REQUEST })
-    try {
-      const response = await verifyAuthCode(email, code)
-      dispatch({ type: VERIFY_CODE_SUCCESS, response })
-    } catch (error) {
-      dispatch({
-        type: VERIFY_CODE_FAILURE,
-        error: error.description || error.message
-      })
-    }
+  return dispatch => {
+    dispatch(verifyCodeRequest())
+
+    return auth
+      .verifyCode(email, code)
+      .then(() => dispatch(verifyCodeSuccess()))
+      .catch(error => dispatch(verifyCodeFailure(error)))
   }
 }
 
-export const FINISH_AUTH_SUCCESS = 'FINISH_AUTH_SUCCESS'
-export const FINISH_AUTH_FAILURE = 'FINISH_AUTH_FAILURE'
-export function finishAuth(hash) {
-  return async dispatch => {
-    try {
-      const accessToken = await parseHash(hash)
-      const couchDB = await getSyncCredentials(accessToken)
-
-      localStorage.setItem('userInfo', JSON.stringify({ accessToken, couchDB }))
-
-      dispatch(loadSettings()).then(() => {
-        dispatch({ type: FINISH_AUTH_SUCCESS })
-        dispatch(startSync())
-      })
-    } catch (error) {
-      dispatch({
-        type: FINISH_AUTH_FAILURE,
-        error: error.description || error.message
-      })
-    }
-  }
+export function finishSignin(hash) {
+  return dispatch =>
+    auth
+      .parseHash(hash)
+      .then(accessToken => auth.getUserInfo(accessToken))
+      .then(info => localStorage.setItem('userInfo', JSON.stringify(info)))
+      .then(() => dispatch(loadSettings()))
+      .then(() => dispatch(sync()))
+      .then(() => dispatch(authSuccess()))
 }
