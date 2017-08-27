@@ -1,6 +1,6 @@
 import reducer from './settings'
 import {
-  changeCurrency,
+  changeSettingsCurrency,
   loadSettingsSuccess,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
@@ -45,7 +45,7 @@ it('changes currency with initial state', () => {
   expect(
     reducer(
       { currency: { base: 'EUR', secondary: ['JPY'] } },
-      changeCurrency('GBP', ['AUD', 'CAD'])
+      changeSettingsCurrency('GBP', ['AUD', 'CAD'])
     )
   ).toEqual({ currency: { base: 'GBP', secondary: ['AUD', 'CAD'] } })
 })

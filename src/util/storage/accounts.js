@@ -24,8 +24,6 @@ async function sync() {
     accounts = await loadAll()
     updateLastSyncedBalance(accounts)
   }
-
-  return accounts
 }
 
 function loadAll() {

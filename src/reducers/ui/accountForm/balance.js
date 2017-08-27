@@ -9,7 +9,7 @@ import {
   saveAccountRequest,
   saveAccountFailure
 } from '../../../actions/accounts'
-import { changeCurrency } from '../../../actions/settings'
+import { changeSettingsCurrency } from '../../../actions/settings'
 
 export default handleActions(
   {
@@ -23,7 +23,7 @@ export default handleActions(
       ...state,
       [payload.code]: payload.balance
     }),
-    [changeCurrency]: (state, { payload }) =>
+    [changeSettingsCurrency]: (state, { payload }) =>
       pick(state, [payload.base, ...payload.secondary]),
     [saveAccountRequest]: () => {},
     [saveAccountFailure]: (state, { payload }) => payload.balanceToForm()

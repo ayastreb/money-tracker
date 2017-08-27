@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'semantic-ui-react'
 import { toggleSidebar } from '../../actions/ui/sidebar'
-import { startSync } from '../../actions/sync'
+import { sync } from '../../actions/sync'
 import './index.css'
 
 const AppHeader = ({
@@ -13,24 +13,25 @@ const AppHeader = ({
   isSyncRunning,
   hasPendingChanges,
   toggleSidebar,
-  startSync
-}) => (
+  sync
+}) =>
   <header>
     <Header>
       {isMobile && <Icon name="bars" onClick={toggleSidebar} />}
-      <Header.Content as="h2">{label}</Header.Content>
+      <Header.Content as="h2">
+        {label}
+      </Header.Content>
       {isAuthenticated &&
         (isSyncRunning
           ? <Icon name="refresh" loading />
           : <Icon
               name="refresh"
               color={hasPendingChanges ? 'olive' : undefined}
-              onClick={startSync}
+              onClick={sync}
               style={{ cursor: 'pointer' }}
             />)}
     </Header>
   </header>
-)
 
 AppHeader.propTypes = {
   label: PropTypes.string.isRequired,
@@ -38,7 +39,7 @@ AppHeader.propTypes = {
   isAuthenticated: PropTypes.bool,
   isSyncRunning: PropTypes.bool,
   toggleSidebar: PropTypes.func,
-  startSync: PropTypes.func
+  sync: PropTypes.func
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -49,4 +50,4 @@ const mapStateToProps = (state, ownProps) => ({
   hasPendingChanges: state.sync.hasPendingChanges
 })
 
-export default connect(mapStateToProps, { toggleSidebar, startSync })(AppHeader)
+export default connect(mapStateToProps, { toggleSidebar, sync })(AppHeader)

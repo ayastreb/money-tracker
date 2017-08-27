@@ -1,22 +1,20 @@
-import omit from 'lodash/omit'
 import { transactionsDB, remoteTransactionsDB } from './pouchdb'
-import { RECENT_TRANSACTIONS_LIMIT } from '../../constants/transaction'
+import Transaction from '../../models/Transaction'
 
-export async function syncTransactions() {
-  if (!remoteTransactionsDB()) return
-  let transactions
-
-  const from = await transactionsDB().replicate.from(remoteTransactionsDB())
-  if (from.docs_written > 0) transactions = await retrieveRecentTransactions()
-
-  await transactionsDB().replicate.to(remoteTransactionsDB())
-
-  return transactions
+export default {
+  sync,
+  loadRecent,
+  save
 }
 
-export async function retrieveRecentTransactions(
-  limit = RECENT_TRANSACTIONS_LIMIT
-) {
+async function sync() {
+  if (!remoteTransactionsDB()) return
+
+  await transactionsDB().replicate.from(remoteTransactionsDB())
+  await transactionsDB().replicate.to(remoteTransactionsDB())
+}
+
+function loadRecent(limit = Transaction.recentListLimit) {
   return transactionsDB()
     .allDocs({
       include_docs: true,
@@ -24,21 +22,20 @@ export async function retrieveRecentTransactions(
       limit
     })
     .then(response =>
-      response.rows.map(row => ({
-        id: row.doc._id,
-        ...omit(row.doc, '_id', '_rev')
-      }))
+      response.rows.map(row => new Transaction({ id: row.doc._id, ...row.doc }))
     )
 }
 
-export async function persistTransaction(data) {
-  const transaction = omit(data, 'id')
+function save(transaction) {
   return transactionsDB()
-    .get(data.id)
-    .then(doc => transactionsDB().put({ ...doc, ...transaction }))
+    .get(transaction.id)
+    .then(doc => transactionsDB().put({ ...doc, ...transaction.toJSON() }))
     .catch(err => {
       if (err.status !== 404) throw err
 
-      return transactionsDB().put({ _id: data.id, ...transaction })
+      return transactionsDB().put({
+        _id: transaction.id,
+        ...transaction.toJSON()
+      })
     })
 }

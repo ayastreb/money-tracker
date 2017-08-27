@@ -1,7 +1,7 @@
 import pick from 'lodash/pick'
 import { handleActions } from 'redux-actions'
 import {
-  changeCurrency,
+  changeSettingsCurrency,
   loadSettingsSuccess,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
@@ -20,7 +20,7 @@ export default handleActions(
       ...state,
       exchangeRate: action.payload
     }),
-    [changeCurrency]: (state, action) => ({
+    [changeSettingsCurrency]: (state, action) => ({
       ...state,
       currency: action.payload
     }),

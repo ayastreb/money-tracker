@@ -9,7 +9,6 @@ import {
   verifyCodeSuccess,
   verifyCodeFailure
 } from '../../actions/ui/auth'
-import { FAILURE, REQUEST, SUCCESS } from '../../middleware/promise'
 
 export default handleActions(
   {

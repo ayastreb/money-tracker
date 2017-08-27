@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { EXPENSE, INCOME } from '../../constants/transaction'
+import { EXPENSE, INCOME } from '../../models/Transaction'
 
 const formSelector = state => state.ui.transactionForm
 const baseCurrencySelector = state => state.settings.currency.base
@@ -51,9 +51,10 @@ export const getCurrency = createSelector(
   getAccountCurrenciesSelector,
   baseCurrencySelector,
   (form, currencies, base) => {
-    const defaultCurrency = currencies.length > 0
-      ? currencies.includes(base) ? base : currencies[0]
-      : ''
+    const defaultCurrency =
+      currencies.length > 0
+        ? currencies.includes(base) ? base : currencies[0]
+        : ''
     if (!form.currency) return defaultCurrency
 
     return currencies.includes(form.currency) ? form.currency : defaultCurrency
@@ -65,9 +66,10 @@ export const getLinkedCurrency = createSelector(
   getLinkedAccountCurrenciesSelector,
   baseCurrencySelector,
   (form, currencies, base) => {
-    const defaultCurrency = currencies.length > 0
-      ? currencies.includes(base) ? base : currencies[0]
-      : ''
+    const defaultCurrency =
+      currencies.length > 0
+        ? currencies.includes(base) ? base : currencies[0]
+        : ''
     if (!form.linkedCurrency) return defaultCurrency
 
     return currencies.includes(form.linkedCurrency)

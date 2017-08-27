@@ -1,6 +1,7 @@
 import { createActions } from 'redux-actions'
 import { changeBalance } from './accounts'
 import { useTag } from './tags'
+import { setPendingChangesFlag } from './sync'
 import transactions from '../util/storage/transactions'
 
 export const {
@@ -31,7 +32,10 @@ export function saveTransaction(transaction) {
   return dispatch => {
     dispatch(saveTransactionRequest(transaction))
 
-    return transactions.save(transaction).then(() => saveTransactionSuccess())
+    return transactions.save(transaction).then(() => {
+      dispatch(saveTransactionSuccess())
+      dispatch(setPendingChangesFlag())
+    })
   }
 }
 

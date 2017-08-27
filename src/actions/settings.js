@@ -3,14 +3,14 @@ import settings from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 
 export const {
-  changeCurrency,
+  changeSettingsCurrency,
   loadSettingsSuccess,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
   completeSetup
 } = createActions(
   {
-    CHANGE_CURRENCY: (nextBase, secondary, currentBase) => ({
+    CHANGE_SETTINGS_CURRENCY: (nextBase, secondary, currentBase) => ({
       base: nextBase,
       secondary: secondary.includes(nextBase)
         ? secondary.concat(currentBase).filter(code => code !== nextBase)
@@ -31,6 +31,6 @@ export function loadSettings() {
 export function updateExchangeRate(base, target) {
   return dispatch =>
     fetchExchangeRates(base, target).then(rates =>
-      updateExchangeRateSuccess(rates)
+      dispatch(updateExchangeRateSuccess(rates))
     )
 }

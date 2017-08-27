@@ -1,28 +1,28 @@
-import { persistLocalSettings, persistSettings } from '../util/storage/settings'
+import settings from '../util/storage/settings'
 import {
-  COMPLETE_SETUP,
-  UPDATE_EXCHANGE_RATE_SUCCESS,
-  CHANGE_CURRENCY,
-  TOGGLE_SECTION_COLLAPSE
+  completeSetup,
+  changeSettingsCurrency,
+  updateExchangeRateSuccess,
+  toggleSectionCollapse
 } from '../actions/settings'
 
 export default store => next => action => {
   const result = next(action)
   switch (action.type) {
-    case COMPLETE_SETUP:
-    case CHANGE_CURRENCY:
-    case UPDATE_EXCHANGE_RATE_SUCCESS:
+    case `${completeSetup}`:
+    case `${changeSettingsCurrency}`:
+    case `${updateExchangeRateSuccess}`:
       const {
         isSetupComplete,
         currency,
         exchangeRate
       } = store.getState().settings
-      persistSettings({ isSetupComplete, currency, exchangeRate })
+      settings.save({ isSetupComplete, currency, exchangeRate })
 
       return result
-    case TOGGLE_SECTION_COLLAPSE:
+    case `${toggleSectionCollapse}`:
       const { collapsedSections } = store.getState().settings
-      persistLocalSettings({ collapsedSections })
+      settings.saveLocal({ collapsedSections })
 
       return result
     default:

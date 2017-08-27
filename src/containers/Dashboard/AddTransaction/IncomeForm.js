@@ -7,8 +7,8 @@ import {
   getCurrency,
   getIncomeTagOptions
 } from '../../../selectors/ui/transactionForm'
-import { INCOME } from '../../../constants/transaction'
-import { saveIncomeTransaction } from '../../../actions/transactions'
+import { INCOME } from '../../../models/Transaction'
+import { save } from '../../../actions/transactions'
 import { loadIncomeTags } from '../../../actions/tags'
 import {
   changeAccount,
@@ -21,6 +21,7 @@ import {
 } from '../../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
+  kind: INCOME,
   label: 'To',
   buttonLabel: 'Add Income',
   accountId: getAccountId(state),
@@ -43,5 +44,5 @@ export default connect(mapStateToProps, {
   addTag: addIncomeTag,
   changeTags: changeIncomeTags,
   loadTagsOptions: loadIncomeTags,
-  saveTransaction: saveIncomeTransaction
+  save
 })(TransactionForm)

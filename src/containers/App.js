@@ -11,8 +11,6 @@ import SidebarMenu from './SidebarMenu'
 import Header from '../components/Header'
 import SyncWarning from './SyncWarning'
 import { loadSettings } from '../actions/settings'
-import { loadAccounts } from '../actions/accounts'
-import { startSync } from '../actions/sync'
 import { windowResize } from '../actions/ui/windowResize'
 import { toggleSidebar } from '../actions/ui/sidebar'
 
@@ -23,8 +21,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.props.loadSettings()
-    this.props.loadAccounts()
-    this.props.startSync()
   }
 
   render() {
@@ -48,19 +44,20 @@ class App extends React.Component {
    * They are rendered with common structure: sidebar menu and sticky header.
    */
   renderNavigationRoutes = () => {
-    const wrapperClassName = this.props.isSidebarOpen || !this.props.isMobile
-      ? 'openSidebar'
-      : 'closedSidebar'
+    const wrapper =
+      this.props.isSidebarOpen || !this.props.isMobile
+        ? 'openSidebar'
+        : 'closedSidebar'
     return (
-      <div className={wrapperClassName}>
+      <div className={wrapper}>
         <SidebarMenu />
         <Dimmer.Dimmable className="container">
-          {routes.map(route => (
+          {routes.map(route =>
             <Route
               key={route.path}
               path={route.path}
               exact={route.exact}
-              render={props => (
+              render={props =>
                 <div>
                   <Dimmer
                     active={this.props.isMobile && this.props.isSidebarOpen}
@@ -69,10 +66,9 @@ class App extends React.Component {
                   <Header label={route.label} />
                   <SyncWarning />
                   <route.component {...props} />
-                </div>
-              )}
+                </div>}
             />
-          ))}
+          )}
         </Dimmer.Dimmable>
       </div>
     )
@@ -86,8 +82,6 @@ App.propTypes = {
   isMobile: PropTypes.bool,
   isSidebarOpen: PropTypes.bool,
   loadSettings: PropTypes.func,
-  loadAccounts: PropTypes.func,
-  startSync: PropTypes.func,
   windowResize: PropTypes.func,
   toggleSidebar: PropTypes.func
 }
@@ -102,8 +96,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 export default connect(mapStateToProps, {
   loadSettings,
-  loadAccounts,
-  startSync,
   windowResize,
   toggleSidebar
 })(App)

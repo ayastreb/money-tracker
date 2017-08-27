@@ -6,7 +6,7 @@ export async function fetchExchangeRates(base, target) {
     env: 'store://datatables.org/alltableswithkeys',
     format: 'json'
   }
-
+  // TODO: handle errors when API not available
   return fetch(`https://query.yahooapis.com/v1/public/yql?${encode(params)}`)
     .then(body => body.json())
     .then(
@@ -26,7 +26,9 @@ export async function fetchExchangeRates(base, target) {
 function buildQuery(base, target) {
   if (!target.includes(base)) target.push(base)
   const pairs = target.map(code => `${base}${code}`)
-  return `SELECT id,Rate FROM yahoo.finance.xchange WHERE pair = "${pairs.join(',')}"`
+  return `SELECT id,Rate FROM yahoo.finance.xchange WHERE pair = "${pairs.join(
+    ','
+  )}"`
 }
 
 function encode(params) {

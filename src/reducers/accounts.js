@@ -41,8 +41,7 @@ export default handleActions(
             ...state.byId[id],
             balance: {
               ...state.byId[id].balance,
-              [currency]:
-                parseInt(state.byId[id].balance[currency], 10) +
+              [currency]: parseInt(state.byId[id].balance[currency], 10) +
                 action.payload.amount
             }
           }

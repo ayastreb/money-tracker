@@ -1,4 +1,5 @@
 import Dashboard from '../containers/Dashboard'
+import Accounts from '../containers/Accounts'
 import WorkInProgress from '../containers/WorkInProgress'
 
 export default [
@@ -21,7 +22,7 @@ export default [
     exact: false,
     label: 'Accounts',
     icon: 'credit card',
-    component: WorkInProgress
+    component: Accounts
   },
   {
     path: '/budget',

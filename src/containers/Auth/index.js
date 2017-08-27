@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
-import Auth from '../../components/Auth/index'
+import Auth from '../../components/Auth'
 import {
   changeEmail,
   changeCode,
   sendCode,
   verifyCode,
-  finishAuth
+  finishSignin
 } from '../../actions/ui/auth'
 
 const mapStateToProps = state => ({
@@ -24,5 +24,5 @@ export default connect(mapStateToProps, {
   changeCode,
   sendCode,
   verifyCode,
-  finishAuth
+  finishSignin
 })(Auth)

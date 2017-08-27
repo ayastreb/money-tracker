@@ -7,7 +7,7 @@ import {
   saveAccountRequest,
   saveAccountFailure
 } from '../../../actions/accounts'
-import { changeCurrency } from '../../../actions/settings'
+import { changeSettingsCurrency } from '../../../actions/settings'
 import Account from '../../../models/Account'
 
 it('returns initial state', () => {
@@ -73,14 +73,16 @@ describe('changing currency balance', () => {
 
 describe('changing currency settings', () => {
   it('filters out unused currencies', () => {
-    expect(reducer({ USD: 100, JPY: 500 }, changeCurrency('USD', []))).toEqual({
+    expect(
+      reducer({ USD: 100, JPY: 500 }, changeSettingsCurrency('USD', []))
+    ).toEqual({
       USD: 100
     })
 
     expect(
       reducer(
         { EUR: 101, CAD: 102, AUD: 103 },
-        changeCurrency('USD', ['EUR', 'CAD'])
+        changeSettingsCurrency('USD', ['EUR', 'CAD'])
       )
     ).toEqual({
       EUR: 101,

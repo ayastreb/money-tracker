@@ -29,12 +29,12 @@ export default class Account {
    * @param {object} data
    * @return {Account}
    */
-  static fromForm = data =>
+  static fromForm = input =>
     new Account({
-      ...data,
-      balance: Object.keys(data.balance).reduce((cents, code) => {
+      ...input,
+      balance: Object.keys(input.balance).reduce((cents, code) => {
         cents[code] = Math.round(
-          data.balance[code] * Math.pow(10, CURRENCY[code].exp)
+          input.balance[code] * Math.pow(10, CURRENCY[code].exp)
         )
         return cents
       }, {})

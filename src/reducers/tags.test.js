@@ -1,6 +1,6 @@
 import reducer from './tags'
 import { loadExpenseTagsSuccess, loadIncomeTagsSuccess } from '../actions/tags'
-import { ADD_INCOME_TAG, ADD_EXPENSE_TAG } from '../actions/ui/transactionForm'
+import { addIncomeTag, addExpenseTag } from '../actions/ui/transactionForm'
 import { EXPENSE, INCOME } from '../models/Transaction'
 
 it('returns default state', () => {
@@ -24,27 +24,18 @@ it('loads income tags', () => {
 
 it('adds tag to expense tags', () => {
   expect(
-    reducer(
-      { [EXPENSE]: ['food', 'groceries'] },
-      { type: ADD_EXPENSE_TAG, tag: 'rent' }
-    )
+    reducer({ [EXPENSE]: ['food', 'groceries'] }, addExpenseTag('rent'))
   ).toEqual({ [EXPENSE]: ['food', 'groceries', 'rent'] })
 })
 
 it('adds tag to income tags', () => {
-  expect(
-    reducer(
-      { [INCOME]: ['salary'] },
-      { type: ADD_INCOME_TAG, tag: 'dividends' }
-    )
-  ).toEqual({ [INCOME]: ['salary', 'dividends'] })
+  expect(reducer({ [INCOME]: ['salary'] }, addIncomeTag('dividends'))).toEqual({
+    [INCOME]: ['salary', 'dividends']
+  })
 })
 
 it('does not add used tag if it is already there', () => {
   expect(
-    reducer(
-      { [EXPENSE]: ['food', 'groceries'] },
-      { type: ADD_EXPENSE_TAG, tag: 'food' }
-    )
+    reducer({ [EXPENSE]: ['food', 'groceries'] }, addExpenseTag('food'))
   ).toEqual({ [EXPENSE]: ['food', 'groceries'] })
 })

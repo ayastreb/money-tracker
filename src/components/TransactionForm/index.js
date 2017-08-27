@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Dropdown, Input } from 'semantic-ui-react'
 import Account from './Account'
+import Transaction from '../../models/Transaction'
 import { DropdownOption } from '../types'
 import './index.css'
 
@@ -79,7 +80,9 @@ class TransactionForm extends React.Component {
               </Form.Field>
             </div>
             <div className="transaction-form-grid__field">
-              <Button primary fluid>{this.props.buttonLabel}</Button>
+              <Button primary fluid>
+                {this.props.buttonLabel}
+              </Button>
             </div>
           </div>
         </div>
@@ -98,11 +101,12 @@ class TransactionForm extends React.Component {
   handle = handler => (event, { value }) => handler(value)
   handleSubmit = event => {
     event.preventDefault()
-    this.props.saveTransaction(this.props)
+    this.props.save(Transaction.fromForm(this.props))
   }
 }
 
 TransactionForm.propTypes = {
+  kind: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   buttonLabel: PropTypes.string.isRequired,
   accountId: PropTypes.string,
@@ -129,7 +133,7 @@ TransactionForm.propTypes = {
   changeDate: PropTypes.func.isRequired,
   changeNote: PropTypes.func.isRequired,
   loadTagsOptions: PropTypes.func,
-  saveTransaction: PropTypes.func.isRequired
+  save: PropTypes.func.isRequired
 }
 
 export default TransactionForm

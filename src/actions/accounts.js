@@ -10,11 +10,13 @@ export const {
   removeAccountRequest,
   changeBalanceRequest
 } = createActions(
+  {
+    CHANGE_BALANCE_REQUEST: (id, currency, amount) => ({ id, currency, amount })
+  },
   'LOAD_ACCOUNTS_SUCCESS',
   'SAVE_ACCOUNT_REQUEST',
   'SAVE_ACCOUNT_FAILURE',
-  'REMOVE_ACCOUNT_REQUEST',
-  'CHANGE_BALANCE_REQUEST'
+  'REMOVE_ACCOUNT_REQUEST'
 )
 
 export function syncAccounts() {

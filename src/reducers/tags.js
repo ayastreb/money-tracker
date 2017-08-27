@@ -1,22 +1,22 @@
 import { handleActions } from 'redux-actions'
 import { loadExpenseTagsSuccess, loadIncomeTagsSuccess } from '../actions/tags'
-import { ADD_EXPENSE_TAG, ADD_INCOME_TAG } from '../actions/ui/transactionForm'
+import { addExpenseTag, addIncomeTag } from '../actions/ui/transactionForm'
 import { EXPENSE, INCOME } from '../models/Transaction'
 
 export default handleActions(
   {
-    [loadExpenseTagsSuccess]: (state, action) => ({
+    [loadExpenseTagsSuccess]: (state, { payload }) => ({
       ...state,
-      [EXPENSE]: action.payload
+      [EXPENSE]: payload
     }),
-    [loadIncomeTagsSuccess]: (state, action) => ({
+    [loadIncomeTagsSuccess]: (state, { payload }) => ({
       ...state,
-      [INCOME]: action.payload
+      [INCOME]: payload
     }),
-    [ADD_EXPENSE_TAG]: (state, action) =>
-      addTagIfNotUsed(state, EXPENSE, action.tag),
-    [ADD_INCOME_TAG]: (state, action) =>
-      addTagIfNotUsed(state, INCOME, action.tag)
+    [addExpenseTag]: (state, { payload }) =>
+      addTagIfNotUsed(state, EXPENSE, payload),
+    [addIncomeTag]: (state, { payload }) =>
+      addTagIfNotUsed(state, INCOME, payload)
   },
   { [EXPENSE]: [], [INCOME]: [] }
 )

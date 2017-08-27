@@ -1,6 +1,12 @@
 import { tagsDB, remoteTagsDB } from './pouchdb'
 
-export async function syncTags() {
+export default {
+  sync,
+  load,
+  increaseUsage
+}
+
+async function sync() {
   let hasChanges = false
   if (!remoteTagsDB()) return hasChanges
 
@@ -11,7 +17,7 @@ export async function syncTags() {
   return hasChanges
 }
 
-export async function retrieveTags(kind) {
+function load(kind) {
   return tagsDB()
     .allDocs({
       include_docs: true,
@@ -28,7 +34,7 @@ export async function retrieveTags(kind) {
     .then(docs => docs.map(doc => doc.tag))
 }
 
-export async function increaseTagUsage(kind, tag) {
+function increaseUsage(kind, tag) {
   const id = `${kind}/${tag}`
   return tagsDB()
     .get(id)

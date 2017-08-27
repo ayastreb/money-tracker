@@ -15,7 +15,7 @@ import './index.css'
 class Auth extends React.Component {
   componentDidMount() {
     if (this.props.location.hash) {
-      this.props.finishAuth(this.props.location.hash)
+      this.props.finishSignin(this.props.location.hash)
     }
   }
 
@@ -30,22 +30,26 @@ class Auth extends React.Component {
         {this.props.error &&
           <Message error>
             <Message.Header>Error</Message.Header>
-            <Message.Content>{this.props.error}</Message.Content>
+            <Message.Content>
+              {this.props.error}
+            </Message.Content>
           </Message>}
         {!this.props.isCodeSent
           ? this.renderSendCodeForm()
           : this.renderVerifyCodeForm()}
         <Divider />
-        <p><Link to="/">Back</Link></p>
+        <p>
+          <Link to="/">Back</Link>
+        </p>
       </div>
     )
   }
 
-  renderSendCodeForm = () => (
+  renderSendCodeForm = () =>
     <div>
       <p>
-        Please provide your email address and we will send you a
-        verification code for sign in.
+        Please provide your email address and we will send you a verification
+        code for sign in.
       </p>
       <Form onSubmit={() => this.props.sendCode(this.props.email)}>
         <div className="auth--input-field">
@@ -72,17 +76,17 @@ class Auth extends React.Component {
       </Form>
       <Header as="h3">Why do I need to sign in?</Header>
       <p style={{ marginTop: '1em' }}>
-        After you sign in for the first time we will create a new database
-        for you hosted in the cloud.
-        This database will be used to synchronize your data among different
-        devices as well as for back up.
+        After you sign in for the first time we will create a new database for
+        you hosted in the cloud. This database will be used to synchronize your
+        data among different devices as well as for back up.
       </p>
     </div>
-  )
 
-  renderVerifyCodeForm = () => (
+  renderVerifyCodeForm = () =>
     <Form onSubmit={this.verifyCode}>
-      <p>An email with the code has been sent to {this.props.email}</p>
+      <p>
+        An email with the code has been sent to {this.props.email}
+      </p>
       <div className="auth--input-field">
         <Input
           fluid
@@ -102,10 +106,11 @@ class Auth extends React.Component {
             />
           }
         />
-        <Button basic as="a">Didn't get the code?</Button>
+        <Button basic as="a">
+          Didn't get the code?
+        </Button>
       </div>
     </Form>
-  )
 
   verifyCode = () => this.props.verifyCode(this.props.email, this.props.code)
   handleChange = handler => (event, { value }) => handler(value)
@@ -124,7 +129,7 @@ Auth.propTypes = {
   changeCode: PropTypes.func,
   sendCode: PropTypes.func,
   verifyCode: PropTypes.func,
-  finishAuth: PropTypes.func
+  finishSignin: PropTypes.func
 }
 
 export default Auth

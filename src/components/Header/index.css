@@ -4,13 +4,13 @@ header {
   padding: 16px;
   height: 62px;
   width: 100%;
-  background-color: #3F51B5;
+  background-color: #3f51b5;
   border-bottom: 1px solid rgba(34, 36, 38, 0.15);
   z-index: 1;
 }
 
 header .ui.header {
-  display: flex!important;
+  display: flex !important;
   flex-direction: row;
   align-items: stretch;
   vertical-align: middle;
@@ -25,13 +25,14 @@ header .ui.header .icon {
 }
 
 .ui.header .content {
-  padding-left: .5rem!important;
+  padding-left: .5rem !important;
 }
 
 @media (max-width: 767px) {
   header {
     padding: 10px;
     height: 50px;
-    box-shadow: 0 2px 6px 0 rgba(34, 36, 38, 0.15), 0 2px 18px 0 rgba(34, 36, 38, 0.17);
+    box-shadow: 0 2px 6px 0 rgba(34, 36, 38, 0.15),
+      0 2px 18px 0 rgba(34, 36, 38, 0.17);
   }
 }
