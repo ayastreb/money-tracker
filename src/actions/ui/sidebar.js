@@ -1,6 +1,3 @@
-export const TOGGLE_SIDEBAR = 'TOGGLE_SIDEBAR'
-export function toggleSidebar() {
-  return {
-    type: TOGGLE_SIDEBAR
-  }
-}
+import { createAction } from 'redux-actions'
+
+export const toggleSidebar = createAction('TOGGLE_SIDEBAR')

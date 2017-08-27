@@ -1,10 +1,4 @@
-import { TOGGLE_SIDEBAR } from '../../actions/ui/sidebar'
+import { handleAction } from 'redux-actions'
+import { toggleSidebar } from '../../actions/ui/sidebar'
 
-export default function(state = false, action) {
-  switch (action.type) {
-    case TOGGLE_SIDEBAR:
-      return !state
-    default:
-      return state
-  }
-}
+export default handleAction(toggleSidebar, state => !state, false)
