@@ -7,6 +7,6 @@ export default handleActions(
   },
   {
     // @TODO: check if user is authenticated in bootstrap
-    isAuthenticated: !!localStorage.getItem('userInfo')
+    isAuthenticated: false
   }
 )
