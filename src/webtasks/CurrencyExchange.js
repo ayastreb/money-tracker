@@ -107,6 +107,7 @@ module.exports = function(context, respond) {
    * Fallback to cached rate if API is not available.
    *
    * @see https://currencylayer.com/documentation
+   * @see https://webtask.io/docs/editor/secrets
    * @return {Promise}
    */
   function fetchLiveRate() {
