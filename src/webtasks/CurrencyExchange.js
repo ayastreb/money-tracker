@@ -8,12 +8,24 @@
  * Response:
  * {
  *   "ok": "true",
- *   "rates": {
- *      "USDEUR": "0.834303",
- *      "EURUSD": "1.198605",
- *      "USDJPY": "109.678001",
- *      "EURJPY": "131.460634"
- *   }
+ *   "rates": [
+ *      {
+ *        "id": "USDEUR",
+ *        "rate": "0.834303"
+ *      },
+ *      {
+ *        "id": "EURUSD",
+ *        "rate": "1.198605"
+ *      },
+ *      {
+ *        "id": "USDJPY",
+ *        "rate": "109.678001"
+ *      },
+ *      {
+ *        "id": "EURJPY",
+ *        "rate": "131.460634"
+ *      }
+ *   ]
  * }
  */
 module.exports = function(context, cb) {
