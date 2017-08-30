@@ -28,19 +28,19 @@
  *   ]
  * }
  */
-module.exports = function(context, cb) {
+module.exports = function(context, respond) {
   const request = require('request')
   const BASE = 'USD'
   const pairs = context.query.pairs.toUpperCase().split(',')
 
   return getBaseRate()
-    .then(baseRate => {
-      cb(null, {
+    .then(baseRate =>
+      respond(null, {
         ok: true,
         rates: pairs.map(pair => getRateForPair(baseRate, pair))
       })
-    })
-    .catch(error => cb(error))
+    )
+    .catch(error => respond(error))
 
   /**
    * Get exchange rate for given pair using given base exchange rate.
