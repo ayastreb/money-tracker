@@ -1,17 +1,18 @@
 /**
  * This webtask is used to fetch current exchange rate for any given currency pair.
- * It gets base exchange rate data from currencylayer.com and caches it in webtask
- * storage for 1 hour.
+ * It gets base exchange rate data from currencylayer.com and caches it in webtask storage for 1 hour.
  * It uses cross rate for pairs where base is not USD.
  *
  * Usage:
- * HTTP GET https://wt-e9c9a7a436fcd9273a7f8890849dae65-0.run.webtask.io/currency-exchange?pairs=USDEUR,USDJPY
+ * HTTP GET https://wt-e9c9a7a436fcd9273a7f8890849dae65-0.run.webtask.io/currency-exchange?pairs=USDEUR,EURUSD,USDJPY,EURJPY
  * Response:
  * {
  *   "ok": "true",
  *   "rates": {
  *      "USDEUR": "0.834303",
- *      "USDJPY": "109.678001"
+ *      "EURUSD": "1.198605",
+ *      "USDJPY": "109.678001",
+ *      "EURJPY": "131.460634"
  *   }
  * }
  */
