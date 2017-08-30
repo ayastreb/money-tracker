@@ -1,38 +1,16 @@
 import fetch from 'isomorphic-fetch'
 
-export async function fetchExchangeRates(base, target) {
-  const params = {
-    q: buildQuery(base, target),
-    env: 'store://datatables.org/alltableswithkeys',
-    format: 'json'
-  }
-  // TODO: handle errors when API not available
-  return fetch(`https://query.yahooapis.com/v1/public/yql?${encode(params)}`)
+export function fetchExchangeRates(base, target) {
+  if (!target.includes(base)) target.push(base)
+  const exchangeServiceUrl = process.env.REACT_APP_XCHANGE_URL
+  const pairs = target.map(code => `${base}${code}`)
+
+  return fetch(`${exchangeServiceUrl}?pairs=${pairs.join(',')}`)
     .then(body => body.json())
-    .then(
-      response =>
-        response.query.results.rate.id !== undefined
-          ? [response.query.results.rate]
-          : response.query.results.rate
-    )
-    .then(rate =>
-      rate.reduce((result, row) => {
-        result[row.id.substring(3)] = parseFloat(row['Rate'])
+    .then(response =>
+      response.rates.reduce((result, row) => {
+        result[row.id.substring(3)] = parseFloat(row['rate'])
         return result
       }, {})
     )
-}
-
-function buildQuery(base, target) {
-  if (!target.includes(base)) target.push(base)
-  const pairs = target.map(code => `${base}${code}`)
-  return `SELECT id,Rate FROM yahoo.finance.xchange WHERE pair = "${pairs.join(
-    ','
-  )}"`
-}
-
-function encode(params) {
-  return Object.keys(params)
-    .map(key => [key, params[key]].map(encodeURIComponent).join('='))
-    .join('&')
 }
