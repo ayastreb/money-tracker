@@ -11,6 +11,7 @@ import {
 import { userLoggedIn } from '../actions/user'
 import { getAuthEmail, getAuthCode } from '../selectors/ui/auth'
 import { loadSetting } from './settings'
+import { syncSaga } from './sync'
 import Auth from '../util/auth'
 
 export function* isUserLoggedIn() {
@@ -46,6 +47,7 @@ export function* finishAuthSaga(action) {
   yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo))
 
   yield loadSetting()
+  yield syncSaga()
   yield isUserLoggedIn()
 }
 

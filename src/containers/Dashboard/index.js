@@ -15,6 +15,7 @@ class Dashboard extends React.Component {
     this.props.loadAccounts()
     this.props.loadRecentTransactions()
   }
+
   render() {
     return (
       <div className="container-full-page">

@@ -1,9 +1,6 @@
 import reducer from './name'
 import { changeName } from '../../../actions/ui/accountForm'
-import {
-  saveAccountRequest,
-  saveAccountFailure
-} from '../../../actions/accounts'
+import { saveAccount, saveAccountFailure } from '../../../actions/accounts'
 import Account from '../../../models/Account'
 
 it('returns initial state', () => {
@@ -11,7 +8,7 @@ it('returns initial state', () => {
 })
 
 it('resets to initial state when account is created', () => {
-  expect(reducer('foo', saveAccountRequest())).toEqual('')
+  expect(reducer('foo', saveAccount())).toEqual('')
 })
 
 it('restores form value when failed to persist account', () => {

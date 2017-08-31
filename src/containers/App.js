@@ -10,9 +10,9 @@ import InitialSetup from './InitialSetup'
 import SidebarMenu from './SidebarMenu'
 import Header from '../components/Header'
 import SyncWarning from './SyncWarning'
-import { loadSettings } from '../actions/settings'
 import { windowResize } from '../actions/ui/windowResize'
 import { toggleSidebar } from '../actions/ui/sidebar'
+import { bootstrap } from '../actions/app'
 
 class App extends React.Component {
   componentWillMount() {
@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.props.loadSettings()
+    this.props.bootstrap()
   }
 
   render() {
@@ -81,7 +81,7 @@ App.propTypes = {
   isSetupComplete: PropTypes.bool,
   isMobile: PropTypes.bool,
   isSidebarOpen: PropTypes.bool,
-  loadSettings: PropTypes.func,
+  bootstrap: PropTypes.func,
   windowResize: PropTypes.func,
   toggleSidebar: PropTypes.func
 }
@@ -95,7 +95,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 export default connect(mapStateToProps, {
-  loadSettings,
+  bootstrap,
   windowResize,
   toggleSidebar
 })(App)

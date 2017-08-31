@@ -11,7 +11,7 @@ export default class Account {
 
   static defaultGroup = 'cash'
 
-  static groupAsDropdownOptions() {
+  static groupOptions() {
     return Object.keys(this.groups).map(key => ({
       key,
       value: key,

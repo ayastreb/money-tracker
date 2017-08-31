@@ -12,7 +12,7 @@ import {
   changeDate,
   changeNote
 } from '../../../actions/ui/transactionForm'
-import { saveTransactionRequest } from '../../../actions/transactions'
+import { saveTransaction } from '../../../actions/transactions'
 import Transaction, { EXPENSE, INCOME } from '../../../models/Transaction.js'
 import format from 'date-fns/format'
 
@@ -78,7 +78,7 @@ export default handleActions(
       ...state,
       note: payload
     }),
-    [saveTransactionRequest]: () => initialState()
+    [saveTransaction]: () => initialState()
   },
   initialState()
 )

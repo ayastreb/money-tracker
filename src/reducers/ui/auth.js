@@ -2,10 +2,10 @@ import { handleActions } from 'redux-actions'
 import {
   changeEmail,
   changeCode,
-  sendCodeRequest,
+  sendCode,
   sendCodeSuccess,
   sendCodeFailure,
-  verifyCodeRequest,
+  verifyCode,
   verifyCodeSuccess,
   verifyCodeFailure
 } from '../../actions/ui/auth'
@@ -14,7 +14,7 @@ export default handleActions(
   {
     [changeEmail]: (state, action) => ({ ...state, email: action.payload }),
     [changeCode]: (state, action) => ({ ...state, code: action.payload }),
-    [sendCodeRequest]: state => ({ ...state, isSendingCode: true }),
+    [sendCode]: state => ({ ...state, isSendingCode: true }),
     [sendCodeSuccess]: state => ({
       ...state,
       isSendingCode: false,
@@ -25,7 +25,7 @@ export default handleActions(
       isSendingCode: false,
       error: action.payload.message
     }),
-    [verifyCodeRequest]: state => ({
+    [verifyCode]: state => ({
       ...state,
       isVerifyingCode: true
     }),

@@ -1,9 +1,15 @@
-import { settingsDB, remoteSettingsDB } from './pouchdb'
-import { fetchExchangeRates } from '../currency'
-import { DEFAULT_BASE_CURRENCY } from '../../constants/currency'
 import union from 'lodash/union'
 import pick from 'lodash/pick'
 import isEqual from 'lodash/isEqual'
+import { settingsDB, remoteSettingsDB } from './pouchdb'
+import { fetchExchangeRates } from '../currency'
+import { DEFAULT_BASE_CURRENCY } from '../../constants/currency'
+
+export default {
+  load,
+  save,
+  saveLocal
+}
 
 const defaultLocalSettings = {
   _id: '_local/settings',
@@ -13,12 +19,6 @@ const defaultSettings = {
   _id: 'settings',
   currency: { base: DEFAULT_BASE_CURRENCY, secondary: [] },
   exchangeRate: { [DEFAULT_BASE_CURRENCY]: 1 }
-}
-
-export default {
-  load,
-  save,
-  saveLocal
 }
 
 function load() {
@@ -70,9 +70,10 @@ async function syncSettings(settings) {
 
   const synced = {
     currency: { base, secondary },
-    exchangeRate: settings.currency.base === base
-      ? { ...settings.exchangeRate, ...remote.exchangeRate }
-      : await fetchExchangeRates(base, secondary),
+    exchangeRate:
+      settings.currency.base === base
+        ? { ...settings.exchangeRate, ...remote.exchangeRate }
+        : await fetchExchangeRates(base, secondary),
     isSetupComplete: remote.isSetupComplete
   }
 

@@ -15,7 +15,7 @@ import './index.css'
 class Auth extends React.Component {
   componentDidMount() {
     if (this.props.location.hash) {
-      this.props.finishSignin(this.props.location.hash)
+      this.props.finishAuth(this.props.location.hash)
     }
   }
 
@@ -51,7 +51,7 @@ class Auth extends React.Component {
         Please provide your email address and we will send you a verification
         code for sign in.
       </p>
-      <Form onSubmit={() => this.props.sendCode(this.props.email)}>
+      <Form onSubmit={this.props.sendCode}>
         <div className="auth--input-field">
           <Input
             fluid
@@ -83,7 +83,7 @@ class Auth extends React.Component {
     </div>
 
   renderVerifyCodeForm = () =>
-    <Form onSubmit={this.verifyCode}>
+    <Form onSubmit={this.props.verifyCode}>
       <p>
         An email with the code has been sent to {this.props.email}
       </p>
@@ -112,7 +112,6 @@ class Auth extends React.Component {
       </div>
     </Form>
 
-  verifyCode = () => this.props.verifyCode(this.props.email, this.props.code)
   handleChange = handler => (event, { value }) => handler(value)
 }
 
@@ -129,7 +128,7 @@ Auth.propTypes = {
   changeCode: PropTypes.func,
   sendCode: PropTypes.func,
   verifyCode: PropTypes.func,
-  finishSignin: PropTypes.func
+  finishAuth: PropTypes.func
 }
 
 export default Auth

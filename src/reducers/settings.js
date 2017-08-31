@@ -1,8 +1,8 @@
 import pick from 'lodash/pick'
 import { handleActions } from 'redux-actions'
 import {
-  changeSettingsCurrency,
   loadSettingsSuccess,
+  changeSettingsCurrency,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
   completeSetup
@@ -11,24 +11,30 @@ import { DEFAULT_BASE_CURRENCY } from '../constants/currency'
 
 export default handleActions(
   {
-    [loadSettingsSuccess]: (state, action) => ({
+    [loadSettingsSuccess]: (state, { payload }) => ({
       ...state,
       isLoaded: true,
-      ...pick(action.payload, Object.keys(state))
+      ...pick(payload, Object.keys(state))
     }),
-    [updateExchangeRateSuccess]: (state, action) => ({
+    [changeSettingsCurrency]: (state, { payload }) => {
+      let { base, secondary } = payload
+      if (secondary.includes(base)) {
+        secondary = secondary
+          .concat(state.currency.base)
+          .filter(code => code !== base)
+      }
+
+      return { ...state, currency: { base, secondary } }
+    },
+    [updateExchangeRateSuccess]: (state, { payload }) => ({
       ...state,
-      exchangeRate: action.payload
+      exchangeRate: payload
     }),
-    [changeSettingsCurrency]: (state, action) => ({
+    [toggleSectionCollapse]: (state, { payload }) => ({
       ...state,
-      currency: action.payload
-    }),
-    [toggleSectionCollapse]: (state, action) => ({
-      ...state,
-      collapsedSections: state.collapsedSections.includes(action.payload)
-        ? state.collapsedSections.filter(section => section !== action.payload)
-        : state.collapsedSections.concat(action.payload)
+      collapsedSections: state.collapsedSections.includes(payload)
+        ? state.collapsedSections.filter(section => section !== payload)
+        : state.collapsedSections.concat(payload)
     }),
     [completeSetup]: state => ({ ...state, isSetupComplete: true })
   },

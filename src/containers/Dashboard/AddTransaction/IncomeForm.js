@@ -8,7 +8,7 @@ import {
   getIncomeTagOptions
 } from '../../../selectors/ui/transactionForm'
 import { INCOME } from '../../../models/Transaction'
-import { save } from '../../../actions/transactions'
+import { saveTransaction } from '../../../actions/transactions'
 import { loadIncomeTags } from '../../../actions/tags'
 import {
   changeAccount,
@@ -44,5 +44,5 @@ export default connect(mapStateToProps, {
   addTag: addIncomeTag,
   changeTags: changeIncomeTags,
   loadTagsOptions: loadIncomeTags,
-  save
+  saveTransaction
 })(TransactionForm)

@@ -1,6 +1,6 @@
 import reducer from './recent'
 import {
-  saveTransactionRequest,
+  saveTransaction,
   loadRecentTransactionsSuccess
 } from '../../actions/transactions'
 
@@ -36,7 +36,7 @@ it('adds new transaction to the beginning of the list', () => {
         },
         allIds: ['T12345', 'T12346']
       },
-      saveTransactionRequest({
+      saveTransaction({
         id: 'T12347',
         amount: 300
       })

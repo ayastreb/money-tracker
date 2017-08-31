@@ -1,6 +1,7 @@
 import {
   dismissSyncWarning,
   setPendingChangesFlag,
+  sync,
   syncRequest,
   syncSuccess,
   syncFailure
@@ -15,6 +16,12 @@ it('creates dismiss warning action', () => {
 it('creates set pending changes action', () => {
   expect(setPendingChangesFlag()).toEqual({
     type: 'SET_PENDING_CHANGES_FLAG'
+  })
+})
+
+it('creates sync action', () => {
+  expect(sync()).toEqual({
+    type: 'SYNC'
   })
 })
 

@@ -2,38 +2,35 @@ import omit from 'lodash/omit'
 import { handleActions, combineActions } from 'redux-actions'
 import {
   loadAccountsSuccess,
-  saveAccountRequest,
+  saveAccount,
   saveAccountFailure,
-  changeBalanceRequest,
-  removeAccountRequest
+  removeAccount,
+  changeBalance
 } from '../actions/accounts'
 
 export default handleActions(
   {
-    [loadAccountsSuccess]: (state, action) => ({
-      byId: action.payload.reduce((result, account) => {
+    [loadAccountsSuccess]: (state, { payload }) => ({
+      byId: payload.reduce((result, account) => {
         result[account.id] = account.toState()
         return result
       }, {}),
-      allIds: action.payload.map(account => account.id)
+      allIds: payload.map(account => account.id)
     }),
-    [saveAccountRequest]: (state, action) => ({
+    [saveAccount]: (state, { payload }) => ({
       byId: {
         ...state.byId,
-        [action.payload.id]: action.payload.toState()
+        [payload.id]: payload.toState()
       },
-      allIds: state.allIds.concat(action.payload.id)
+      allIds: state.allIds.concat(payload.id)
     }),
-    [combineActions(saveAccountFailure, removeAccountRequest)]: (
-      state,
-      action
-    ) => ({
+    [combineActions(saveAccountFailure, removeAccount)]: (state, action) => ({
       byId: omit(state.byId, action.payload),
       allIds: state.allIds.filter(id => id !== action.payload)
     }),
-    [changeBalanceRequest]: (state, action) => {
-      const id = action.payload.id
-      const currency = action.payload.currency
+    [changeBalance]: (state, { payload }) => {
+      const { id, currency, amount } = payload
+
       return {
         byId: {
           ...state.byId,
@@ -41,8 +38,8 @@ export default handleActions(
             ...state.byId[id],
             balance: {
               ...state.byId[id].balance,
-              [currency]: parseInt(state.byId[id].balance[currency], 10) +
-                action.payload.amount
+              [currency]:
+                parseInt(state.byId[id].balance[currency], 10) + amount
             }
           }
         },

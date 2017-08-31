@@ -1,10 +1,10 @@
 import reducer from './accounts'
 import {
   loadAccountsSuccess,
-  saveAccountRequest,
+  saveAccount,
   saveAccountFailure,
-  removeAccountRequest,
-  changeBalanceRequest
+  removeAccount,
+  changeBalance
 } from '../actions/accounts'
 import Account from '../models/Account'
 
@@ -51,7 +51,7 @@ describe('saving account', () => {
     expect(
       reducer(
         undefined,
-        saveAccountRequest(
+        saveAccount(
           new Account({
             id: 'A12345',
             name: 'foo',
@@ -87,7 +87,7 @@ describe('saving account', () => {
           },
           allIds: ['A12345']
         },
-        saveAccountRequest(
+        saveAccount(
           new Account({
             id: 'A12346',
             name: 'bar',
@@ -177,7 +177,7 @@ describe('removing account', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        removeAccountRequest('A12346')
+        removeAccount('A12346')
       )
     ).toEqual({
       byId: {
@@ -214,7 +214,7 @@ describe('changing balance', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        changeBalanceRequest('A12346', 'JPY', -200)
+        changeBalance({ id: 'A12346', currency: 'JPY', amount: -200 })
       )
     ).toEqual({
       byId: {
@@ -255,7 +255,7 @@ describe('changing balance', () => {
           },
           allIds: ['A12345', 'A12346']
         },
-        changeBalanceRequest('A12346', 'USD', 100)
+        changeBalance({ id: 'A12346', currency: 'USD', amount: 100 })
       )
     ).toEqual({
       byId: {

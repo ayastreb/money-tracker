@@ -7,6 +7,7 @@ import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
 } from '../../actions/ui/accountForm'
+import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
 
 class CurrencyTable extends React.Component {
   componentWillMount() {
@@ -81,8 +82,8 @@ CurrencyTable.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  base: state.settings.currency.base,
-  secondary: state.settings.currency.secondary,
+  base: getBaseCurrency(state),
+  secondary: getSecondaryCurrency(state),
   balance: state.ui.accountForm.balance
 })
 

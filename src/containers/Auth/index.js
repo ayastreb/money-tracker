@@ -5,8 +5,9 @@ import {
   changeCode,
   sendCode,
   verifyCode,
-  finishSignin
+  finishAuth
 } from '../../actions/ui/auth'
+import { getAuthEmail, getAuthCode } from '../../selectors/ui/auth'
 
 const mapStateToProps = state => ({
   isAuthenticated: state.user.isAuthenticated,
@@ -15,8 +16,8 @@ const mapStateToProps = state => ({
   isVerifyingCode: state.ui.auth.isVerifyingCode,
   isCodeValid: state.ui.auth.isCodeValid,
   error: state.ui.auth.error,
-  email: state.ui.auth.email,
-  code: state.ui.auth.code
+  email: getAuthEmail(state),
+  code: getAuthCode(state)
 })
 
 export default connect(mapStateToProps, {
@@ -24,5 +25,5 @@ export default connect(mapStateToProps, {
   changeCode,
   sendCode,
   verifyCode,
-  finishSignin
+  finishAuth
 })(Auth)

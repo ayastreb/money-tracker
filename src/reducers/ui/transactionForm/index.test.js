@@ -12,7 +12,7 @@ import {
   changeDate,
   changeNote
 } from '../../../actions/ui/transactionForm'
-import { saveTransactionRequest } from '../../../actions/transactions'
+import { saveTransaction } from '../../../actions/transactions'
 import Transaction, { EXPENSE, INCOME } from '../../../models/Transaction.js'
 import format from 'date-fns/format'
 
@@ -105,7 +105,7 @@ it('changes note', () => {
 })
 
 it('returns default state when create action succeed', () => {
-  expect(reducer({}, saveTransactionRequest())).toEqual({
+  expect(reducer({}, saveTransaction())).toEqual({
     kind: Transaction.defaultKind,
     accountId: null,
     amount: '',

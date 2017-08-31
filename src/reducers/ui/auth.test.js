@@ -2,10 +2,10 @@ import reducer from './auth'
 import {
   changeEmail,
   changeCode,
-  sendCodeRequest,
+  sendCode,
   sendCodeSuccess,
   sendCodeFailure,
-  verifyCodeRequest,
+  verifyCode,
   verifyCodeSuccess,
   verifyCodeFailure
 } from '../../actions/ui/auth'
@@ -35,7 +35,7 @@ it('changes code', () => {
 })
 
 it('shows loader when send code requested', () => {
-  expect(reducer({ isSendingCode: false }, sendCodeRequest())).toEqual({
+  expect(reducer({ isSendingCode: false }, sendCode())).toEqual({
     isSendingCode: true
   })
 })
@@ -62,7 +62,7 @@ it('shows error if code was not sent', () => {
 })
 
 it('shows loader when code verification is requested', () => {
-  expect(reducer({ isVerifyingCode: false }, verifyCodeRequest())).toEqual({
+  expect(reducer({ isVerifyingCode: false }, verifyCode())).toEqual({
     isVerifyingCode: true
   })
 })

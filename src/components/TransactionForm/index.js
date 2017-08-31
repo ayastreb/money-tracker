@@ -21,25 +21,28 @@ class TransactionForm extends React.Component {
           onAmountChange={this.handle(this.props.changeAmount)}
           onCurrencyChange={this.handle(this.props.changeCurrency)}
         />
-        {this.props.linkedAccountId &&
+        {this.props.linkedAccountId && (
           <Account
             label="To"
             accountId={this.props.linkedAccountId}
             accountOptions={this.props.accountOptions}
             amount={
-              this.props.currency === this.props.linkedCurrency
-                ? this.props.amount
-                : this.props.linkedAmount
+              this.props.currency === this.props.linkedCurrency ? (
+                this.props.amount
+              ) : (
+                this.props.linkedAmount
+              )
             }
             currency={this.props.linkedCurrency}
             currencyOptions={this.props.linkedCurrencyOptions}
             onAccountChange={this.handle(this.props.changeLinkedAccount)}
             onAmountChange={this.handle(this.props.changeLinkedAmount)}
             onCurrencyChange={this.handle(this.props.changeLinkedCurrency)}
-          />}
+          />
+        )}
         <div className={this.gridClassName()}>
           <div className="transaction-form-grid__column-wide">
-            {this.props.tags !== undefined &&
+            {this.props.tags !== undefined && (
               <div className="transaction-form-grid__field">
                 <Form.Field>
                   <label>Tags</label>
@@ -56,7 +59,8 @@ class TransactionForm extends React.Component {
                     onAddItem={this.handle(this.props.addTag)}
                   />
                 </Form.Field>
-              </div>}
+              </div>
+            )}
             <div className="transaction-form-grid__field">
               <Form.Field>
                 <Input
@@ -101,7 +105,7 @@ class TransactionForm extends React.Component {
   handle = handler => (event, { value }) => handler(value)
   handleSubmit = event => {
     event.preventDefault()
-    this.props.save(Transaction.fromForm(this.props))
+    this.props.saveTransaction(Transaction.fromForm(this.props))
   }
 }
 
@@ -133,7 +137,7 @@ TransactionForm.propTypes = {
   changeDate: PropTypes.func.isRequired,
   changeNote: PropTypes.func.isRequired,
   loadTagsOptions: PropTypes.func,
-  save: PropTypes.func.isRequired
+  saveTransaction: PropTypes.func.isRequired
 }
 
 export default TransactionForm

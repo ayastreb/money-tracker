@@ -15,6 +15,7 @@ export const getRecentTransactions = createSelector(
       accountName:
         accounts[byId[id].accountId] && accounts[byId[id].accountId].name,
       linkedAccountName:
-        byId[id].linkedAccountId && accounts[byId[id].linkedAccountId].name
+        accounts[byId[id].linkedAccountId] &&
+        accounts[byId[id].linkedAccountId].name
     }))
 )

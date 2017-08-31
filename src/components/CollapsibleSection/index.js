@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon } from 'semantic-ui-react'
 import { toggleSectionCollapse } from '../../actions/settings'
+import { getCollapsedSections } from '../../selectors/settings'
 import './index.css'
 
 const CollapsibleSection = ({
@@ -12,11 +13,13 @@ const CollapsibleSection = ({
   collapsed,
   toggle,
   children
-}) => (
+}) =>
   <div className="section">
     <div className="section__header" onClick={() => toggle(name)}>
       <Icon name={collapsed.includes(name) ? 'caret right' : 'caret down'} />
-      <h3>{label}</h3>
+      <h3>
+        {label}
+      </h3>
       {LabelComponent && <LabelComponent />}
     </div>
     {!collapsed.includes(name) &&
@@ -24,7 +27,6 @@ const CollapsibleSection = ({
         {children}
       </div>}
   </div>
-)
 
 CollapsibleSection.propTypes = {
   name: PropTypes.string.isRequired,
@@ -36,7 +38,7 @@ CollapsibleSection.propTypes = {
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
-  collapsed: state.settings.collapsedSections
+  collapsed: getCollapsedSections(state)
 })
 
 export default connect(mapStateToProps, { toggle: toggleSectionCollapse })(

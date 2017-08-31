@@ -3,10 +3,7 @@ import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
 } from '../../../actions/ui/accountForm'
-import {
-  saveAccountRequest,
-  saveAccountFailure
-} from '../../../actions/accounts'
+import { saveAccount, saveAccountFailure } from '../../../actions/accounts'
 import { changeSettingsCurrency } from '../../../actions/settings'
 import Account from '../../../models/Account'
 
@@ -15,7 +12,7 @@ it('returns initial state', () => {
 })
 
 it('resets to initial state when account is created', () => {
-  expect(reducer({ EUR: 100 }, saveAccountRequest())).toEqual({})
+  expect(reducer({ EUR: 100 }, saveAccount())).toEqual({})
 })
 
 it('restores form value when failed to persist account', () => {
@@ -74,7 +71,10 @@ describe('changing currency balance', () => {
 describe('changing currency settings', () => {
   it('filters out unused currencies', () => {
     expect(
-      reducer({ USD: 100, JPY: 500 }, changeSettingsCurrency('USD', []))
+      reducer(
+        { USD: 100, JPY: 500 },
+        changeSettingsCurrency({ base: 'USD', secondary: [] })
+      )
     ).toEqual({
       USD: 100
     })
@@ -82,7 +82,7 @@ describe('changing currency settings', () => {
     expect(
       reducer(
         { EUR: 101, CAD: 102, AUD: 103 },
-        changeSettingsCurrency('USD', ['EUR', 'CAD'])
+        changeSettingsCurrency({ base: 'USD', secondary: ['EUR', 'CAD'] })
       )
     ).toEqual({
       EUR: 101,

@@ -10,7 +10,7 @@ import {
   getLinkedCurrency
 } from '../../../selectors/ui/transactionForm'
 import { TRANSFER } from '../../../models/Transaction'
-import { save } from '../../../actions/transactions'
+import { saveTransaction } from '../../../actions/transactions'
 import {
   changeAccount,
   changeAmount,
@@ -48,5 +48,5 @@ export default connect(mapStateToProps, {
   changeLinkedCurrency,
   changeDate,
   changeNote,
-  save
+  saveTransaction
 })(TransactionForm)

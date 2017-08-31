@@ -1,14 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import union from 'lodash/union'
 import { connect } from 'react-redux'
 import { Dropdown, Form } from 'semantic-ui-react'
-import { getUsedCurrency } from '../../selectors/currency'
-import {
-  changeSettingsCurrency,
-  updateExchangeRate
-} from '../../actions/settings'
+import { changeSettingsCurrency } from '../../actions/settings'
 import { currencyAsDropdownOptions } from '../../constants/currency'
+import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
 
 class CurrencyForm extends React.Component {
   constructor(props) {
@@ -27,23 +23,17 @@ class CurrencyForm extends React.Component {
   }
 
   handleBaseChange = (event, { value }) => {
-    this.props.changeSettingsCurrency(
-      value,
-      this.props.secondary,
-      this.props.base
-    )
-    this.props.updateExchangeRate(
-      value,
-      union(this.props.secondary, this.props.usedCurrency)
-    )
+    this.props.changeSettingsCurrency({
+      base: value,
+      secondary: this.props.secondary
+    })
   }
 
   handleSecondaryChange = (event, { value }) => {
-    this.props.changeSettingsCurrency(this.props.base, value)
-    this.props.updateExchangeRate(
-      this.props.base,
-      union(value, this.props.usedCurrency)
-    )
+    this.props.changeSettingsCurrency({
+      base: this.props.base,
+      secondary: value
+    })
   }
 
   render() {
@@ -83,20 +73,15 @@ class CurrencyForm extends React.Component {
 CurrencyForm.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
-  usedCurrency: PropTypes.arrayOf(PropTypes.string),
   exchangeRate: PropTypes.objectOf(PropTypes.number),
-  changeSettingsCurrency: PropTypes.func,
-  updateExchangeRate: PropTypes.func
+  changeSettingsCurrency: PropTypes.func
 }
 
 const mapStateToProps = state => ({
-  base: state.settings.currency.base,
-  secondary: state.settings.currency.secondary,
-  usedCurrency: getUsedCurrency(state),
-  exchangeRate: state.settings.exchangeRate
+  base: getBaseCurrency(state),
+  secondary: getSecondaryCurrency(state)
 })
 
-export default connect(mapStateToProps, {
-  changeSettingsCurrency,
-  updateExchangeRate
-})(CurrencyForm)
+export default connect(mapStateToProps, { changeSettingsCurrency })(
+  CurrencyForm
+)

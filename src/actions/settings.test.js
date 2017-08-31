@@ -1,25 +1,27 @@
 import {
-  changeSettingsCurrency,
   loadSettingsSuccess,
+  changeSettingsCurrency,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
   completeSetup
 } from './settings'
 
-it('filters base currency from secondary currencies', () => {
-  expect(changeSettingsCurrency('EUR', ['USD', 'EUR', 'JPY'], 'CAD')).toEqual({
-    type: 'CHANGE_SETTINGS_CURRENCY',
-    payload: {
-      base: 'EUR',
-      secondary: ['USD', 'JPY', 'CAD']
-    }
-  })
-})
-
 it('creates load success action', () => {
   expect(loadSettingsSuccess('foo')).toEqual({
     type: 'LOAD_SETTINGS_SUCCESS',
     payload: 'foo'
+  })
+})
+
+it('creates change currency action', () => {
+  expect(
+    changeSettingsCurrency({ base: 'EUR', secondary: ['USD', 'JPY'] })
+  ).toEqual({
+    type: 'CHANGE_SETTINGS_CURRENCY',
+    payload: {
+      base: 'EUR',
+      secondary: ['USD', 'JPY']
+    }
   })
 })
 

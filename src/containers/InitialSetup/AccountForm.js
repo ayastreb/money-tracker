@@ -11,7 +11,7 @@ class AccountForm extends React.Component {
   constructor(props) {
     super(props)
 
-    this.groups = Account.groupAsDropdownOptions()
+    this.groups = Account.groupOptions()
   }
 
   handleNameChange = (event, { value }) => this.props.changeName(value)
@@ -19,7 +19,7 @@ class AccountForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault()
-    this.props.saveAccount(Account.fromForm(this.props))
+    this.props.saveAccount(Account.fromForm(this.props.form))
   }
 
   render() {
@@ -30,13 +30,13 @@ class AccountForm extends React.Component {
             label="Name"
             required
             placeholder="Account name"
-            value={this.props.name}
+            value={this.props.form.name}
             onChange={this.handleNameChange}
           />
           <Form.Select
             label="Group"
             options={this.groups}
-            value={this.props.group}
+            value={this.props.form.group}
             onChange={this.handleGroupChange}
           />
         </Form.Group>
@@ -48,18 +48,18 @@ class AccountForm extends React.Component {
 }
 
 AccountForm.propTypes = {
-  name: PropTypes.string,
-  group: PropTypes.string,
-  balance: PropTypes.objectOf(PropTypes.string),
+  form: PropTypes.shape({
+    name: PropTypes.string,
+    group: PropTypes.string,
+    balance: PropTypes.objectOf(PropTypes.string)
+  }),
   changeName: PropTypes.func,
   changeGroup: PropTypes.func,
   saveAccount: PropTypes.func
 }
 
 const mapStateToProps = state => ({
-  name: state.ui.accountForm.name,
-  group: state.ui.accountForm.group,
-  balance: state.ui.accountForm.balance
+  form: state.ui.accountForm
 })
 
 export default connect(mapStateToProps, {

@@ -1,8 +1,15 @@
 import {
+  loadRecentTransactions,
   loadRecentTransactionsSuccess,
-  saveTransactionRequest,
+  saveTransaction,
   saveTransactionSuccess
 } from './transactions'
+
+it('creates load recent transactions action', () => {
+  expect(loadRecentTransactions()).toEqual({
+    type: 'LOAD_RECENT_TRANSACTIONS'
+  })
+})
 
 it('creates load recent transactions success action', () => {
   expect(loadRecentTransactionsSuccess('foo')).toEqual({
@@ -11,9 +18,9 @@ it('creates load recent transactions success action', () => {
   })
 })
 
-it('creates save transaction request action', () => {
-  expect(saveTransactionRequest('foo')).toEqual({
-    type: 'SAVE_TRANSACTION_REQUEST',
+it('creates save transaction action', () => {
+  expect(saveTransaction('foo')).toEqual({
+    type: 'SAVE_TRANSACTION',
     payload: 'foo'
   })
 })

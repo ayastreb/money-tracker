@@ -5,10 +5,7 @@ import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
 } from '../../../actions/ui/accountForm'
-import {
-  saveAccountRequest,
-  saveAccountFailure
-} from '../../../actions/accounts'
+import { saveAccount, saveAccountFailure } from '../../../actions/accounts'
 import { changeSettingsCurrency } from '../../../actions/settings'
 
 export default handleActions(
@@ -25,7 +22,7 @@ export default handleActions(
     }),
     [changeSettingsCurrency]: (state, { payload }) =>
       pick(state, [payload.base, ...payload.secondary]),
-    [saveAccountRequest]: () => {},
+    [saveAccount]: () => {},
     [saveAccountFailure]: (state, { payload }) => payload.balanceToForm()
   },
   {}

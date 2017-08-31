@@ -45,7 +45,7 @@ it('changes currency with initial state', () => {
   expect(
     reducer(
       { currency: { base: 'EUR', secondary: ['JPY'] } },
-      changeSettingsCurrency('GBP', ['AUD', 'CAD'])
+      changeSettingsCurrency({ base: 'GBP', secondary: ['AUD', 'CAD'] })
     )
   ).toEqual({ currency: { base: 'GBP', secondary: ['AUD', 'CAD'] } })
 })

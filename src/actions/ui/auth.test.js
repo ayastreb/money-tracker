@@ -1,13 +1,13 @@
 import {
   changeEmail,
   changeCode,
-  sendCodeRequest,
+  sendCode,
   sendCodeSuccess,
   sendCodeFailure,
-  verifyCodeRequest,
+  verifyCode,
   verifyCodeSuccess,
   verifyCodeFailure,
-  authSuccess
+  finishAuth
 } from './auth'
 
 it('creates change email action', () => {
@@ -24,9 +24,9 @@ it('creates change code action', () => {
   })
 })
 
-it('creates send code request action', () => {
-  expect(sendCodeRequest()).toEqual({
-    type: 'SEND_CODE_REQUEST'
+it('creates send code  action', () => {
+  expect(sendCode()).toEqual({
+    type: 'SEND_CODE'
   })
 })
 
@@ -42,9 +42,9 @@ it('creates send code failure action', () => {
   })
 })
 
-it('creates verify code request action', () => {
-  expect(verifyCodeRequest()).toEqual({
-    type: 'VERIFY_CODE_REQUEST'
+it('creates verify code  action', () => {
+  expect(verifyCode()).toEqual({
+    type: 'VERIFY_CODE'
   })
 })
 
@@ -60,8 +60,8 @@ it('creates verify code failure action', () => {
   })
 })
 
-it('creates auth success action', () => {
-  expect(authSuccess()).toEqual({
-    type: 'AUTH_SUCCESS'
+it('creates finish auth action', () => {
+  expect(finishAuth()).toEqual({
+    type: 'FINISH_AUTH'
   })
 })

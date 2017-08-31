@@ -8,7 +8,7 @@ import {
   getExpenseTagOptions
 } from '../../../selectors/ui/transactionForm'
 import { EXPENSE } from '../../../models/Transaction'
-import { save } from '../../../actions/transactions'
+import { saveTransaction } from '../../../actions/transactions'
 import { loadExpenseTags } from '../../../actions/tags'
 import {
   changeAccount,
@@ -44,5 +44,5 @@ export default connect(mapStateToProps, {
   addTag: addExpenseTag,
   changeTags: changeExpenseTags,
   loadTagsOptions: loadExpenseTags,
-  save
+  saveTransaction
 })(TransactionForm)
