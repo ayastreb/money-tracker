@@ -1,11 +1,11 @@
 .account-widget-group {
-  border-top: solid 1px #D4D4D5;
+  border-top: solid 1px #d4d4d5;
 }
 
 @media (min-width: 768px) {
   .account-widget {
-    border: solid 1px #D4D4D5;
-    border-radius: .28571429rem;
+    border: solid 1px #d4d4d5;
+    border-radius: 0.28571429rem;
   }
 
   .account-widget-group:first-child {
@@ -19,15 +19,17 @@
   cursor: pointer;
 }
 
-.account-widget-group__name, .account-widget-group__total  {
+.account-widget-group__name,
+.account-widget-group__total {
   display: table-cell;
-  font-weight: 700;
+  font-weight: 500;
   background-color: rgba(77, 78, 80, 0.05);
   padding: 0.5em 1em;
 }
 
 @media (max-width: 767px) {
-  .account-widget-group__name, .account-widget-group__total  {
+  .account-widget-group__name,
+  .account-widget-group__total {
     padding: 0.75em 1em;
   }
 }
@@ -40,10 +42,11 @@
 .account-widget-account {
   width: 100%;
   display: table;
-  border-top: solid 1px #D4D4D5;
+  border-top: solid 1px #d4d4d5;
 }
 
-.account-widget-account__name, .account-widget-account__balance {
+.account-widget-account__name,
+.account-widget-account__balance {
   display: table-cell;
   padding: 0.5em 1em;
 }
