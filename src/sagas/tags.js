@@ -5,7 +5,7 @@ import {
   loadExpenseTagsSuccess,
   loadIncomeTagsSuccess
 } from '../actions/tags'
-import { INCOME, EXPENSE } from '../models/Transaction'
+import { INCOME, EXPENSE } from '../entities/Transaction'
 import TagsStorage from '../util/storage/tags'
 
 export function* loadExpenseTagsSaga() {
