@@ -1,17 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { CURRENCY } from '../constants/currency'
+import Currency from '../entities/Currency'
 
 const Amount = ({ value, code, showColor = true }) => (
-  <span className={`mono ${showColor && (value >=0 ? 'positive': 'negative')}`}>
-    {Number(
-      value / Math.pow(10, CURRENCY[code].exp)
-    ).toLocaleString(undefined, {
-      minimumFractionDigits: CURRENCY[code].exp,
-      maximumFractionDigits: CURRENCY[code].exp
-    })}
-    {' '}
-    {code}
+  <span
+    className={`mono ${showColor && (value >= 0 ? 'positive' : 'negative')}`}
+  >
+    {Currency.toFloat(value, code)} {code}
   </span>
 )
 

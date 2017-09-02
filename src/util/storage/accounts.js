@@ -1,5 +1,5 @@
 import { accountsDB, remoteAccountsDB } from './pouchdb'
-import Account from '../../models/Account'
+import Account from '../../entities/Account'
 
 export default {
   sync,
@@ -30,16 +30,19 @@ function loadAll() {
   return accountsDB()
     .allDocs({ include_docs: true, conflicts: true })
     .then(response => Promise.all(response.rows.map(resolveConflicts)))
-    .then(docs => docs.map(doc => new Account({ id: doc._id, ...doc })))
+    .then(docs => docs.map(Account.fromStorage))
 }
 
 function save(account) {
   return accountsDB()
     .get(account.id)
-    .then(doc => accountsDB().put({ ...doc, ...account.toJSON() }))
+    .then(doc => accountsDB().put({ ...doc, ...Account.toStorage(account) }))
     .catch(err => {
       if (err.status !== 404) throw err
-      return accountsDB().put({ _id: account.id, ...account.toJSON() })
+      return accountsDB().put({
+        _id: account.id,
+        ...Account.toStorage(account)
+      })
     })
 }
 
@@ -83,7 +86,9 @@ async function resolveConflicts(row) {
   const lastSyncedBalance = JSON.parse(localStorage.getItem(row.doc._id))
   const conflictedBalances = await Promise.all(
     row.doc._conflicts.map(async rev =>
-      accountsDB().get(row.doc._id, { rev }).then(doc => doc.balance)
+      accountsDB()
+        .get(row.doc._id, { rev })
+        .then(doc => doc.balance)
     )
   )
   conflictedBalances.push(row.doc.balance)

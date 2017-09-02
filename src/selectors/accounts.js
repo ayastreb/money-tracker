@@ -1,59 +1,72 @@
 import { createSelector } from 'reselect'
-import { CURRENCY } from '../constants/currency'
-import Account from '../models/Account'
+import { getBaseCurrency, getExchangeRate } from './currency'
+import Account from '../entities/Account'
+import Currency from '../entities/Currency'
+import EntityMap from '../entities/EntityMap'
 
-const baseCurrencySelector = state => state.settings.currency.base
-const exchangeRateSelector = state => state.settings.exchangeRate
-const accountsSelector = state => state.accounts.byId
-const accountsIdsSelector = state => state.accounts.allIds
+const insertCurrencies = account => ({
+  ...account,
+  currencies: Object.keys(account.balance)
+})
 
-export const getAccountsAsOptions = createSelector(
-  accountsIdsSelector,
-  accountsSelector,
-  (accountsIds, accounts) =>
-    accountsIds.map(id => ({ key: id, value: id, text: accounts[id].name }))
-)
+export const getAccountsMap = state =>
+  EntityMap.apply(state.entities.accounts, insertCurrencies)
+
+export const getAccount = id =>
+  createSelector(getAccountsMap, accounts => EntityMap.get(accounts, id))
+
+export const getAccountsList = state =>
+  EntityMap.map(state.entities.accounts, insertCurrencies)
+
+export const getAccountsAsOptions = state =>
+  EntityMap.map(state.entities.accounts, account => ({
+    key: account.id,
+    value: account.id,
+    text: account.name
+  }))
+
+export const getUsedCurrency = createSelector(getAccountsList, accounts => [
+  ...new Set(accounts.map(account => account.currencies))
+])
 
 export const getGroupedAccounts = createSelector(
-  accountsIdsSelector,
-  accountsSelector,
-  baseCurrencySelector,
-  exchangeRateSelector,
-  (accountsIds, accounts, base, exchangeRate) =>
-    accountsIds.reduce((grouped, id) => {
-      const group = accounts[id].group
+  getAccountsList,
+  getBaseCurrency,
+  getExchangeRate,
+  (accounts, base, rate) =>
+    accounts.reduce((grouped, account) => {
+      const group = account.group
       if (!grouped[group]) {
-        grouped[group] = { name: Account.groups[group], accounts: [], total: 0 }
+        grouped[group] = {
+          name: Account.groupName(group),
+          accounts: [],
+          total: 0
+        }
       }
 
-      grouped[group].accounts.push(accounts[id])
-      grouped[group].total += accountBaseTotal(accounts[id], base, exchangeRate)
+      grouped[group].accounts.push(account)
+      grouped[group].total += getBaseTotal(account, base, rate)
 
       return grouped
     }, {})
 )
 
 export const getNetWorth = createSelector(
-  accountsIdsSelector,
-  accountsSelector,
-  baseCurrencySelector,
-  exchangeRateSelector,
-  (accountsIds, accounts, base, exchangeRate) =>
-    accountsIds.reduce(
-      (netWorth, id) =>
-        netWorth + accountBaseTotal(accounts[id], base, exchangeRate),
+  getAccountsList,
+  getBaseCurrency,
+  getExchangeRate,
+  (accounts, base, rate) =>
+    accounts.reduce(
+      (netWorth, account) => netWorth + getBaseTotal(account, base, rate),
       0
     )
 )
 
-const accountBaseTotal = (account, base, exchangeRate) =>
+export const getBaseTotal = (account, base, rate) =>
   account.currencies.reduce(
-    (total, foreign) =>
+    (total, code) =>
       Math.floor(
-        total +
-          account.balance[foreign] /
-            exchangeRate[foreign] *
-            Math.pow(10, CURRENCY[base].exp - CURRENCY[foreign].exp)
+        total + Currency.convert(account.balance[code], rate[code], base, code)
       ),
     0
   )

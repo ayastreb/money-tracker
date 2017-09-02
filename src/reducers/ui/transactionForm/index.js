@@ -13,7 +13,7 @@ import {
   changeNote
 } from '../../../actions/ui/transactionForm'
 import { saveTransaction } from '../../../actions/transactions'
-import Transaction, { EXPENSE, INCOME } from '../../../models/Transaction.js'
+import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction'
 import format from 'date-fns/format'
 
 const initialState = () => ({
@@ -44,11 +44,15 @@ export default handleActions(
     }),
     [changeAmount]: (state, { payload }) => ({
       ...state,
-      amount: payload
+      amount: payload,
+      linkedAmount:
+        state.currency === state.linkedCurrency ? payload : state.linkedAmount
     }),
     [changeCurrency]: (state, { payload }) => ({
       ...state,
-      currency: payload
+      currency: payload,
+      linkedAmount:
+        state.linkedCurrency === payload ? state.amount : state.linkedAmount
     }),
     [changeLinkedAccount]: (state, { payload }) => ({
       ...state,
@@ -56,11 +60,14 @@ export default handleActions(
     }),
     [changeLinkedAmount]: (state, { payload }) => ({
       ...state,
+      amount: state.currency === state.linkedCurrency ? payload : state.amount,
       linkedAmount: payload
     }),
     [changeLinkedCurrency]: (state, { payload }) => ({
       ...state,
-      linkedCurrency: payload
+      linkedCurrency: payload,
+      linkedAmount:
+        state.currency === payload ? state.amount : state.linkedAmount
     }),
     [changeExpenseTags]: (state, { payload }) => ({
       ...state,

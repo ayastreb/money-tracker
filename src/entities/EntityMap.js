@@ -30,7 +30,10 @@ const EntityMap = {
       },
       keys: [
         ...new Set(
-          source.keys.concat(entities.map(entity => entity[keyPropName]))
+          entities
+            .map(entity => entity[keyPropName])
+            .filter(key => !source.keys.includes(key))
+            .concat(source.keys)
         )
       ]
     }

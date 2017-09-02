@@ -7,8 +7,7 @@ export const {
   saveAccountFailure,
   saveAccountSuccess,
   removeAccount,
-  removeAccountSuccess,
-  changeBalance
+  removeAccountSuccess
 } = createActions(
   'LOAD_ACCOUNTS',
   'LOAD_ACCOUNTS_SUCCESS',
@@ -16,6 +15,5 @@ export const {
   'SAVE_ACCOUNT_FAILURE',
   'SAVE_ACCOUNT_SUCCESS',
   'REMOVE_ACCOUNT',
-  'REMOVE_ACCOUNT_SUCCESS',
-  'CHANGE_BALANCE'
+  'REMOVE_ACCOUNT_SUCCESS'
 )

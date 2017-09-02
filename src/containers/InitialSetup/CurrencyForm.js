@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dropdown, Form } from 'semantic-ui-react'
 import { changeSettingsCurrency } from '../../actions/settings'
-import { currencyAsDropdownOptions } from '../../constants/currency'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
+import Currency from '../../entities/Currency'
 
 class CurrencyForm extends React.Component {
   constructor(props) {
     super(props)
 
-    this.options = currencyAsDropdownOptions()
+    this.options = Currency.options()
     this.updateSecondaryOptions(props.base)
   }
 

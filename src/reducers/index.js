@@ -1,18 +1,14 @@
 import { combineReducers } from 'redux'
+import entities from './entities'
 import ui from './ui'
 import settings from './settings'
-import accounts from './accounts'
-import transactions from './transactions'
-import tags from './tags'
 import user from './user'
 import sync from './sync'
 
 export default combineReducers({
+  entities,
   ui,
   settings,
-  accounts,
-  transactions,
-  tags,
   user,
   sync
 })

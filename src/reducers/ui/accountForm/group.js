@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 import { changeGroup } from '../../../actions/ui/accountForm'
 import { saveAccount, saveAccountFailure } from '../../../actions/accounts'
-import Account from '../../../models/Account'
+import Account from '../../../entities/Account'
 
 export default handleActions(
   {

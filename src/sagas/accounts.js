@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
 import {
   loadAccounts,
   loadAccountsSuccess,
@@ -6,9 +6,10 @@ import {
   saveAccountSuccess,
   saveAccountFailure,
   removeAccount,
-  removeAccountSuccess,
-  changeBalance
+  removeAccountSuccess
 } from '../actions/accounts'
+import { saveTransaction } from '../actions/transactions'
+import { getAccount } from '../selectors/accounts'
 import AccountsStorage from '../util/storage/accounts'
 
 export function* loadAccountsSaga() {
@@ -26,20 +27,25 @@ export function* saveAccountSaga(action) {
   }
 }
 
+export function* saveTransactionSaga(action) {
+  const transaction = action.payload
+  const account = yield select(getAccount(transaction.accountId))
+  yield call(AccountsStorage.save, account)
+  if (transaction.linkedAccountId) {
+    const linkedAccount = yield select(getAccount(transaction.linkedAccountId))
+    yield call(AccountsStorage.save, linkedAccount)
+  }
+}
+
 export function* removeAccountSaga(action) {
   const id = action.payload
   yield call(AccountsStorage.remove, id)
   yield put(removeAccountSuccess())
 }
 
-export function* changeBalanceSaga(action) {
-  const { id, currency, amount } = action.payload
-  yield call(AccountsStorage.changeBalance, id, currency, amount)
-}
-
 export default [
   takeLatest(loadAccounts, loadAccountsSaga),
   takeLatest(saveAccount, saveAccountSaga),
-  takeLatest(removeAccount, removeAccountSaga),
-  takeLatest(changeBalance, changeBalanceSaga)
+  takeLatest(saveTransaction, saveTransactionSaga),
+  takeLatest(removeAccount, removeAccountSaga)
 ]

@@ -59,7 +59,7 @@ describe('merge array of entities into existing map', () => {
         bar: { id: 'bar', name: 'Bar' },
         baz: { id: 'baz', name: 'Baz' }
       },
-      keys: ['foo', 'bar', 'baz']
+      keys: ['baz', 'foo', 'bar']
     })
   })
 
@@ -76,7 +76,7 @@ describe('merge array of entities into existing map', () => {
         bar: { id: 'bar', name: 'Bar' },
         bax: { id: 'bax', name: 'Bax' }
       },
-      keys: ['foo', 'bar', 'bax']
+      keys: ['bax', 'foo', 'bar']
     })
   })
 })
@@ -101,7 +101,7 @@ describe('set entity in map', () => {
         bar: { id: 'bar', name: 'Bar' },
         baz: { id: 'baz', name: 'Baz' }
       },
-      keys: ['foo', 'bar', 'baz']
+      keys: ['baz', 'foo', 'bar']
     })
   })
 

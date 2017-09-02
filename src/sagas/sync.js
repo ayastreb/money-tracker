@@ -10,6 +10,7 @@ import { saveAccountSuccess, removeAccountSuccess } from '../actions/accounts'
 import { saveTransactionSuccess } from '../actions/transactions'
 import { loadAccountsSaga } from './accounts'
 import { loadExpenseTagsSaga, loadIncomeTagsSaga } from './tags'
+import { loadRecentTransactionsSaga } from './transactions'
 import AccountsStorage from '../util/storage/accounts'
 import TransactionsStorage from '../util/storage/transactions'
 import TagsStorage from '../util/storage/tags'
@@ -20,6 +21,7 @@ export function* syncSaga() {
     yield call(AccountsStorage.sync)
     yield loadAccountsSaga()
     yield call(TransactionsStorage.sync)
+    yield loadRecentTransactionsSaga()
     yield call(TagsStorage.sync)
     yield loadExpenseTagsSaga()
     yield loadIncomeTagsSaga()

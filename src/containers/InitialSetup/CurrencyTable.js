@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Checkbox, Input, Form } from 'semantic-ui-react'
-import { CURRENCY } from '../../constants/currency'
 import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
 } from '../../actions/ui/accountForm'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
+import Currency from '../../entities/Currency'
 
 class CurrencyTable extends React.Component {
   componentWillMount() {
@@ -49,7 +49,7 @@ class CurrencyTable extends React.Component {
                   checked={this.props.balance[code] !== undefined}
                   onChange={this.handleCheckbox}
                   value={code}
-                  label={CURRENCY[code].name}
+                  label={Currency.name(code)}
                 />
               </Form.Field>
               <Form.Field className="input-right">

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
-import Account from '../../models/Account'
+import Account from '../../entities/Account'
 import { changeName, changeGroup } from '../../actions/ui/accountForm'
 import { saveAccount } from '../../actions/accounts'
 
