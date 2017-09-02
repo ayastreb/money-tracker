@@ -8,7 +8,7 @@ const GROUP = {
   asset: 'Asset'
 }
 
-export default {
+const Account = {
   defaultGroup: 'cash',
   groupOptions() {
     return Object.keys(GROUP).map(key => ({
@@ -42,7 +42,7 @@ export default {
   fromStorage(data) {
     return {
       id: data._id,
-      ...this.toStorage(data)
+      ...Account.toStorage(data)
     }
   },
   toStorage(data) {
@@ -57,8 +57,10 @@ export default {
       ...account,
       balance: {
         ...account.balance,
-        [currency]: parseInt(account.balance[currency]) + amount
+        [currency]: parseInt(account.balance[currency], 10) + amount
       }
     }
   }
 }
+
+export default Account

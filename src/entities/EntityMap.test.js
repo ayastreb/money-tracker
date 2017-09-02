@@ -81,7 +81,7 @@ describe('merge array of entities into existing map', () => {
   })
 })
 
-describe('set value in map by key', () => {
+describe('set entity in map', () => {
   const map = {
     byKey: {
       foo: { id: 'foo', name: 'Foo' },
@@ -91,25 +91,22 @@ describe('set value in map by key', () => {
   }
   const original = { ...map }
 
-  it('sets new value with given key', () => {
-    const mapWithBaz = EntityMap.set(map, 'baz', { name: 'Baz without id' })
+  it('sets new entity', () => {
+    const mapWithBaz = EntityMap.set(map, { id: 'baz', name: 'Baz' })
     expect(map === mapWithBaz).toBeFalsy()
     expect(map).toEqual(original)
     expect(mapWithBaz).toEqual({
       byKey: {
         foo: { id: 'foo', name: 'Foo' },
         bar: { id: 'bar', name: 'Bar' },
-        baz: { name: 'Baz without id' }
+        baz: { id: 'baz', name: 'Baz' }
       },
       keys: ['foo', 'bar', 'baz']
     })
   })
 
   it('updates existing value with given key', () => {
-    const mapUpdated = EntityMap.set(map, 'bar', {
-      id: 'bar',
-      name: 'Bar Updated'
-    })
+    const mapUpdated = EntityMap.set(map, { id: 'bar', name: 'Bar Updated' })
     expect(map === mapUpdated).toBeFalsy()
     expect(map).toEqual(original)
     expect(mapUpdated).toEqual({
@@ -160,8 +157,12 @@ describe('get value from map', () => {
     keys: ['foo', 'bar']
   }
 
-  it('returns undefined when key is not found', () => {
-    expect(EntityMap.get(map, 'baz')).toEqual(undefined)
+  it('returns default fallback when key is not found', () => {
+    expect(EntityMap.get(map, 'baz')).toEqual({})
+  })
+
+  it('returns given fallback when key is not found', () => {
+    expect(EntityMap.get(map, 'baz', 'no baz')).toEqual('no baz')
   })
 
   it('returns entity for given key', () => {
@@ -208,13 +209,16 @@ describe('appliy function to values', () => {
     expect(upperCaseNames === map).toBeFalsy()
     expect(map).toEqual(original)
     expect(upperCaseNames).toEqual({
-      foo: {
-        id: 'foo',
-        deep: { prop: ref },
-        name: 'Foo update',
-        nameToUpper: 'FOO UPDATE'
+      byKey: {
+        foo: {
+          id: 'foo',
+          deep: { prop: ref },
+          name: 'Foo update',
+          nameToUpper: 'FOO UPDATE'
+        },
+        bar: { id: 'bar', name: 'Bar update', nameToUpper: 'BAR UPDATE' }
       },
-      bar: { id: 'bar', name: 'Bar update', nameToUpper: 'BAR UPDATE' }
+      keys: ['foo', 'bar']
     })
   })
 })

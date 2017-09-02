@@ -36,17 +36,13 @@ const EntityMap = {
     }
   },
   /**
-   * Set value with given key in given map.
+   * Set given entity in map.
    *
    * @param {object} source
-   * @param {string} key
-   * @param {any} value
+   * @param {striobjectng} entity
    */
-  set(source, key, value) {
-    return {
-      byKey: { ...source.byKey, [key]: value },
-      keys: [...new Set(source.keys.concat(key))]
-    }
+  set(source, entity, keyPropName = 'id') {
+    return EntityMap.merge(source, [entity], keyPropName)
   },
   /**
    * Remove value by given key.
@@ -73,8 +69,8 @@ const EntityMap = {
    * @param {object} source
    * @param {string} key
    */
-  get(source, key) {
-    return source.byKey && source.byKey[key]
+  get(source, key, fallback = {}) {
+    return (source.byKey && source.byKey[key]) || fallback
   },
   /**
    * Map over all entities with given function and return array with results.
@@ -87,17 +83,20 @@ const EntityMap = {
     return source.keys.map(key => fn(source.byKey[key], key))
   },
   /**
-   * Apply given function to all entities and return a dictionary with results.
+   * Apply given function to all entities and return new map with results.
    *
    * @param {object} source
    * @param {function} fn
    * @return {object}
    */
   apply(source, fn) {
-    return source.keys.reduce((acc, key) => {
-      acc[key] = fn({ ...source.byKey[key] })
-      return acc
-    }, {})
+    return {
+      byKey: source.keys.reduce((acc, key) => {
+        acc[key] = fn(source.byKey[key], key)
+        return acc
+      }, {}),
+      keys: source.keys
+    }
   }
 }
 

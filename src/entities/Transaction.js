@@ -4,7 +4,7 @@ export const EXPENSE = 'expense'
 export const TRANSFER = 'transfer'
 export const INCOME = 'income'
 
-export default {
+const Transaction = {
   defaultKind: EXPENSE,
   recentListLimit: 5,
   fromForm(data) {
@@ -41,7 +41,7 @@ export default {
   fromStorage(data) {
     return {
       id: data._id,
-      ...this.toStorage(data)
+      ...Transaction.toStorage(data)
     }
   },
   toStorage(data) {
@@ -57,6 +57,8 @@ export default {
     return pick(data, keys)
   }
 }
+
+export default Transaction
 
 function pick(object, keys) {
   return keys.reduce((acc, key) => {

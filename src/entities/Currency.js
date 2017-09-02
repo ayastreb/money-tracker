@@ -150,7 +150,7 @@ const CURRENCY = {
   ZWD: { name: 'Zimbabwean Dollar', symbol: 'Z$', exp: 2, flag: 'zw' }
 }
 
-export default {
+const Currency = {
   defaultBase: 'USD',
   options() {
     return Object.keys(CURRENCY).map(code => ({
@@ -159,6 +159,9 @@ export default {
       flag: CURRENCY[code].flag,
       text: `${code}, ${CURRENCY[code].name}`
     }))
+  },
+  name(code) {
+    return CURRENCY[code].name
   },
   /**
    * Convert value to currency's subunit (e.g. cents for USD).
@@ -183,5 +186,10 @@ export default {
       minimumFractionDigits: exp,
       maximumFractionDigits: exp
     })
+  },
+  convert(value, rate, from, to) {
+    return value / rate * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp)
   }
 }
+
+export default Currency
