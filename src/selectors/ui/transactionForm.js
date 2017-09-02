@@ -1,16 +1,22 @@
 import { createSelector } from 'reselect'
-import { EXPENSE, INCOME } from '../../models/Transaction'
+import { EXPENSE, INCOME } from '../../entities/Transaction'
+import { getAccountsMap } from '../accounts'
+import { getBaseCurrency } from '../currency'
+import EntityMap from '../../entities/EntityMap'
 
 const formSelector = state => state.ui.transactionForm
-const baseCurrencySelector = state => state.settings.currency.base
-const defaultAccountSelector = state => state.accounts.allIds[0]
-const accountsSelector = state => state.accounts.byId
-const tagsSelector = state => state.tags
+const defaultAccountSelector = state => state.entities.accounts.keys[0]
 const arrayToOptions = code => ({
   key: code,
   value: code,
   text: code
 })
+
+export const getExpenseTagOptions = state =>
+  state.entities.tags[EXPENSE].map(arrayToOptions)
+
+export const getIncomeTagOptions = state =>
+  state.entities.tags[INCOME].map(arrayToOptions)
 
 export const getAccountId = createSelector(
   formSelector,
@@ -25,15 +31,15 @@ export const getLinkedAccountId = createSelector(
 )
 
 const getAccountCurrenciesSelector = createSelector(
+  getAccountsMap,
   getAccountId,
-  accountsSelector,
-  (accountId, accounts) => (accountId && accounts[accountId].currencies) || []
+  (accounts, id) => EntityMap.get(accounts, id).currencies || []
 )
 
 const getLinkedAccountCurrenciesSelector = createSelector(
+  getAccountsMap,
   getLinkedAccountId,
-  accountsSelector,
-  (accountId, accounts) => (accountId && accounts[accountId].currencies) || []
+  (accounts, id) => EntityMap.get(accounts, id).currencies || []
 )
 
 export const getCurrencyOptions = createSelector(
@@ -49,7 +55,7 @@ export const getLinkedCurrencyOptions = createSelector(
 export const getCurrency = createSelector(
   formSelector,
   getAccountCurrenciesSelector,
-  baseCurrencySelector,
+  getBaseCurrency,
   (form, currencies, base) => {
     const defaultCurrency =
       currencies.length > 0
@@ -64,7 +70,7 @@ export const getCurrency = createSelector(
 export const getLinkedCurrency = createSelector(
   formSelector,
   getLinkedAccountCurrenciesSelector,
-  baseCurrencySelector,
+  getBaseCurrency,
   (form, currencies, base) => {
     const defaultCurrency =
       currencies.length > 0
@@ -76,12 +82,4 @@ export const getLinkedCurrency = createSelector(
       ? form.linkedCurrency
       : defaultCurrency
   }
-)
-
-export const getExpenseTagOptions = createSelector(tagsSelector, tags =>
-  tags[EXPENSE].map(arrayToOptions)
-)
-
-export const getIncomeTagOptions = createSelector(tagsSelector, tags =>
-  tags[INCOME].map(arrayToOptions)
 )

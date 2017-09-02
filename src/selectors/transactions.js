@@ -1,21 +1,17 @@
 import { createSelector } from 'reselect'
-import Transaction from '../models/Transaction'
+import { getAccountsMap } from './accounts'
+import Transaction from '../entities/Transaction'
+import EntityMap from '../entities/EntityMap'
 
-const recentTransactionsSelector = state => state.transactions.recent.byId
-const recentTransactionsIdsSelector = state => state.transactions.recent.allIds
-const accountsIdsSelector = state => state.accounts.byId
+const recentTransactionsSelector = state => state.entities.transactions.recent
 
 export const getRecentTransactions = createSelector(
   recentTransactionsSelector,
-  recentTransactionsIdsSelector,
-  accountsIdsSelector,
-  (byId, allIds, accounts) =>
-    allIds.slice(0, Transaction.recentListLimit).map(id => ({
-      ...byId[id],
-      accountName:
-        accounts[byId[id].accountId] && accounts[byId[id].accountId].name,
-      linkedAccountName:
-        accounts[byId[id].linkedAccountId] &&
-        accounts[byId[id].linkedAccountId].name
-    }))
+  getAccountsMap,
+  (transactions, accounts) =>
+    EntityMap.map(transactions, tx => ({
+      ...tx,
+      accountName: EntityMap.get(accounts, tx.accountId).name,
+      linkedAccountName: EntityMap.get(accounts, tx.linkedAccountId).name
+    })).slice(0, Transaction.recentListLimit)
 )

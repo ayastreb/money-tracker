@@ -7,7 +7,7 @@ import {
   getCurrency,
   getIncomeTagOptions
 } from '../../../selectors/ui/transactionForm'
-import { INCOME } from '../../../models/Transaction'
+import { INCOME } from '../../../entities/Transaction'
 import { saveTransaction } from '../../../actions/transactions'
 import { loadIncomeTags } from '../../../actions/tags'
 import {
@@ -21,18 +21,20 @@ import {
 } from '../../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
-  kind: INCOME,
+  form: {
+    kind: INCOME,
+    accountId: getAccountId(state),
+    amount: state.ui.transactionForm.amount,
+    currency: getCurrency(state),
+    tags: state.ui.transactionForm.tags[INCOME],
+    date: state.ui.transactionForm.date,
+    note: state.ui.transactionForm.note
+  },
   label: 'To',
   buttonLabel: 'Add Income',
-  accountId: getAccountId(state),
   accountOptions: getAccountsAsOptions(state),
-  amount: state.ui.transactionForm.amount,
-  currency: getCurrency(state),
   currencyOptions: getCurrencyOptions(state),
-  tags: state.ui.transactionForm.tags[INCOME],
-  tagsOptions: getIncomeTagOptions(state),
-  date: state.ui.transactionForm.date,
-  note: state.ui.transactionForm.note
+  tagsOptions: getIncomeTagOptions(state)
 })
 
 export default connect(mapStateToProps, {

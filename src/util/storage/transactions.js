@@ -1,5 +1,5 @@
 import { transactionsDB, remoteTransactionsDB } from './pouchdb'
-import Transaction from '../../models/Transaction'
+import Transaction from '../../entities/Transaction'
 
 export default {
   sync,
@@ -22,20 +22,22 @@ function loadRecent(limit = Transaction.recentListLimit) {
       limit
     })
     .then(response =>
-      response.rows.map(row => new Transaction({ id: row.doc._id, ...row.doc }))
+      response.rows.map(row => Transaction.fromStorage(row.doc))
     )
 }
 
 function save(transaction) {
   return transactionsDB()
     .get(transaction.id)
-    .then(doc => transactionsDB().put({ ...doc, ...transaction.toJSON() }))
+    .then(doc =>
+      transactionsDB().put({ ...doc, ...Transaction.toStorage(transaction) })
+    )
     .catch(err => {
       if (err.status !== 404) throw err
 
       return transactionsDB().put({
         _id: transaction.id,
-        ...transaction.toJSON()
+        ...Transaction.toStorage(transaction)
       })
     })
 }

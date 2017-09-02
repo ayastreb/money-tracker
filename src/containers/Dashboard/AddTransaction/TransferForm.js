@@ -9,7 +9,7 @@ import {
   getLinkedCurrencyOptions,
   getLinkedCurrency
 } from '../../../selectors/ui/transactionForm'
-import { TRANSFER } from '../../../models/Transaction'
+import { TRANSFER } from '../../../entities/Transaction'
 import { saveTransaction } from '../../../actions/transactions'
 import {
   changeAccount,
@@ -23,20 +23,22 @@ import {
 } from '../../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
-  kind: TRANSFER,
+  form: {
+    kind: TRANSFER,
+    accountId: getAccountId(state),
+    amount: state.ui.transactionForm.amount,
+    currency: getCurrency(state),
+    linkedAccountId: getLinkedAccountId(state),
+    linkedAmount: state.ui.transactionForm.linkedAmount,
+    linkedCurrency: getLinkedCurrency(state),
+    date: state.ui.transactionForm.date,
+    note: state.ui.transactionForm.note
+  },
   label: 'From',
   buttonLabel: 'Add Transfer',
-  accountId: getAccountId(state),
   accountOptions: getAccountsAsOptions(state),
-  amount: state.ui.transactionForm.amount,
-  currency: getCurrency(state),
   currencyOptions: getCurrencyOptions(state),
-  linkedAccountId: getLinkedAccountId(state),
-  linkedAmount: state.ui.transactionForm.linkedAmount,
-  linkedCurrency: getLinkedCurrency(state),
-  linkedCurrencyOptions: getLinkedCurrencyOptions(state),
-  date: state.ui.transactionForm.date,
-  note: state.ui.transactionForm.note
+  linkedCurrencyOptions: getLinkedCurrencyOptions(state)
 })
 
 export default connect(mapStateToProps, {

@@ -4,23 +4,23 @@ import { Menu, Segment } from 'semantic-ui-react'
 import ExpenseForm from './ExpenseForm'
 import TransferForm from './TransferForm'
 import IncomeForm from './IncomeForm'
-import { EXPENSE, TRANSFER, INCOME } from '../../../models/Transaction'
-import Transaction from '../../../models/Transaction'
+import { EXPENSE, TRANSFER, INCOME } from '../../../entities/Transaction'
 import { changeTransactionKind } from '../../../actions/ui/transactionForm'
 
 class AddTransaction extends React.Component {
   render() {
+    const kinds = [EXPENSE, TRANSFER, INCOME]
     return (
       <div>
-        <Menu attached="top" widths={Transaction.kinds.length}>
-          {Transaction.kinds.map(kind =>
+        <Menu attached="top" widths={kinds.length}>
+          {kinds.map(kind => (
             <Menu.Item
               key={kind}
               name={kind}
               active={kind === this.props.kind}
               onClick={() => this.props.changeTransactionKind(kind)}
             />
-          )}
+          ))}
         </Menu>
         <Segment attached="bottom">
           {this.props.kind === EXPENSE && <ExpenseForm />}

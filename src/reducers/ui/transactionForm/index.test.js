@@ -13,7 +13,7 @@ import {
   changeNote
 } from '../../../actions/ui/transactionForm'
 import { saveTransaction } from '../../../actions/transactions'
-import Transaction, { EXPENSE, INCOME } from '../../../models/Transaction.js'
+import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction.js'
 import format from 'date-fns/format'
 
 it('returns default state', () => {
@@ -47,7 +47,22 @@ it('changes account id', () => {
 })
 
 it('changes amount', () => {
-  expect(reducer({ amount: 1234 }, changeAmount(456))).toEqual({ amount: 456 })
+  expect(
+    reducer(
+      {
+        amount: 1234,
+        currency: 'USD',
+        linkedAmount: 100,
+        linkedCurrency: 'EUR'
+      },
+      changeAmount(456)
+    )
+  ).toEqual({
+    amount: 456,
+    currency: 'USD',
+    linkedAmount: 100,
+    linkedCurrency: 'EUR'
+  })
 })
 
 it('changes currency', () => {
@@ -63,7 +78,20 @@ it('changes linked account id', () => {
 })
 
 it('changes linked amount', () => {
-  expect(reducer({ linkedAmount: 1234 }, changeLinkedAmount(456))).toEqual({
+  expect(
+    reducer(
+      {
+        currency: 'USD',
+        amount: 100,
+        linkedCurrency: 'EUR',
+        linkedAmount: 1234
+      },
+      changeLinkedAmount(456)
+    )
+  ).toEqual({
+    currency: 'USD',
+    amount: 100,
+    linkedCurrency: 'EUR',
     linkedAmount: 456
   })
 })
