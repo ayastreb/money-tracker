@@ -7,7 +7,7 @@ import {
   toggleSectionCollapse,
   completeSetup
 } from '../actions/settings'
-import { DEFAULT_BASE_CURRENCY } from '../constants/currency'
+import Currency from '../entities/Currency'
 
 export default handleActions(
   {
@@ -41,8 +41,8 @@ export default handleActions(
   {
     isLoaded: false,
     isSetupComplete: false,
-    currency: { base: DEFAULT_BASE_CURRENCY, secondary: [] },
-    exchangeRate: { [DEFAULT_BASE_CURRENCY]: 1.0 },
+    currency: { base: Currency.defaultBase, secondary: [] },
+    exchangeRate: { [Currency.defaultBase]: 1.0 },
     collapsedSections: []
   }
 )

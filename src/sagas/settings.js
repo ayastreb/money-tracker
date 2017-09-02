@@ -8,11 +8,8 @@ import {
   toggleSectionCollapse
 } from '../actions/settings'
 import { getCollapsedSections } from '../selectors/settings'
-import {
-  getBaseCurrency,
-  getSecondaryCurrency,
-  getUsedCurrency
-} from '../selectors/currency.js'
+import { getBaseCurrency, getSecondaryCurrency } from '../selectors/currency.js'
+import { getUsedCurrency } from '../selectors/accounts'
 import SettingsStorage from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 

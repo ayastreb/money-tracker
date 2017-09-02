@@ -3,7 +3,7 @@ import pick from 'lodash/pick'
 import isEqual from 'lodash/isEqual'
 import { settingsDB, remoteSettingsDB } from './pouchdb'
 import { fetchExchangeRates } from '../currency'
-import { DEFAULT_BASE_CURRENCY } from '../../constants/currency'
+import Currency from '../../entities/Currency'
 
 export default {
   load,
@@ -17,8 +17,8 @@ const defaultLocalSettings = {
 }
 const defaultSettings = {
   _id: 'settings',
-  currency: { base: DEFAULT_BASE_CURRENCY, secondary: [] },
-  exchangeRate: { [DEFAULT_BASE_CURRENCY]: 1 }
+  currency: { base: Currency.defaultBase, secondary: [] },
+  exchangeRate: { [Currency.defaultBase]: 1 }
 }
 
 function load() {
