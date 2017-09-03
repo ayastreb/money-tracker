@@ -12,18 +12,18 @@ import {
 
 export default handleActions(
   {
-    [changeEmail]: (state, action) => ({ ...state, email: action.payload }),
-    [changeCode]: (state, action) => ({ ...state, code: action.payload }),
+    [changeEmail]: (state, { payload }) => ({ ...state, email: payload }),
+    [changeCode]: (state, { payload }) => ({ ...state, code: payload }),
     [sendCode]: state => ({ ...state, isSendingCode: true }),
     [sendCodeSuccess]: state => ({
       ...state,
       isSendingCode: false,
       isCodeSent: true
     }),
-    [sendCodeFailure]: (state, action) => ({
+    [sendCodeFailure]: (state, { payload }) => ({
       ...state,
       isSendingCode: false,
-      error: action.payload.message
+      error: payload.message
     }),
     [verifyCode]: state => ({
       ...state,
@@ -34,10 +34,10 @@ export default handleActions(
       isVerifyingCode: false,
       isCodeValid: true
     }),
-    [verifyCodeFailure]: (state, action) => ({
+    [verifyCodeFailure]: (state, { payload }) => ({
       ...state,
       isVerifyingCode: false,
-      error: action.payload.message
+      error: payload.message
     })
   },
   {
