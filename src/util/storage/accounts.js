@@ -5,7 +5,6 @@ export default {
   sync,
   loadAll,
   save,
-  changeBalance,
   remove
 }
 
@@ -43,24 +42,6 @@ function save(account) {
         _id: account.id,
         ...Account.toStorage(account)
       })
-    })
-}
-
-function changeBalance(id, currency, amount) {
-  return accountsDB()
-    .get(id)
-    .then(doc =>
-      accountsDB().put({
-        ...doc,
-        balance: {
-          ...doc.balance,
-          [currency]: parseInt(doc.balance[currency], 10) + amount
-        }
-      })
-    )
-    .catch(err => {
-      if (err.status !== 404) throw err
-      return true
     })
 }
 
