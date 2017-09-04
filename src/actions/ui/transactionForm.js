@@ -1,7 +1,7 @@
 import { createActions } from 'redux-actions'
 
 export const {
-  changeTransactionKind,
+  changeKind,
   changeAccount,
   changeAmount,
   changeCurrency,
@@ -15,7 +15,7 @@ export const {
   changeIncomeTags,
   changeNote
 } = createActions(
-  'CHANGE_TRANSACTION_KIND',
+  'CHANGE_KIND',
   'CHANGE_ACCOUNT',
   'CHANGE_AMOUNT',
   'CHANGE_CURRENCY',

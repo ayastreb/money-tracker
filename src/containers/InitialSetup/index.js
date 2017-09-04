@@ -8,6 +8,7 @@ import AccountForm from './AccountForm'
 import AccountTable from './AccountTable'
 import { loadAccounts } from '../../actions/accounts'
 import { completeSetup } from '../../actions/settings'
+import { getAccountsList } from '../../selectors/entities/accounts'
 
 class InitialSetup extends React.Component {
   componentDidMount() {
@@ -19,13 +20,14 @@ class InitialSetup extends React.Component {
       <div className="container-raised-desktop" style={{ paddingBottom: '0' }}>
         <Header as="h2" icon="settings" content="Money Tracker Setup" />
         <Divider />
-        {!this.props.isAuthenticated &&
+        {!this.props.isAuthenticated && (
           <p>
             <Link to="/auth">Sign in</Link> if you want to sync your data with
             the cloud. You may also use the tracker without signing in. Your
             data will be stored only on current device in this case. You can
             sign in and sync your data any time later.
-          </p>}
+          </p>
+        )}
         <Header as="h3">Currencies</Header>
         <p>
           Select your base currency — the currency which will be used by
@@ -42,7 +44,7 @@ class InitialSetup extends React.Component {
           loan to your friend.
         </p>
         <AccountForm />
-        {this.props.accounts.length > 0 &&
+        {this.props.accounts.length > 0 && (
           <div>
             <AccountTable />
             <div className="form-submit">
@@ -52,7 +54,8 @@ class InitialSetup extends React.Component {
                 onClick={this.props.completeSetup}
               />
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     )
   }
@@ -60,14 +63,14 @@ class InitialSetup extends React.Component {
 
 InitialSetup.propTypes = {
   isAuthenticated: PropTypes.bool,
-  accounts: PropTypes.arrayOf(PropTypes.string),
+  accounts: PropTypes.arrayOf(PropTypes.object),
   loadAccounts: PropTypes.func,
   completeSetup: PropTypes.func
 }
 
 const mapStateToProps = state => ({
   isAuthenticated: state.user.isAuthenticated,
-  accounts: state.accounts.allIds
+  accounts: getAccountsList(state)
 })
 
 export default connect(mapStateToProps, { loadAccounts, completeSetup })(

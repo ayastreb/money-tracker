@@ -9,6 +9,7 @@ import AddTransaction from './AddTransaction'
 import RecentTransactions from './RecentTransactions'
 import { loadAccounts } from '../../actions/accounts'
 import { loadRecentTransactions } from '../../actions/transactions'
+import { getAccountsList } from '../../selectors/entities/accounts'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -27,12 +28,12 @@ class Dashboard extends React.Component {
                 label="Net Worth"
                 LabelComponent={NetWorth}
               >
-                <AccountsWidget />
+                {this.props.accounts.length > 0 && <AccountsWidget />}
               </CollapsibleSection>
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
               <CollapsibleSection name="add_tx" label="Add Transaction">
-                <AddTransaction />
+                {this.props.accounts.length > 0 && <AddTransaction />}
               </CollapsibleSection>
               <CollapsibleSection name="recent_tx" label="Recent Transactions">
                 <RecentTransactions />
@@ -46,10 +47,16 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
+  accounts: PropTypes.array,
   loadAccounts: PropTypes.func,
   loadRecentTransactions: PropTypes.func
 }
 
-export default connect(undefined, { loadAccounts, loadRecentTransactions })(
-  Dashboard
-)
+const mapStateToProps = state => ({
+  accounts: getAccountsList(state)
+})
+
+export default connect(mapStateToProps, {
+  loadAccounts,
+  loadRecentTransactions
+})(Dashboard)

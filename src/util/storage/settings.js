@@ -21,13 +21,6 @@ const defaultSettings = {
   exchangeRate: { [Currency.defaultBase]: 1 }
 }
 
-function load() {
-  return settingsDB()
-    .get('_local/settings')
-    .then(local => local, err => defaultLocalSettings)
-    .then(local => mergeLocalWithSyncedSettings(local))
-}
-
 async function save(settings) {
   if (remoteSettingsDB()) {
     await remoteSettingsDB()
@@ -47,6 +40,13 @@ function saveLocal(settings) {
     .get('_local/settings')
     .then(doc => doc, err => defaultLocalSettings)
     .then(doc => settingsDB().put({ ...doc, ...settings }))
+}
+
+function load() {
+  return settingsDB()
+    .get('_local/settings')
+    .then(local => local, err => defaultLocalSettings)
+    .then(local => mergeLocalWithSyncedSettings(local))
 }
 
 async function mergeLocalWithSyncedSettings(local) {

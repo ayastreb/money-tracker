@@ -44,7 +44,6 @@ export default handleActions(
           )
         )
       }
-      console.log(mutatedAccounts)
 
       return EntityMap.merge(state, mutatedAccounts)
     }

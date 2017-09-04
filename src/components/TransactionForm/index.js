@@ -2,41 +2,72 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button, Dropdown, Input } from 'semantic-ui-react'
 import Account from './Account'
-import Transaction from '../../entities/Transaction'
+import Transaction, {
+  EXPENSE,
+  TRANSFER,
+  INCOME
+} from '../../entities/Transaction'
 import { DropdownOption } from '../types'
 import './index.css'
 
 class TransactionForm extends React.Component {
+  handleAccountChange = handler => (event, { value }) => {
+    handler({
+      accountId: value,
+      currency: this.props.currencyMap[value]
+    })
+  }
+
+  getCurrencyOptions = () => {
+    return this.props.currencyMap[this.props.form.accountId].map(code => ({
+      key: code,
+      value: code,
+      text: code
+    }))
+  }
+
+  getLinkedCurrencyOptions = () => {
+    return this.props.currencyMap[
+      this.props.form.linkedAccountId
+    ].map(code => ({
+      key: code,
+      value: code,
+      text: code
+    }))
+  }
+
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit} className="transaction-form">
         <Account
           label={this.props.label}
           accountId={this.props.form.accountId}
-          accountOptions={this.props.accountOptions}
           amount={this.props.form.amount}
           currency={this.props.form.currency}
-          currencyOptions={this.props.currencyOptions}
-          onAccountChange={this.handle(this.props.changeAccount)}
+          accountOptions={this.props.accountOptions}
+          currencyOptions={this.getCurrencyOptions()}
+          onAccountChange={this.handleAccountChange(this.props.changeAccount)}
           onAmountChange={this.handle(this.props.changeAmount)}
           onCurrencyChange={this.handle(this.props.changeCurrency)}
         />
-        {this.props.form.linkedAccountId && (
+        {this.props.form.kind === TRANSFER && (
           <Account
             label="To"
             accountId={this.props.form.linkedAccountId}
-            accountOptions={this.props.accountOptions}
             amount={this.props.form.linkedAmount}
             currency={this.props.form.linkedCurrency}
-            currencyOptions={this.props.linkedCurrencyOptions}
-            onAccountChange={this.handle(this.props.changeLinkedAccount)}
+            accountOptions={this.props.accountOptions}
+            currencyOptions={this.getLinkedCurrencyOptions()}
+            onAccountChange={this.handleAccountChange(
+              this.props.changeLinkedAccount
+            )}
             onAmountChange={this.handle(this.props.changeLinkedAmount)}
             onCurrencyChange={this.handle(this.props.changeLinkedCurrency)}
           />
         )}
         <div className={this.gridClassName()}>
           <div className="transaction-form-grid__column-wide">
-            {this.props.form.tags !== undefined && (
+            {this.props.form.tags[this.props.form.kind] !== undefined && (
               <div className="transaction-form-grid__field">
                 <Form.Field>
                   <label>Tags</label>
@@ -47,7 +78,7 @@ class TransactionForm extends React.Component {
                     allowAdditions
                     closeOnChange
                     placeholder="Choose existing tags or add new"
-                    value={this.props.form.tags}
+                    value={this.props.form.tags[this.props.form.kind]}
                     options={this.props.tagsOptions}
                     onChange={this.handle(this.props.changeTags)}
                     onAddItem={this.handle(this.props.addTag)}
@@ -78,7 +109,11 @@ class TransactionForm extends React.Component {
               </Form.Field>
             </div>
             <div className="transaction-form-grid__field">
-              <Button primary fluid>
+              <Button
+                primary
+                fluid
+                disabled={parseFloat(this.props.form.amount) === 0}
+              >
                 {this.props.buttonLabel}
               </Button>
             </div>
@@ -93,7 +128,7 @@ class TransactionForm extends React.Component {
   }
 
   gridClassName = () =>
-    this.props.form.tags === undefined
+    this.props.form.kind === TRANSFER
       ? 'transaction-form-grid single-line'
       : 'transaction-form-grid'
   handle = handler => (event, { value }) => handler(value)
@@ -105,23 +140,25 @@ class TransactionForm extends React.Component {
 
 TransactionForm.propTypes = {
   form: PropTypes.shape({
-    kind: PropTypes.string.isRequired,
+    kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
     accountId: PropTypes.string,
     amount: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     linkedAccountId: PropTypes.string,
     linkedAmount: PropTypes.string,
     linkedCurrency: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
+    tags: PropTypes.shape({
+      [EXPENSE]: PropTypes.arrayOf(PropTypes.string),
+      [INCOME]: PropTypes.arrayOf(PropTypes.string)
+    }),
     date: PropTypes.string.isRequired,
     note: PropTypes.string.isRequired
   }),
   label: PropTypes.string.isRequired,
   buttonLabel: PropTypes.string.isRequired,
+  currencyMap: PropTypes.object.isRequired,
   accountOptions: PropTypes.arrayOf(DropdownOption).isRequired,
-  currencyOptions: PropTypes.arrayOf(DropdownOption).isRequired,
   tagsOptions: PropTypes.arrayOf(DropdownOption),
-  linkedCurrencyOptions: PropTypes.arrayOf(DropdownOption),
   changeAccount: PropTypes.func.isRequired,
   changeAmount: PropTypes.func.isRequired,
   changeCurrency: PropTypes.func.isRequired,

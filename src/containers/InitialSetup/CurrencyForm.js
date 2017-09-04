@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Dropdown, Form } from 'semantic-ui-react'
 import { changeSettingsCurrency } from '../../actions/settings'
-import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
+import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
 import Currency from '../../entities/Currency'
 
 class CurrencyForm extends React.Component {

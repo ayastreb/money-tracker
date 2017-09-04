@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
+import { loadAccountsSuccess } from '../../../actions/accounts'
 import {
-  changeTransactionKind,
+  changeKind,
   changeAccount,
   changeAmount,
   changeCurrency,
@@ -34,13 +35,43 @@ const initialState = () => ({
 
 export default handleActions(
   {
-    [changeTransactionKind]: (state, { payload }) => ({
-      ...state,
-      kind: payload
-    }),
+    [loadAccountsSuccess]: (state, { payload }) => {
+      if (state.accountId !== null || payload.length === 0) return state
+      const account = payload[0]
+      const currencies = Object.keys(account.balance)
+      if (payload.length === 1 && currencies.length === 1) {
+        return {
+          ...state,
+          accountId: payload[0].id,
+          currency: currencies[0]
+        }
+      }
+
+      return {
+        ...state,
+        accountId: payload[0].id,
+        currency: currencies[0],
+        linkedAccountId: currencies.length > 1 ? payload[0].id : payload[1].id,
+        linkedCurrency:
+          currencies.length > 1
+            ? currencies[1]
+            : Object.keys(payload[1].balance)[0]
+      }
+    },
+    [changeKind]: (state, { payload }) => ({ ...state, kind: payload }),
     [changeAccount]: (state, { payload }) => ({
       ...state,
-      accountId: payload
+      accountId: payload.accountId,
+      currency: payload.currency.includes(state.currency)
+        ? state.currency
+        : payload.currency[0]
+    }),
+    [changeLinkedAccount]: (state, { payload }) => ({
+      ...state,
+      linkedAccountId: payload.accountId,
+      linkedCurrency: payload.currency.includes(state.linkedCurrency)
+        ? state.linkedCurrency
+        : payload.currency[0]
     }),
     [changeAmount]: (state, { payload }) => ({
       ...state,
@@ -48,20 +79,16 @@ export default handleActions(
       linkedAmount:
         state.currency === state.linkedCurrency ? payload : state.linkedAmount
     }),
+    [changeLinkedAmount]: (state, { payload }) => ({
+      ...state,
+      amount: state.currency === state.linkedCurrency ? payload : state.amount,
+      linkedAmount: payload
+    }),
     [changeCurrency]: (state, { payload }) => ({
       ...state,
       currency: payload,
       linkedAmount:
         state.linkedCurrency === payload ? state.amount : state.linkedAmount
-    }),
-    [changeLinkedAccount]: (state, { payload }) => ({
-      ...state,
-      linkedAccountId: payload
-    }),
-    [changeLinkedAmount]: (state, { payload }) => ({
-      ...state,
-      amount: state.currency === state.linkedCurrency ? payload : state.amount,
-      linkedAmount: payload
     }),
     [changeLinkedCurrency]: (state, { payload }) => ({
       ...state,
@@ -77,14 +104,8 @@ export default handleActions(
       ...state,
       tags: { ...state.tags, [INCOME]: payload }
     }),
-    [changeDate]: (state, { payload }) => ({
-      ...state,
-      date: payload
-    }),
-    [changeNote]: (state, { payload }) => ({
-      ...state,
-      note: payload
-    }),
+    [changeDate]: (state, { payload }) => ({ ...state, date: payload }),
+    [changeNote]: (state, { payload }) => ({ ...state, note: payload }),
     [saveTransaction]: () => initialState()
   },
   initialState()

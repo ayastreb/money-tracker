@@ -5,11 +5,13 @@ import ExpenseForm from './ExpenseForm'
 import TransferForm from './TransferForm'
 import IncomeForm from './IncomeForm'
 import { EXPENSE, TRANSFER, INCOME } from '../../../entities/Transaction'
-import { changeTransactionKind } from '../../../actions/ui/transactionForm'
+import { changeKind } from '../../../actions/ui/transactionForm'
 
 class AddTransaction extends React.Component {
   render() {
-    const kinds = [EXPENSE, TRANSFER, INCOME]
+    const kinds = this.props.hasLinkedAccount
+      ? [EXPENSE, TRANSFER, INCOME]
+      : [EXPENSE, INCOME]
     return (
       <div>
         <Menu attached="top" widths={kinds.length}>
@@ -18,7 +20,7 @@ class AddTransaction extends React.Component {
               key={kind}
               name={kind}
               active={kind === this.props.kind}
-              onClick={() => this.props.changeTransactionKind(kind)}
+              onClick={() => this.props.changeKind(kind)}
             />
           ))}
         </Menu>
@@ -33,9 +35,8 @@ class AddTransaction extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  kind: state.ui.transactionForm.kind
+  kind: state.ui.transactionForm.kind,
+  hasLinkedAccount: state.ui.transactionForm.linkedAccountId !== null
 })
 
-export default connect(mapStateToProps, { changeTransactionKind })(
-  AddTransaction
-)
+export default connect(mapStateToProps, { changeKind })(AddTransaction)

@@ -1,13 +1,10 @@
 import { connect } from 'react-redux'
 import TransactionForm from '../../../components/TransactionForm'
-import { getAccountsAsOptions } from '../../../selectors/accounts'
 import {
-  getAccountId,
-  getCurrencyOptions,
-  getCurrency,
-  getExpenseTagOptions
-} from '../../../selectors/ui/transactionForm'
-import { EXPENSE } from '../../../entities/Transaction'
+  getAccountsCurrencyMap,
+  getAccountsAsOptions
+} from '../../../selectors/entities/accounts'
+import { getTagOptions } from '../../../selectors/entities/tags'
 import { saveTransaction } from '../../../actions/transactions'
 import { loadExpenseTags } from '../../../actions/tags'
 import {
@@ -21,20 +18,12 @@ import {
 } from '../../../actions/ui/transactionForm'
 
 const mapStateToProps = state => ({
-  form: {
-    kind: EXPENSE,
-    accountId: getAccountId(state),
-    amount: state.ui.transactionForm.amount,
-    currency: getCurrency(state),
-    tags: state.ui.transactionForm.tags[EXPENSE],
-    date: state.ui.transactionForm.date,
-    note: state.ui.transactionForm.note
-  },
+  form: state.ui.transactionForm,
   label: 'From',
   buttonLabel: 'Add Expense',
+  currencyMap: getAccountsCurrencyMap(state),
   accountOptions: getAccountsAsOptions(state),
-  currencyOptions: getCurrencyOptions(state),
-  tagsOptions: getExpenseTagOptions(state)
+  tagsOptions: getTagOptions(state)
 })
 
 export default connect(mapStateToProps, {

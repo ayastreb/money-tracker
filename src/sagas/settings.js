@@ -7,9 +7,12 @@ import {
   completeSetup,
   toggleSectionCollapse
 } from '../actions/settings'
-import { getCollapsedSections } from '../selectors/settings'
-import { getBaseCurrency, getSecondaryCurrency } from '../selectors/currency.js'
-import { getUsedCurrency } from '../selectors/accounts'
+import {
+  getCollapsedSections,
+  getBaseCurrency,
+  getSecondaryCurrency
+} from '../selectors/settings'
+import { getAccountsCurrencyList } from '../selectors/entities/accounts'
 import SettingsStorage from '../util/storage/settings'
 import { fetchExchangeRates } from '../util/currency'
 
@@ -21,7 +24,7 @@ export function* loadSetting() {
 export function* changeCurrencySaga() {
   const base = yield select(getBaseCurrency)
   const secondary = yield select(getSecondaryCurrency)
-  const used = yield select(getUsedCurrency)
+  const used = yield select(getAccountsCurrencyList)
   const exchangeRate = yield call(
     fetchExchangeRates,
     base,

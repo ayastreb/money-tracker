@@ -18,7 +18,7 @@ class Auth extends React.Component {
       this.props.finishAuth(this.props.location.hash)
     }
   }
-
+  // TODO: show sync status suring first sign in
   render() {
     if (this.props.isAuthenticated) return <Redirect to="/" />
     if (this.props.location.hash) return <Loader active />
@@ -27,16 +27,17 @@ class Auth extends React.Component {
       <div className="container-raised-desktop">
         <Header as="h2" icon="id card outline" content="Sign In" />
         <Divider />
-        {this.props.error &&
+        {this.props.error && (
           <Message error>
             <Message.Header>Error</Message.Header>
-            <Message.Content>
-              {this.props.error}
-            </Message.Content>
-          </Message>}
-        {!this.props.isCodeSent
-          ? this.renderSendCodeForm()
-          : this.renderVerifyCodeForm()}
+            <Message.Content>{this.props.error}</Message.Content>
+          </Message>
+        )}
+        {!this.props.isCodeSent ? (
+          this.renderSendCodeForm()
+        ) : (
+          this.renderVerifyCodeForm()
+        )}
         <Divider />
         <p>
           <Link to="/">Back</Link>
@@ -45,7 +46,7 @@ class Auth extends React.Component {
     )
   }
 
-  renderSendCodeForm = () =>
+  renderSendCodeForm = () => (
     <div>
       <p>
         Please provide your email address and we will send you a verification
@@ -81,12 +82,11 @@ class Auth extends React.Component {
         data among different devices as well as for back up.
       </p>
     </div>
+  )
 
-  renderVerifyCodeForm = () =>
+  renderVerifyCodeForm = () => (
     <Form onSubmit={this.props.verifyCode}>
-      <p>
-        An email with the code has been sent to {this.props.email}
-      </p>
+      <p>An email with the code has been sent to {this.props.email}</p>
       <div className="auth--input-field">
         <Input
           fluid
@@ -111,6 +111,7 @@ class Auth extends React.Component {
         </Button>
       </div>
     </Form>
+  )
 
   handleChange = handler => (event, { value }) => handler(value)
 }

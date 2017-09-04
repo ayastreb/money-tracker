@@ -1,10 +1,9 @@
 import { connect } from 'react-redux'
 import AccountsWidget from '../../components/AccountsWidget'
-import { getGroupedAccounts } from '../../selectors/accounts'
+import { getGroupedAccounts } from '../../selectors/entities/accounts'
 import { removeAccount } from '../../actions/accounts'
 import { toggleSectionCollapse } from '../../actions/settings'
-import { getCollapsedSections } from '../../selectors/settings'
-import { getBaseCurrency } from '../../selectors/currency'
+import { getCollapsedSections, getBaseCurrency } from '../../selectors/settings'
 
 const mapStateToProps = state => ({
   baseCurrency: getBaseCurrency(state),

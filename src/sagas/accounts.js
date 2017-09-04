@@ -9,7 +9,7 @@ import {
   removeAccountSuccess
 } from '../actions/accounts'
 import { saveTransaction } from '../actions/transactions'
-import { getAccount } from '../selectors/accounts'
+import { getAccount } from '../selectors/entities/accounts'
 import AccountsStorage from '../util/storage/accounts'
 
 export function* loadAccountsSaga() {

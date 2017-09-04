@@ -19,21 +19,18 @@ const Transaction = {
         data.kind === TRANSFER
           ? Currency.toInt(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: data.tags || []
+      tags: data.tags[data.kind] || []
     }
   },
   toForm(data) {
-    const kind =
-      data.amount < 0 ? EXPENSE : data.linkedAccountId ? TRANSFER : INCOME
     return {
-      kind,
       ...data,
       amount: Currency.toFloat(
-        data.amount * (kind === EXPENSE ? -1 : 1),
+        data.amount * (data.kind === EXPENSE ? -1 : 1),
         data.currency
       ),
       linkedAmount:
-        kind === TRANSFER
+        data.kind === TRANSFER
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
           : undefined
     }
@@ -41,12 +38,23 @@ const Transaction = {
   fromStorage(data) {
     return {
       id: data._id,
-      ...Transaction.toStorage(data)
+      ...pick(data, Transaction.persistentKeys(data.kind))
     }
   },
   toStorage(data) {
-    const keys = ['date', 'note', 'tags', 'accountId', 'amount', 'currency']
-    if (data.kind === TRANSFER || data.linkedAccountId) {
+    return pick(data, Transaction.persistentKeys(data.kind))
+  },
+  persistentKeys(kind) {
+    const keys = [
+      'kind',
+      'date',
+      'note',
+      'tags',
+      'accountId',
+      'amount',
+      'currency'
+    ]
+    if (kind === TRANSFER) {
       keys.push.apply(keys, [
         'linkedAccountId',
         'linkedAmount',
@@ -54,7 +62,7 @@ const Transaction = {
       ])
     }
 
-    return pick(data, keys)
+    return keys
   }
 }
 

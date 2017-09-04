@@ -6,7 +6,7 @@ import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
 } from '../../actions/ui/accountForm'
-import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/currency'
+import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
 import Currency from '../../entities/Currency'
 
 class CurrencyTable extends React.Component {
