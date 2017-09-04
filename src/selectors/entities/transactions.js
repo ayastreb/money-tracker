@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { getAccountsMap } from './accounts'
-import Transaction from '../entities/Transaction'
-import EntityMap from '../entities/EntityMap'
+import Transaction from '../../entities/Transaction'
+import EntityMap from '../../entities/EntityMap'
 
 const recentTransactionsSelector = state => state.entities.transactions.recent
 

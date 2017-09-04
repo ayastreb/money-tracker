@@ -1,5 +1,5 @@
 import { getRecentTransactions } from './transactions'
-import EntityMap from '../entities/EntityMap'
+import EntityMap from '../../entities/EntityMap'
 
 it('returns recent transactions', () => {
   const state = {

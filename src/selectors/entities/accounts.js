@@ -1,19 +1,19 @@
 import { createSelector } from 'reselect'
-import { getBaseCurrency, getExchangeRate } from './currency'
-import Account from '../entities/Account'
-import Currency from '../entities/Currency'
-import EntityMap from '../entities/EntityMap'
+import { getBaseCurrency, getExchangeRate } from '../settings'
+import Account from '../../entities/Account'
+import Currency from '../../entities/Currency'
+import EntityMap from '../../entities/EntityMap'
 
 const insertCurrencies = account => ({
   ...account,
   currencies: Object.keys(account.balance)
 })
 
-export const getAccountsMap = state =>
-  EntityMap.apply(state.entities.accounts, insertCurrencies)
-
 export const getAccount = id =>
   createSelector(getAccountsMap, accounts => EntityMap.get(accounts, id))
+
+export const getAccountsMap = state =>
+  EntityMap.apply(state.entities.accounts, insertCurrencies)
 
 export const getAccountsList = state =>
   EntityMap.map(state.entities.accounts, insertCurrencies)
@@ -22,12 +22,30 @@ export const getAccountsAsOptions = state =>
   EntityMap.map(state.entities.accounts, account => ({
     key: account.id,
     value: account.id,
-    text: account.name
+    text: account.name,
+    description: Account.groupName(account.group)
   }))
 
-export const getUsedCurrency = createSelector(getAccountsList, accounts => [
-  ...new Set(accounts.map(account => account.currencies))
-])
+export const getAccountsCurrencyMap = createSelector(
+  getAccountsList,
+  accounts =>
+    accounts.reduce((acc, account) => {
+      acc[account.id] = account.currencies
+      return acc
+    }, {})
+)
+
+export const getAccountsCurrencyList = createSelector(
+  getAccountsList,
+  accounts =>
+    accounts.reduce(
+      (currencies, account) =>
+        currencies.concat(
+          account.currencies.filter(code => !currencies.includes(code))
+        ),
+      []
+    )
+)
 
 export const getGroupedAccounts = createSelector(
   getAccountsList,
@@ -62,7 +80,7 @@ export const getNetWorth = createSelector(
     )
 )
 
-export const getBaseTotal = (account, base, rate) =>
+const getBaseTotal = (account, base, rate) =>
   account.currencies.reduce(
     (total, code) =>
       Math.floor(
