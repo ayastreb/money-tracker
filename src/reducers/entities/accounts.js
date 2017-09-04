@@ -4,8 +4,8 @@ import {
   saveAccount,
   saveAccountFailure,
   removeAccount
-} from '../../actions/accounts'
-import { saveTransaction } from '../../actions/transactions'
+} from '../../actions/entities/accounts'
+import { saveTransaction } from '../../actions/entities/transactions'
 import { TRANSFER } from '../../entities/Transaction'
 import Account from '../../entities/Account'
 import EntityMap from '../../entities/EntityMap'
@@ -35,7 +35,7 @@ export default handleActions(
           transaction.amount * (transaction.kind === TRANSFER ? -1 : 1)
         )
       ]
-      if (transaction.linkedAccountId) {
+      if (transaction.kind === TRANSFER) {
         mutatedAccounts.push(
           Account.mutateBalance(
             EntityMap.get(state, transaction.linkedAccountId),

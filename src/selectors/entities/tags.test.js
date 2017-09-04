@@ -2,7 +2,7 @@ import { getTagOptions } from './tags'
 
 it('gets expense tag options', () => {
   const state = {
-    ui: { transactionForm: { kind: 'expense' } },
+    ui: { form: { transaction: { kind: 'expense' } } },
     entities: { tags: { expense: ['food', 'cafe'], income: ['salary'] } }
   }
   const expectedOptions = [
@@ -23,7 +23,7 @@ it('gets expense tag options', () => {
 
 it('gets income tag options', () => {
   const state = {
-    ui: { transactionForm: { kind: 'income' } },
+    ui: { form: { transaction: { kind: 'income' } } },
     entities: { tags: { expense: ['food', 'cafe'], income: ['salary'] } }
   }
   const expectedOptions = [

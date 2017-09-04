@@ -10,16 +10,18 @@ it('has default recent transactions list limit', () => {
 
 it('defaults id to current timestamp if not present in form', () => {
   const form = {
+    kind: EXPENSE,
     accountId: 'A12345',
     amount: 9.95,
     currency: 'USD',
-    tags: ['food']
+    tags: { [EXPENSE]: ['food'] }
   }
   Date.now = jest.fn(() => '1234')
   expect(Transaction.fromForm(form)).toEqual({
     id: 'T1234',
+    kind: EXPENSE,
     accountId: 'A12345',
-    amount: 995,
+    amount: -995,
     currency: 'USD',
     tags: ['food']
   })
@@ -31,7 +33,8 @@ it('converts transaction amount to currency subunit', () => {
     id: 'T12345',
     accountId: 'A12345',
     amount: 9.95,
-    currency: 'USD'
+    currency: 'USD',
+    tags: {}
   }
   expect(Transaction.fromForm(form)).toEqual({
     kind: INCOME,
@@ -52,7 +55,8 @@ it('converts linked amount for transfer transaction to currency subunit', () => 
     currency: 'JPY',
     linkedAccountId: 'A12346',
     linkedAmount: 9.09,
-    linkedCurrency: 'USD'
+    linkedCurrency: 'USD',
+    tags: {}
   }
   expect(Transaction.fromForm(form)).toEqual({
     kind: TRANSFER,
@@ -73,7 +77,8 @@ it('changes amount sign to negative for expense transactio', () => {
     id: 'T12345',
     accountId: 'A12345',
     amount: 9.95,
-    currency: 'USD'
+    currency: 'USD',
+    tags: {}
   }
   expect(Transaction.fromForm(form)).toEqual({
     kind: EXPENSE,
@@ -87,11 +92,12 @@ it('changes amount sign to negative for expense transactio', () => {
 
 it('changes amount back to float and reverses negative sign for expense', () => {
   const data = {
+    kind: EXPENSE,
     id: 'T12345',
     accountId: 'A12345',
     amount: -990,
     currency: 'USD',
-    tags: []
+    tags: ['food']
   }
   expect(Transaction.toForm(data)).toEqual({
     kind: EXPENSE,
@@ -99,12 +105,15 @@ it('changes amount back to float and reverses negative sign for expense', () => 
     accountId: 'A12345',
     amount: '9.90',
     currency: 'USD',
-    tags: []
+    tags: {
+      [EXPENSE]: ['food']
+    }
   })
 })
 
 it('changes amount back to float for transfer transaction', () => {
   const data = {
+    kind: TRANSFER,
     id: 'T12345',
     accountId: 'A12345',
     amount: 1000,
@@ -123,7 +132,9 @@ it('changes amount back to float for transfer transaction', () => {
     linkedAccountId: 'A12346',
     linkedAmount: '9.09',
     linkedCurrency: 'USD',
-    tags: []
+    tags: {
+      [TRANSFER]: []
+    }
   })
 })
 
@@ -156,6 +167,7 @@ it('skips id from data when write to storage', () => {
     tags: []
   }
   expect(Transaction.toStorage(data)).toEqual({
+    kind: INCOME,
     accountId: 'A12345',
     amount: 990,
     currency: 'USD',
@@ -176,6 +188,7 @@ it('stores linked account only for transfer transaction', () => {
     tags: []
   }
   expect(Transaction.toStorage(data)).toEqual({
+    kind: TRANSFER,
     accountId: 'A12345',
     amount: 990,
     currency: 'USD',

@@ -6,9 +6,10 @@ import { Button, Divider, Header } from 'semantic-ui-react'
 import CurrencyForm from './CurrencyForm'
 import AccountForm from './AccountForm'
 import AccountTable from './AccountTable'
-import { loadAccounts } from '../../actions/accounts'
 import { completeSetup } from '../../actions/settings'
+import { loadAccounts } from '../../actions/entities/accounts'
 import { getAccountsList } from '../../selectors/entities/accounts'
+import { isUserAuthenticated } from '../../selectors/user'
 
 class InitialSetup extends React.Component {
   componentDidMount() {
@@ -69,7 +70,7 @@ InitialSetup.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated,
+  isAuthenticated: isUserAuthenticated(state),
   accounts: getAccountsList(state)
 })
 

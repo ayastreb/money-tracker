@@ -7,8 +7,8 @@ import {
   saveAccountFailure,
   removeAccount,
   removeAccountSuccess
-} from '../actions/accounts'
-import { saveTransaction } from '../actions/transactions'
+} from '../actions/entities/accounts'
+import { saveTransaction } from '../actions/entities/transactions'
 import { getAccount } from '../selectors/entities/accounts'
 import AccountsStorage from '../util/storage/accounts'
 

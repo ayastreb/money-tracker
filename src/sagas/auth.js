@@ -7,9 +7,9 @@ import {
   verifyCodeSuccess,
   verifyCodeFailure,
   finishAuth
-} from '../actions/ui/auth'
+} from '../actions/ui/form/auth'
 import { userLoggedIn } from '../actions/user'
-import { getAuthEmail, getAuthCode } from '../selectors/ui/auth'
+import { getAuthEmail, getAuthCode } from '../selectors/ui/form/auth'
 import { loadSetting } from './settings'
 import { syncSaga } from './sync'
 import Auth from '../util/auth'

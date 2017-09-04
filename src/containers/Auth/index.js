@@ -6,18 +6,13 @@ import {
   sendCode,
   verifyCode,
   finishAuth
-} from '../../actions/ui/auth'
-import { getAuthEmail, getAuthCode } from '../../selectors/ui/auth'
+} from '../../actions/ui/form/auth'
+import { getAuthForm } from '../../selectors/ui/form/auth'
+import { isUserAuthenticated } from '../../selectors/user'
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.user.isAuthenticated,
-  isSendingCode: state.ui.auth.isSendingCode,
-  isCodeSent: state.ui.auth.isCodeSent,
-  isVerifyingCode: state.ui.auth.isVerifyingCode,
-  isCodeValid: state.ui.auth.isCodeValid,
-  error: state.ui.auth.error,
-  email: getAuthEmail(state),
-  code: getAuthCode(state)
+  ...getAuthForm(state),
+  isAuthenticated: isUserAuthenticated(state)
 })
 
 export default connect(mapStateToProps, {

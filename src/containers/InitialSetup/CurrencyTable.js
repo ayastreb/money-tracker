@@ -5,7 +5,7 @@ import { Checkbox, Input, Form } from 'semantic-ui-react'
 import {
   changeCurrencyCheckbox,
   changeCurrencyBalance
-} from '../../actions/ui/accountForm'
+} from '../../actions/ui/form/account'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
 import Currency from '../../entities/Currency'
 
@@ -26,16 +26,16 @@ class CurrencyTable extends React.Component {
 
   setInitialBalanceCheckbox(base, balance) {
     if (Object.keys(balance).length === 0) {
-      this.props.changeCurrencyCheckbox(base, true)
+      this.props.changeCurrencyCheckbox({ code: base, isChecked: true })
     }
   }
 
   handleCheckbox = (event, { value, checked }) => {
-    this.props.changeCurrencyCheckbox(value, checked)
+    this.props.changeCurrencyCheckbox({ code: value, isChecked: checked })
   }
 
   handleInput = code => (event, { value }) => {
-    this.props.changeCurrencyBalance(code, value)
+    this.props.changeCurrencyBalance({ code: code, balance: value })
   }
 
   render() {
@@ -84,7 +84,7 @@ CurrencyTable.propTypes = {
 const mapStateToProps = state => ({
   base: getBaseCurrency(state),
   secondary: getSecondaryCurrency(state),
-  balance: state.ui.accountForm.balance
+  balance: state.ui.form.account.balance
 })
 
 export default connect(mapStateToProps, {

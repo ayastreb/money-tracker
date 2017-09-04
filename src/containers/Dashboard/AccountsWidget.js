@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import AccountsWidget from '../../components/AccountsWidget'
+import AccountsWidget from '../../components/Account/Widget'
 import { getGroupedAccounts } from '../../selectors/entities/accounts'
 import { getCollapsedSections, getBaseCurrency } from '../../selectors/settings'
 import { toggleSectionCollapse } from '../../actions/settings'

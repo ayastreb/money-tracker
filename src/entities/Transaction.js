@@ -1,12 +1,20 @@
 import Currency from './Currency'
 
-export const EXPENSE = 'expense'
-export const TRANSFER = 'transfer'
-export const INCOME = 'income'
+export const EXPENSE = 0
+export const TRANSFER = 1
+export const INCOME = 2
+const KIND_LABEL = {
+  0: 'Expense',
+  1: 'Transfer',
+  2: 'Income'
+}
 
 const Transaction = {
   defaultKind: EXPENSE,
   recentListLimit: 5,
+  kindLabel(kind) {
+    return KIND_LABEL[kind]
+  },
   fromForm(data) {
     return {
       ...data,
@@ -32,7 +40,8 @@ const Transaction = {
       linkedAmount:
         data.kind === TRANSFER
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
-          : undefined
+          : undefined,
+      tags: { [data.kind]: data.tags }
     }
   },
   fromStorage(data) {

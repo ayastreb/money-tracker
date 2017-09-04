@@ -4,7 +4,7 @@ import {
   loadRecentTransactionsSuccess,
   saveTransaction,
   saveTransactionSuccess
-} from '../actions/transactions'
+} from '../actions/entities/transactions'
 import { useTag } from './tags'
 import TransactionsStorage from '../util/storage/transactions'
 

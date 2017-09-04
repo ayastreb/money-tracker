@@ -21,8 +21,8 @@ function load(kind) {
   return tagsDB()
     .allDocs({
       include_docs: true,
-      start_key: kind,
-      end_key: `${kind}\uffff`
+      start_key: `t${kind}`,
+      end_key: `t${kind}\uffff`
     })
     .then(response =>
       response.rows.map(row => ({
@@ -35,7 +35,7 @@ function load(kind) {
 }
 
 function increaseUsage(kind, tag) {
-  const id = `${kind}/${tag}`
+  const id = `t${kind}/${tag}`
   return tagsDB()
     .get(id)
     .then(doc => tagsDB().put({ ...doc, usage: parseInt(doc.usage, 10) + 1 }))

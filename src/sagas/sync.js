@@ -5,11 +5,14 @@ import {
   syncSuccess,
   syncFailure,
   setPendingChangesFlag
-} from '../actions/sync'
-import { saveAccountSuccess, removeAccountSuccess } from '../actions/accounts'
-import { saveTransactionSuccess } from '../actions/transactions'
+} from '../actions/ui/sync'
+import {
+  saveAccountSuccess,
+  removeAccountSuccess
+} from '../actions/entities/accounts'
+import { saveTransactionSuccess } from '../actions/entities/transactions'
 import { loadAccountsSaga } from './accounts'
-import { loadExpenseTagsSaga, loadIncomeTagsSaga } from './tags'
+import { loadTagsSaga } from './tags'
 import { loadRecentTransactionsSaga } from './transactions'
 import AccountsStorage from '../util/storage/accounts'
 import TransactionsStorage from '../util/storage/transactions'
@@ -23,8 +26,7 @@ export function* syncSaga() {
     yield call(TransactionsStorage.sync)
     yield loadRecentTransactionsSaga()
     yield call(TagsStorage.sync)
-    yield loadExpenseTagsSaga()
-    yield loadIncomeTagsSaga()
+    yield loadTagsSaga()
     yield put(syncSuccess())
   } catch (error) {
     yield put(syncFailure(error))

@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions'
 import {
   loadRecentTransactionsSuccess,
   saveTransaction
-} from '../../../actions/transactions'
+} from '../../../actions/entities/transactions'
 import EntityMap from '../../../entities/EntityMap'
 
 const initialState = EntityMap.fromArray([])

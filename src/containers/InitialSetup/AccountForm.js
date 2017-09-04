@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Form } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
+import { changeName, changeGroup } from '../../actions/ui/form/account'
+import { saveAccount } from '../../actions/entities/accounts'
 import Account from '../../entities/Account'
-import { changeName, changeGroup } from '../../actions/ui/accountForm'
-import { saveAccount } from '../../actions/accounts'
 
 class AccountForm extends React.Component {
   constructor(props) {
@@ -59,7 +59,7 @@ AccountForm.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  form: state.ui.accountForm
+  form: state.ui.form.account
 })
 
 export default connect(mapStateToProps, {

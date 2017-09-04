@@ -7,8 +7,8 @@ import NetWorth from './NetWorth'
 import AccountsWidget from './AccountsWidget'
 import AddTransaction from './AddTransaction'
 import RecentTransactions from './RecentTransactions'
-import { loadAccounts } from '../../actions/accounts'
-import { loadRecentTransactions } from '../../actions/transactions'
+import { loadAccounts } from '../../actions/entities/accounts'
+import { loadRecentTransactions } from '../../actions/entities/transactions'
 import { getAccountsList } from '../../selectors/entities/accounts'
 
 class Dashboard extends React.Component {

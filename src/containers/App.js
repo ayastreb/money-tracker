@@ -30,9 +30,11 @@ class App extends React.Component {
       <Router history={this.props.history}>
         <Switch>
           <Route path="/auth" exact={true} component={Auth} />
-          {!this.props.isSetupComplete
-            ? <Route component={InitialSetup} />
-            : <Route render={this.renderNavigationRoutes} />}
+          {!this.props.isSetupComplete ? (
+            <Route component={InitialSetup} />
+          ) : (
+            <Route render={this.renderNavigationRoutes} />
+          )}
         </Switch>
       </Router>
     )
@@ -52,12 +54,12 @@ class App extends React.Component {
       <div className={wrapper}>
         <SidebarMenu />
         <Dimmer.Dimmable className="container">
-          {routes.map(route =>
+          {routes.map(route => (
             <Route
               key={route.path}
               path={route.path}
               exact={route.exact}
-              render={props =>
+              render={props => (
                 <div>
                   <Dimmer
                     active={this.props.isMobile && this.props.isSidebarOpen}
@@ -66,9 +68,10 @@ class App extends React.Component {
                   <Header label={route.label} />
                   <SyncWarning />
                   <route.component {...props} />
-                </div>}
+                </div>
+              )}
             />
-          )}
+          ))}
         </Dimmer.Dimmable>
       </div>
     )
