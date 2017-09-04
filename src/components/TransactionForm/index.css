@@ -1,11 +1,11 @@
 .input-right input {
-  text-align: right!important;
-  font-family: "Roboto Mono", monospace!important;
+  text-align: right !important;
+  font-family: 'Roboto Mono', monospace !important;
 }
 
 .transaction-form .ui.labeled.input .label {
-  width: 4.9em!important;
-  font-family: "Roboto Mono", monospace!important;
+  width: 4.9em !important;
+  font-family: 'Roboto Mono', monospace !important;
 }
 
 .transaction-form-grid {
@@ -28,7 +28,7 @@
 
 .transaction-form-grid__column-narrow .transaction-form-grid__field:last-child {
   margin-top: 1em;
-  padding-top: .1em;
+  padding-top: 0.1em;
 }
 
 .transaction-form-grid.single-line {
@@ -42,19 +42,21 @@
 
   .transaction-form-grid__column-wide {
     width: 68.75%;
-    padding-right: .3em;
+    padding-right: 0.3em;
   }
 
   .transaction-form-grid__column-narrow {
     width: 31.25%;
-    padding-left: .7em;
+    padding-left: 0.7em;
   }
 
   .transaction-form-grid.single-line .transaction-form-grid__field {
     margin-top: 0;
   }
 
-  .transaction-form-grid.single-line .transaction-form-grid__column-narrow .transaction-form-grid__field:last-child {
+  .transaction-form-grid.single-line
+    .transaction-form-grid__column-narrow
+    .transaction-form-grid__field:last-child {
     margin-top: 1em;
   }
 }
@@ -74,7 +76,8 @@
     display: flex;
   }
 
-  .transaction-form-grid__column-narrow .transaction-form-grid__field:first-child {
+  .transaction-form-grid__column-narrow
+    .transaction-form-grid__field:first-child {
     padding-right: 1.5em;
   }
 
@@ -83,21 +86,21 @@
     flex-grow: 1;
   }
 
-  .ui[class*="top attached"].menu {
-    border-radius: 0!important;
-    border-left: none!important;
-    border-right: none!important;
+  .ui[class*='top attached'].menu {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
   }
 
-  .ui.segment[class*="bottom attached"] {
-    border-radius: 0!important;
-    border-left: none!important;
-    border-right: none!important;
-    border-bottom: none!important;
-    padding-top: 0!important;
+  .ui.segment[class*='bottom attached'] {
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    padding-top: 0 !important;
   }
 
   .mobile-with-margin {
-    margin-top: 1em!important;
+    margin-top: 1em !important;
   }
 }
