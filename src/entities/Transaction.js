@@ -4,9 +4,9 @@ export const EXPENSE = 0
 export const TRANSFER = 1
 export const INCOME = 2
 const KIND_LABEL = {
-  0: 'Expense',
-  1: 'Transfer',
-  2: 'Income'
+  [EXPENSE]: 'Expense',
+  [TRANSFER]: 'Transfer',
+  [INCOME]: 'Income'
 }
 
 const Transaction = {

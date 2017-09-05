@@ -163,6 +163,10 @@ const Currency = {
   name(code) {
     return CURRENCY[code].name
   },
+  minAmount(code) {
+    const exp = CURRENCY[code].exp
+    return Number(1 / Math.pow(10, exp)).toFixed(exp)
+  },
   /**
    * Convert value to currency's subunit (e.g. cents for USD).
    * Subunit is the minimal currency unit and it is always whole integer.

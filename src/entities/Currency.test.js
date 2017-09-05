@@ -19,6 +19,16 @@ it('returns list of options', () => {
   expect(usdOption.flag).toEqual('us')
 })
 
+it('returns currency name', () => {
+  expect(Currency.name('USD')).toEqual('US Dollar')
+})
+
+it('returns currency minimal amount', () => {
+  expect(Currency.minAmount('USD')).toEqual('0.01')
+  expect(Currency.minAmount('JPY')).toEqual('1')
+  expect(Currency.minAmount('KWD')).toEqual('0.001')
+})
+
 it('converts to currency subunit (cents)', () => {
   expect(Currency.toInt(10.99, 'USD')).toEqual(1099) // $10.99 => 1099 cents
   expect(Currency.toInt(9.5, 'USD')).toEqual(950) // $9.50 => 950 cents

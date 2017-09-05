@@ -27,7 +27,7 @@ class TransactionItem extends React.Component {
             code={this.props.currency}
             showColor={this.props.kind !== TRANSFER}
           />
-          {this.renderLinkedAmount()}
+          {this.props.kind === TRANSFER && this.renderLinkedAmount()}
         </div>
       </div>
     )

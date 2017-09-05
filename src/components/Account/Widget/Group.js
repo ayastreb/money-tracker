@@ -22,7 +22,7 @@ const Group = ({
         <Account
           key={account.id}
           account={account}
-          removeAccount={removeAccount}
+          onRemoveAccount={removeAccount}
         />
       ))}
   </div>

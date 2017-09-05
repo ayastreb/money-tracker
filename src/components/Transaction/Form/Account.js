@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown, Form, Input } from 'semantic-ui-react'
 import { DropdownOption } from '../../types'
+import Currency from '../../../entities/Currency'
 
 const Account = props => (
   <Form.Group>
@@ -18,6 +19,8 @@ const Account = props => (
       <Input
         required
         type="number"
+        min={Currency.minAmount(props.currency)}
+        step={Currency.minAmount(props.currency)}
         value={props.amount}
         onChange={props.onAmountChange}
         labelPosition="right"

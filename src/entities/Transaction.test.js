@@ -8,6 +8,12 @@ it('has default recent transactions list limit', () => {
   expect(Transaction.recentListLimit).toEqual(5)
 })
 
+it('returns kind label', () => {
+  expect(Transaction.kindLabel(EXPENSE)).toEqual('Expense')
+  expect(Transaction.kindLabel(TRANSFER)).toEqual('Transfer')
+  expect(Transaction.kindLabel(INCOME)).toEqual('Income')
+})
+
 it('defaults id to current timestamp if not present in form', () => {
   const form = {
     kind: EXPENSE,

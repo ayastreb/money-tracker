@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import { Icon } from 'semantic-ui-react'
 import Amount from '../../Amount'
 
-const Account = ({ account, removeAccount }) => (
+const Account = ({ account, onRemoveAccount }) => (
   <div className="account-widget-account">
     <div className="account-widget-account__name">{account.name}</div>
-    {removeAccount && (
+    {onRemoveAccount && (
       <div className="account-widget-account__remove">
         <Icon
           name="trash"
           color="grey"
           style={{ cursor: 'pointer' }}
-          onClick={() => removeAccount(account.id)}
+          onClick={() => onRemoveAccount(account.id)}
         />
       </div>
     )}
@@ -31,7 +31,7 @@ Account.propTypes = {
     name: PropTypes.string.isRequired,
     balance: PropTypes.objectOf(PropTypes.number).isRequired
   }).isRequired,
-  removeAccount: PropTypes.func
+  onRemoveAccount: PropTypes.func
 }
 
 export default Account
