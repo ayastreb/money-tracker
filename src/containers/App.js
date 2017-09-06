@@ -46,15 +46,18 @@ class App extends React.Component {
    * They are rendered with common structure: sidebar menu and sticky header.
    */
   renderNavigationRoutes = () => {
-    const wrapper =
-      this.props.isSidebarOpen || !this.props.isMobile
-        ? 'openSidebar'
-        : 'closedSidebar'
+    const { isSidebarOpen, isMobile, toggleSidebar } = this.props
     return (
-      <div className={wrapper}>
+      <div
+        className={isSidebarOpen || !isMobile ? 'openSidebar' : 'closedSidebar'}
+        onClick={isSidebarOpen && toggleSidebar}
+      >
         <SidebarMenu />
-        <Dimmer.Dimmable className="container">
-          {routes.map(route => (
+        <Dimmer.Dimmable
+          className="container"
+          onClick={isSidebarOpen && toggleSidebar}
+        >
+          {flatten(routes).map(route => (
             <Route
               key={route.path}
               path={route.path}
@@ -62,8 +65,8 @@ class App extends React.Component {
               render={props => (
                 <div>
                   <Dimmer
-                    active={this.props.isMobile && this.props.isSidebarOpen}
-                    onClick={this.props.toggleSidebar}
+                    active={isMobile && isSidebarOpen}
+                    onClick={toggleSidebar}
                   />
                   <Header label={route.label} />
                   <SyncWarning />
@@ -76,6 +79,20 @@ class App extends React.Component {
       </div>
     )
   }
+}
+
+function flatten(routes) {
+  let flatRoutes = []
+  routes.forEach(route => {
+    if (route.routes) {
+      flatRoutes.push({ ...route, exact: true })
+      flatRoutes.push(...flatten(route.routes))
+    } else {
+      flatRoutes.push(route)
+    }
+  })
+
+  return flatRoutes
 }
 
 App.propTypes = {

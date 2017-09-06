@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Icon } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import Amount from '../../Amount'
 
 const Account = ({ account, onRemoveAccount }) => (
   <div className="account-widget-account">
-    <div className="account-widget-account__name">{account.name}</div>
+    <div className="account-widget-account__name">
+      <Link to={`/accounts/details/${account.id}`}>{account.name}</Link>
+    </div>
     {onRemoveAccount && (
       <div className="account-widget-account__remove">
         <Icon

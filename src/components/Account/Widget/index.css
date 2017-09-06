@@ -2,6 +2,15 @@
   border-top: solid 1px #d4d4d5;
 }
 
+.account-widget__new {
+  padding-top: 1em;
+  text-align: right;
+}
+
+.account-widget__new .ui.button {
+  margin: 0;
+}
+
 @media (min-width: 768px) {
   .account-widget {
     border: solid 1px #d4d4d5;
@@ -31,6 +40,11 @@
   .account-widget-group__name,
   .account-widget-group__total {
     padding: 0.75em 1em;
+  }
+
+  .account-widget__new {
+    border-top: solid 1px #d4d4d5;
+    padding: 1em 0.75em;
   }
 }
 

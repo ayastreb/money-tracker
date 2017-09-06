@@ -1,5 +1,6 @@
 import Dashboard from '../containers/Dashboard'
 import Accounts from '../containers/Accounts'
+import AccountDetails from '../containers/Accounts/Details'
 import WorkInProgress from '../containers/WorkInProgress'
 
 export default [
@@ -22,7 +23,15 @@ export default [
     exact: false,
     label: 'Accounts',
     icon: 'credit card',
-    component: Accounts
+    component: Accounts,
+    routes: [
+      {
+        path: '/accounts/details/:id',
+        label: 'Account',
+        exact: true,
+        component: AccountDetails
+      }
+    ]
   },
   {
     path: '/budget',

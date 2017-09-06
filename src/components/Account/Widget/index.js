@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Button } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import Group from './Group'
 import './index.css'
 
@@ -8,17 +10,24 @@ class AccountsWidget extends React.Component {
 
   render() {
     return (
-      <div className="account-widget">
-        {Object.keys(this.props.groups).map(group => (
-          <Group
-            key={group}
-            baseCurrency={this.props.baseCurrency}
-            group={this.props.groups[group]}
-            isCollapsed={this.props.collapsedGroups.includes(group)}
-            toggleGroupCollapse={this.toggle(group)}
-            removeAccount={this.props.removeAccount}
-          />
-        ))}
+      <div>
+        <div className="account-widget">
+          {Object.keys(this.props.groups).map(group => (
+            <Group
+              key={group}
+              baseCurrency={this.props.baseCurrency}
+              group={this.props.groups[group]}
+              isCollapsed={this.props.collapsedGroups.includes(group)}
+              toggleGroupCollapse={this.toggle(group)}
+              removeAccount={this.props.removeAccount}
+            />
+          ))}
+        </div>
+        <div className="account-widget__new">
+          <Button as={Link} to="/accounts/details/new">
+            Create New Account
+          </Button>
+        </div>
       </div>
     )
   }

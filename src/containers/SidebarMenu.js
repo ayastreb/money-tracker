@@ -1,13 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react'
 import Logo from '../components/Logo/index'
 import routes from '../router/routes'
-import { toggleSidebar } from '../actions/ui/sidebar'
 
-const SidebarMenu = ({ toggleSidebar }) => (
+const SidebarMenu = () => (
   <nav>
     <Menu fluid color="blue" vertical icon="labeled">
       <Logo />
@@ -17,13 +14,9 @@ const SidebarMenu = ({ toggleSidebar }) => (
           exact={route.exact}
           path={route.path}
           children={({ match }) => (
-            <Menu.Item
-              as={Link}
-              to={route.path}
-              active={!!match}
-              onClick={toggleSidebar}
-            >
-              <Icon name={route.icon} />{route.label}
+            <Menu.Item as={Link} to={route.path} active={!!match}>
+              <Icon name={route.icon} />
+              {route.label}
             </Menu.Item>
           )}
         />
@@ -32,12 +25,4 @@ const SidebarMenu = ({ toggleSidebar }) => (
   </nav>
 )
 
-SidebarMenu.propTypes = {
-  toggleSidebar: PropTypes.func
-}
-
-const mapStateToProps = state => ({
-  isSidebarOpen: state.ui.isSidebarOpen
-})
-
-export default connect(mapStateToProps, { toggleSidebar })(SidebarMenu)
+export default SidebarMenu

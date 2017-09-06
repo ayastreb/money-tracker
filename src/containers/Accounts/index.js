@@ -1,10 +1,16 @@
 import React from 'react'
+import NetWorth from '../Dashboard/NetWorth'
 import CollapsibleSection from '../../components/CollapsibleSection'
+import AccountsWidget from '../Dashboard/AccountsWidget'
 
-const Accounts = () => (
+const Accounts = props => (
   <div className="container-full-page">
-    <CollapsibleSection name="new_account" label="New Account">
-      <div>form here</div>
+    <CollapsibleSection
+      name="account_list"
+      label="Accounts"
+      LabelComponent={NetWorth}
+    >
+      <AccountsWidget />
     </CollapsibleSection>
   </div>
 )
