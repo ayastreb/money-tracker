@@ -37,7 +37,12 @@ class CurrencyTable extends React.Component {
     return (
       <div>
         {this.currencies.map(code => (
-          <Form.Group widths="equal" key={code}>
+          <Form.Group
+            key={code}
+            unstackable
+            widths={2}
+            style={{ marginBottom: '1em' }}
+          >
             <Form.Field className="checkbox">
               <Checkbox
                 checked={this.props.form.currencies.includes(code)}

@@ -31,7 +31,7 @@ class Details extends React.Component {
     if (this.props.isComplete) return <Redirect to="/accounts" />
 
     return (
-      <div className="container-full-page">
+      <div className="container-full-page" style={{ padding: '1em' }}>
         <AccountForm />
       </div>
     )

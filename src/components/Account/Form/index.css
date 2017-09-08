@@ -1,9 +1,13 @@
 .account-form {
-  margin-top: 1em;
   max-width: 680px !important;
 }
+.ui.form.account-form .input-right .mono {
+  display: block;
+  margin-top: 0.75em;
+}
+
 .ui.form.account-form .field.checkbox {
-  padding-top: 0.5em;
+  padding-top: 0.75em;
 }
 
 .ui.form.account-form .fields.no-margin {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Checkbox, Button } from 'semantic-ui-react'
+import { Form, Checkbox } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
 import Account from '../../../entities/Account'
 import './index.css'
@@ -40,16 +40,18 @@ class AccountForm extends React.Component {
           />
         </Form.Group>
         <CurrencyTable {...this.props} />
-        <Form.Field>
+        <Form.Field style={{ paddingTop: '0.5em' }}>
           <Checkbox
             checked={this.props.form.on_dashboard}
             onChange={this.toggleOnDashboard}
             label="Display on Dashboard"
           />
         </Form.Field>
-        <Form.Group className="no-margin">
+        <Form.Group unstackable className="no-margin" widths={2}>
           <Form.Button primary content="Save Account" />
-          {this.props.form.id && <Button content="Delete Account" />}
+          {this.props.form.id && (
+            <Form.Button className="input-right" content="Delete Account" />
+          )}
         </Form.Group>
       </Form>
     )
