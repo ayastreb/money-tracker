@@ -1,9 +1,11 @@
 import {
   getAccountsMap,
   getAccountsList,
+  getDashboardAccountsList,
   getAccountsCurrencyMap,
   getAccountsCurrencyList,
   getAccountsAsOptions,
+  getDashboardGroupedAccounts,
   getGroupedAccounts,
   getNetWorth
 } from './accounts'
@@ -26,42 +28,29 @@ const state = {
         id: 'A12345',
         name: 'foo',
         group: 'cash',
-        balance: { USD: 100, EUR: 200 }
+        balance: { USD: 100, EUR: 200 },
+        currencies: ['USD', 'EUR'],
+        on_dashboard: true
       },
-      { id: 'A12346', name: 'bar', group: 'cash', balance: { JPY: 1000 } },
+      {
+        id: 'A12346',
+        name: 'bar',
+        group: 'cash',
+        balance: { JPY: 1000 },
+        currencies: ['JPY'],
+        on_dashboard: false
+      },
       {
         id: 'A12347',
         name: 'baz',
         group: 'bank',
-        balance: { USD: 200, JPY: 100 }
+        balance: { USD: 200, JPY: 100 },
+        currencies: ['USD', 'JPY'],
+        on_dashboard: false
       }
     ])
   }
 }
-
-it('adds currencies list to accounts map', () => {
-  const expectedAccount = {
-    id: 'A12345',
-    name: 'foo',
-    group: 'cash',
-    balance: { USD: 100, EUR: 200 },
-    currencies: ['USD', 'EUR']
-  }
-  const account = EntityMap.get(getAccountsMap(state), 'A12345')
-  expect(account).toEqual(expectedAccount)
-})
-
-it('adds currencies list to account list', () => {
-  const expectedAccount = {
-    id: 'A12345',
-    name: 'foo',
-    group: 'cash',
-    balance: { USD: 100, EUR: 200 },
-    currencies: ['USD', 'EUR']
-  }
-  const account = getAccountsList(state).find(acc => acc.id === 'A12345')
-  expect(account).toEqual(expectedAccount)
-})
 
 it('gets accounts currency map', () => {
   const expectedCurrencyMap = {
@@ -101,6 +90,26 @@ it('gets accounts as dropdown options list', () => {
   expect(getAccountsAsOptions(state)).toEqual(expectedOptions)
 })
 
+it('get grouped accounts map for dashboard', () => {
+  const expectedGroups = {
+    cash: {
+      name: 'Cash',
+      total: 366, // => $3.66
+      accounts: [
+        {
+          id: 'A12345',
+          name: 'foo',
+          group: 'cash',
+          balance: { USD: 100, EUR: 200 }, // => $1 + $2.66 => $3.66
+          currencies: ['USD', 'EUR'],
+          on_dashboard: true
+        }
+      ]
+    }
+  }
+  expect(getDashboardGroupedAccounts(state)).toEqual(expectedGroups)
+})
+
 it('get grouped accounts map with calculated base total', () => {
   const expectedGroups = {
     cash: {
@@ -112,14 +121,16 @@ it('get grouped accounts map with calculated base total', () => {
           name: 'foo',
           group: 'cash',
           balance: { USD: 100, EUR: 200 }, // => $1 + $2.66 => $3.66
-          currencies: ['USD', 'EUR']
+          currencies: ['USD', 'EUR'],
+          on_dashboard: true
         },
         {
           id: 'A12346',
           name: 'bar',
           group: 'cash',
           balance: { JPY: 1000 }, // => $9.09
-          currencies: ['JPY']
+          currencies: ['JPY'],
+          on_dashboard: false
         }
       ]
     },
@@ -132,7 +143,8 @@ it('get grouped accounts map with calculated base total', () => {
           name: 'baz',
           group: 'bank',
           balance: { USD: 200, JPY: 100 },
-          currencies: ['USD', 'JPY']
+          currencies: ['USD', 'JPY'],
+          on_dashboard: false
         }
       ]
     }

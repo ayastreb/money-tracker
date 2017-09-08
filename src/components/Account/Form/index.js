@@ -1,11 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Form } from 'semantic-ui-react'
+import { Form, Checkbox, Button } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
-import { changeName, changeGroup } from '../../actions/ui/form/account'
-import { saveAccount } from '../../actions/entities/accounts'
-import Account from '../../entities/Account'
+import Account from '../../../entities/Account'
+import './index.css'
 
 class AccountForm extends React.Component {
   constructor(props) {
@@ -16,6 +14,7 @@ class AccountForm extends React.Component {
 
   handleNameChange = (event, { value }) => this.props.changeName(value)
   handleGroupChange = (event, { value }) => this.props.changeGroup(value)
+  toggleOnDashboard = event => this.props.toggleOnDashboard()
 
   handleSubmit = event => {
     event.preventDefault()
@@ -24,7 +23,7 @@ class AccountForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit} style={{ marginBottom: '1em' }}>
+      <Form onSubmit={this.handleSubmit} className="account-form">
         <Form.Group widths="equal">
           <Form.Input
             label="Name"
@@ -40,8 +39,18 @@ class AccountForm extends React.Component {
             onChange={this.handleGroupChange}
           />
         </Form.Group>
-        <CurrencyTable />
-        <Form.Button content="Create Account" />
+        <CurrencyTable {...this.props} />
+        <Form.Field>
+          <Checkbox
+            checked={this.props.form.on_dashboard}
+            onChange={this.toggleOnDashboard}
+            label="Display on Dashboard"
+          />
+        </Form.Field>
+        <Form.Group className="no-margin">
+          <Form.Button primary content="Save Account" />
+          {this.props.form.id && <Button content="Delete Account" />}
+        </Form.Group>
       </Form>
     )
   }
@@ -49,21 +58,21 @@ class AccountForm extends React.Component {
 
 AccountForm.propTypes = {
   form: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     group: PropTypes.string,
-    balance: PropTypes.objectOf(PropTypes.string)
+    balance: PropTypes.objectOf(PropTypes.string),
+    currencies: PropTypes.arrayOf(PropTypes.string),
+    on_dashboard: PropTypes.bool
   }),
+  base: PropTypes.string.isRequired,
+  secondary: PropTypes.arrayOf(PropTypes.string),
   changeName: PropTypes.func,
   changeGroup: PropTypes.func,
+  toggleOnDashboard: PropTypes.func,
+  toggleCurrency: PropTypes.func.isRequired,
+  changeBalance: PropTypes.func.isRequired,
   saveAccount: PropTypes.func
 }
 
-const mapStateToProps = state => ({
-  form: state.ui.form.account
-})
-
-export default connect(mapStateToProps, {
-  changeName,
-  changeGroup,
-  saveAccount
-})(AccountForm)
+export default AccountForm

@@ -1,3 +1,4 @@
+import pick from 'lodash/pick'
 import Currency from './Currency'
 
 export const EXPENSE = 0
@@ -47,13 +48,13 @@ const Transaction = {
   fromStorage(data) {
     return {
       id: data._id,
-      ...pick(data, Transaction.persistentKeys(data.kind))
+      ...pick(data, Transaction.persistentKeys(data))
     }
   },
   toStorage(data) {
-    return pick(data, Transaction.persistentKeys(data.kind))
+    return pick(data, Transaction.persistentKeys(data))
   },
-  persistentKeys(kind) {
+  persistentKeys(data) {
     const keys = [
       'kind',
       'date',
@@ -63,12 +64,8 @@ const Transaction = {
       'amount',
       'currency'
     ]
-    if (kind === TRANSFER) {
-      keys.push.apply(keys, [
-        'linkedAccountId',
-        'linkedAmount',
-        'linkedCurrency'
-      ])
+    if (data.kind === TRANSFER) {
+      keys.push(...['linkedAccountId', 'linkedAmount', 'linkedCurrency'])
     }
 
     return keys
@@ -76,10 +73,3 @@ const Transaction = {
 }
 
 export default Transaction
-
-function pick(object, keys) {
-  return keys.reduce((acc, key) => {
-    if (object[key] !== undefined) acc[key] = object[key]
-    return acc
-  }, {})
-}

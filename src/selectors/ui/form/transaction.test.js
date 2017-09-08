@@ -7,7 +7,12 @@ it('returns default state for single account, single currency', () => {
   const state = {
     entities: {
       accounts: EntityMap.fromArray([
-        { id: 'A12345', name: 'foo', balance: { USD: 199 } }
+        {
+          id: 'A12345',
+          name: 'foo',
+          balance: { USD: 199 },
+          currencies: ['USD']
+        }
       ])
     }
   }
@@ -34,7 +39,12 @@ it('returns default state for single account, multiple currencies', () => {
   const state = {
     entities: {
       accounts: EntityMap.fromArray([
-        { id: 'A12345', name: 'foo', balance: { USD: 199, JPY: 2000 } }
+        {
+          id: 'A12345',
+          name: 'foo',
+          balance: { USD: 199, JPY: 2000 },
+          currencies: ['USD', 'JPY']
+        }
       ])
     }
   }
@@ -61,8 +71,18 @@ it('returns default state for multiple accounts', () => {
   const state = {
     entities: {
       accounts: EntityMap.fromArray([
-        { id: 'A12345', name: 'foo', balance: { USD: 199, JPY: 2000 } },
-        { id: 'A12346', name: 'bar', balance: { EUR: 100 } }
+        {
+          id: 'A12345',
+          name: 'foo',
+          balance: { USD: 199, JPY: 2000 },
+          currencies: ['USD', 'JPY']
+        },
+        {
+          id: 'A12346',
+          name: 'bar',
+          balance: { EUR: 100 },
+          currencies: ['EUR']
+        }
       ])
     }
   }

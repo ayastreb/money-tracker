@@ -183,13 +183,17 @@ const Currency = {
    *
    * @param {number} value
    * @param {string} code
+   * @param {bool} format
    */
-  toFloat(value, code) {
+  toFloat(value, code, format = true) {
     const exp = CURRENCY[code].exp
-    return Number(value / Math.pow(10, exp)).toLocaleString(undefined, {
-      minimumFractionDigits: exp,
-      maximumFractionDigits: exp
-    })
+    const num = Number(value / Math.pow(10, exp))
+    return format
+      ? num.toLocaleString(undefined, {
+          minimumFractionDigits: exp,
+          maximumFractionDigits: exp
+        })
+      : num.toString()
   },
   convert(value, rate, from, to) {
     return value / rate * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp)

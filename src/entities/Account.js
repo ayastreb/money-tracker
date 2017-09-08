@@ -1,3 +1,4 @@
+import pick from 'lodash/pick'
 import Currency from './Currency'
 
 const GROUP = {
@@ -22,7 +23,7 @@ const Account = {
   },
   fromForm(data) {
     return {
-      ...data,
+      ...pick(data, Account.persistentKeys()),
       id: data.id || `A${Date.now()}`,
       balance: Object.keys(data.balance).reduce((acc, code) => {
         acc[code] = Currency.toInt(data.balance[code], code)
@@ -34,7 +35,7 @@ const Account = {
     return {
       ...data,
       balance: Object.keys(data.balance).reduce((acc, code) => {
-        acc[code] = Currency.toFloat(data.balance[code], code)
+        acc[code] = Currency.toFloat(data.balance[code], code, false)
         return acc
       }, {})
     }
@@ -42,15 +43,14 @@ const Account = {
   fromStorage(data) {
     return {
       id: data._id,
-      ...Account.toStorage(data)
+      ...pick(data, Account.persistentKeys())
     }
   },
   toStorage(data) {
-    return {
-      name: data.name,
-      group: data.group,
-      balance: data.balance
-    }
+    return pick(data, Account.persistentKeys())
+  },
+  persistentKeys() {
+    return ['name', 'group', 'balance', 'currencies', 'on_dashboard']
   },
   mutateBalance(account, currency, amount) {
     return {

@@ -1,47 +1,70 @@
 import { handleActions } from 'redux-actions'
-import omit from 'lodash/omit'
+
 import pick from 'lodash/pick'
 import {
-  changeCurrencyCheckbox,
-  changeCurrencyBalance,
+  fillInAccountForm,
+  resetAccountForm,
+  toggleOnDashboard,
+  toggleCurrency,
+  changeBalance,
   changeGroup,
   changeName
 } from '../../../actions/ui/form/account'
-import {
-  saveAccount,
-  saveAccountFailure
-} from '../../../actions/entities/accounts'
+import { saveAccountSuccess } from '../../../actions/entities/accounts'
 import { changeSettingsCurrency } from '../../../actions/settings'
 import Account from '../../../entities/Account'
 
 const initialState = {
   name: '',
   group: Account.defaultGroup,
-  balance: {}
+  balance: {},
+  currencies: [],
+  on_dashboard: true,
+  completed: false
 }
 export default handleActions(
   {
     [changeGroup]: (state, { payload }) => ({ ...state, group: payload }),
     [changeName]: (state, { payload }) => ({ ...state, name: payload }),
-    [changeCurrencyCheckbox]: (state, { payload }) => {
-      if (!payload.isChecked && Object.keys(state).length === 1) return state
+    [toggleCurrency]: (state, { payload }) => {
+      const isChecked = state.currencies.includes(payload)
+      if (isChecked && state.currencies.length === 1) return state
       return {
         ...state,
-        balance: payload.isChecked
-          ? { ...state.balance, [payload.code]: '' }
-          : omit(state.balance, payload.code)
+        currencies: isChecked
+          ? state.currencies.filter(code => code !== payload)
+          : state.currencies.concat(payload),
+        balance:
+          !isChecked && state.balance[payload] === undefined
+            ? { ...state.balance, [payload]: '' }
+            : state.balance
       }
     },
-    [changeCurrencyBalance]: (state, { payload }) => ({
+    [changeBalance]: (state, { payload }) => ({
       ...state,
+      currencies: state.currencies.includes(payload.code)
+        ? state.currencies
+        : state.currencies.concat(payload.code),
       balance: { ...state.balance, [payload.code]: payload.balance }
     }),
-    [changeSettingsCurrency]: (state, { payload }) => ({
+    [toggleOnDashboard]: state => ({
       ...state,
-      balance: pick(state.balance, [payload.base, ...payload.secondary])
+      on_dashboard: !state.on_dashboard
     }),
-    [saveAccount]: () => initialState,
-    [saveAccountFailure]: (state, { payload }) => Account.toForm(payload)
+    [changeSettingsCurrency]: (state, { payload }) => {
+      const currencies = new Set([payload.base, ...payload.secondary])
+      return {
+        ...state,
+        currencies: state.currencies.filter(code => currencies.has(code)),
+        balance: pick(state.balance, [...currencies])
+      }
+    },
+    [resetAccountForm]: () => initialState,
+    [saveAccountSuccess]: () => ({ ...initialState, completed: true }),
+    [fillInAccountForm]: (state, { payload }) => ({
+      ...state,
+      ...Account.toForm(payload)
+    })
   },
   initialState
 )

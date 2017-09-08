@@ -1,3 +1,7 @@
+.input-right {
+  text-align: right;
+}
+
 .input-right input {
   text-align: right !important;
   font-family: 'Roboto Mono', monospace !important;

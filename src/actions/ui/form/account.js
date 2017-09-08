@@ -1,13 +1,19 @@
 import { createActions } from 'redux-actions'
 
 export const {
+  fillInAccountForm,
+  resetAccountForm,
   changeName,
   changeGroup,
-  changeCurrencyCheckbox,
-  changeCurrencyBalance
+  changeBalance,
+  toggleCurrency,
+  toggleOnDashboard
 } = createActions(
-  'CHANGE_CURRENCY_CHECKBOX',
-  'CHANGE_CURRENCY_BALANCE',
+  'FILL_IN_ACCOUNT_FORM',
+  'RESET_ACCOUNT_FORM',
   'CHANGE_NAME',
-  'CHANGE_GROUP'
+  'CHANGE_GROUP',
+  'CHANGE_BALANCE',
+  'TOGGLE_CURRENCY',
+  'TOGGLE_ON_DASHBOARD'
 )

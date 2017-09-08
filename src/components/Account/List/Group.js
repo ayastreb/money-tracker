@@ -19,11 +19,7 @@ const Group = ({
     </div>
     {!isCollapsed &&
       group.accounts.map(account => (
-        <Account
-          key={account.id}
-          account={account}
-          onRemoveAccount={removeAccount}
-        />
+        <Account key={account.id} account={account} />
       ))}
   </div>
 )
@@ -36,8 +32,7 @@ Group.propTypes = {
     total: PropTypes.number.isRequired
   }).isRequired,
   isCollapsed: PropTypes.bool.isRequired,
-  toggleGroupCollapse: PropTypes.func.isRequired,
-  removeAccount: PropTypes.func
+  toggleGroupCollapse: PropTypes.func.isRequired
 }
 
 export default Group

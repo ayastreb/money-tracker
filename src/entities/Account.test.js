@@ -59,6 +59,33 @@ it('converts balance to subunits from form data', () => {
   })
 })
 
+it('keeps only stored keys from form data', () => {
+  const form = {
+    id: 'A12345',
+    name: 'Test',
+    group: 'cash',
+    balance: {
+      USD: '100.95',
+      JPY: '2200'
+    },
+    currencies: ['USD'],
+    on_dashboard: true,
+    completed: true,
+    foo: 'bar'
+  }
+  expect(Account.fromForm(form)).toEqual({
+    id: 'A12345',
+    name: 'Test',
+    group: 'cash',
+    balance: {
+      USD: 10095,
+      JPY: 2200
+    },
+    currencies: ['USD'],
+    on_dashboard: true
+  })
+})
+
 it('converts balance from subunits back to float', () => {
   const data = {
     name: 'Test',
@@ -73,7 +100,7 @@ it('converts balance from subunits back to float', () => {
     group: 'cash',
     balance: {
       USD: '100.95',
-      JPY: '2,200'
+      JPY: '2200'
     }
   })
 })

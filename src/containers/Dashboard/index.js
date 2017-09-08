@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { Grid } from 'semantic-ui-react'
 import CollapsibleSection from '../../components/CollapsibleSection'
 import NetWorth from './NetWorth'
-import AccountsWidget from './AccountsWidget'
+import Accounts from './Accounts'
 import AddTransaction from './AddTransaction'
 import RecentTransactions from './RecentTransactions'
 import { loadAccounts } from '../../actions/entities/accounts'
 import { loadRecentTransactions } from '../../actions/entities/transactions'
-import { getAccountsList } from '../../selectors/entities/accounts'
+import { getDashboardAccountsList } from '../../selectors/entities/accounts'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
                 label="Net Worth"
                 LabelComponent={NetWorth}
               >
-                {this.props.accounts.length > 0 && <AccountsWidget />}
+                {this.props.accounts.length > 0 && <Accounts withNewButton />}
               </CollapsibleSection>
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
@@ -53,7 +53,7 @@ Dashboard.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  accounts: getAccountsList(state)
+  accounts: getDashboardAccountsList(state)
 })
 
 export default connect(mapStateToProps, {

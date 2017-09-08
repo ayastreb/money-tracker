@@ -19,26 +19,27 @@ class AccountsWidget extends React.Component {
               group={this.props.groups[group]}
               isCollapsed={this.props.collapsedGroups.includes(group)}
               toggleGroupCollapse={this.toggle(group)}
-              removeAccount={this.props.removeAccount}
             />
           ))}
         </div>
-        <div className="account-widget__new">
-          <Button as={Link} to="/accounts/details/new">
-            Create New Account
-          </Button>
-        </div>
+        {this.props.withNewButton && (
+          <div className="account-widget__new">
+            <Button as={Link} to="/accounts/details/new">
+              Create New Account
+            </Button>
+          </div>
+        )}
       </div>
     )
   }
 }
 
 AccountsWidget.propTypes = {
+  withNewButton: PropTypes.bool,
   baseCurrency: PropTypes.string.isRequired,
   groups: PropTypes.objectOf(PropTypes.object).isRequired,
   collapsedGroups: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleSectionCollapse: PropTypes.func.isRequired,
-  removeAccount: PropTypes.func
+  toggleSectionCollapse: PropTypes.func.isRequired
 }
 
 export default AccountsWidget

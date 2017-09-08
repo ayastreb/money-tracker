@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Divider, Header } from 'semantic-ui-react'
 import CurrencyForm from './CurrencyForm'
-import AccountForm from './AccountForm'
-import AccountTable from './AccountTable'
+import AccountForm from '../Accounts/Form'
+import AccountList from '../Accounts/List'
 import { completeSetup } from '../../actions/settings'
 import { loadAccounts } from '../../actions/entities/accounts'
 import { getAccountsList } from '../../selectors/entities/accounts'
@@ -18,7 +18,7 @@ class InitialSetup extends React.Component {
 
   render() {
     return (
-      <div className="container-raised-desktop" style={{ paddingBottom: '0' }}>
+      <div className="container-raised-desktop">
         <Header as="h2" icon="settings" content="Money Tracker Setup" />
         <Divider />
         {!this.props.isAuthenticated && (
@@ -46,8 +46,8 @@ class InitialSetup extends React.Component {
         </p>
         <AccountForm />
         {this.props.accounts.length > 0 && (
-          <div>
-            <AccountTable />
+          <div style={{ marginTop: '1em' }}>
+            <AccountList />
             <div className="form-submit">
               <Button
                 primary

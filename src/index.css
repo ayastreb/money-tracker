@@ -85,7 +85,7 @@ nav .menu .item:last-child {
 }
 
 .container-raised-desktop .form-submit {
-  padding: 1rem 0;
+  padding: 1em 0 0 0;
   text-align: right;
 }
 

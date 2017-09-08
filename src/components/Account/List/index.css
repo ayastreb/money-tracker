@@ -78,9 +78,3 @@
 .account-widget-account__name {
   padding: 0.5em 0.5em 0.5em 1em;
 }
-
-.account-widget-account__remove {
-  display: table-cell;
-  width: 1px;
-  padding: 0;
-}
