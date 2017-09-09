@@ -1,6 +1,7 @@
 import Dashboard from '../containers/Dashboard'
 import Accounts from '../containers/Accounts'
 import AccountDetails from '../containers/Accounts/Details'
+import Settings from '../containers/Settings'
 import WorkInProgress from '../containers/WorkInProgress'
 
 export default [
@@ -52,6 +53,6 @@ export default [
     exact: true,
     label: 'Settings',
     icon: 'options',
-    component: WorkInProgress
+    component: Settings
   }
 ]

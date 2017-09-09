@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Divider, Header } from 'semantic-ui-react'
-import CurrencyForm from './CurrencyForm'
+import CurrencySettings from '../Settings/Currency'
 import AccountForm from '../Accounts/Form'
 import AccountList from '../Accounts/List'
 import { completeSetup } from '../../actions/settings'
@@ -37,7 +37,7 @@ class InitialSetup extends React.Component {
           You can also select any number of additional currencies, if you use
           them.
         </p>
-        <CurrencyForm />
+        <CurrencySettings />
         <Header as="h3">Accounts</Header>
         <p>
           Create accounts that you would like to keep track of.<br />

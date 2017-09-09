@@ -9,7 +9,7 @@ import AddTransaction from './AddTransaction'
 import RecentTransactions from './RecentTransactions'
 import { loadAccounts } from '../../actions/entities/accounts'
 import { loadRecentTransactions } from '../../actions/entities/transactions'
-import { getDashboardAccountsList } from '../../selectors/entities/accounts'
+import { getAccountsList } from '../../selectors/entities/accounts'
 
 class Dashboard extends React.Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ class Dashboard extends React.Component {
                 label="Net Worth"
                 LabelComponent={NetWorth}
               >
-                {this.props.accounts.length > 0 && <Accounts withNewButton />}
+                <Accounts withNewButton />
               </CollapsibleSection>
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
@@ -53,7 +53,7 @@ Dashboard.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  accounts: getDashboardAccountsList(state)
+  accounts: getAccountsList(state)
 })
 
 export default connect(mapStateToProps, {

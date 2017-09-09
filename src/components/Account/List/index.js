@@ -9,19 +9,23 @@ class AccountsWidget extends React.Component {
   toggle = group => () => this.props.toggleSectionCollapse(group)
 
   render() {
+    const groups = Object.keys(this.props.groups)
+
     return (
       <div>
-        <div className="account-widget">
-          {Object.keys(this.props.groups).map(group => (
-            <Group
-              key={group}
-              baseCurrency={this.props.baseCurrency}
-              group={this.props.groups[group]}
-              isCollapsed={this.props.collapsedGroups.includes(group)}
-              toggleGroupCollapse={this.toggle(group)}
-            />
-          ))}
-        </div>
+        {groups.length > 0 && (
+          <div className="account-widget">
+            {groups.map(group => (
+              <Group
+                key={group}
+                baseCurrency={this.props.baseCurrency}
+                group={this.props.groups[group]}
+                isCollapsed={this.props.collapsedGroups.includes(group)}
+                toggleGroupCollapse={this.toggle(group)}
+              />
+            ))}
+          </div>
+        )}
         {this.props.withNewButton && (
           <div className="account-widget__new">
             <Button as={Link} to="/accounts/details/new">

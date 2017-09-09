@@ -6,7 +6,7 @@ import { changeSettingsCurrency } from '../../actions/settings'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
 import Currency from '../../entities/Currency'
 
-class CurrencyForm extends React.Component {
+class CurrencySettings extends React.Component {
   constructor(props) {
     super(props)
 
@@ -38,7 +38,7 @@ class CurrencyForm extends React.Component {
 
   render() {
     return (
-      <Form>
+      <Form style={{ maxWidth: '680px' }}>
         <Form.Group widths="equal">
           <Form.Field>
             <label>Base Currency</label>
@@ -70,7 +70,7 @@ class CurrencyForm extends React.Component {
   }
 }
 
-CurrencyForm.propTypes = {
+CurrencySettings.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
   exchangeRate: PropTypes.objectOf(PropTypes.number),
@@ -83,5 +83,5 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, { changeSettingsCurrency })(
-  CurrencyForm
+  CurrencySettings
 )
