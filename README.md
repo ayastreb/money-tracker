@@ -5,4 +5,4 @@
 
 Personal finances tracking web app. Implemented with React and Semantic UI.
 
-* WORK IN PROGRESS *
+**WORK IN PROGRESS**
