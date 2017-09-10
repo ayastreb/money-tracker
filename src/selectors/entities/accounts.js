@@ -4,10 +4,10 @@ import Account from '../../entities/Account'
 import Currency from '../../entities/Currency'
 import EntityMap from '../../entities/EntityMap'
 
+export const getAccountsMap = state => state.entities.accounts
+
 export const getAccount = id =>
   createSelector(getAccountsMap, accounts => EntityMap.get(accounts, id))
-
-export const getAccountsMap = state => state.entities.accounts
 
 export const getAccountsList = state =>
   EntityMap.map(state.entities.accounts, account => ({ ...account }))

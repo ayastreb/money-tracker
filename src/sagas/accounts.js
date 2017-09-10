@@ -29,10 +29,15 @@ export function* saveAccountSaga(action) {
 
 export function* saveTransactionSaga(action) {
   const transaction = action.payload
-  const account = yield select(getAccount(transaction.accountId))
+  const accountSelector = yield call(getAccount, transaction.accountId)
+  const account = yield select(accountSelector)
   yield call(AccountsStorage.save, account)
   if (transaction.linkedAccountId) {
-    const linkedAccount = yield select(getAccount(transaction.linkedAccountId))
+    const linkedAccountSelector = yield call(
+      getAccount,
+      transaction.linkedAccountId
+    )
+    const linkedAccount = yield select(linkedAccountSelector)
     yield call(AccountsStorage.save, linkedAccount)
   }
 }
