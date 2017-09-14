@@ -41,6 +41,7 @@ describe('save account', () => {
   it('puts failure when error', () => {
     expect(gen.next().value).toEqual(call(AccountsStorage.save, account))
     expect(gen.throw().value).toEqual(put(saveAccountFailure(account.id)))
+    expect(gen.next().done).toBeTruthy()
   })
 })
 
