@@ -7,7 +7,7 @@ import {
   toggleOnDashboard,
   toggleCurrency
 } from '../../actions/ui/form/account'
-import { saveAccount } from '../../actions/entities/accounts'
+import { saveAccount, removeAccount } from '../../actions/entities/accounts'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
 
 const mapStateToProps = state => ({
@@ -22,5 +22,6 @@ export default connect(mapStateToProps, {
   changeBalance,
   toggleCurrency,
   toggleOnDashboard,
-  saveAccount
+  saveAccount,
+  removeAccount
 })(AccountForm)

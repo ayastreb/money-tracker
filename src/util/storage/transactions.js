@@ -4,7 +4,8 @@ import Transaction from '../../entities/Transaction'
 export default {
   sync,
   loadRecent,
-  save
+  save,
+  removeByAccount
 }
 
 async function sync() {
@@ -19,6 +20,8 @@ function loadRecent(limit = Transaction.recentListLimit) {
     .allDocs({
       include_docs: true,
       descending: true,
+      startkey: 'T\uffff',
+      endkey: 'T',
       limit
     })
     .then(response =>
@@ -40,4 +43,21 @@ function save(transaction) {
         ...Transaction.toStorage(transaction)
       })
     })
+}
+
+function removeByAccount(accountId) {
+  return transactionsDB()
+    .createIndex({
+      index: {
+        fields: ['accountId']
+      }
+    })
+    .then(() => transactionsDB().find({ selector: { accountId } }))
+    .then(response =>
+      Promise.all(
+        response.docs.map(doc =>
+          transactionsDB().put({ ...doc, _deleted: true })
+        )
+      )
+    )
 }

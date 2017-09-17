@@ -1,4 +1,5 @@
 import { accountsDB, remoteAccountsDB } from './pouchdb'
+import TransactionsStorage from './transactions'
 import Account from '../../entities/Account'
 
 export default {
@@ -46,8 +47,8 @@ function save(account) {
 }
 
 function remove(id) {
-  return accountsDB()
-    .get(id)
+  return TransactionsStorage.removeByAccount(id)
+    .then(() => accountsDB().get(id))
     .then(doc => accountsDB().put({ ...doc, _deleted: true }))
     .catch(err => {
       if (err.status !== 404) throw err

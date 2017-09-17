@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Checkbox } from 'semantic-ui-react'
+import { Form, Checkbox, Popup, Button } from 'semantic-ui-react'
 import CurrencyTable from './CurrencyTable'
 import Account from '../../../entities/Account'
 import './index.css'
@@ -50,7 +50,27 @@ class AccountForm extends React.Component {
         <Form.Group unstackable className="no-margin" widths={2}>
           <Form.Button primary content="Save Account" />
           {this.props.form.id && (
-            <Form.Button className="input-right" content="Delete Account" />
+            <Popup
+              on="click"
+              flowing
+              trigger={
+                <Form.Button
+                  className="input-right"
+                  content="Delete Account"
+                  onClick={e => e.preventDefault()}
+                />
+              }
+              header="All transactions will be deleted!"
+              content={
+                <Button
+                  negative
+                  floated="right"
+                  style={{ marginTop: '1em' }}
+                  content="Confirm"
+                  onClick={() => this.props.removeAccount(this.props.form.id)}
+                />
+              }
+            />
           )}
         </Form.Group>
       </Form>
@@ -74,7 +94,8 @@ AccountForm.propTypes = {
   toggleOnDashboard: PropTypes.func,
   toggleCurrency: PropTypes.func.isRequired,
   changeBalance: PropTypes.func.isRequired,
-  saveAccount: PropTypes.func
+  saveAccount: PropTypes.func,
+  removeAccount: PropTypes.func
 }
 
 export default AccountForm

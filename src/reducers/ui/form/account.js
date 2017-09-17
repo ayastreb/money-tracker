@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions'
 
 import pick from 'lodash/pick'
 import {
@@ -10,7 +10,10 @@ import {
   changeGroup,
   changeName
 } from '../../../actions/ui/form/account'
-import { saveAccountSuccess } from '../../../actions/entities/accounts'
+import {
+  saveAccountSuccess,
+  removeAccountSuccess
+} from '../../../actions/entities/accounts'
 import { changeSettingsCurrency } from '../../../actions/settings'
 import Account from '../../../entities/Account'
 
@@ -60,7 +63,10 @@ export default handleActions(
       }
     },
     [resetAccountForm]: () => initialState,
-    [saveAccountSuccess]: () => ({ ...initialState, completed: true }),
+    [combineActions(saveAccountSuccess, removeAccountSuccess)]: () => ({
+      ...initialState,
+      completed: true
+    }),
     [fillInAccountForm]: (state, { payload }) => ({
       ...state,
       ...Account.toForm(payload)
