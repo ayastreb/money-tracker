@@ -19,7 +19,7 @@ export function* loadRecentTransactionsSaga() {
 export function* saveTransactionSaga(action) {
   const transaction = action.payload
   yield call(TransactionsStorage.save, transaction)
-  yield mutateAffectedAccounts(transaction)
+  yield updateAccountsBalance(transaction)
   // TODO: move to transaction storage and check real usage for exisitng tx.
   for (const tag of transaction.tags) {
     yield call(TagsStorage.increaseUsage, transaction.kind, tag)
@@ -27,7 +27,7 @@ export function* saveTransactionSaga(action) {
   yield put(saveTransactionSuccess())
 }
 
-export function* mutateAffectedAccounts(transaction) {
+export function* updateAccountsBalance(transaction) {
   if (
     transaction.kind === TRANSFER &&
     transaction.accountId === transaction.linkedAccountId &&

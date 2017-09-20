@@ -66,12 +66,13 @@ export function* updateCurrencySettings(currencies) {
  * If no account found in local accounts, create new one.
  *
  * @param {Map} accounts name => set of currencies map
+ * @return {Map} account name => account id map
  */
 export function* mapAccountsId(accounts) {
   const idByName = new Map()
   for (const [name, currency] of accounts.entries()) {
     let account = yield select(getAccountByName(name))
-    if (!account) account = yield createNewAccount(name, currency)
+    if (!account) account = yield createNewAccount(name, [...currency])
 
     idByName.set(name, account.id)
   }
@@ -79,15 +80,22 @@ export function* mapAccountsId(accounts) {
   return idByName
 }
 
-export function* createNewAccount(name, currency) {
+/**
+ * Create new account.
+ *
+ * @param {string} name
+ * @param {array} currencies list of used currencies
+ * @return {object}
+ */
+export function* createNewAccount(name, currencies) {
   const account = Account.fromForm({
     name,
-    group: 'cash',
-    balance: [...currency].reduce((acc, code) => {
+    group: Account.defaultGroup,
+    balance: currencies.reduce((acc, code) => {
       acc[code] = 0
       return acc
     }, {}),
-    currencies: [...currency],
+    currencies,
     on_dashboard: false
   })
   yield saveAccountSaga(saveAccount(account))
