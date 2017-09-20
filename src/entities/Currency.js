@@ -147,7 +147,8 @@ const CURRENCY = {
   YER: { name: 'Yemeni Rial', symbol: 'YER', exp: 2, flag: 'ye' },
   ZAR: { name: 'South African Rand', symbol: 'R', exp: 2, flag: 'za' },
   ZMW: { name: 'Zambian Kwacha', symbol: 'ZMK', exp: 2, flag: 'zm' },
-  ZWD: { name: 'Zimbabwean Dollar', symbol: 'Z$', exp: 2, flag: 'zw' }
+  ZWD: { name: 'Zimbabwean Dollar', symbol: 'Z$', exp: 2, flag: 'zw' },
+  XAU: { name: 'Gold, troy ounce', symbol: 'XAU', exp: 2 }
 }
 
 const Currency = {
@@ -164,8 +165,7 @@ const Currency = {
     return CURRENCY[code].name
   },
   minAmount(code) {
-    const exp = CURRENCY[code].exp
-    return Number(1 / Math.pow(10, exp)).toFixed(exp)
+    return Number(`1e-${CURRENCY[code].exp}`)
   },
   /**
    * Convert value to currency's subunit (e.g. cents for USD).
@@ -175,7 +175,7 @@ const Currency = {
    * @param {string} code
    */
   toInt(value, code) {
-    return Math.round(value * Math.pow(10, CURRENCY[code].exp))
+    return Math.round(`${value}e${CURRENCY[code].exp}`)
   },
   /**
    * Convert value from subunit back to float representation with formatting.
@@ -187,7 +187,7 @@ const Currency = {
    */
   toFloat(value, code, format = true) {
     const exp = CURRENCY[code].exp
-    const num = Number(value / Math.pow(10, exp))
+    const num = Number(`${value}e-${exp}`)
     return format
       ? num.toLocaleString(undefined, {
           minimumFractionDigits: exp,

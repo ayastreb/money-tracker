@@ -24,9 +24,9 @@ it('returns currency name', () => {
 })
 
 it('returns currency minimal amount', () => {
-  expect(Currency.minAmount('USD')).toEqual('0.01')
-  expect(Currency.minAmount('JPY')).toEqual('1')
-  expect(Currency.minAmount('KWD')).toEqual('0.001')
+  expect(Currency.minAmount('USD')).toEqual(0.01)
+  expect(Currency.minAmount('JPY')).toEqual(1)
+  expect(Currency.minAmount('KWD')).toEqual(0.001)
 })
 
 it('converts to currency subunit (cents)', () => {
