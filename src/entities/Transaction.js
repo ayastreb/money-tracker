@@ -1,4 +1,5 @@
 import pick from 'lodash/pick'
+import format from 'date-fns/format'
 import Currency from './Currency'
 
 export const EXPENSE = 0
@@ -28,7 +29,8 @@ const Transaction = {
         data.kind === TRANSFER
           ? Currency.toInt(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: data.tags[data.kind] || []
+      tags: data.tags[data.kind] || [],
+      date: data.date ? new Date(data.date).getTime() : undefined
     }
   },
   toForm(data) {
@@ -42,7 +44,8 @@ const Transaction = {
         data.kind === TRANSFER
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: { [data.kind]: data.tags }
+      tags: { [data.kind]: data.tags },
+      date: data.date ? format(new Date(data.date), 'YYYY-MM-DD') : undefined
     }
   },
   fromStorage(data) {

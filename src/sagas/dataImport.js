@@ -25,15 +25,15 @@ export function* startDataImportSaga() {
 
     yield put(importFileReadSuccess(transactions.length - 1))
     yield updateCurrencySettings(currencies)
-    const accountIds = yield mapAccountsToIds(accounts)
+    const accountIdByName = yield mapAccountsId(accounts)
 
     for (const [lineNr, transaction] of transactions.entries()) {
       yield saveTransactionSaga(
         saveTransaction(
           Transaction.fromForm({
             ...transaction,
-            accountId: accountIds.get(transaction.account),
-            linkedAccountId: accountIds.get(transaction.linkedAccount)
+            accountId: accountIdByName.get(transaction.account),
+            linkedAccountId: accountIdByName.get(transaction.linkedAccount)
           })
         )
       )
@@ -67,29 +67,32 @@ export function* updateCurrencySettings(currencies) {
  *
  * @param {Map} accounts name => set of currencies map
  */
-export function* mapAccountsToIds(accounts) {
-  const idMap = new Map()
+export function* mapAccountsId(accounts) {
+  const idByName = new Map()
   for (const [name, currency] of accounts.entries()) {
-    if (!idMap.has(name)) {
-      let account = yield select(getAccountByName(name))
-      if (!account) {
-        account = Account.fromForm({
-          name,
-          group: 'cash',
-          balance: [...currency].reduce((acc, code) => {
-            acc[code] = 0
-            return acc
-          }, {}),
-          currencies: [...currency],
-          on_dashboard: false
-        })
-        yield saveAccountSaga(saveAccount(account))
-      }
-      idMap.set(name, account.id)
-    }
+    let account = yield select(getAccountByName(name))
+    if (!account) account = yield createNewAccount(name, currency)
+
+    idByName.set(name, account.id)
   }
 
-  return idMap
+  return idByName
+}
+
+export function* createNewAccount(name, currency) {
+  const account = Account.fromForm({
+    name,
+    group: 'cash',
+    balance: [...currency].reduce((acc, code) => {
+      acc[code] = 0
+      return acc
+    }, {}),
+    currencies: [...currency],
+    on_dashboard: false
+  })
+  yield saveAccountSaga(saveAccount(account))
+
+  return account
 }
 
 export default [takeLatest(startDataImport, startDataImportSaga)]

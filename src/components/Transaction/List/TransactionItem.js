@@ -71,7 +71,7 @@ TransactionItem.propTypes = {
   linkedCurrency: PropTypes.string,
   tags: PropTypes.arrayOf(PropTypes.string),
   note: PropTypes.string,
-  date: PropTypes.string
+  date: PropTypes.number
 }
 
 export default TransactionItem

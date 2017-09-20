@@ -33,6 +33,47 @@ it('defaults id to current timestamp if not present in form', () => {
   })
 })
 
+it('converts transaction date to timestamp', () => {
+  const form = {
+    kind: EXPENSE,
+    accountId: 'A12345',
+    amount: 9.95,
+    currency: 'USD',
+    tags: { [EXPENSE]: ['food'] },
+    date: '2017-09-20'
+  }
+  expect(Transaction.fromForm(form)).toEqual({
+    id: 'T1234',
+    kind: EXPENSE,
+    accountId: 'A12345',
+    amount: -995,
+    currency: 'USD',
+    tags: ['food'],
+    date: 1505865600000
+  })
+})
+
+it('converts transaction date timestamp back to date in form', () => {
+  const data = {
+    id: 'T1234',
+    kind: EXPENSE,
+    accountId: 'A12345',
+    amount: -995,
+    currency: 'USD',
+    tags: ['food'],
+    date: 1505865600000
+  }
+  expect(Transaction.toForm(data)).toEqual({
+    id: 'T1234',
+    kind: EXPENSE,
+    accountId: 'A12345',
+    amount: '9.95',
+    currency: 'USD',
+    tags: { [EXPENSE]: ['food'] },
+    date: '2017-09-20'
+  })
+})
+
 it('converts transaction amount to currency subunit', () => {
   const form = {
     kind: INCOME,
