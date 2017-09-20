@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import prettyBytes from 'pretty-bytes'
+import prettyBytes from '../../util/PrettyBytes'
 import { Button, Progress, Message } from 'semantic-ui-react'
 import './index.css'
 
