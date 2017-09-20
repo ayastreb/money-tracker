@@ -1,0 +1,7 @@
+.mt-dataImport {
+  max-width: 680px;
+}
+
+.mt-dataImport input[type='file'] {
+  display: none;
+}

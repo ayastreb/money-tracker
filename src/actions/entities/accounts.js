@@ -6,6 +6,7 @@ export const {
   saveAccount,
   saveAccountFailure,
   saveAccountSuccess,
+  updateAccount,
   removeAccount,
   removeAccountSuccess
 } = createActions(
@@ -14,6 +15,7 @@ export const {
   'SAVE_ACCOUNT',
   'SAVE_ACCOUNT_FAILURE',
   'SAVE_ACCOUNT_SUCCESS',
+  'UPDATE_ACCOUNT',
   'REMOVE_ACCOUNT',
   'REMOVE_ACCOUNT_SUCCESS'
 )

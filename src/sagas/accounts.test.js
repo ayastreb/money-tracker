@@ -45,30 +45,6 @@ describe('save account', () => {
   })
 })
 
-it('saves accounts affected in transaction', () => {
-  const transaction = {
-    id: 'T12345',
-    accountId: 'A12345',
-    linkedAccountId: 'A12346'
-  }
-  const accountA = { id: 'A12345', name: 'foo' }
-  const accountB = { id: 'A12346', name: 'bar' }
-  const action = saveTransaction(transaction)
-  const gen = saveTransactionSaga(action)
-
-  expect(gen.next().value).toEqual(call(getAccount, accountA.id))
-  const selectorA = function() {}
-  expect(gen.next(selectorA).value).toEqual(select(selectorA))
-  expect(gen.next(accountA).value).toEqual(call(AccountsStorage.save, accountA))
-
-  expect(gen.next().value).toEqual(call(getAccount, accountB.id))
-  const selectorB = function() {}
-  expect(gen.next(selectorB).value).toEqual(select(selectorB))
-  expect(gen.next(accountB).value).toEqual(call(AccountsStorage.save, accountB))
-
-  expect(gen.next().done).toBeTruthy()
-})
-
 it('removes account', () => {
   const action = removeAccount('A12345')
   const gen = removeAccountSaga(action)

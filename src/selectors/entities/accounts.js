@@ -9,6 +9,11 @@ export const getAccountsMap = state => state.entities.accounts
 export const getAccount = id =>
   createSelector(getAccountsMap, accounts => EntityMap.get(accounts, id))
 
+export const getAccountByName = name =>
+  createSelector(getAccountsList, accounts =>
+    accounts.find(account => account.name === name)
+  )
+
 export const getAccountsList = state =>
   EntityMap.map(state.entities.accounts, account => ({ ...account }))
 

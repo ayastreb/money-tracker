@@ -6,6 +6,7 @@ export default {
   sync,
   loadAll,
   save,
+  mutateBalance,
   remove
 }
 
@@ -44,6 +45,19 @@ function save(account) {
         ...Account.toStorage(account)
       })
     })
+}
+
+function mutateBalance(id, currency, amount) {
+  return accountsDB()
+    .get(id)
+    .then(doc =>
+      accountsDB().put({
+        ...doc,
+        ...Account.mutateBalance(doc, currency, amount)
+      })
+    )
+    .then(({ rev }) => accountsDB().get(id, rev))
+    .then(doc => Account.fromStorage(doc))
 }
 
 function remove(id) {

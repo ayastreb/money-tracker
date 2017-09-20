@@ -14,8 +14,4 @@ export function* loadTagsSaga() {
   yield put(loadIncomeTagsSuccess(incomeTags))
 }
 
-export function* useTag(kind, tag) {
-  yield call(TagsStorage.increaseUsage, kind, tag)
-}
-
 export default [takeLatest(loadTags, loadTagsSaga)]

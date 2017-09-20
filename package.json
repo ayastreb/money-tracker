@@ -10,6 +10,7 @@
     "lodash": "^4.17.4",
     "pouchdb": "^6.3.4",
     "pouchdb-find": "^6.3.4",
+    "pretty-bytes": "^4.0.2",
     "prop-types": "^15.5.10",
     "react": "^15.6.0",
     "react-dom": "^15.6.0",

@@ -1,6 +1,7 @@
 import {
   getAccountsMap,
   getAccountsList,
+  getAccountByName,
   getDashboardAccountsList,
   getAccountsCurrencyMap,
   getAccountsCurrencyList,
@@ -51,6 +52,17 @@ const state = {
     ])
   }
 }
+
+it('gets account by name', () => {
+  expect(getAccountByName('baz')(state)).toEqual({
+    id: 'A12347',
+    name: 'baz',
+    group: 'bank',
+    balance: { USD: 200, JPY: 100 },
+    currencies: ['USD', 'JPY'],
+    on_dashboard: false
+  })
+})
 
 it('gets accounts currency map', () => {
   const expectedCurrencyMap = {

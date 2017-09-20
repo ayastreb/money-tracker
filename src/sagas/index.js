@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects'
 import accounts from './accounts'
 import auth from './auth'
 import bootstrap from './bootstrap'
+import dataImport from './dataImport'
 import settings from './settings'
 import sync from './sync'
 import tags from './tags'
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     ...accounts,
     ...auth,
     ...bootstrap,
+    ...dataImport,
     ...settings,
     ...sync,
     ...tags,
