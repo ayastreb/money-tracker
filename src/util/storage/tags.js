@@ -3,7 +3,7 @@ import { tagsDB, remoteTagsDB } from './pouchdb'
 export default {
   sync,
   load,
-  increaseUsage
+  updateUsage
 }
 
 async function sync() {
@@ -34,11 +34,13 @@ function load(kind) {
     .then(docs => docs.map(doc => doc.tag))
 }
 
-function increaseUsage(kind, tag) {
+function updateUsage(kind, tag, delta) {
   const id = `t${kind}/${tag}`
   return tagsDB()
     .get(id)
-    .then(doc => tagsDB().put({ ...doc, usage: parseInt(doc.usage, 10) + 1 }))
+    .then(doc =>
+      tagsDB().put({ ...doc, usage: parseInt(doc.usage, 10) + delta })
+    )
     .catch(err => {
       if (err.status !== 404) throw err
 

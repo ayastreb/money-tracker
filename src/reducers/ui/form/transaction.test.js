@@ -17,7 +17,8 @@ import format from 'date-fns/format'
 
 it('returns default state', () => {
   expect(reducer(undefined, {})).toEqual({
-    kind: Transaction.defaultKind
+    kind: Transaction.defaultKind,
+    isModalOpen: false
   })
 })
 

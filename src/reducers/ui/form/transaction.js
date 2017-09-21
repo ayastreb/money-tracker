@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions'
 import {
   fillInTransactionForm,
+  openTransactionInModal,
   changeKind,
   changeAccount,
   changeAmount,
@@ -15,12 +16,18 @@ import {
 import Transaction from '../../../entities/Transaction'
 
 const initialState = {
-  kind: Transaction.defaultKind
+  kind: Transaction.defaultKind,
+  isModalOpen: false
 }
 
 export default handleActions(
   {
     [fillInTransactionForm]: (state, { payload }) => payload,
+    [openTransactionInModal]: (state, { payload }) => ({
+      ...state,
+      ...payload,
+      isModalOpen: true
+    }),
     [changeKind]: (state, { payload }) => ({ ...state, kind: payload }),
     [changeAccount]: (state, { payload }) => ({
       ...state,

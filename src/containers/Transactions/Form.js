@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getDefaultState } from '../../selectors/ui/form/transaction'
 import TransactionForm from '../../components/Transaction/Form'
 import {
   getAccountsCurrencyMap,
@@ -10,7 +9,7 @@ import { getTagOptions } from '../../selectors/entities/tags'
 import { saveTransaction } from '../../actions/entities/transactions'
 import { loadTags } from '../../actions/entities/tags'
 import {
-  fillInTransactionForm,
+  resetTransactionForm,
   changeKind,
   changeAccount,
   changeAmount,
@@ -25,16 +24,11 @@ import {
 } from '../../actions/ui/form/transaction'
 import Transaction from '../../entities/Transaction'
 
-class AddTransaction extends React.Component {
-  componentWillMount() {
-    this.props.loadTags()
-    this.props.fillInTransactionForm(this.props.initialData)
-  }
-
+class Form extends React.Component {
   onSubmit = event => {
     event.preventDefault()
     this.props.saveTransaction(Transaction.fromForm(this.props.form))
-    this.props.fillInTransactionForm(this.props.initialData)
+    this.props.resetTransactionForm()
   }
 
   render() {
@@ -45,7 +39,6 @@ class AddTransaction extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  initialData: getDefaultState(state),
   form: state.ui.form.transaction,
   accountCurrency: getAccountsCurrencyMap(state),
   accountOptions: getAccountsAsOptions(state),
@@ -53,7 +46,7 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps, {
-  fillInTransactionForm,
+  resetTransactionForm,
   changeKind,
   changeAccount,
   changeAmount,
@@ -67,4 +60,4 @@ export default connect(mapStateToProps, {
   changeTags,
   loadTags,
   saveTransaction
-})(AddTransaction)
+})(Form)

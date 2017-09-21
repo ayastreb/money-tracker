@@ -42,7 +42,7 @@ class TransactionForm extends React.Component {
     return (
       <div>
         <Header
-          withTransfer={this.props.form.linkedAccountId !== null}
+          withTransfer={!!this.props.form.linkedAccountId}
           activeKind={this.props.form.kind}
           changeKind={this.props.changeKind}
         />
@@ -129,7 +129,8 @@ class TransactionForm extends React.Component {
                     fluid
                     disabled={parseFloat(this.props.form.amount) === 0}
                   >
-                    Add {Transaction.kindLabel(this.props.form.kind)}
+                    {this.props.form.id ? 'Save' : 'Add'}{' '}
+                    {Transaction.kindLabel(this.props.form.kind)}
                   </Button>
                 </div>
               </div>
@@ -143,6 +144,7 @@ class TransactionForm extends React.Component {
 
 TransactionForm.propTypes = {
   form: PropTypes.shape({
+    id: PropTypes.string,
     kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
     accountId: PropTypes.string,
     amount: PropTypes.string.isRequired,

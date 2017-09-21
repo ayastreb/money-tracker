@@ -69,7 +69,7 @@ it('converts transaction date timestamp back to date in form', () => {
     accountId: 'A12345',
     amount: '9.95',
     currency: 'USD',
-    tags: { [EXPENSE]: ['food'] },
+    tags: { [EXPENSE]: ['food'], [INCOME]: [] },
     date: '2017-09-20'
   })
 })
@@ -150,10 +150,11 @@ it('changes amount back to float and reverses negative sign for expense', () => 
     kind: EXPENSE,
     id: 'T12345',
     accountId: 'A12345',
-    amount: '9.90',
+    amount: '9.9',
     currency: 'USD',
     tags: {
-      [EXPENSE]: ['food']
+      [EXPENSE]: ['food'],
+      [INCOME]: []
     }
   })
 })
@@ -174,12 +175,14 @@ it('changes amount back to float for transfer transaction', () => {
     kind: TRANSFER,
     id: 'T12345',
     accountId: 'A12345',
-    amount: '1,000',
+    amount: '1000',
     currency: 'JPY',
     linkedAccountId: 'A12346',
     linkedAmount: '9.09',
     linkedCurrency: 'USD',
     tags: {
+      [EXPENSE]: [],
+      [INCOME]: [],
       [TRANSFER]: []
     }
   })

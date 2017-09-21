@@ -5,14 +5,15 @@ import { Grid } from 'semantic-ui-react'
 import CollapsibleSection from '../../components/CollapsibleSection'
 import NetWorth from './NetWorth'
 import Accounts from './Accounts'
-import AddTransaction from './AddTransaction'
+import TransactionForm from '../Transactions/Form'
 import RecentTransactions from './RecentTransactions'
 import { loadAccounts } from '../../actions/entities/accounts'
 import { loadRecentTransactions } from '../../actions/entities/transactions'
-import { getAccountsList } from '../../selectors/entities/accounts'
+import { loadTags } from '../../actions/entities/tags'
 
 class Dashboard extends React.Component {
   componentDidMount() {
+    this.props.loadTags()
     this.props.loadAccounts()
     this.props.loadRecentTransactions()
   }
@@ -33,7 +34,7 @@ class Dashboard extends React.Component {
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
               <CollapsibleSection name="add_tx" label="Add Transaction">
-                {this.props.accounts.length > 0 && <AddTransaction />}
+                <TransactionForm />
               </CollapsibleSection>
               <CollapsibleSection name="recent_tx" label="Recent Transactions">
                 <RecentTransactions />
@@ -47,16 +48,13 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-  accounts: PropTypes.array,
+  loadTags: PropTypes.func,
   loadAccounts: PropTypes.func,
   loadRecentTransactions: PropTypes.func
 }
 
-const mapStateToProps = state => ({
-  accounts: getAccountsList(state)
-})
-
-export default connect(mapStateToProps, {
+export default connect(undefined, {
+  loadTags,
   loadAccounts,
   loadRecentTransactions
 })(Dashboard)

@@ -3,8 +3,10 @@ import Transaction from '../../entities/Transaction'
 
 export default {
   sync,
+  load,
   loadRecent,
   save,
+  remove,
   removeByAccount
 }
 
@@ -13,6 +15,15 @@ async function sync() {
 
   await transactionsDB().replicate.from(remoteTransactionsDB())
   await transactionsDB().replicate.to(remoteTransactionsDB())
+}
+
+function load(id) {
+  return transactionsDB()
+    .get(id)
+    .catch(error => {
+      if (error.status !== 404) throw error
+      return undefined
+    })
 }
 
 function loadRecent(limit = Transaction.recentListLimit) {
@@ -42,6 +53,16 @@ function save(transaction) {
         _id: transaction.id,
         ...Transaction.toStorage(transaction)
       })
+    })
+}
+
+function remove(id) {
+  return transactionsDB()
+    .get(id)
+    .then(doc => transactionsDB().put({ ...doc, _deleted: true }))
+    .catch(err => {
+      if (err.status !== 404) throw err
+      return true
     })
 }
 

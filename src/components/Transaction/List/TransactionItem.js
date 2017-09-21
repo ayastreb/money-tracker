@@ -1,40 +1,54 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import format from 'date-fns/format'
-import { Icon, Label } from 'semantic-ui-react'
+import { Icon, Button, Label } from 'semantic-ui-react'
 import Amount from '../../Amount'
-import { EXPENSE, TRANSFER, INCOME } from '../../../entities/Transaction'
+import Transaction, {
+  EXPENSE,
+  TRANSFER,
+  INCOME
+} from '../../../entities/Transaction'
 
 class TransactionItem extends React.Component {
+  handleEditClick = () => {
+    this.props.openTransactionInModal(
+      Transaction.toForm(this.props.transaction)
+    )
+  }
+
   render() {
+    const { transaction } = this.props
     return (
       <div className="transaction-item">
         <div className="transaction-item__date">
-          {format(new Date(this.props.date), 'DD MMM')}
+          {format(new Date(transaction.date), 'DD MMM')}
         </div>
         <div className="transaction-item__info">
-          {this.props.accountName}
+          {transaction.accountName}
           {this.renderArrow()}
-          {this.props.kind === TRANSFER && this.props.linkedAccountName}
-          {this.props.tags.map(tag => <Label key={tag}>{tag}</Label>)}
+          {transaction.kind === TRANSFER && transaction.linkedAccountName}
+          {transaction.tags.map(tag => <Label key={tag}>{tag}</Label>)}
           <span className="transaction-item__info__note">
-            {this.props.note}
+            {transaction.note}
           </span>
         </div>
         <div className="transaction-item__amount">
           <Amount
-            value={this.props.amount}
-            code={this.props.currency}
-            showColor={this.props.kind !== TRANSFER}
+            value={transaction.amount}
+            code={transaction.currency}
+            showColor={transaction.kind !== TRANSFER}
           />
-          {this.props.kind === TRANSFER && this.renderLinkedAmount()}
+          {transaction.kind === TRANSFER && this.renderLinkedAmount()}
+        </div>
+        <div className="transaction-item__edit">
+          <Button circular basic icon="pencil" onClick={this.handleEditClick} />
         </div>
       </div>
     )
   }
 
   renderArrow() {
-    const { kind, tags, note } = this.props
+    const { kind, tags, note } = this.props.transaction
     if (kind !== TRANSFER && !tags.length && !note.length) return
 
     return (
@@ -46,7 +60,7 @@ class TransactionItem extends React.Component {
   }
 
   renderLinkedAmount() {
-    const { linkedAmount, linkedCurrency, currency } = this.props
+    const { linkedAmount, linkedCurrency, currency } = this.props.transaction
     if (!linkedCurrency || linkedCurrency === currency) return
 
     return (
@@ -59,19 +73,22 @@ class TransactionItem extends React.Component {
 }
 
 TransactionItem.propTypes = {
-  kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
-  id: PropTypes.string,
-  accountId: PropTypes.string,
-  accountName: PropTypes.string,
-  amount: PropTypes.number,
-  currency: PropTypes.string,
-  linkedAccountId: PropTypes.string,
-  linkedAccountName: PropTypes.string,
-  linkedAmount: PropTypes.number,
-  linkedCurrency: PropTypes.string,
-  tags: PropTypes.arrayOf(PropTypes.string),
-  note: PropTypes.string,
-  date: PropTypes.number
+  transaction: PropTypes.shape({
+    kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
+    id: PropTypes.string,
+    accountId: PropTypes.string,
+    accountName: PropTypes.string,
+    amount: PropTypes.number,
+    currency: PropTypes.string,
+    linkedAccountId: PropTypes.string,
+    linkedAccountName: PropTypes.string,
+    linkedAmount: PropTypes.number,
+    linkedCurrency: PropTypes.string,
+    tags: PropTypes.arrayOf(PropTypes.string),
+    note: PropTypes.string,
+    date: PropTypes.number
+  }),
+  openTransactionInModal: PropTypes.func
 }
 
 export default TransactionItem

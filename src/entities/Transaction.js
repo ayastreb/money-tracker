@@ -38,13 +38,14 @@ const Transaction = {
       ...data,
       amount: Currency.toFloat(
         data.amount * (data.kind === EXPENSE ? -1 : 1),
-        data.currency
+        data.currency,
+        false
       ),
       linkedAmount:
         data.kind === TRANSFER
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: { [data.kind]: data.tags },
+      tags: { [EXPENSE]: [], [INCOME]: [], [data.kind]: data.tags },
       date: data.date ? format(new Date(data.date), 'YYYY-MM-DD') : undefined
     }
   },

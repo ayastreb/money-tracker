@@ -3,6 +3,8 @@ import { createSelector } from 'reselect'
 import { getAccountsList } from '../../entities/accounts'
 import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction'
 
+export const getForm = state => state.ui.form.transaction
+
 export const getDefaultState = createSelector(getAccountsList, accounts => {
   const accountId = accounts[0].id
   const currency = accounts[0].currencies[0]
@@ -20,6 +22,7 @@ export const getDefaultState = createSelector(getAccountsList, accounts => {
 
   return {
     kind: Transaction.defaultKind,
+    isModalOpen: false,
     accountId,
     currency,
     amount: '',

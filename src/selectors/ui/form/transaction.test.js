@@ -18,6 +18,7 @@ it('returns default state for single account, single currency', () => {
   }
   const expectedDefault = {
     kind: Transaction.defaultKind,
+    isModalOpen: false,
     accountId: 'A12345',
     amount: '',
     currency: 'USD',
@@ -50,6 +51,7 @@ it('returns default state for single account, multiple currencies', () => {
   }
   const expectedDefault = {
     kind: Transaction.defaultKind,
+    isModalOpen: false,
     accountId: 'A12345',
     amount: '',
     currency: 'USD',
@@ -88,6 +90,7 @@ it('returns default state for multiple accounts', () => {
   }
   const expectedDefault = {
     kind: Transaction.defaultKind,
+    isModalOpen: false,
     accountId: 'A12345',
     amount: '',
     currency: 'USD',

@@ -2,6 +2,8 @@ import { createActions } from 'redux-actions'
 
 export const {
   fillInTransactionForm,
+  resetTransactionForm,
+  openTransactionInModal,
   changeKind,
   changeAccount,
   changeAmount,
@@ -15,6 +17,8 @@ export const {
   changeNote
 } = createActions(
   'FILL_IN_TRANSACTION_FORM',
+  'RESET_TRANSACTION_FORM',
+  'OPEN_TRANSACTION_IN_MODAL',
   'CHANGE_KIND',
   'CHANGE_ACCOUNT',
   'CHANGE_AMOUNT',

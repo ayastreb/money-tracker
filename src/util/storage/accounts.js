@@ -47,11 +47,11 @@ function save(account) {
     })
 }
 
-function mutateBalance(id, currency, amount) {
+function mutateBalance({ accountId, currency, amount }) {
   return accountsDB()
-    .get(id)
+    .get(accountId)
     .then(doc => accountsDB().put(Account.mutateBalance(doc, currency, amount)))
-    .then(({ rev }) => accountsDB().get(id, rev))
+    .then(({ rev }) => accountsDB().get(accountId, rev))
     .then(doc => Account.fromStorage(doc))
 }
 
