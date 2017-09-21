@@ -22,7 +22,7 @@
     "redux-saga": "^0.15.6",
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.72.0"
+    "semantic-ui-react": "^0.73.1"
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.3.0",
