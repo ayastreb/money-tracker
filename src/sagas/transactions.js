@@ -58,12 +58,6 @@ export function* updateAccountsBalance(prev, next) {
   }
 }
 
-/**
- * Update tags usage based on previous and next transaction state.
- *
- * @param {array} prev
- * @param {array} next
- */
 export function* updateTagsUsage(prev, next) {
   const prevTags = new Set((prev && prev.tags) || [])
   const nextTags = new Set((next && next.tags) || [])
