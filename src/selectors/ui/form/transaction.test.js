@@ -14,6 +14,11 @@ it('returns default state for single account, single currency', () => {
           currencies: ['USD']
         }
       ])
+    },
+    settings: {
+      currency: {
+        base: 'USD'
+      }
     }
   }
   const expectedDefault = {
@@ -47,6 +52,11 @@ it('returns default state for single account, multiple currencies', () => {
           currencies: ['USD', 'JPY']
         }
       ])
+    },
+    settings: {
+      currency: {
+        base: 'USD'
+      }
     }
   }
   const expectedDefault = {
@@ -86,6 +96,11 @@ it('returns default state for multiple accounts', () => {
           currencies: ['EUR']
         }
       ])
+    },
+    settings: {
+      currency: {
+        base: 'JPY'
+      }
     }
   }
   const expectedDefault = {
@@ -93,7 +108,7 @@ it('returns default state for multiple accounts', () => {
     isModalOpen: false,
     accountId: 'A12345',
     amount: '',
-    currency: 'USD',
+    currency: 'JPY',
     linkedAccountId: 'A12346',
     linkedAmount: '',
     linkedCurrency: 'EUR',
