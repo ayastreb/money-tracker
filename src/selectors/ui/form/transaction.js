@@ -19,7 +19,9 @@ export const getDefaultState = createSelector(
     if (accounts.length > 1 || accounts[0].currencies.length > 1) {
       if (accounts.length > 1) {
         linkedAccountId = accounts[1].id
-        linkedCurrency = accounts[1].currencies[0]
+        linkedCurrency = accounts[1].currencies.includes(base)
+          ? base
+          : accounts[1].currencies[0]
       } else {
         linkedAccountId = accounts[0].id
         linkedCurrency = accounts[0].currencies[1]
