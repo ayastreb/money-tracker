@@ -12,7 +12,7 @@ class ModalForm extends React.Component {
         open={this.props.isOpen}
         onClose={this.props.resetTransactionForm}
       >
-        <Header icon="exchange" content="Transaction Details" />
+        <Header icon="file text outline" content="Transaction details" />
         <Modal.Content>
           <this.props.EditForm />
         </Modal.Content>

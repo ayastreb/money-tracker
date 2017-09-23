@@ -67,6 +67,7 @@
 
 .ui.modal.transaction > .ui.header {
   border-bottom: none;
+  padding: 1.25rem 1rem;
 }
 
 @media (min-width: 768px) {
