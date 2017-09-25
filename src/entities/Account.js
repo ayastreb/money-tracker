@@ -26,7 +26,10 @@ const Account = {
       ...pick(data, Account.persistentKeys()),
       id: data.id || `A${Date.now()}`,
       balance: Object.keys(data.balance).reduce((acc, code) => {
-        acc[code] = Currency.toInt(data.balance[code], code)
+        acc[code] = Currency.toInt(
+          data.balance[code] !== '' ? data.balance[code] : 0,
+          code
+        )
         return acc
       }, {})
     }

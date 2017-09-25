@@ -45,7 +45,7 @@ it('converts balance to subunits from form data', () => {
     group: 'cash',
     balance: {
       USD: '100.95',
-      JPY: '2200'
+      JPY: ''
     }
   }
   expect(Account.fromForm(form)).toEqual({
@@ -54,7 +54,7 @@ it('converts balance to subunits from form data', () => {
     group: 'cash',
     balance: {
       USD: 10095,
-      JPY: 2200
+      JPY: 0
     }
   })
 })
