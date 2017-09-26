@@ -1,0 +1,20 @@
+.transactions-filter {
+  padding: 1em;
+  border-bottom: solid 1px #d4d4d5;
+}
+
+@media (min-width: 1194px) {
+  .transactions-filter > .ui.buttons {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 767px) {
+  .transactions-filter-modal .DayPicker-wrapper {
+    padding: 0;
+  }
+
+  .transactions-filter-modal .DayPicker-Month:last-child {
+    margin-top: 1em;
+  }
+}

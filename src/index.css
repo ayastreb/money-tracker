@@ -156,6 +156,10 @@ nav .menu .item:last-child {
   }
 }
 
+.container-full-page.flat {
+  padding: 0;
+}
+
 header .ui.header {
   color: white;
 }

@@ -1,4 +1,5 @@
 import Dashboard from '../containers/Dashboard'
+import Transactions from '../containers/Transactions'
 import Accounts from '../containers/Accounts'
 import AccountDetails from '../containers/Accounts/Details'
 import Settings from '../containers/Settings'
@@ -17,7 +18,7 @@ export default [
     exact: false,
     label: 'Transactions',
     icon: 'exchange',
-    component: WorkInProgress
+    component: Transactions
   },
   {
     path: '/accounts',

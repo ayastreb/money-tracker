@@ -6,6 +6,10 @@
   font-size: 1.14285714rem;
 }
 
+.search-page > .transactions-list__wrapper {
+  border: none;
+}
+
 .transactions-list__empty {
   padding: 1em;
   text-align: center;
