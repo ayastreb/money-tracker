@@ -7,6 +7,7 @@ import {
 import { getDateLabel } from '../../selectors/ui/transaction/filter'
 
 const mapStateToProps = state => ({
+  isMobile: state.ui.isMobile,
   dateRangeLabel: getDateLabel(state),
   isCalendarOpen: state.ui.transaction.filter.isCalendarOpen
 })

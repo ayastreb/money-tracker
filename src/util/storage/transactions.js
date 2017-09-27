@@ -4,6 +4,7 @@ import Transaction from '../../entities/Transaction'
 export default {
   sync,
   load,
+  loadFilter,
   loadRecent,
   save,
   remove,
@@ -24,6 +25,35 @@ function load(id) {
       if (error.status !== 404) throw error
       return undefined
     })
+}
+
+function loadFilter(filters) {
+  return transactionsDB()
+    .createIndex({
+      index: {
+        fields: ['date']
+      }
+    })
+    .then(() =>
+      transactionsDB().find({
+        selector: {
+          $and: [
+            {
+              date: {
+                $gte: filters.date.start
+              }
+            },
+            {
+              date: {
+                $lte: filters.date.end
+              }
+            }
+          ]
+        },
+        sort: [{ date: 'desc' }]
+      })
+    )
+    .then(response => response.docs.map(doc => Transaction.fromStorage(doc)))
 }
 
 function loadRecent(limit = Transaction.recentListLimit) {

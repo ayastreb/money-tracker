@@ -14,6 +14,9 @@ const KIND_LABEL = {
 const Transaction = {
   defaultKind: EXPENSE,
   recentListLimit: 5,
+  rowsPerSearchPage: 10,
+  pagerSizeMobile: 5,
+  pagerSizeDesktop: 9,
   kindLabel(kind) {
     return KIND_LABEL[kind]
   },

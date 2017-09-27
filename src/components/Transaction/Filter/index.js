@@ -49,6 +49,7 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
+  isMobile: PropTypes.bool,
   dateRangeLabel: PropTypes.string,
   isCalendarOpen: PropTypes.bool,
   changeFilterDate: PropTypes.func,

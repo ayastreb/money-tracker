@@ -1,6 +1,11 @@
 import subDays from 'date-fns/sub_days'
 
 const today = () => new Date().setHours(0, 0, 0)
+const todayEnd = () => new Date().setHours(23, 59, 59)
+const daysFromToday = days => () => subDays(today(), days).getTime()
+const yesterday = daysFromToday(1)
+const lastWeek = daysFromToday(7)
+const lastMonth = daysFromToday(30)
 const firstDayOfThisMonth = () => {
   const date = new Date()
   date.setDate(1)
@@ -11,27 +16,27 @@ const ranges = {
   today: {
     label: 'Today',
     start: today,
-    end: today
+    end: todayEnd
   },
   yesterday: {
     label: 'Yesterday',
-    start: () => subDays(today(), 1).getTime(),
-    end: () => subDays(today(), 1).getTime()
+    start: yesterday,
+    end: yesterday
   },
-  last7: {
+  lastWeek: {
     label: 'Last 7 days',
-    start: () => subDays(today(), 7).getTime(),
-    end: today
+    start: lastWeek,
+    end: todayEnd
   },
-  last30: {
+  lastMonth: {
     label: 'Last 30 days',
-    start: () => subDays(today(), 30).getTime(),
-    end: today
+    start: lastMonth,
+    end: todayEnd
   },
   thisMonth: {
     label: 'This month',
     start: firstDayOfThisMonth,
-    end: today
+    end: todayEnd
   },
   custom: {
     label: 'Custom date'
@@ -39,9 +44,9 @@ const ranges = {
 }
 
 const DateRange = {
-  defaultRange: 'last7',
-  defaultStart: ranges.last7.start(),
-  defaultEnd: ranges.last7.end(),
+  defaultRange: 'lastWeek',
+  defaultStart: ranges.lastWeek.start(),
+  defaultEnd: ranges.lastWeek.end(),
   rangeStart(key) {
     return ranges[key].start && ranges[key].start()
   },

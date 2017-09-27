@@ -1,17 +1,21 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects'
 import {
+  loadFilterTransactions,
+  loadFilterTransactionsSuccess,
   loadRecentTransactions,
   loadRecentTransactionsSuccess,
   saveTransaction,
   saveTransactionSuccess,
   removeTransaction
 } from '../actions/entities/transactions'
+import { changeFilterDate } from '../actions/ui/transaction/filter'
 import { updateAccount } from '../actions/entities/accounts'
 import {
   fillInTransactionForm,
   resetTransactionForm
 } from '../actions/ui/form/transaction'
 import { getForm, getDefaultState } from '../selectors/ui/form/transaction'
+import { getFilters } from '../selectors/ui/transaction/filter'
 import getAccountsMutations from '../entities/Transaction/AccountMutations'
 import AccountsStorage from '../util/storage/accounts'
 import TagsStorage from '../util/storage/tags'
@@ -21,6 +25,12 @@ import difference from '../util/SetDifference'
 export function* resetTransactionFormSaga() {
   const initialData = yield select(getDefaultState)
   yield put(fillInTransactionForm(initialData))
+}
+
+export function* loadFilterTransactionsSaga() {
+  const filters = yield select(getFilters)
+  const transactions = yield call(TransactionsStorage.loadFilter, filters)
+  yield put(loadFilterTransactionsSuccess(transactions))
 }
 
 export function* loadRecentTransactionsSaga() {
@@ -72,6 +82,8 @@ export function* updateTagsUsage(prev, next) {
 
 export default [
   takeLatest(resetTransactionForm, resetTransactionFormSaga),
+  takeLatest(loadFilterTransactions, loadFilterTransactionsSaga),
+  takeLatest(changeFilterDate, loadFilterTransactionsSaga),
   takeLatest(loadRecentTransactions, loadRecentTransactionsSaga),
   takeLatest(removeTransaction, removeTransactionSaga),
   takeLatest(saveTransaction, saveTransactionSaga)

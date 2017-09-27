@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Segment, Dimmer, Loader } from 'semantic-ui-react'
 import TransactionItem from './TransactionItem'
 import ModalForm from './ModalForm'
 import './index.css'
@@ -7,13 +8,14 @@ import './index.css'
 class TransactionList extends React.Component {
   render() {
     return (
-      <div className="transactions-list__wrapper">
+      <Segment className="transactions-list__wrapper">
+        <Dimmer inverted active={this.props.isLoading}>
+          <Loader active inline="centered" />
+        </Dimmer>
         {this.props.transactions.length > 0 ? (
           this.props.transactions.map(this.renderTransaction)
         ) : (
-          <div className="transactions-list__empty">
-            You don't have any transactions yet
-          </div>
+          <div className="transactions-list__empty">No transactions found.</div>
         )}
         <ModalForm
           EditForm={this.props.EditForm}
@@ -21,7 +23,7 @@ class TransactionList extends React.Component {
           resetTransactionForm={this.props.resetTransactionForm}
           removeTransaction={this.props.removeTransaction}
         />
-      </div>
+      </Segment>
     )
   }
 
@@ -35,6 +37,7 @@ class TransactionList extends React.Component {
 }
 
 TransactionList.propTypes = {
+  isLoading: PropTypes.bool,
   transactions: PropTypes.arrayOf(PropTypes.object),
   isModalOpen: PropTypes.bool,
   openTransactionInModal: PropTypes.func,

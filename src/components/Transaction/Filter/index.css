@@ -1,15 +1,35 @@
 .transactions-filter {
   padding: 1em;
   border-bottom: solid 1px #d4d4d5;
+  background: #f9fafb;
 }
 
-@media (min-width: 1194px) {
-  .transactions-filter > .ui.buttons {
+.transactions-filter > .ui.basic.buttons {
+  background: #ffffff;
+}
+
+@media (min-width: 768px) {
+  .transactions-filter > .ui.basic.buttons {
     max-width: 400px;
+    background: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
   }
 }
 
+.transactions-filter-modal .content {
+  text-align: center;
+}
+
 @media (max-width: 767px) {
+  .transactions-filter {
+    padding: 0;
+    border-top: solid 1px #d4d4d5;
+  }
+
+  .transactions-filter > .ui.basic.buttons {
+    border: none;
+  }
+
   .transactions-filter-modal .DayPicker-wrapper {
     padding: 0;
   }

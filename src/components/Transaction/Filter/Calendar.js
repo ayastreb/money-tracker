@@ -25,8 +25,8 @@ class Calendar extends React.Component {
     const { from, to } = this.state
 
     this.props.changeFilterDate({
-      dateStart: from,
-      dateEnd: to || from
+      dateStart: from.setHours(0, 0, 0),
+      dateEnd: (to && to.setHours(23, 59, 59)) || from.setHours(23, 59, 59)
     })
     this.props.toggleFilterCalendar()
   }
@@ -46,7 +46,7 @@ class Calendar extends React.Component {
         <Modal.Content>
           <DayPicker
             className="Range"
-            numberOfMonths={2}
+            numberOfMonths={this.props.isMobile ? 1 : 2}
             fixedWeeks
             selectedDays={[from, { from, to }]}
             onDayClick={this.handleDayClick}

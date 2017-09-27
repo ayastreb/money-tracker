@@ -6,6 +6,24 @@
   font-size: 1.14285714rem;
 }
 
+.ui.segment.transactions-list__wrapper {
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (max-width: 767px) {
+  .ui.segment.transactions-list__wrapper {
+    border: none;
+    border-top: solid 1px #d4d4d5;
+    border-radius: 0;
+  }
+}
+
+.search-page > .ui.segment.transactions-list__wrapper {
+  border: none;
+}
+
 .search-page > .transactions-list__wrapper {
   border: none;
 }
@@ -113,5 +131,46 @@
 
   .transaction-item__edit {
     order: 3;
+  }
+}
+
+.transactions-list-footer {
+  border-top: solid 1px #d4d4d5;
+}
+
+@media (min-width: 768px) {
+  .transactions-list-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .transactions-list-footer > .ui.table {
+    max-width: 400px;
+  }
+}
+
+.transactions-list-footer
+  .ui[class*='very basic'].table:not(.sortable):not(.striped)
+  td:last-child {
+  padding: 0.78571429em;
+  padding-right: 1.2em;
+}
+
+.transactions-list-pager {
+  border-top: solid 1px #d4d4d5;
+  background: #f9fafb;
+  padding: 1em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 767px) {
+  .transactions-list-footer
+    .ui[class*='very basic'].table:not(.sortable):not(.striped)
+    td:first-child {
+    padding: 0.78571429em;
+  }
+
+  .transactions-list-pager {
+    justify-content: center;
   }
 }

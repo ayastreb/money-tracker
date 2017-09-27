@@ -82,8 +82,8 @@ const EntityMap = {
    * @param {function} fn
    * @param {array}
    */
-  map(source, fn) {
-    return source.keys.map(key => fn(source.byKey[key], key))
+  map(source, fn, start, end) {
+    return source.keys.slice(start, end).map(key => fn(source.byKey[key], key))
   },
   /**
    * Apply given function to all entities and return new map with results.
