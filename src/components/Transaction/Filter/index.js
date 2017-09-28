@@ -7,8 +7,12 @@ import './index.css'
 
 class Filter extends React.Component {
   options = DateRange.options()
+  lastValue = DateRange.defaultRange
 
   handleDateRange = (event, { value }) => {
+    if (value === this.lastValue) return
+
+    this.lastValue = value
     if (value === 'custom') {
       this.props.toggleFilterCalendar()
     } else {
