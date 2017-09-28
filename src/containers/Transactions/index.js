@@ -4,10 +4,12 @@ import List from './List'
 import Filter from './Filter'
 import Pager from './Pager'
 import Footer from './Footer'
+import { loadAccounts } from '../../actions/entities/accounts'
 import { loadFilterTransactions } from '../../actions/entities/transactions'
 
 class Transactions extends React.Component {
   componentWillMount() {
+    this.props.loadAccounts()
     this.props.loadFilterTransactions()
   }
 
@@ -23,4 +25,6 @@ class Transactions extends React.Component {
   }
 }
 
-export default connect(undefined, { loadFilterTransactions })(Transactions)
+export default connect(undefined, { loadAccounts, loadFilterTransactions })(
+  Transactions
+)
