@@ -2,8 +2,10 @@ import subDays from 'date-fns/sub_days'
 
 const today = () => new Date().setHours(0, 0, 0)
 const todayEnd = () => new Date().setHours(23, 59, 59)
+const yesterday = () => subDays(today(), 1).getTime()
+const yesterdayEnd = () => subDays(todayEnd(), 1).getTime()
+
 const daysFromToday = days => () => subDays(today(), days).getTime()
-const yesterday = daysFromToday(1)
 const lastWeek = daysFromToday(7)
 const lastMonth = daysFromToday(30)
 const firstDayOfThisMonth = () => {
@@ -21,7 +23,7 @@ const ranges = {
   yesterday: {
     label: 'Yesterday',
     start: yesterday,
-    end: yesterday
+    end: yesterdayEnd
   },
   lastWeek: {
     label: 'Last 7 days',
