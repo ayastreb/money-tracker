@@ -77,13 +77,33 @@ const EntityMap = {
   },
   /**
    * Map over all entities with given function and return array with results.
+   * Optionally slice mapping to given offset and limit.
    *
    * @param {object} source
    * @param {function} fn
-   * @param {array}
+   * @param {number} limit
+   * @param {number} offset
+   * @return {array}
    */
-  map(source, fn, start, end) {
-    return source.keys.slice(start, end).map(key => fn(source.byKey[key], key))
+  map(source, fn, limit = source.keys.length, offset = 0) {
+    return source.keys
+      .slice(offset, offset + limit)
+      .map(key => fn(source.byKey[key], key))
+  },
+  /**
+   * Filter source entires with given function and return array of entries matching the filter.
+   *
+   * @param {object} source
+   * @param {function} fn
+   * @return {array}
+   */
+  filter(source, fn) {
+    return source.keys.reduce((acc, key) => {
+      if (fn(source.byKey[key], key)) {
+        acc.push(source.byKey[key])
+      }
+      return acc
+    }, [])
   },
   /**
    * Apply given function to all entities and return new map with results.

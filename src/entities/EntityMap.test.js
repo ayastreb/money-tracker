@@ -189,6 +189,25 @@ describe('map function to values', () => {
   })
 })
 
+describe('filter values', () => {
+  const map = {
+    byKey: {
+      foo: { id: 'foo', name: 'Foo' },
+      bar: { id: 'bar', name: 'Bar' }
+    },
+    keys: ['foo', 'bar']
+  }
+  const original = { ...map }
+
+  it('filters values with given function', () => {
+    expect(map).toEqual(original)
+    const onlyFoo = EntityMap.filter(map, entity => entity.name === 'Foo')
+    expect(onlyFoo).toEqual([{ id: 'foo', name: 'Foo' }])
+    const onlyBar = EntityMap.filter(map, entity => entity.name === 'Bar')
+    expect(onlyBar).toEqual([{ id: 'bar', name: 'Bar' }])
+  })
+})
+
 describe('appliy function to values', () => {
   const ref = Object.create({ iAmDeep: true })
   const map = {
