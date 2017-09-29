@@ -12,7 +12,6 @@ class Filter extends React.Component {
   handleDateRange = (event, { value }) => {
     if (value === this.lastValue) return
 
-    this.lastValue = value
     if (value === 'custom') {
       this.props.toggleFilterCalendar()
     } else {
@@ -20,6 +19,7 @@ class Filter extends React.Component {
         dateStart: DateRange.rangeStart(value),
         dateEnd: DateRange.rangeEnd(value)
       })
+      this.lastValue = value
     }
   }
 
