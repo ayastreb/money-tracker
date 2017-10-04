@@ -2,7 +2,9 @@ import { handleActions } from 'redux-actions'
 import {
   changeFilterDate,
   changeFilterPage,
-  toggleFilterCalendar
+  toggleFilterCalendar,
+  toggleFilterModal,
+  applyFilters
 } from '../../../actions/ui/transaction/filter'
 import {
   loadFilterTransactions,
@@ -16,6 +18,7 @@ const initialState = {
   dateEnd: DateRange.defaultEnd,
   isCalendarOpen: false,
   isFilterModalOpen: false,
+  applied: {},
   isLoading: false,
   totalRows: 0,
   page: 0,
@@ -40,7 +43,12 @@ export default handleActions(
     [toggleFilterCalendar]: state => ({
       ...state,
       isCalendarOpen: !state.isCalendarOpen
-    })
+    }),
+    [toggleFilterModal]: state => ({
+      ...state,
+      isFilterModalOpen: !state.isFilterModalOpen
+    }),
+    [applyFilters]: (state, { payload }) => ({ ...state, applied: payload })
   },
   initialState
 )

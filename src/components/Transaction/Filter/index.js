@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Dropdown, Icon, Button } from 'semantic-ui-react'
 import Calendar from './Calendar'
+import Filters from './Filters'
 import DateRange from '../../../entities/Transaction/FilterDateRange'
+import { DropdownOption } from '../../types'
 import './index.css'
 
 class Filter extends React.Component {
@@ -41,12 +43,14 @@ class Filter extends React.Component {
             icon="filter"
             labelPosition="left"
             content="Filter by&hellip;"
+            onClick={this.props.toggleFilterModal}
           />
           <Button icon>
             <Icon name="plus" />
           </Button>
         </Button.Group>
         <Calendar {...this.props} />
+        <Filters {...this.props} />
       </div>
     )
   }
@@ -56,8 +60,13 @@ Filter.propTypes = {
   isMobile: PropTypes.bool,
   dateRangeLabel: PropTypes.string,
   isCalendarOpen: PropTypes.bool,
+  isFilterModalOpen: PropTypes.bool,
+  appliedAccounts: PropTypes.arrayOf(PropTypes.string),
+  accountOptions: PropTypes.arrayOf(DropdownOption),
   changeFilterDate: PropTypes.func,
-  toggleFilterCalendar: PropTypes.func
+  toggleFilterCalendar: PropTypes.func,
+  toggleFilterModal: PropTypes.func,
+  applyFilters: PropTypes.func
 }
 
 export default Filter

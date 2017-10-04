@@ -8,7 +8,10 @@ import {
   saveTransactionSuccess,
   removeTransaction
 } from '../actions/entities/transactions'
-import { changeFilterDate } from '../actions/ui/transaction/filter'
+import {
+  changeFilterDate,
+  applyFilters
+} from '../actions/ui/transaction/filter'
 import { updateAccount } from '../actions/entities/accounts'
 import {
   fillInTransactionForm,
@@ -29,7 +32,7 @@ export function* resetTransactionFormSaga() {
 
 export function* loadFilterTransactionsSaga() {
   const filters = yield select(getFilters)
-  const transactions = yield call(TransactionsStorage.loadFilter, filters)
+  const transactions = yield call(TransactionsStorage.loadFiltered, filters)
   yield put(loadFilterTransactionsSuccess(transactions))
 }
 
@@ -84,6 +87,7 @@ export default [
   takeLatest(resetTransactionForm, resetTransactionFormSaga),
   takeLatest(loadFilterTransactions, loadFilterTransactionsSaga),
   takeLatest(changeFilterDate, loadFilterTransactionsSaga),
+  takeLatest(applyFilters, loadFilterTransactionsSaga),
   takeLatest(loadRecentTransactions, loadRecentTransactionsSaga),
   takeLatest(removeTransaction, removeTransactionSaga),
   takeLatest(saveTransaction, saveTransactionSaga)

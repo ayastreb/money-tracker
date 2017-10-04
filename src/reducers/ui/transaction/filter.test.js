@@ -12,6 +12,7 @@ it('returns initial state', () => {
     dateEnd: DateRange.defaultEnd,
     isCalendarOpen: false,
     isFilterModalOpen: false,
+    applied: {},
     isLoading: false,
     totalRows: 0,
     page: 0,

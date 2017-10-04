@@ -4,7 +4,7 @@ import Transaction from '../../entities/Transaction'
 export default {
   sync,
   load,
-  loadFilter,
+  loadFiltered,
   loadRecent,
   save,
   remove,
@@ -27,33 +27,31 @@ function load(id) {
     })
 }
 
-function loadFilter(filters) {
+function loadFiltered(filters) {
   return transactionsDB()
-    .createIndex({
-      index: {
-        fields: ['date']
-      }
-    })
-    .then(() =>
-      transactionsDB().find({
-        selector: {
-          $and: [
-            {
-              date: {
-                $gte: filters.date.start
-              }
-            },
-            {
-              date: {
-                $lte: filters.date.end
-              }
-            }
-          ]
-        },
-        sort: [{ date: 'desc' }]
-      })
+    .createIndex({ index: { fields: ['date'] } })
+    .then(() => filterByDate(filters.date.start, filters.date.end))
+    .then(response => filterByAccount(response.docs, filters.accounts))
+    .then(docs => docs.map(doc => Transaction.fromStorage(doc)))
+}
+
+function filterByDate(start, end) {
+  return transactionsDB().find({
+    selector: {
+      $and: [{ date: { $gte: start } }, { date: { $lte: end } }]
+    },
+    sort: [{ date: 'desc' }]
+  })
+}
+
+function filterByAccount(docs, accounts) {
+  if (accounts.size > 0) {
+    return docs.filter(
+      doc => accounts.has(doc.accountId) || accounts.has(doc.linkedAccountId)
     )
-    .then(response => response.docs.map(doc => Transaction.fromStorage(doc)))
+  }
+
+  return docs
 }
 
 function loadRecent(limit = Transaction.recentListLimit) {

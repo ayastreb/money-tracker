@@ -13,7 +13,8 @@ export const getFilters = state => ({
   date: {
     start: state.ui.transaction.filter.dateStart,
     end: state.ui.transaction.filter.dateEnd
-  }
+  },
+  accounts: new Set(state.ui.transaction.filter.applied.accounts)
 })
 
 export const getPage = state => state.ui.transaction.filter.page
