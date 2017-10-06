@@ -63,6 +63,8 @@ Filter.propTypes = {
   isFilterModalOpen: PropTypes.bool,
   appliedAccounts: PropTypes.arrayOf(PropTypes.string),
   accountOptions: PropTypes.arrayOf(DropdownOption),
+  appliedTags: PropTypes.arrayOf(PropTypes.string),
+  tagsOptions: PropTypes.arrayOf(DropdownOption),
   changeFilterDate: PropTypes.func,
   toggleFilterCalendar: PropTypes.func,
   toggleFilterModal: PropTypes.func,

@@ -14,7 +14,8 @@ export const getFilters = state => ({
     start: state.ui.transaction.filter.dateStart,
     end: state.ui.transaction.filter.dateEnd
   },
-  accounts: new Set(state.ui.transaction.filter.applied.accounts)
+  accounts: new Set(state.ui.transaction.filter.applied.accounts),
+  tags: state.ui.transaction.filter.applied.tags || []
 })
 
 export const getPage = state => state.ui.transaction.filter.page

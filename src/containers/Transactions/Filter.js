@@ -8,6 +8,7 @@ import {
 } from '../../actions/ui/transaction/filter'
 import { getDateLabel } from '../../selectors/ui/transaction/filter'
 import { getAccountsAsOptions } from '../../selectors/entities/accounts'
+import { getAllTagsOptions } from '../../selectors/entities/tags'
 
 const mapStateToProps = state => ({
   isMobile: state.ui.isMobile,
@@ -15,7 +16,9 @@ const mapStateToProps = state => ({
   isCalendarOpen: state.ui.transaction.filter.isCalendarOpen,
   isFilterModalOpen: state.ui.transaction.filter.isFilterModalOpen,
   accountOptions: getAccountsAsOptions(state),
-  appliedAccounts: state.ui.transaction.filter.applied.accounts || []
+  appliedAccounts: state.ui.transaction.filter.applied.accounts || [],
+  tagsOptions: getAllTagsOptions(state),
+  appliedTags: state.ui.transaction.filter.applied.tags || []
 })
 
 export default connect(mapStateToProps, {

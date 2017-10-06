@@ -1,5 +1,6 @@
 import { transactionsDB, remoteTransactionsDB } from './pouchdb'
 import Transaction from '../../entities/Transaction'
+import intersection from 'lodash/intersection'
 
 export default {
   sync,
@@ -31,7 +32,9 @@ function loadFiltered(filters) {
   return transactionsDB()
     .createIndex({ index: { fields: ['date'] } })
     .then(() => filterByDate(filters.date.start, filters.date.end))
-    .then(response => filterByAccount(response.docs, filters.accounts))
+    .then(response => response.docs)
+    .then(docs => filterByAccount(docs, filters.accounts))
+    .then(docs => filterByTags(docs, filters.tags))
     .then(docs => docs.map(doc => Transaction.fromStorage(doc)))
 }
 
@@ -44,14 +47,36 @@ function filterByDate(start, end) {
   })
 }
 
-function filterByAccount(docs, accounts) {
+/**
+ * Filter transactions by account.
+ *
+ * @param {array} transactions
+ * @param {Set} accounts
+ * @return {array}
+ */
+function filterByAccount(transactions, accounts) {
   if (accounts.size > 0) {
-    return docs.filter(
-      doc => accounts.has(doc.accountId) || accounts.has(doc.linkedAccountId)
+    return transactions.filter(
+      tx => accounts.has(tx.accountId) || accounts.has(tx.linkedAccountId)
     )
   }
 
-  return docs
+  return transactions
+}
+
+/**
+ * Filter transactions by tag.
+ *
+ * @param {array} transactions
+ * @param {array} tags
+ * @return {array}
+ */
+function filterByTags(transactions, tags) {
+  if (tags.length > 0) {
+    return transactions.filter(tx => intersection(tx.tags, tags).length > 0)
+  }
+
+  return transactions
 }
 
 function loadRecent(limit = Transaction.recentListLimit) {

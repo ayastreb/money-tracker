@@ -8,15 +8,18 @@ class Filters extends React.Component {
     super(props)
 
     this.state = {
-      accounts: this.props.appliedAccounts
+      accounts: this.props.appliedAccounts,
+      tags: this.props.appliedTags
     }
   }
 
   handleAccountChange = (event, { value }) => this.setState({ accounts: value })
+  handleTagsChange = (event, { value }) => this.setState({ tags: value })
 
   handleResetClick = () => {
     this.setState({
-      accounts: []
+      accounts: [],
+      tags: []
     })
   }
 
@@ -42,10 +45,25 @@ class Filters extends React.Component {
                 <Dropdown
                   multiple
                   selection
+                  search
                   closeOnChange
                   onChange={this.handleAccountChange}
                   options={this.props.accountOptions}
                   value={this.state.accounts}
+                />
+              </Form.Field>
+            </Form.Group>
+            <Form.Group widths="equal">
+              <Form.Field>
+                <label>Tags</label>
+                <Dropdown
+                  multiple
+                  selection
+                  search
+                  closeOnChange
+                  onChange={this.handleTagsChange}
+                  options={this.props.tagsOptions}
+                  value={this.state.tags}
                 />
               </Form.Field>
             </Form.Group>
@@ -64,6 +82,8 @@ Filters.propTypes = {
   isFilterModalOpen: PropTypes.bool,
   appliedAccounts: PropTypes.arrayOf(PropTypes.string),
   accountOptions: PropTypes.arrayOf(DropdownOption),
+  appliedTags: PropTypes.arrayOf(PropTypes.string),
+  tagsOptions: PropTypes.arrayOf(DropdownOption),
   toggleFilterModal: PropTypes.func,
   applyFilters: PropTypes.func
 }
