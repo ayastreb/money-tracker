@@ -31,20 +31,21 @@ function load(id) {
 function loadFiltered(filters) {
   return transactionsDB()
     .createIndex({ index: { fields: ['date'] } })
-    .then(() => filterByDate(filters.date.start, filters.date.end))
-    .then(response => response.docs)
+    .then(() => findByDate(filters.date.start, filters.date.end))
     .then(docs => filterByAccount(docs, filters.accounts))
     .then(docs => filterByTags(docs, filters.tags))
     .then(docs => docs.map(doc => Transaction.fromStorage(doc)))
 }
 
-function filterByDate(start, end) {
-  return transactionsDB().find({
-    selector: {
-      $and: [{ date: { $gte: start } }, { date: { $lte: end } }]
-    },
-    sort: [{ date: 'desc' }]
-  })
+function findByDate(start, end) {
+  return transactionsDB()
+    .find({
+      selector: {
+        $and: [{ date: { $gte: start } }, { date: { $lte: end } }]
+      },
+      sort: [{ date: 'desc' }]
+    })
+    .then(response => response.docs)
 }
 
 /**
@@ -55,13 +56,11 @@ function filterByDate(start, end) {
  * @return {array}
  */
 function filterByAccount(transactions, accounts) {
-  if (accounts.size > 0) {
-    return transactions.filter(
-      tx => accounts.has(tx.accountId) || accounts.has(tx.linkedAccountId)
-    )
-  }
-
-  return transactions
+  return accounts.size > 0
+    ? transactions.filter(
+        tx => accounts.has(tx.accountId) || accounts.has(tx.linkedAccountId)
+      )
+    : transactions
 }
 
 /**
@@ -72,11 +71,9 @@ function filterByAccount(transactions, accounts) {
  * @return {array}
  */
 function filterByTags(transactions, tags) {
-  if (tags.length > 0) {
-    return transactions.filter(tx => intersection(tx.tags, tags).length > 0)
-  }
-
-  return transactions
+  return tags.length > 0
+    ? transactions.filter(tx => intersection(tx.tags, tags).length > 0)
+    : transactions
 }
 
 function loadRecent(limit = Transaction.recentListLimit) {
