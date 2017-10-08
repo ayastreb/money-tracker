@@ -1,4 +1,8 @@
-import { transactionsDB, remoteTransactionsDB } from './pouchdb'
+import {
+  transactionsDB,
+  remoteTransactionsDB,
+  destroyTransactionsDB
+} from './pouchdb'
 import Transaction from '../../entities/Transaction'
 import intersection from 'lodash/intersection'
 
@@ -9,7 +13,8 @@ export default {
   loadRecent,
   save,
   remove,
-  removeByAccount
+  removeByAccount,
+  destroy
 }
 
 async function sync() {
@@ -17,6 +22,10 @@ async function sync() {
 
   await transactionsDB().replicate.from(remoteTransactionsDB())
   await transactionsDB().replicate.to(remoteTransactionsDB())
+}
+
+function destroy() {
+  return destroyTransactionsDB()
 }
 
 function load(id) {

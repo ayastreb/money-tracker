@@ -1,4 +1,4 @@
-import { accountsDB, remoteAccountsDB } from './pouchdb'
+import { accountsDB, remoteAccountsDB, destroyAccountsDB } from './pouchdb'
 import TransactionsStorage from './transactions'
 import Account from '../../entities/Account'
 
@@ -7,7 +7,8 @@ export default {
   loadAll,
   save,
   mutateBalance,
-  remove
+  remove,
+  destroy
 }
 
 async function sync() {
@@ -25,6 +26,10 @@ async function sync() {
     accounts = await loadAll()
     updateLastSyncedBalance(accounts)
   }
+}
+
+function destroy() {
+  return destroyAccountsDB()
 }
 
 function loadAll() {

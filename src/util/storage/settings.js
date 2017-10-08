@@ -1,14 +1,15 @@
 import union from 'lodash/union'
 import pick from 'lodash/pick'
 import isEqual from 'lodash/isEqual'
-import { settingsDB, remoteSettingsDB } from './pouchdb'
+import { settingsDB, remoteSettingsDB, destroySettingsDB } from './pouchdb'
 import { fetchExchangeRates } from '../currency'
 import Currency from '../../entities/Currency'
 
 export default {
   load,
   save,
-  saveLocal
+  saveLocal,
+  destroy
 }
 
 const defaultLocalSettings = {
@@ -19,6 +20,10 @@ const defaultSettings = {
   _id: 'settings',
   currency: { base: Currency.defaultBase, secondary: [] },
   exchangeRate: { [Currency.defaultBase]: 1 }
+}
+
+function destroy() {
+  return destroySettingsDB()
 }
 
 async function save(settings) {

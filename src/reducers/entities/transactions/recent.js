@@ -3,6 +3,7 @@ import {
   loadRecentTransactionsSuccess,
   saveTransaction
 } from '../../../actions/entities/transactions'
+import { signOutComplete } from '../../../actions/user'
 import EntityMap from '../../../entities/EntityMap'
 
 const initialState = EntityMap.fromArray([])
@@ -16,7 +17,8 @@ export default handleActions(
     [saveTransaction]: (state, action) => {
       const transaction = action.payload
       return EntityMap.set(state, transaction)
-    }
+    },
+    [signOutComplete]: () => initialState
   },
   initialState
 )

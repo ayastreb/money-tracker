@@ -7,7 +7,16 @@ import {
   toggleSectionCollapse,
   completeSetup
 } from '../actions/settings'
+import { signOutComplete } from '../actions/user'
 import Currency from '../entities/Currency'
+
+const initialState = {
+  isLoaded: false,
+  isSetupComplete: false,
+  currency: { base: Currency.defaultBase, secondary: [] },
+  exchangeRate: { [Currency.defaultBase]: 1.0 },
+  collapsedSections: []
+}
 
 export default handleActions(
   {
@@ -36,13 +45,8 @@ export default handleActions(
         ? state.collapsedSections.filter(section => section !== payload)
         : state.collapsedSections.concat(payload)
     }),
-    [completeSetup]: state => ({ ...state, isSetupComplete: true })
+    [completeSetup]: state => ({ ...state, isSetupComplete: true }),
+    [signOutComplete]: () => initialState
   },
-  {
-    isLoaded: false,
-    isSetupComplete: false,
-    currency: { base: Currency.defaultBase, secondary: [] },
-    exchangeRate: { [Currency.defaultBase]: 1.0 },
-    collapsedSections: []
-  }
+  initialState
 )

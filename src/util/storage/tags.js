@@ -1,9 +1,10 @@
-import { tagsDB, remoteTagsDB } from './pouchdb'
+import { tagsDB, remoteTagsDB, destroyTagsDB } from './pouchdb'
 
 export default {
   sync,
   load,
-  updateUsage
+  updateUsage,
+  destroy
 }
 
 async function sync() {
@@ -15,6 +16,10 @@ async function sync() {
   if (from.docs_written > 0) hasChanges = true
 
   return hasChanges
+}
+
+function destroy() {
+  return destroyTagsDB()
 }
 
 function load(kind) {

@@ -30,6 +30,16 @@ function remoteInstance(name) {
   return instancePool[instanceName]
 }
 
+function destroyInstance(name) {
+  if (instancePool[name] !== undefined) {
+    const instance = instancePool[name]
+    delete instancePool[name]
+    delete instancePool[`remote_${name}`]
+
+    return instance.destroy()
+  }
+}
+
 export const settingsDB = () => instance('settings')
 export const accountsDB = () => instance('accounts')
 export const transactionsDB = () => instance('transactions')
@@ -38,3 +48,7 @@ export const remoteSettingsDB = () => remoteInstance('settings')
 export const remoteAccountsDB = () => remoteInstance('accounts')
 export const remoteTransactionsDB = () => remoteInstance('transactions')
 export const remoteTagsDB = () => remoteInstance('tags')
+export const destroySettingsDB = () => destroyInstance('settings')
+export const destroyAccountsDB = () => destroyInstance('accounts')
+export const destroyTransactionsDB = () => destroyInstance('transactions')
+export const destroyTagsDB = () => destroyInstance('tags')

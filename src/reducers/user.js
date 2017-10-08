@@ -1,11 +1,19 @@
 import { handleActions } from 'redux-actions'
-import { userLoggedIn } from '../actions/user'
+import { userLoggedIn, signOut, signOutComplete } from '../actions/user'
 
 export default handleActions(
   {
-    [userLoggedIn]: state => ({ ...state, isAuthenticated: true })
+    [userLoggedIn]: state => ({ ...state, isAuthenticated: true }),
+    [signOut]: state => ({ ...state, isSignOutRunning: true }),
+    [signOutComplete]: state => ({
+      isAuthenticated: false,
+      isSignOutRunning: false,
+      isSignOutComplete: true
+    })
   },
   {
-    isAuthenticated: false
+    isAuthenticated: false,
+    isSignOutRunning: false,
+    isSignOutComplete: false
   }
 )

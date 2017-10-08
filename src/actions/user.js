@@ -1,3 +1,7 @@
-import { createAction } from 'redux-actions'
+import { createActions } from 'redux-actions'
 
-export const userLoggedIn = createAction('USER_LOGGED_IN')
+export const { userLoggedIn, signOut, signOutComplete } = createActions(
+  'USER_LOGGED_IN',
+  'SIGN_OUT',
+  'SIGN_OUT_COMPLETE'
+)

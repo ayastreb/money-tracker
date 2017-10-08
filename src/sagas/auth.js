@@ -8,11 +8,15 @@ import {
   verifyCodeFailure,
   finishAuth
 } from '../actions/ui/form/auth'
-import { userLoggedIn } from '../actions/user'
+import { userLoggedIn, signOut, signOutComplete } from '../actions/user'
 import { getAuthEmail, getAuthCode } from '../selectors/ui/form/auth'
 import { loadSetting } from './settings'
 import { syncSaga } from './sync'
 import Auth from '../util/auth'
+import AccountsStorage from '../util/storage/accounts'
+import SettingsStorage from '../util/storage/settings'
+import TagsStorage from '../util/storage/tags'
+import TransactionsStorage from '../util/storage/transactions'
 
 export function* isUserLoggedIn() {
   const userInfo = yield call([localStorage, 'getItem'], 'userInfo')
@@ -51,8 +55,20 @@ export function* finishAuthSaga(action) {
   yield isUserLoggedIn()
 }
 
+export function* signOutSaga() {
+  yield call(AccountsStorage.destroy)
+  yield call(SettingsStorage.destroy)
+  yield call(TagsStorage.destroy)
+  yield call(TransactionsStorage.destroy)
+  yield call([localStorage, 'clear'])
+
+  yield put(signOutComplete())
+  yield loadSetting()
+}
+
 export default [
   takeLatest(sendCode, sendCodeSaga),
   takeLatest(verifyCode, verifyCodeSaga),
-  takeLatest(finishAuth, finishAuthSaga)
+  takeLatest(finishAuth, finishAuthSaga),
+  takeLatest(signOut, signOutSaga)
 ]

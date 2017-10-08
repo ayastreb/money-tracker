@@ -4,7 +4,10 @@ import {
   loadIncomeTagsSuccess
 } from '../../actions/entities/tags'
 import { addTag } from '../../actions/ui/form/transaction'
+import { signOutComplete } from '../../actions/user'
 import { EXPENSE, TRANSFER, INCOME } from '../../entities/Transaction'
+
+const initialState = { [EXPENSE]: [], [TRANSFER]: [], [INCOME]: [] }
 
 export default handleActions(
   {
@@ -21,7 +24,8 @@ export default handleActions(
       return state[kind].includes(tag)
         ? state
         : { ...state, [kind]: state[kind].concat(tag) }
-    }
+    },
+    [signOutComplete]: () => initialState
   },
-  { [EXPENSE]: [], [TRANSFER]: [], [INCOME]: [] }
+  initialState
 )
