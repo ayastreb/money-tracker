@@ -11,9 +11,9 @@
     "pouchdb": "^6.3.4",
     "pouchdb-find": "^6.3.4",
     "prop-types": "^15.6.0",
-    "react": "^15.6.2",
+    "react": "^16.0.0",
     "react-day-picker": "^6.2.1",
-    "react-dom": "^15.6.2",
+    "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
@@ -23,7 +23,7 @@
     "redux-saga": "^0.15.6",
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.2.12",
-    "semantic-ui-react": "^0.75.0"
+    "semantic-ui-react": "^0.75.1"
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.3.0",
