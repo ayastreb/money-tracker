@@ -45,7 +45,7 @@ class Filter extends React.Component {
             content="Filter by&hellip;"
             onClick={this.props.toggleFilterModal}
           />
-          <Button icon>
+          <Button icon onClick={this.props.openTransactionInModal}>
             <Icon name="plus" />
           </Button>
         </Button.Group>
@@ -68,7 +68,8 @@ Filter.propTypes = {
   changeFilterDate: PropTypes.func,
   toggleFilterCalendar: PropTypes.func,
   toggleFilterModal: PropTypes.func,
-  applyFilters: PropTypes.func
+  applyFilters: PropTypes.func,
+  openTransactionInModal: PropTypes.func
 }
 
 export default Filter

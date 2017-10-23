@@ -6,6 +6,7 @@ import {
   toggleFilterModal,
   applyFilters
 } from '../../actions/ui/transaction/filter'
+import { openTransactionInModal } from '../../actions/ui/form/transaction'
 import { getDateLabel } from '../../selectors/ui/transaction/filter'
 import { getAccountsAsOptions } from '../../selectors/entities/accounts'
 import { getAllTagsOptions } from '../../selectors/entities/tags'
@@ -25,5 +26,6 @@ export default connect(mapStateToProps, {
   changeFilterDate,
   toggleFilterCalendar,
   toggleFilterModal,
-  applyFilters
+  applyFilters,
+  openTransactionInModal
 })(Filter)

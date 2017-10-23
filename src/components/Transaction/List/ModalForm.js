@@ -12,19 +12,24 @@ class ModalForm extends React.Component {
         open={this.props.isOpen}
         onClose={this.props.resetTransactionForm}
       >
-        <Header icon="file text outline" content="Transaction details" />
+        <Header
+          icon="file text outline"
+          content={this.props.isEdit ? 'Edit Transaction' : 'New Transaction'}
+        />
         <Modal.Content>
           <this.props.EditForm />
         </Modal.Content>
-        <Modal.Actions>
-          <Button
-            negative
-            labelPosition="right"
-            icon="trash"
-            content="Delete"
-            onClick={this.props.removeTransaction}
-          />
-        </Modal.Actions>
+        {this.props.isEdit && (
+          <Modal.Actions>
+            <Button
+              negative
+              labelPosition="right"
+              icon="trash"
+              content="Delete"
+              onClick={this.props.removeTransaction}
+            />
+          </Modal.Actions>
+        )}
       </Modal>
     )
   }
@@ -32,6 +37,7 @@ class ModalForm extends React.Component {
 
 ModalForm.propTypes = {
   isOpen: PropTypes.bool,
+  isEdit: PropTypes.bool,
   resetTransactionForm: PropTypes.func,
   removeTransaction: PropTypes.func,
   EditForm: PropTypes.func

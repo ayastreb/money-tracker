@@ -20,6 +20,7 @@ class TransactionList extends React.Component {
         <ModalForm
           EditForm={this.props.EditForm}
           isOpen={this.props.isModalOpen}
+          isEdit={this.props.isEdit}
           resetTransactionForm={this.props.resetTransactionForm}
           removeTransaction={this.props.removeTransaction}
         />
@@ -40,6 +41,7 @@ TransactionList.propTypes = {
   isLoading: PropTypes.bool,
   transactions: PropTypes.arrayOf(PropTypes.object),
   isModalOpen: PropTypes.bool,
+  isEdit: PropTypes.bool,
   openTransactionInModal: PropTypes.func,
   resetTransactionForm: PropTypes.func,
   removeTransaction: PropTypes.func,

@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   isLoading: state.ui.transaction.filter.isLoading,
   transactions: getFilterTransactions(state),
   isModalOpen: getForm(state).isModalOpen,
+  isEdit: getForm(state).id !== undefined,
   EditForm: TransactionForm
 })
 

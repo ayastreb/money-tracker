@@ -50,6 +50,7 @@ export function* removeTransactionSaga() {
     yield call(TransactionsStorage.remove, form.id)
     yield call(loadRecentTransactionsSaga)
     yield call(resetTransactionFormSaga)
+    yield call(loadFilterTransactionsSaga)
   }
 }
 
