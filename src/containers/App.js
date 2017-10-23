@@ -50,12 +50,12 @@ class App extends React.Component {
     return (
       <div
         className={isSidebarOpen || !isMobile ? 'openSidebar' : 'closedSidebar'}
-        onClick={isSidebarOpen && toggleSidebar}
+        onClick={isSidebarOpen ? toggleSidebar : undefined}
       >
         <SidebarMenu />
         <Dimmer.Dimmable
           className="container"
-          onClick={isSidebarOpen && toggleSidebar}
+          onClick={isSidebarOpen ? toggleSidebar : undefined}
         >
           {flatten(routes).map(route => (
             <Route
