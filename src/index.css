@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400,500');
 
 body {
   height: auto !important;
@@ -183,8 +183,13 @@ header .ui.header h2 {
 }
 
 .ui.button,
-.ui.label {
+.ui.label,
+.ui.header {
   font-weight: 400 !important;
+}
+
+.ui.dropdown .menu .active.item {
+  font-weight: 500 !important;
 }
 
 .ui.header {

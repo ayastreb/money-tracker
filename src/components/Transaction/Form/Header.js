@@ -13,6 +13,7 @@ const Header = ({ withTransfer, activeKind, changeKind }) => {
       {kinds.map(kind => (
         <Menu.Item
           key={kind}
+          color={kind === EXPENSE ? 'red' : kind === INCOME ? 'green' : 'black'}
           name={Transaction.kindLabel(kind)}
           active={kind === activeKind}
           onClick={() => changeKind(kind)}
