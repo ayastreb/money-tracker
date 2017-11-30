@@ -8,6 +8,7 @@ import Transaction, {
   TRANSFER,
   INCOME
 } from '../../../entities/Transaction'
+import { toLocalTimestamp } from '../../../util/timezone'
 
 class TransactionItem extends React.Component {
   handleEditClick = () => {
@@ -21,7 +22,7 @@ class TransactionItem extends React.Component {
     return (
       <div className="transaction-item">
         <div className="transaction-item__date">
-          {format(new Date(transaction.date), 'DD MMM')}
+          {format(toLocalTimestamp(transaction.date), 'DD MMM')}
         </div>
         <div className="transaction-item__info">
           {transaction.accountName}

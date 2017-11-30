@@ -1,44 +1,44 @@
 import subDays from 'date-fns/sub_days'
+import startOfToday from 'date-fns/start_of_today'
+import endOfToday from 'date-fns/end_of_today'
+import startOfYesterday from 'date-fns/start_of_yesterday'
+import endOfYesterday from 'date-fns/end_of_yesterday'
+import startOfMonth from 'date-fns/start_of_month'
+import { toUtcTimestamp } from '../../util/timezone'
 
-const today = () => new Date().setHours(0, 0, 0)
-const todayEnd = () => new Date().setHours(23, 59, 59)
-const yesterday = () => subDays(today(), 1).getTime()
-const yesterdayEnd = () => subDays(todayEnd(), 1).getTime()
-
-const daysFromToday = days => () => subDays(today(), days).getTime()
+const daysFromToday = days => () => subDays(startOfToday(), days)
 const lastWeek = daysFromToday(7)
 const lastMonth = daysFromToday(30)
 const firstDayOfThisMonth = () => {
   const date = new Date()
-  date.setDate(1)
-  return date.setHours(0, 0, 0)
+  return startOfMonth(date)
 }
 
 const ranges = {
   today: {
     label: 'Today',
-    start: today,
-    end: todayEnd
+    start: startOfToday,
+    end: endOfToday
   },
   yesterday: {
     label: 'Yesterday',
-    start: yesterday,
-    end: yesterdayEnd
+    start: startOfYesterday,
+    end: endOfYesterday
   },
   lastWeek: {
     label: 'Last 7 days',
     start: lastWeek,
-    end: todayEnd
+    end: endOfToday
   },
   lastMonth: {
     label: 'Last 30 days',
     start: lastMonth,
-    end: todayEnd
+    end: endOfToday
   },
   thisMonth: {
     label: 'This month',
     start: firstDayOfThisMonth,
-    end: todayEnd
+    end: endOfToday
   },
   custom: {
     label: 'Custom date'
@@ -47,13 +47,13 @@ const ranges = {
 
 const DateRange = {
   defaultRange: 'lastWeek',
-  defaultStart: ranges.lastWeek.start(),
-  defaultEnd: ranges.lastWeek.end(),
+  defaultStart: toUtcTimestamp(ranges.lastWeek.start()),
+  defaultEnd: toUtcTimestamp(ranges.lastWeek.end()),
   rangeStart(key) {
-    return ranges[key].start && ranges[key].start()
+    return ranges[key].start && toUtcTimestamp(ranges[key].start())
   },
   rangeEnd(key) {
-    return ranges[key].end && ranges[key].end()
+    return ranges[key].end && toUtcTimestamp(ranges[key].end())
   },
   options() {
     return Object.keys(ranges).map(key => ({

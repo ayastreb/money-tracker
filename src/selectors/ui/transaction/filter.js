@@ -1,9 +1,11 @@
 import format from 'date-fns/format'
 import { createSelector } from 'reselect'
 import Transaction from '../../../entities/Transaction'
+import { toLocalTimestamp } from '../../../util/timezone'
 
 export const getDateLabel = state => {
-  const { dateStart, dateEnd } = state.ui.transaction.filter
+  const dateStart = toLocalTimestamp(state.ui.transaction.filter.dateStart)
+  const dateEnd = toLocalTimestamp(state.ui.transaction.filter.dateEnd)
   return format(dateStart, 'DD MMM') !== format(dateEnd, 'DD MMM')
     ? `${format(dateStart, 'DD MMM')} — ${format(dateEnd, 'DD MMM')}`
     : format(dateStart, 'DD MMMM')

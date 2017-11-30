@@ -1,6 +1,7 @@
 import pick from 'lodash/pick'
 import format from 'date-fns/format'
 import Currency from './Currency'
+import { toLocalTimestamp } from '../util/timezone'
 
 export const EXPENSE = 0
 export const TRANSFER = 1
@@ -49,7 +50,9 @@ const Transaction = {
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
           : undefined,
       tags: { [EXPENSE]: [], [INCOME]: [], [data.kind]: data.tags },
-      date: data.date ? format(new Date(data.date), 'YYYY-MM-DD') : undefined
+      date: data.date
+        ? format(toLocalTimestamp(data.date), 'YYYY-MM-DD')
+        : undefined
     }
   },
   fromStorage(data) {
