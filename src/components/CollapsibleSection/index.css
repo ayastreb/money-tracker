@@ -5,7 +5,8 @@
   padding: 1em 0;
 }
 
-.section__header h3, .section__header .icon {
+.section__header h3,
+.section__header .icon {
   display: table-cell;
   white-space: nowrap;
   padding-left: 0;

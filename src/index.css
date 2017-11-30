@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400");
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:300,400');
 
 body {
   height: auto !important;
@@ -182,6 +182,11 @@ header .ui.header h2 {
   background-color: #3f51b5 !important;
 }
 
+.ui.button,
+.ui.label {
+  font-weight: 400 !important;
+}
+
 .ui.header {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
 }
@@ -242,6 +247,11 @@ h5 {
     margin: 0 !important;
     box-shadow: none !important;
     padding: 1em !important;
+  }
+
+  .mt-settings .section__body {
+    padding: 1em;
+    border-top: solid 1px #d4d4d5;
   }
 }
 
