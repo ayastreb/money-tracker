@@ -1,5 +1,4 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects'
-import { delay } from 'redux-saga'
 import union from 'lodash/union'
 import {
   loadSettingsSuccess,
@@ -33,7 +32,6 @@ export function* changeCurrencySaga() {
       base,
       union(secondary, used)
     )
-    yield delay(1000)
     yield put(updateExchangeRateSuccess(exchangeRate))
     yield call(SettingsStorage.save, {
       currency: { base, secondary },
