@@ -1,7 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Dropdown, Button, Form, Table } from 'semantic-ui-react'
+import {
+  Dropdown,
+  Button,
+  Form,
+  Table,
+  Loader,
+  Dimmer,
+  Segment
+} from 'semantic-ui-react'
 import { changeSettingsCurrency } from '../../actions/settings'
 import {
   getBaseCurrency,
@@ -85,7 +93,10 @@ class CurrencySettings extends React.Component {
 
   renderExchangeRate() {
     return (
-      <div>
+      <Segment basic style={{ padding: '0' }}>
+        <Dimmer inverted active={this.props.isLoading}>
+          <Loader />
+        </Dimmer>
         <Table unstackable basic>
           <Table.Body>
             {this.props.secondary.map(code => (
@@ -107,7 +118,7 @@ class CurrencySettings extends React.Component {
           icon="refresh"
           onClick={this.updateExchangeRate}
         />
-      </div>
+      </Segment>
     )
   }
 }
@@ -116,13 +127,15 @@ CurrencySettings.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
   exchangeRate: PropTypes.objectOf(PropTypes.number),
+  isLoading: PropTypes.bool,
   changeSettingsCurrency: PropTypes.func
 }
 
 const mapStateToProps = state => ({
   base: getBaseCurrency(state),
   secondary: getSecondaryCurrency(state),
-  exchangeRate: getExchangeRate(state)
+  exchangeRate: getExchangeRate(state),
+  isLoading: state.ui.settings.isExchangeLoading
 })
 
 export default connect(mapStateToProps, { changeSettingsCurrency })(

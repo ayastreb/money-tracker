@@ -1,9 +1,11 @@
 import { takeLatest, call, put, select } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import union from 'lodash/union'
 import {
   loadSettingsSuccess,
   changeSettingsCurrency,
   updateExchangeRateSuccess,
+  updateExchangeRateFailure,
   completeSetup,
   toggleSectionCollapse
 } from '../actions/settings'
@@ -25,16 +27,21 @@ export function* changeCurrencySaga() {
   const base = yield select(getBaseCurrency)
   const secondary = yield select(getSecondaryCurrency)
   const used = yield select(getAccountsCurrencyList)
-  const exchangeRate = yield call(
-    fetchExchangeRates,
-    base,
-    union(secondary, used)
-  )
-  yield put(updateExchangeRateSuccess(exchangeRate))
-  yield call(SettingsStorage.save, {
-    currency: { base, secondary },
-    exchangeRate
-  })
+  try {
+    const exchangeRate = yield call(
+      fetchExchangeRates,
+      base,
+      union(secondary, used)
+    )
+    yield delay(1000)
+    yield put(updateExchangeRateSuccess(exchangeRate))
+    yield call(SettingsStorage.save, {
+      currency: { base, secondary },
+      exchangeRate
+    })
+  } catch (error) {
+    yield put(updateExchangeRateFailure(error))
+  }
 }
 
 export function* completeSetupSaga() {
