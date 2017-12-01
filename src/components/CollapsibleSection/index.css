@@ -12,6 +12,18 @@
   padding-left: 0;
 }
 
+.section__header .icon {
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.section__header.active .icon {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+
 .section__header h3 {
   font-size: 1.2em;
   line-height: 1.5;

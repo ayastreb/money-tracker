@@ -13,20 +13,23 @@ const CollapsibleSection = ({
   collapsed,
   toggle,
   children
-}) =>
+}) => (
   <div className="section">
-    <div className="section__header" onClick={() => toggle(name)}>
-      <Icon name={collapsed.includes(name) ? 'caret right' : 'caret down'} />
-      <h3>
-        {label}
-      </h3>
+    <div
+      className={
+        collapsed.includes(name) ? 'section__header' : 'section__header active'
+      }
+      onClick={() => toggle(name)}
+    >
+      <Icon name="dropdown" />
+      <h3>{label}</h3>
       {LabelComponent && <LabelComponent />}
     </div>
-    {!collapsed.includes(name) &&
-      <div className="section__body">
-        {children}
-      </div>}
+    {!collapsed.includes(name) && (
+      <div className="section__body">{children}</div>
+    )}
   </div>
+)
 
 CollapsibleSection.propTypes = {
   name: PropTypes.string.isRequired,
