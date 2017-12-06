@@ -3,6 +3,7 @@ import union from 'lodash/union'
 import {
   loadSettingsSuccess,
   changeSettingsCurrency,
+  updateExchangeRate,
   updateExchangeRateSuccess,
   updateExchangeRateFailure,
   completeSetup,
@@ -22,7 +23,7 @@ export function* loadSetting() {
   yield put(loadSettingsSuccess(settings))
 }
 
-export function* changeCurrencySaga() {
+export function* updateCurrencySaga() {
   const base = yield select(getBaseCurrency)
   const secondary = yield select(getSecondaryCurrency)
   const used = yield select(getAccountsCurrencyList)
@@ -52,7 +53,8 @@ export function* saveCollapsedSectionsSaga() {
 }
 
 export default [
-  takeLatest(changeSettingsCurrency, changeCurrencySaga),
+  takeLatest(changeSettingsCurrency, updateCurrencySaga),
+  takeLatest(updateExchangeRate, updateCurrencySaga),
   takeLatest(completeSetup, completeSetupSaga),
   takeLatest(toggleSectionCollapse, saveCollapsedSectionsSaga)
 ]

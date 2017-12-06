@@ -12,10 +12,11 @@ import {
 } from '../../../actions/entities/transactions'
 import DateRange from '../../../entities/Transaction/FilterDateRange'
 import Transaction from '../../../entities/Transaction'
+import { toUtcTimestamp } from '../../../util/timezone'
 
 const initialState = {
-  dateStart: DateRange.defaultStart,
-  dateEnd: DateRange.defaultEnd,
+  dateStart: toUtcTimestamp(DateRange.defaultStart),
+  dateEnd: toUtcTimestamp(DateRange.defaultEnd),
   isCalendarOpen: false,
   isFilterModalOpen: false,
   applied: {},
@@ -36,7 +37,8 @@ export default handleActions(
     }),
     [changeFilterDate]: (state, { payload }) => ({
       ...state,
-      ...payload,
+      dateStart: toUtcTimestamp(payload.dateStart),
+      dateEnd: toUtcTimestamp(payload.dateEnd),
       isLoading: true
     }),
     [changeFilterPage]: (state, { payload }) => ({ ...state, page: payload }),

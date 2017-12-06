@@ -1,5 +1,6 @@
 import React from 'react'
-import CurrencySettings from './Currency'
+import CurrencyInput from './Currency/Input'
+import CurrenchExchangeRate from './Currency/ExchangeRate'
 import DataImport from './DataImport'
 import User from './User'
 import CollapsibleSection from '../../components/CollapsibleSection'
@@ -7,7 +8,8 @@ import CollapsibleSection from '../../components/CollapsibleSection'
 const Settings = () => (
   <div className="container-full-page mt-settings">
     <CollapsibleSection name="settings_currency" label="Currency">
-      <CurrencySettings />
+      <CurrencyInput />
+      <CurrenchExchangeRate />
     </CollapsibleSection>
     <CollapsibleSection name="settings_import" label="Data Import">
       <DataImport />

@@ -5,11 +5,12 @@ import {
 } from '../../../actions/ui/transaction/filter'
 import DateRange from '../../../entities/Transaction/FilterDateRange'
 import Transaction from '../../../entities/Transaction'
+import { toUtcTimestamp } from '../../../util/timezone'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
-    dateStart: DateRange.defaultStart,
-    dateEnd: DateRange.defaultEnd,
+    dateStart: toUtcTimestamp(DateRange.defaultStart),
+    dateEnd: toUtcTimestamp(DateRange.defaultEnd),
     isCalendarOpen: false,
     isFilterModalOpen: false,
     applied: {},
@@ -23,10 +24,20 @@ it('returns initial state', () => {
 it('changes filter date range', () => {
   expect(
     reducer(
-      { dateStart: 123, dateEnd: 456 },
-      changeFilterDate({ dateStart: 789, dateEnd: 987 })
+      {
+        dateStart: toUtcTimestamp(new Date('2017-12-03 00:00:00')),
+        dateEnd: toUtcTimestamp(new Date('2017-12-03 23:59:59'))
+      },
+      changeFilterDate({
+        dateStart: new Date('2017-12-05 00:00:00'),
+        dateEnd: new Date('2017-12-05 23:59:59')
+      })
     )
-  ).toEqual({ dateStart: 789, dateEnd: 987, isLoading: true })
+  ).toEqual({
+    dateStart: toUtcTimestamp(new Date('2017-12-05 00:00:00')),
+    dateEnd: toUtcTimestamp(new Date('2017-12-05 23:59:59')),
+    isLoading: true
+  })
 })
 
 it('toggles calendar visibility', () => {

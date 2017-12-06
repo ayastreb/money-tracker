@@ -3,6 +3,7 @@ import accounts from './accounts'
 import auth from './auth'
 import bootstrap from './bootstrap'
 import dataImport from './dataImport'
+import report from './report'
 import settings from './settings'
 import sync from './sync'
 import tags from './tags'
@@ -14,6 +15,7 @@ export default function* rootSaga() {
     ...auth,
     ...bootstrap,
     ...dataImport,
+    ...report,
     ...settings,
     ...sync,
     ...tags,

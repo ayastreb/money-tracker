@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Dropdown, Icon, Button } from 'semantic-ui-react'
+import { Dropdown, Button } from 'semantic-ui-react'
 import Calendar from './Calendar'
 import Filters from './Filters'
 import DateRange from '../../../entities/Transaction/FilterDateRange'
@@ -27,8 +27,14 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <div className="transactions-filter">
+      <div className="container-header">
         <Button.Group basic fluid>
+          <Button
+            icon="plus"
+            labelPosition="left"
+            content="New"
+            onClick={this.props.openTransactionInModal}
+          />
           <Dropdown
             button
             className="icon"
@@ -42,12 +48,9 @@ class Filter extends React.Component {
           <Button
             icon="filter"
             labelPosition="left"
-            content="Filter by&hellip;"
+            content="Filter"
             onClick={this.props.toggleFilterModal}
           />
-          <Button icon onClick={this.props.openTransactionInModal}>
-            <Icon name="plus" />
-          </Button>
         </Button.Group>
         <Calendar {...this.props} />
         <Filters {...this.props} />

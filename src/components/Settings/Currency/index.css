@@ -1,0 +1,12 @@
+.exchange-rate-table {
+  margin: 0 !important;
+  padding: 0 1em !important;
+}
+
+.exchange-rate-table .ui.button {
+  margin-top: 1em;
+}
+
+.section__body .exchange-rate-table {
+  padding: 0 !important;
+}

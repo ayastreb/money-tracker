@@ -92,6 +92,11 @@
   padding: 1.25rem 1rem;
 }
 
+.ui.modal.transaction .ui.top.attached,
+.ui.modal.transaction .ui.top.attached.menu > .item:first-child {
+  border-radius: 0;
+}
+
 @media (min-width: 768px) {
   .ui.modal.transaction > .actions {
     border-top: none;

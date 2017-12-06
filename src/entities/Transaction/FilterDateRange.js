@@ -4,7 +4,6 @@ import endOfToday from 'date-fns/end_of_today'
 import startOfYesterday from 'date-fns/start_of_yesterday'
 import endOfYesterday from 'date-fns/end_of_yesterday'
 import startOfMonth from 'date-fns/start_of_month'
-import { toUtcTimestamp } from '../../util/timezone'
 
 const daysFromToday = days => () => subDays(startOfToday(), days)
 const lastWeek = daysFromToday(7)
@@ -47,13 +46,13 @@ const ranges = {
 
 const DateRange = {
   defaultRange: 'lastWeek',
-  defaultStart: toUtcTimestamp(ranges.lastWeek.start()),
-  defaultEnd: toUtcTimestamp(ranges.lastWeek.end()),
+  defaultStart: ranges.lastWeek.start(),
+  defaultEnd: ranges.lastWeek.end(),
   rangeStart(key) {
-    return ranges[key].start && toUtcTimestamp(ranges[key].start())
+    return ranges[key].start && ranges[key].start()
   },
   rangeEnd(key) {
-    return ranges[key].end && toUtcTimestamp(ranges[key].end())
+    return ranges[key].end && ranges[key].end()
   },
   options() {
     return Object.keys(ranges).map(key => ({
