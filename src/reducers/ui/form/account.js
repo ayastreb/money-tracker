@@ -3,6 +3,7 @@ import { handleActions, combineActions } from 'redux-actions'
 import pick from 'lodash/pick'
 import {
   fillInAccountForm,
+  openAccountInModal,
   resetAccountForm,
   toggleOnDashboard,
   toggleCurrency,
@@ -23,7 +24,8 @@ const initialState = {
   balance: {},
   currencies: [],
   on_dashboard: true,
-  completed: false
+  completed: false,
+  isModalOpen: false
 }
 export default handleActions(
   {
@@ -62,6 +64,11 @@ export default handleActions(
         balance: pick(state.balance, [...currencies])
       }
     },
+    [openAccountInModal]: (state, { payload }) => ({
+      ...state,
+      ...payload,
+      isModalOpen: true
+    }),
     [resetAccountForm]: () => initialState,
     [combineActions(saveAccountSuccess, removeAccountSuccess)]: () => ({
       ...initialState,

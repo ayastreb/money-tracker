@@ -9,9 +9,10 @@ import {
 } from '../../actions/ui/form/account'
 import { saveAccount, removeAccount } from '../../actions/entities/accounts'
 import { getBaseCurrency, getSecondaryCurrency } from '../../selectors/settings'
+import { getForm } from '../../selectors/ui/form/account'
 
 const mapStateToProps = state => ({
-  form: state.ui.form.account,
+  form: getForm(state),
   base: getBaseCurrency(state),
   secondary: getSecondaryCurrency(state)
 })

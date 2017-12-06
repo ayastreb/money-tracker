@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Divider, Header } from 'semantic-ui-react'
-import CurrencySettings from '../Settings/Currency'
+import CurrencyInput from '../Settings/Currency/Input'
+import CurrencyExchangeRate from '../Settings/Currency/ExchangeRate'
 import AccountForm from '../Accounts/Form'
 import AccountList from '../Accounts/List'
 import { completeSetup } from '../../actions/settings'
@@ -29,7 +30,7 @@ class InitialSetup extends React.Component {
             sign in and sync your data any time later.
           </p>
         )}
-        <Header as="h3">Currencies</Header>
+        <Header as="h2">Currencies</Header>
         <p>
           Select your base currency — the currency which will be used by
           default.
@@ -37,8 +38,9 @@ class InitialSetup extends React.Component {
           You can also select any number of additional currencies, if you use
           them.
         </p>
-        <CurrencySettings />
-        <Header as="h3">Accounts</Header>
+        <CurrencyInput />
+        <CurrencyExchangeRate />
+        <Header as="h2">Accounts</Header>
         <p>
           Create accounts that you would like to keep track of.<br />
           It could be cash in your wallet, bank accounts, credit cards or even a

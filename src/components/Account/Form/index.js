@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Checkbox, Popup, Button } from 'semantic-ui-react'
-import CurrencyTable from './CurrencyTable'
+import { Form, Checkbox } from 'semantic-ui-react'
+import BalanceTable from './BalanceTable'
 import Account from '../../../entities/Account'
 import './index.css'
 
@@ -23,55 +23,34 @@ class AccountForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit} className="account-form">
-        <Form.Group widths="equal">
+      <Form className="account-form" onSubmit={this.handleSubmit}>
+        <Form.Group>
           <Form.Input
-            label="Name"
+            width={10}
             required
+            label="Name"
             placeholder="Account name"
             value={this.props.form.name}
             onChange={this.handleNameChange}
           />
           <Form.Select
+            width={6}
             label="Group"
-            options={this.groups}
             value={this.props.form.group}
+            options={this.groups}
             onChange={this.handleGroupChange}
           />
         </Form.Group>
-        <CurrencyTable {...this.props} />
-        <Form.Field style={{ paddingTop: '0.5em' }}>
-          <Checkbox
-            checked={this.props.form.on_dashboard}
-            onChange={this.toggleOnDashboard}
-            label="Display on Dashboard"
-          />
-        </Form.Field>
-        <Form.Group unstackable className="no-margin" widths={2}>
-          <Form.Button primary content="Save Account" />
-          {this.props.form.id && (
-            <Popup
-              on="click"
-              flowing
-              trigger={
-                <Form.Button
-                  className="input-right"
-                  content="Delete Account"
-                  onClick={e => e.preventDefault()}
-                />
-              }
-              header="All transactions will be deleted!"
-              content={
-                <Button
-                  negative
-                  floated="right"
-                  style={{ marginTop: '1em' }}
-                  content="Confirm"
-                  onClick={() => this.props.removeAccount(this.props.form.id)}
-                />
-              }
+        <BalanceTable {...this.props} />
+        <Form.Group unstackable>
+          <Form.Field width={10} style={{ paddingTop: '0.5em' }}>
+            <Checkbox
+              label="Show on Dashboard"
+              checked={this.props.form.on_dashboard}
+              onChange={this.toggleOnDashboard}
             />
-          )}
+          </Form.Field>
+          <Form.Button width={6} primary fluid content="Save Account" />
         </Form.Group>
       </Form>
     )
@@ -94,8 +73,7 @@ AccountForm.propTypes = {
   toggleOnDashboard: PropTypes.func,
   toggleCurrency: PropTypes.func.isRequired,
   changeBalance: PropTypes.func.isRequired,
-  saveAccount: PropTypes.func,
-  removeAccount: PropTypes.func
+  saveAccount: PropTypes.func
 }
 
 export default AccountForm

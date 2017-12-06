@@ -14,6 +14,7 @@ import Account from '../../../entities/Account'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
+    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},
@@ -39,6 +40,7 @@ it('resets to initial state when account is created', () => {
       saveAccountSuccess()
     )
   ).toEqual({
+    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},
@@ -55,6 +57,7 @@ it('resets to initial state', () => {
       resetAccountForm()
     )
   ).toEqual({
+    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},

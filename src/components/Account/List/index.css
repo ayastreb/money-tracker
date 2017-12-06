@@ -17,6 +17,10 @@
     border-radius: 0.28571429rem;
   }
 
+  .accounts-list-wrapper .account-widget {
+    border: none;
+  }
+
   .account-widget-group:first-child {
     border-top: none;
   }
@@ -37,6 +41,10 @@
 }
 
 @media (max-width: 767px) {
+  .accounts-list-wrapper .account-widget-group:first-child {
+    border-top: none;
+  }
+
   .account-widget-group__name,
   .account-widget-group__total {
     padding: 0.75em 1em;
@@ -55,26 +63,35 @@
 
 .account-widget-account {
   width: 100%;
-  display: table;
   border-top: solid 1px #d4d4d5;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: top;
 }
 
 .account-widget-account__name,
 .account-widget-account__balance {
-  display: table-cell;
+  display: flex;
   padding: 0.5em 1em;
 }
 
 .account-widget-account__name {
-  width: 1px;
+  flex-basis: 100%;
   white-space: nowrap;
 }
 
 .account-widget-account__balance {
   text-align: right;
   white-space: nowrap;
+  flex: 1;
+  flex-flow: column nowrap;
 }
 
 .account-widget-account__name {
   padding: 0.5em 0.5em 0.5em 1em;
+}
+
+.account-widget-account__edit {
+  flex: 1;
+  padding: 0.75em 0.75em 0.75em 0;
 }

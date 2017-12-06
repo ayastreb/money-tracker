@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Account from './Account'
+import AccountItem from './AccountItem'
 import Amount from '../../Amount'
 
 const Group = ({
@@ -8,7 +8,7 @@ const Group = ({
   group,
   isCollapsed,
   toggleGroupCollapse,
-  removeAccount
+  openAccountInModal
 }) => (
   <div className="account-widget-group">
     <div className="account-widget-group__header" onClick={toggleGroupCollapse}>
@@ -19,7 +19,11 @@ const Group = ({
     </div>
     {!isCollapsed &&
       group.accounts.map(account => (
-        <Account key={account.id} account={account} />
+        <AccountItem
+          key={account.id}
+          account={account}
+          openAccountInModal={openAccountInModal}
+        />
       ))}
   </div>
 )
@@ -32,7 +36,8 @@ Group.propTypes = {
     total: PropTypes.number.isRequired
   }).isRequired,
   isCollapsed: PropTypes.bool.isRequired,
-  toggleGroupCollapse: PropTypes.func.isRequired
+  toggleGroupCollapse: PropTypes.func.isRequired,
+  openAccountInModal: PropTypes.func
 }
 
 export default Group
