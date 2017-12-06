@@ -1,7 +1,7 @@
 import Dashboard from '../containers/Dashboard'
 import Transactions from '../containers/Transactions'
 import Accounts from '../containers/Accounts'
-import AccountDetails from '../containers/Accounts/Details'
+import Reports from '../containers/Reports'
 import Settings from '../containers/Settings'
 import WorkInProgress from '../containers/WorkInProgress'
 
@@ -25,28 +25,20 @@ export default [
     exact: false,
     label: 'Accounts',
     icon: 'credit card',
-    component: Accounts,
-    routes: [
-      {
-        path: '/accounts/details/:id',
-        label: 'Account',
-        exact: true,
-        component: AccountDetails
-      }
-    ]
-  },
-  {
-    path: '/budget',
-    exact: false,
-    label: 'Budget',
-    icon: 'shopping basket',
-    component: WorkInProgress
+    component: Accounts
   },
   {
     path: '/reports',
     exact: false,
     label: 'Reports',
     icon: 'line chart',
+    component: Reports
+  },
+  {
+    path: '/budget',
+    exact: false,
+    label: 'Budget',
+    icon: 'shopping basket',
     component: WorkInProgress
   },
   {
