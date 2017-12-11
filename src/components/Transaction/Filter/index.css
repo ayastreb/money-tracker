@@ -1,6 +1,6 @@
 @media (min-width: 768px) {
   .container-header > .ui.basic.buttons {
-    max-width: 408px;
+    max-width: 360px;
     background: #ffffff;
     box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.15);
   }

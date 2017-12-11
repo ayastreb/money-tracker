@@ -26,7 +26,7 @@ class AccountForm extends React.Component {
       <Form className="account-form" onSubmit={this.handleSubmit}>
         <Form.Group>
           <Form.Input
-            width={10}
+            width={9}
             required
             label="Name"
             placeholder="Account name"
@@ -34,7 +34,7 @@ class AccountForm extends React.Component {
             onChange={this.handleNameChange}
           />
           <Form.Select
-            width={6}
+            width={7}
             label="Group"
             value={this.props.form.group}
             options={this.groups}
@@ -43,14 +43,14 @@ class AccountForm extends React.Component {
         </Form.Group>
         <BalanceTable {...this.props} />
         <Form.Group unstackable>
-          <Form.Field width={10} style={{ paddingTop: '0.5em' }}>
+          <Form.Field width={9} style={{ paddingTop: '0.5em' }}>
             <Checkbox
               label="Show on Dashboard"
               checked={this.props.form.on_dashboard}
               onChange={this.toggleOnDashboard}
             />
           </Form.Field>
-          <Form.Button width={6} primary fluid content="Save Account" />
+          <Form.Button width={7} primary fluid content="Save Account" />
         </Form.Group>
       </Form>
     )

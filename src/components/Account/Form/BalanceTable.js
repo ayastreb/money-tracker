@@ -35,8 +35,12 @@ class BalanceTable extends React.Component {
 
   render() {
     return this.currencies.map(code => (
-      <Form.Group unstackable key={code} style={{ marginBottom: '1em' }}>
-        <Form.Field className="checkbox" width={10}>
+      <Form.Group
+        unstackable
+        key={code}
+        style={{ marginBottom: '1em', marginTop: '1em' }}
+      >
+        <Form.Field className="checkbox" width={9}>
           <Checkbox
             value={code}
             label={Currency.name(code)}
@@ -44,7 +48,7 @@ class BalanceTable extends React.Component {
             onChange={this.handleCurrencyChange}
           />
         </Form.Field>
-        <Form.Field className="input-right" width={6}>
+        <Form.Field className="input-right" width={7}>
           {this.props.form.id ? (
             <Amount
               code={code}

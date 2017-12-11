@@ -45,12 +45,7 @@ class Filter extends React.Component {
             labeled
             icon="calendar"
           />
-          <Button
-            icon="filter"
-            labelPosition="left"
-            content="Filter"
-            onClick={this.props.toggleFilterModal}
-          />
+          <Button icon="filter" onClick={this.props.toggleFilterModal} />
         </Button.Group>
         <Calendar {...this.props} />
         <Filters {...this.props} />
