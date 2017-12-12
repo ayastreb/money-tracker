@@ -13,6 +13,13 @@ class Filters extends React.Component {
     }
   }
 
+  componentWillReceiveProps({ appliedAccounts, appliedTags }) {
+    this.setState({
+      accounts: appliedAccounts,
+      tags: appliedTags
+    })
+  }
+
   handleAccountChange = (event, { value }) => this.setState({ accounts: value })
   handleTagsChange = (event, { value }) => this.setState({ tags: value })
 

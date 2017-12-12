@@ -28,7 +28,7 @@ class TransactionItem extends React.Component {
           {transaction.accountName}
           {this.renderArrow()}
           {transaction.kind === TRANSFER && transaction.linkedAccountName}
-          {transaction.tags.map(tag => <Label key={tag}>{tag}</Label>)}
+          {transaction.tags.map(tag => <Label key={tag} content={tag} />)}
           <span className="transaction-item__info__note">
             {transaction.note}
           </span>

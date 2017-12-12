@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.transaction-item .ui.label {
+  box-shadow: 0 0 0 1px rgba(34, 36, 38, 0.15) inset;
+}
+
 .transaction-item:last-child {
   border-bottom: none;
 }

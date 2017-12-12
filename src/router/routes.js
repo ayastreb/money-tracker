@@ -14,7 +14,8 @@ export default [
     component: Dashboard
   },
   {
-    path: '/transactions',
+    path: '/transactions/:accountId?',
+    link: '/transactions',
     exact: false,
     label: 'Transactions',
     icon: 'exchange',

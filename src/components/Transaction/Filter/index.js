@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Dropdown, Button } from 'semantic-ui-react'
 import Calendar from './Calendar'
 import Filters from './Filters'
+import AppliedFilters from './AppliedFilters'
 import DateRange from '../../../entities/Transaction/FilterDateRange'
 import { DropdownOption } from '../../types'
 import './index.css'
@@ -27,28 +28,31 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <div className="container-header">
-        <Button.Group basic fluid>
-          <Button
-            icon="plus"
-            labelPosition="left"
-            content="New"
-            onClick={this.props.openTransactionInModal}
-          />
-          <Dropdown
-            button
-            className="icon"
-            options={this.options}
-            defaultValue={DateRange.defaultRange}
-            onChange={this.handleDateRange}
-            text={this.props.dateRangeLabel}
-            labeled
-            icon="calendar"
-          />
-          <Button icon="filter" onClick={this.props.toggleFilterModal} />
-        </Button.Group>
-        <Calendar {...this.props} />
-        <Filters {...this.props} />
+      <div>
+        <div className="container-header">
+          <Button.Group basic fluid>
+            <Button
+              icon="plus"
+              labelPosition="left"
+              content="New"
+              onClick={this.props.openTransactionInModal}
+            />
+            <Dropdown
+              button
+              className="icon"
+              options={this.options}
+              defaultValue={DateRange.defaultRange}
+              onChange={this.handleDateRange}
+              text={this.props.dateRangeLabel}
+              labeled
+              icon="calendar"
+            />
+            <Button icon="filter" onClick={this.props.toggleFilterModal} />
+          </Button.Group>
+          <Calendar {...this.props} />
+          <Filters {...this.props} />
+        </div>
+        <AppliedFilters {...this.props} />
       </div>
     )
   }
@@ -61,6 +65,7 @@ Filter.propTypes = {
   isFilterModalOpen: PropTypes.bool,
   appliedAccounts: PropTypes.arrayOf(PropTypes.string),
   accountOptions: PropTypes.arrayOf(DropdownOption),
+  accountNameMap: PropTypes.object,
   appliedTags: PropTypes.arrayOf(PropTypes.string),
   tagsOptions: PropTypes.arrayOf(DropdownOption),
   changeFilterDate: PropTypes.func,

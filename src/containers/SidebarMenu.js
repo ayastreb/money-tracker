@@ -14,7 +14,7 @@ const SidebarMenu = () => (
           exact={route.exact}
           path={route.path}
           children={({ match }) => (
-            <Menu.Item as={Link} to={route.path} active={!!match}>
+            <Menu.Item as={Link} to={route.link || route.path} active={!!match}>
               <Icon name={route.icon} />
               {route.label}
             </Menu.Item>

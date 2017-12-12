@@ -30,6 +30,13 @@ export const getAccountsAsOptions = state =>
     description: Account.groupName(account.group)
   }))
 
+export const getAccountsNameMap = createSelector(getAccountsList, accounts =>
+  accounts.reduce((acc, account) => {
+    acc[account.id] = account.name
+    return acc
+  }, {})
+)
+
 export const getAccountsCurrencyMap = createSelector(
   getAccountsList,
   accounts =>

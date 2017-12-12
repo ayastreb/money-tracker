@@ -14,7 +14,7 @@ class AccountItem extends React.Component {
     return (
       <div className="account-widget-account">
         <div className="account-widget-account__name">
-          <Link to={`/transactions/account/${this.props.account.id}`}>
+          <Link to={`/transactions/${this.props.account.id}`}>
             {this.props.account.name}
           </Link>
         </div>

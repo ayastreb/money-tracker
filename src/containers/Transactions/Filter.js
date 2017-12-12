@@ -8,7 +8,10 @@ import {
 } from '../../actions/ui/transaction/filter'
 import { openTransactionInModal } from '../../actions/ui/form/transaction'
 import { getDateLabel } from '../../selectors/ui/transaction/filter'
-import { getAccountsAsOptions } from '../../selectors/entities/accounts'
+import {
+  getAccountsAsOptions,
+  getAccountsNameMap
+} from '../../selectors/entities/accounts'
 import { getAllTagsOptions } from '../../selectors/entities/tags'
 
 const mapStateToProps = state => ({
@@ -17,6 +20,7 @@ const mapStateToProps = state => ({
   isCalendarOpen: state.ui.transaction.filter.isCalendarOpen,
   isFilterModalOpen: state.ui.transaction.filter.isFilterModalOpen,
   accountOptions: getAccountsAsOptions(state),
+  accountNameMap: getAccountsNameMap(state),
   appliedAccounts: state.ui.transaction.filter.applied.accounts || [],
   tagsOptions: getAllTagsOptions(state),
   appliedTags: state.ui.transaction.filter.applied.tags || []
