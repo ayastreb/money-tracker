@@ -164,6 +164,9 @@ const Currency = {
   name(code) {
     return CURRENCY[code].name
   },
+  symbol(code) {
+    return CURRENCY[code].symbol
+  },
   minAmount(code) {
     return Number(`1e-${CURRENCY[code].exp}`)
   },
