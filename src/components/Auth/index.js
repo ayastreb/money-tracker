@@ -18,10 +18,16 @@ class Auth extends React.Component {
       this.props.finishAuth(this.props.location.hash)
     }
   }
-  // TODO: show sync status suring first sign in
+
   render() {
     if (this.props.isAuthenticated) return <Redirect to="/" />
-    if (this.props.location.hash) return <Loader active />
+    if (this.props.location.hash)
+      return (
+        <Loader
+          active
+          content="Synchronizing data, this might take a moment..."
+        />
+      )
 
     return (
       <div className="container-raised-desktop">
@@ -33,11 +39,9 @@ class Auth extends React.Component {
             <Message.Content>{this.props.error}</Message.Content>
           </Message>
         )}
-        {!this.props.isCodeSent ? (
-          this.renderSendCodeForm()
-        ) : (
-          this.renderVerifyCodeForm()
-        )}
+        {!this.props.isCodeSent
+          ? this.renderSendCodeForm()
+          : this.renderVerifyCodeForm()}
         <Divider />
         <p>
           <Link to="/">Back</Link>
@@ -65,13 +69,11 @@ class Auth extends React.Component {
             value={this.props.email}
             onChange={this.handleChange(this.props.changeEmail)}
             disabled={this.props.isSendingCode}
-            action={
-              <Button
-                primary
-                content="Send Code"
-                loading={this.props.isSendingCode}
-              />
-            }
+            action={{
+              primary: true,
+              content: 'Send Code',
+              loading: this.props.isSendingCode
+            }}
           />
         </div>
       </Form>
