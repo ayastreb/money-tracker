@@ -1,10 +1,10 @@
-import { handleActions, combineActions } from 'redux-actions'
+import { handleActions } from 'redux-actions'
 import {
   changeReportKind,
   changeReportTimespan,
   changeReportAccounts,
-  moveReportTimespanBefore,
-  moveReportTimespanAfter,
+  moveReportDateBackwards,
+  moveReportDateForwards,
   loadReport,
   loadReportSuccess,
   loadReportFailure
@@ -16,26 +16,35 @@ export default handleActions(
     [changeReportKind]: (state, { payload }) => ({ ...state, kind: payload }),
     [changeReportTimespan]: (state, { payload }) => ({
       ...state,
-      timespan: payload
+      timespan: payload,
+      date: Report.defaultDate(payload)
     }),
     [changeReportAccounts]: (state, { payload }) => ({
       ...state,
       accounts: payload
     }),
-    [moveReportTimespanBefore]: state => ({ ...state }),
-    [moveReportTimespanAfter]: state => ({ ...state }),
-    [loadReport]: state => ({ ...state, isLoading: true }),
-    [combineActions(loadReportSuccess, loadReportFailure)]: state => ({
+    [moveReportDateBackwards]: state => ({
       ...state,
-      isLoading: false
-    })
+      date: Report.moveDateBackwards(state.date, state.timespan)
+    }),
+    [moveReportDateForwards]: state => ({
+      ...state,
+      date: Report.moveDateForwards(state.date, state.timespan)
+    }),
+    [loadReport]: state => ({ ...state, isLoading: true }),
+    [loadReportSuccess]: (state, { payload }) => ({
+      ...state,
+      isLoading: false,
+      data: payload
+    }),
+    [loadReportFailure]: state => ({ ...state, isLoading: false })
   },
   {
     isLoading: false,
+    data: {},
     kind: Report.defaultKind,
     timespan: Report.defaultTimespan,
-    dateStart: Report.defaultStartDate(),
-    dateEnd: Report.defaultEndDate(),
+    date: Report.defaultDate(),
     accounts: []
   }
 )

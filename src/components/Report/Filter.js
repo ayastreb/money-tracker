@@ -9,15 +9,17 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <Dropdown
-        multiple
-        selection
-        fluid
-        placeholder="Specify accounts"
-        value={this.props.accounts}
-        options={this.props.accountOptions}
-        onChange={this.handleAccountsChange}
-      />
+      <div className="container-footer">
+        <Dropdown
+          multiple
+          selection
+          fluid
+          placeholder="Specify accounts"
+          value={this.props.accounts}
+          options={this.props.accountOptions}
+          onChange={this.handleAccountsChange}
+        />
+      </div>
     )
   }
 }

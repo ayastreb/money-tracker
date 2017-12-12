@@ -13,31 +13,33 @@ class Navigation extends React.Component {
 
   render() {
     return (
-      <Button.Group basic>
-        <Dropdown
-          button
-          value={this.props.kind}
-          options={this.props.kindOptions}
-          onChange={this.handleKindChange}
-        />
-        <Button
-          icon="chevron left"
-          onClick={this.props.moveReportTimespanBefore}
-        />
-        <Dropdown
-          basic
-          button
-          icon={false}
-          text={this.props.timespanLabel}
-          value={this.props.timespan}
-          options={this.props.timespanOptions}
-          onChange={this.handleTimespanChange}
-        />
-        <Button
-          icon="chevron right"
-          onClick={this.props.moveReportTimespanAfter}
-        />
-      </Button.Group>
+      <div className="container-header">
+        <Button.Group basic>
+          <Dropdown
+            button
+            value={this.props.kind}
+            options={this.props.kindOptions}
+            onChange={this.handleKindChange}
+          />
+          <Button
+            icon="chevron left"
+            onClick={this.props.moveReportDateBackwards}
+          />
+          <Dropdown
+            basic
+            button
+            icon={false}
+            text={this.props.timespanLabel}
+            value={this.props.timespan}
+            options={this.props.timespanOptions}
+            onChange={this.handleTimespanChange}
+          />
+          <Button
+            icon="chevron right"
+            onClick={this.props.moveReportDateForwards}
+          />
+        </Button.Group>
+      </div>
     )
   }
 }
@@ -50,8 +52,8 @@ Navigation.propTypes = {
   timespanOptions: PropTypes.array,
   changeReportKind: PropTypes.func,
   changeReportTimespan: PropTypes.func,
-  moveReportTimespanBefore: PropTypes.func,
-  moveReportTimespanAfter: PropTypes.func
+  moveReportDateBackwards: PropTypes.func,
+  moveReportDateForwards: PropTypes.func
 }
 
 export default Navigation

@@ -3,8 +3,8 @@ import Navigation from '../../components/Report/Navigation'
 import {
   changeReportKind,
   changeReportTimespan,
-  moveReportTimespanAfter,
-  moveReportTimespanBefore
+  moveReportDateBackwards,
+  moveReportDateForwards
 } from '../../actions/ui/report'
 import { getTimespanLabel } from '../../selectors/ui/report'
 import Report from '../../entities/Report'
@@ -20,6 +20,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   changeReportKind,
   changeReportTimespan,
-  moveReportTimespanAfter,
-  moveReportTimespanBefore
+  moveReportDateBackwards,
+  moveReportDateForwards
 })(Navigation)

@@ -1,23 +1,42 @@
 import startOfYear from 'date-fns/start_of_year'
 import endOfYear from 'date-fns/end_of_year'
+import startOfMonth from 'date-fns/start_of_month'
+import endOfMonth from 'date-fns/end_of_month'
+import subMonths from 'date-fns/sub_months'
+import subYears from 'date-fns/sub_years'
+import addMonths from 'date-fns/add_months'
+import addYears from 'date-fns/add_years'
+import format from 'date-fns/format'
+import ExpenseIncomeData from './Report/ExpenseIncomeData'
 import { toUtcTimestamp } from '../util/timezone'
 
 export const REPORT_EXPENSE_INCOME = 'expense_income'
 export const REPORT_EXPENSE_TAGS = 'expense_tags'
 export const REPORT_NET_WORTH = 'net_worth'
-export const REPORT_TIMESPAN_YEARLY = 'yearly'
-export const REPORT_TIMESPAN_MONTHLY = 'monthly'
+export const TIMESPAN_YEARLY = 'yearly'
+export const TIMESPAN_MONTHLY = 'monthly'
 
 const Report = {
   defaultKind: REPORT_EXPENSE_INCOME,
-  defaultTimespan: REPORT_TIMESPAN_YEARLY,
-  defaultStartDate() {
-    const now = new Date()
-    return toUtcTimestamp(startOfYear(now))
+  defaultTimespan: TIMESPAN_YEARLY,
+  defaultDate(timespan = TIMESPAN_YEARLY) {
+    return dateRange(new Date(), timespan)
   },
-  defaultEndDate() {
-    const now = new Date()
-    return toUtcTimestamp(endOfYear(now))
+  moveDateBackwards(date, timespan) {
+    return dateRange(
+      timespan === TIMESPAN_YEARLY
+        ? subYears(date.start, 1)
+        : subMonths(date.start, 1),
+      timespan
+    )
+  },
+  moveDateForwards(date, timespan) {
+    return dateRange(
+      timespan === TIMESPAN_YEARLY
+        ? addYears(date.start, 1)
+        : addMonths(date.start, 1),
+      timespan
+    )
   },
   kindOptions() {
     return [
@@ -41,17 +60,43 @@ const Report = {
   timespanOptions() {
     return [
       {
-        key: REPORT_TIMESPAN_YEARLY,
-        value: REPORT_TIMESPAN_YEARLY,
+        key: TIMESPAN_YEARLY,
+        value: TIMESPAN_YEARLY,
         text: 'Yearly'
       },
       {
-        key: REPORT_TIMESPAN_MONTHLY,
-        value: REPORT_TIMESPAN_MONTHLY,
+        key: TIMESPAN_MONTHLY,
+        value: TIMESPAN_MONTHLY,
         text: 'Monthly'
       }
     ]
+  },
+  timespanLabel(date, timespan) {
+    return format(date, timespan === TIMESPAN_YEARLY ? 'YYYY' : 'MMM, YYYY')
+  },
+  transactionFilters(report) {
+    return {
+      date: report.date,
+      accounts: report.accounts
+    }
+  },
+  prepareData(report, transactions, base, exchangeRate) {
+    switch (report.kind) {
+      case REPORT_EXPENSE_INCOME:
+        return ExpenseIncomeData(report, transactions, base, exchangeRate)
+      default:
+        return undefined
+    }
   }
 }
 
 export default Report
+
+function dateRange(date, timespan) {
+  const start = timespan === TIMESPAN_YEARLY ? startOfYear : startOfMonth
+  const end = timespan === TIMESPAN_YEARLY ? endOfYear : endOfMonth
+  return {
+    start: toUtcTimestamp(start(date)),
+    end: toUtcTimestamp(end(date))
+  }
+}

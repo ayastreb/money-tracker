@@ -80,7 +80,7 @@ function filterByAccount(transactions, accounts) {
  * @return {array}
  */
 function filterByTags(transactions, tags) {
-  return tags.length > 0
+  return tags && tags.length > 0
     ? transactions.filter(tx => intersection(tx.tags, tags).length > 0)
     : transactions
 }

@@ -1,0 +1,25 @@
+.mt-report .ct-chart {
+  margin-top: 1em;
+}
+
+.mt-report-expense-income .ct-series-a .ct-bar {
+  stroke: #7cb342;
+}
+
+.mt-report-expense-income .ct-series-b .ct-bar {
+  stroke: #f44336;
+}
+
+.mt-report-expense-income .ct-bar {
+  stroke-width: 1em;
+  stroke-opacity: 0.75;
+}
+
+.mt-report-expense-income .chartist-tooltip {
+  background: #d4d4d5;
+  border-radius: 3px;
+}
+
+.mt-report-expense-income .chartist-tooltip:before {
+  border-top-color: #d4d4d5;
+}
