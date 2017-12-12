@@ -291,5 +291,7 @@ h5 {
 
   .container-full-page .container-header > .ui.basic.buttons {
     border: none;
+    border-radius: 0;
+    border-right: solid 1px #d4d4d5;
   }
 }
