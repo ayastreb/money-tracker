@@ -1,6 +1,11 @@
 ![Screenshots](/assets/screenshot.png)
 
-# Money Tracker
+<div class="head-title">
+<h1>Money Tracker</h1>
+<div class="github-star">
+<a class="github-button" href="https://github.com/ayastreb/money-tracker" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star ayastreb/money-tracker on GitHub">Star</a>
+</div>
+</div>
 
 Is an [open-source](https://github.com/ayastreb/money-tracker) progressive web app that allows you to track your income and expenses.
 

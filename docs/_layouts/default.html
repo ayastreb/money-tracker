@@ -6,6 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1"> {% seo %}
 
   <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.0/gh-fork-ribbon.min.css"
+  />
   <meta name="viewport" content="width=device-width">
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -31,6 +33,19 @@
 </head>
 
 <body>
+  <style>
+    .github-fork-ribbon:before {
+      background-color: #3f51b5;
+    }
+
+    @media screen and (max-width: 1100px) {
+      .github-fork-ribbon {
+        display: none;
+      }
+    }
+  </style>
+  <a class="github-fork-ribbon right-top fixed" href="https://github.com/ayastreb/money-tracker" title="View at GitHub">View at GitHub</a>
+
   <div class="wrapper">
     <header>
       <a href="{{ site.github.url }}">
@@ -39,12 +54,6 @@
       <p>{{ site.description | default: site.github.project_tagline }}</p>
 
       {% if site.github.is_project_page %}
-      <p class="view">
-        <!-- Place this tag where you want the button to render. -->
-        <a class="github-button" href="https://github.com/ayastreb/money-tracker" data-icon="octicon-star" data-size="large" data-show-count="true"
-          aria-label="Star ayastreb/money-tracker on GitHub">Star</a>
-      </p>
-
       <a class="button" href="https://app.moneytracker.cc">Launch app</a>
       <a class="button" href="https://demo.moneytracker.cc">View demo</a>
       {% endif %}

@@ -34,6 +34,14 @@ header p {
   text-align: left;
 }
 
+.head-title {
+  display: flex;
+}
+
+.head-title .github-star {
+  margin-left: 1em;
+}
+
 .button {
   display: block;
   margin-bottom: 1em;
