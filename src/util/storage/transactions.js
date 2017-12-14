@@ -17,10 +17,11 @@ export default {
   destroy
 }
 
-async function sync() {
+async function sync(readOnly = true) {
   if (!remoteTransactionsDB()) return
 
   await transactionsDB().replicate.from(remoteTransactionsDB())
+  if (readOnly) return
   await transactionsDB().replicate.to(remoteTransactionsDB())
 }
 

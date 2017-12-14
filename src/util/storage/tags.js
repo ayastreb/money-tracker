@@ -7,13 +7,15 @@ export default {
   destroy
 }
 
-async function sync() {
+async function sync(readOnly = false) {
   let hasChanges = false
   if (!remoteTagsDB()) return hasChanges
 
-  await tagsDB().replicate.to(remoteTagsDB())
   const from = await tagsDB().replicate.from(remoteTagsDB())
   if (from.docs_written > 0) hasChanges = true
+  if (readOnly) return hasChanges
+
+  await tagsDB().replicate.to(remoteTagsDB())
 
   return hasChanges
 }

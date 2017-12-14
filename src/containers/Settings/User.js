@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Popup, Button } from 'semantic-ui-react'
 import { signOut } from '../../actions/user'
-import { isUserAuthenticated } from '../../selectors/user'
+import { isUserAuthenticated, isDemo } from '../../selectors/user'
 
 class User extends React.Component {
   render() {
@@ -15,8 +15,8 @@ class User extends React.Component {
         on="click"
         trigger={
           <Button
-            content={this.props.isAuthenticated ? 'Sign out' : 'Delete data'}
-            icon={this.props.isAuthenticated ? 'sign out' : 'trash'}
+            content={this.signOutButtonLabel()}
+            icon={this.signOutButtonIcon()}
             labelPosition="right"
           />
         }
@@ -35,9 +35,22 @@ class User extends React.Component {
       />
     )
   }
+
+  signOutButtonLabel() {
+    if (this.props.isDemo) return 'Reset demo'
+
+    return this.props.isAuthenticated ? 'Sign out' : 'Delete data'
+  }
+
+  signOutButtonIcon() {
+    if (this.props.isDemo) return 'refresh'
+
+    return this.props.isAuthenticated ? 'sign out' : 'trash'
+  }
 }
 
 User.propTypes = {
+  isDemo: PropTypes.bool,
   isAuthenticated: PropTypes.bool,
   isSignOutRunning: PropTypes.bool,
   isSignOutComplete: PropTypes.bool,
@@ -45,6 +58,7 @@ User.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  isDemo: isDemo(state),
   isAuthenticated: isUserAuthenticated(state),
   isSignOutRunning: state.user.isSignOutRunning,
   isSignOutComplete: state.user.isSignOutComplete

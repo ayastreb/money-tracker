@@ -32,6 +32,9 @@ async function save(settings) {
       .get('settings')
       .then(remote => remote, err => defaultSettings)
       .then(doc => remoteSettingsDB().put({ ...doc, ...settings }))
+      .catch(error => {
+        if (error.status !== 403) throw error
+      })
   }
 
   return settingsDB()

@@ -8,7 +8,12 @@ import {
   verifyCodeFailure,
   finishAuth
 } from '../actions/ui/form/auth'
-import { userLoggedIn, signOut, signOutComplete } from '../actions/user'
+import {
+  userLoggedIn,
+  demoUser,
+  signOut,
+  signOutComplete
+} from '../actions/user'
 import { getAuthEmail, getAuthCode } from '../selectors/ui/form/auth'
 import { loadSetting } from './settings'
 import { syncSaga } from './sync'
@@ -17,6 +22,29 @@ import AccountsStorage from '../util/storage/accounts'
 import SettingsStorage from '../util/storage/settings'
 import TagsStorage from '../util/storage/tags'
 import TransactionsStorage from '../util/storage/transactions'
+
+export function* isDemoUser() {
+  if (window.location.hostname === process.env.REACT_APP_DEMO_HOST) {
+    const userInfo = yield call([localStorage, 'getItem'], 'userInfo')
+    if (!userInfo) {
+      yield call(
+        [localStorage, 'setItem'],
+        'userInfo',
+        JSON.stringify({
+          couchDB: {
+            accounts: process.env.REACT_APP_DEMO_DB_ACCOUNTS,
+            settings: process.env.REACT_APP_DEMO_DB_SETTINGS,
+            tags: process.env.REACT_APP_DEMO_DB_TAGS,
+            transactions: process.env.REACT_APP_DEMO_DB_TRANSACTIONS
+          }
+        })
+      )
+      yield syncSaga()
+    }
+    yield put(demoUser())
+    yield put(userLoggedIn())
+  }
+}
 
 export function* isUserLoggedIn() {
   const userInfo = yield call([localStorage, 'getItem'], 'userInfo')
@@ -63,6 +91,7 @@ export function* signOutSaga() {
   yield call([localStorage, 'clear'])
 
   yield put(signOutComplete())
+  yield isDemoUser()
   yield loadSetting()
 }
 

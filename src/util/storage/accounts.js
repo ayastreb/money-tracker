@@ -11,7 +11,7 @@ export default {
   destroy
 }
 
-async function sync() {
+async function sync(readOnly = false) {
   if (!remoteAccountsDB()) return
   let accounts
 
@@ -20,6 +20,8 @@ async function sync() {
     accounts = await loadAll()
     updateLastSyncedBalance(accounts)
   }
+
+  if (readOnly) return
 
   const to = await accountsDB().replicate.to(remoteAccountsDB())
   if (to.docs_written > 0) {
@@ -34,7 +36,12 @@ function destroy() {
 
 function loadAll() {
   return accountsDB()
-    .allDocs({ include_docs: true, conflicts: true })
+    .allDocs({
+      include_docs: true,
+      conflicts: true,
+      startkey: 'A',
+      endkey: 'A\uffff'
+    })
     .then(response => Promise.all(response.rows.map(resolveConflicts)))
     .then(docs => docs.map(Account.fromStorage))
 }

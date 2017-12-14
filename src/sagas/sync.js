@@ -1,4 +1,4 @@
-import { takeLatest, call, put } from 'redux-saga/effects'
+import { takeLatest, call, put, select } from 'redux-saga/effects'
 import {
   sync,
   syncRequest,
@@ -14,6 +14,7 @@ import { saveTransactionSuccess } from '../actions/entities/transactions'
 import { loadAccountsSaga } from './accounts'
 import { loadTagsSaga } from './tags'
 import { loadRecentTransactionsSaga } from './transactions'
+import { isDemo } from '../selectors/user'
 import AccountsStorage from '../util/storage/accounts'
 import TransactionsStorage from '../util/storage/transactions'
 import TagsStorage from '../util/storage/tags'
@@ -21,11 +22,12 @@ import TagsStorage from '../util/storage/tags'
 export function* syncSaga() {
   yield put(syncRequest())
   try {
-    yield call(AccountsStorage.sync)
+    const readOnly = yield select(isDemo)
+    yield call(AccountsStorage.sync, readOnly)
     yield loadAccountsSaga()
-    yield call(TransactionsStorage.sync)
+    yield call(TransactionsStorage.sync, readOnly)
     yield loadRecentTransactionsSaga()
-    yield call(TagsStorage.sync)
+    yield call(TagsStorage.sync, readOnly)
     yield loadTagsSaga()
     yield put(syncSuccess())
   } catch (error) {

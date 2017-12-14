@@ -9,6 +9,7 @@ import Auth from './Auth'
 import InitialSetup from './InitialSetup'
 import SidebarMenu from './SidebarMenu'
 import Header from '../components/Header'
+import DemoNotice from './DemoNotice'
 import SyncWarning from './SyncWarning'
 import { windowResize } from '../actions/ui/windowResize'
 import { toggleSidebar } from '../actions/ui/sidebar'
@@ -24,7 +25,17 @@ class App extends React.Component {
   }
 
   render() {
-    if (!this.props.isLoaded) return <Loader active />
+    if (!this.props.isLoaded) {
+      return (
+        <Loader
+          active
+          content={
+            this.props.isSyncRunning &&
+            'Synchronizing data, this might take a moment...'
+          }
+        />
+      )
+    }
 
     return (
       <Router history={this.props.history}>
@@ -69,6 +80,7 @@ class App extends React.Component {
                     onClick={toggleSidebar}
                   />
                   <Header label={route.label} />
+                  <DemoNotice />
                   <SyncWarning />
                   <route.component {...props} />
                 </div>
@@ -98,6 +110,7 @@ function flatten(routes) {
 App.propTypes = {
   history: PropTypes.object.isRequired,
   isLoaded: PropTypes.bool,
+  isSyncRunning: PropTypes.bool,
   isSetupComplete: PropTypes.bool,
   isMobile: PropTypes.bool,
   isSidebarOpen: PropTypes.bool,
@@ -109,6 +122,7 @@ App.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   history: ownProps.history,
   isLoaded: state.settings.isLoaded,
+  isSyncRunning: state.ui.sync.isRunning,
   isSetupComplete: state.settings.isSetupComplete,
   isMobile: state.ui.isMobile,
   isSidebarOpen: state.ui.isSidebarOpen

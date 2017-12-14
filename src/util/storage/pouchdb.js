@@ -17,12 +17,10 @@ function remoteInstance(name) {
   if (instancePool[instanceName] === undefined) {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'))
     if (userInfo && userInfo.couchDB && userInfo.couchDB[name]) {
+      const { username, password } = userInfo.couchDB
       instancePool[instanceName] = new PouchDB(userInfo.couchDB[name], {
         skipSetup: true,
-        auth: {
-          username: userInfo.couchDB.username,
-          password: userInfo.couchDB.password
-        }
+        auth: username && password ? { username, password } : undefined
       })
     }
   }
