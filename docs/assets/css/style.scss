@@ -32,10 +32,6 @@ header img.logo {
   margin-bottom: .5em;
 }
 
-header p {
-  text-align: left;
-}
-
 .head-title {
   display: flex;
 }
@@ -52,31 +48,32 @@ h1 {
 .button {
   display: block;
   margin-bottom: 1em;
-  text-decoration: none;
-  line-height: 64px;
-  font-size: 2rem;
+  line-height: 48px;
+  font-size: 1.5rem;
   color: #000000;
   background: #f5f5f5;
   border: solid 1px #dcdcdc;
   border-radius: 5px;
-  -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: #eff3f6;
+  background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
 }
 
 .button:hover{
-  -webkit-box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: 0px 1px 15px 0px rgba(0, 0, 0, 0.15);
+  -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
 }
 
 a {
-  text-decoration: underline;
+  color: #0366d6;
+  text-decoration: none;
 }
 
 a:hover, a:focus {
+  color: #0366d6;
   font-weight: normal;
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .footer-links {
