@@ -4,8 +4,9 @@
 @import "{{ site.theme }}";
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Roboto", sans-serif;
   font-size: 1em;
+  color: #000000;
 }
 
 @media screen and (min-width: 1100px) {
@@ -28,6 +29,7 @@ header img.logo {
   box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.25);
   border-radius: 50%;
   height: 96px;
+  margin-bottom: .5em;
 }
 
 header p {
@@ -40,6 +42,11 @@ header p {
 
 .head-title .github-star {
   margin-left: 1em;
+}
+
+h1 {
+  font-weight: 600;
+
 }
 
 .button {
