@@ -15,7 +15,7 @@ body {
   }
 
   section {
-    width: 800px;
+    width: 790px;
   }
 }
 
@@ -24,9 +24,9 @@ header {
 }
 
 header img.logo {
-  -webkit-box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
+  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.35);
   border-radius: 50%;
   height: 96px;
   margin-bottom: .5em;
@@ -59,9 +59,10 @@ h1 {
 }
 
 .button:hover{
-  -webkit-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.15);
+  color: #000000;
+  background-color: #e6ebf1;
+  background-image: linear-gradient(-180deg, #f0f3f6 0%, #e6ebf1 90%);
+  border-color: rgba(27,31,35,0.35);
   text-decoration: none;
 }
 
