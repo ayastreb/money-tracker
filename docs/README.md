@@ -1,3 +1,5 @@
+![Screenshots](/assets/screenshot.png)
+
 # Money Tracker
 
 Is an [open-source](https://github.com/ayastreb/money-tracker) progressive web app that allows you to track your income and expenses.
