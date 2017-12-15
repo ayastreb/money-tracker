@@ -12,12 +12,12 @@ class DemoNotice extends React.Component {
       <Message
         size="large"
         icon="user circle outline"
-        header="Welcome to MoneyTracker.cc demo account!"
+        header="Welcome to demo account!"
         content={
           <div style={{ marginTop: '0.5em' }}>
             <p>
-              You are logged in as a demo user with dummy data generated to show
-              you how things might look like.
+              You are logged in as a demo user with sample data generated to
+              show you how things might look like.
             </p>
             <p>
               All the changes you make will only be stored locally on your

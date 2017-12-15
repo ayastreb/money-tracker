@@ -3,7 +3,9 @@
 body {
   height: auto !important;
   margin: 0;
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -38,7 +40,9 @@ nav .menu .item:last-child {
 }
 
 .ui.menu {
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .ui.blue.menu .active.item,
@@ -188,8 +192,13 @@ header .ui.header h2 {
 }
 
 .ui.primary.button {
-  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #3f51b5 !important;
+}
+
+.ui.button {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .ui.button,
@@ -287,6 +296,7 @@ h5 {
     padding: 0;
     background: #ffffff;
     border-radius: 0;
+    border-top: solid 1px #d4d4d5;
   }
 
   .container-full-page .container-header > .ui.basic.buttons {
