@@ -2,7 +2,7 @@
 
 We, the Operators of this Website, provide it as a public service to our users.
 
-Your privacy is important to the us. Our goal is to provide you with a personalized online experience that provides
+Your privacy is important to us. Our goal is to provide you with a personalized online experience that provides
 you with the information, resources, and services that are most relevant and helpful to you. This Privacy Policy has
 been written to describe the conditions under which this web site is being made available to you. The Privacy Policy
 discusses, among other things, how data obtained during your visit to this web site may be collected and used. We
@@ -11,7 +11,7 @@ terms of this Privacy Policy. If you do not accept the terms of the Privacy Poli
 accessing or otherwise using the web site or any materials obtained from it. If you are dissatisfied with the web
 site, by all means <a href="mailto:contact@moneyrtacker.cc">contact</a> us; otherwise, your only recourse is to
 disconnect
-from this site and refrain from visiting the site in the future.</p>
+from this site and refrain from visiting the site in the future.
 
 The process of maintaining a web site is an evolving one, and the Operators may decide at some point in the future,
 without advance notice, to modify the terms of this Privacy Policy. Your use of the web site, or materials obtained
