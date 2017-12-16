@@ -1,3 +1,7 @@
+---
+image: /assets/screenshot.png
+---
+
 ![Screenshots](/assets/screenshot.png)
 
 <div class="head-title">

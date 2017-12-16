@@ -2,3 +2,4 @@ theme: jekyll-theme-minimal
 title: Money Tracker
 description: Personal finances tracking web app
 google_analytics: UA-111277242-1
+logo: /favicon-96x96.png
