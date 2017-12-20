@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Router, Route, Switch } from 'react-router-dom'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
 import { Dimmer, Loader } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import throttle from 'lodash/throttle'
@@ -57,6 +57,9 @@ class App extends React.Component {
    * They are rendered with common structure: sidebar menu and sticky header.
    */
   renderNavigationRoutes = () => {
+    if (window.location.pathname.endsWith('index.html')) {
+      return <Redirect to="/" />
+    }
     const { isSidebarOpen, isMobile, toggleSidebar } = this.props
     return (
       <div
