@@ -29,7 +29,7 @@ class Dashboard extends React.Component {
                 label="Net Worth"
                 LabelComponent={NetWorth}
               >
-                <Accounts withNewButton />
+                <Accounts />
               </CollapsibleSection>
             </Grid.Column>
             <Grid.Column computer={10} mobile={16}>
