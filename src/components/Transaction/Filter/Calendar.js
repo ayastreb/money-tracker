@@ -83,12 +83,13 @@ class Calendar extends React.Component {
         onClose={this.props.toggleFilterCalendar}
         className="transactions-filter-modal"
         closeIcon
-        size="tiny"
+        size="small"
       >
         <Modal.Header>Show transactions in range</Modal.Header>
         <Modal.Content>
           <DayPicker
             className="Range"
+            fixedWeeks
             enableOutsideDays
             numberOfMonths={this.props.isMobile ? 1 : 2}
             selectedDays={[from, { from, to }]}
