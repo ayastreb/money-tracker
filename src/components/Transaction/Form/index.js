@@ -40,7 +40,7 @@ class TransactionForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Header
           withTransfer={!!this.props.form.linkedAccountId}
           activeKind={this.props.form.kind}
@@ -137,7 +137,7 @@ class TransactionForm extends React.Component {
             </div>
           </Form>
         </Segment>
-      </div>
+      </React.Fragment>
     )
   }
 }

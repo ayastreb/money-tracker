@@ -51,7 +51,7 @@ class Auth extends React.Component {
   }
 
   renderSendCodeForm = () => (
-    <div>
+    <React.Fragment>
       <p>
         Please provide your email address and we will send you a verification
         code for sign in.
@@ -83,7 +83,7 @@ class Auth extends React.Component {
         you hosted in the cloud. This database will be used to synchronize your
         data among different devices as well as for back up.
       </p>
-    </div>
+    </React.Fragment>
   )
 
   renderVerifyCodeForm = () => (

@@ -28,7 +28,7 @@ class Filter extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <div className="container-header">
           <Button.Group basic fluid>
             <Button
@@ -53,7 +53,7 @@ class Filter extends React.Component {
           <Filters {...this.props} />
         </div>
         <AppliedFilters {...this.props} />
-      </div>
+      </React.Fragment>
     )
   }
 }
