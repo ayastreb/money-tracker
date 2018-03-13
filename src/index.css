@@ -20,7 +20,7 @@ nav {
   width: 150px;
   min-height: 100%;
   transition: transform 0.5s ease;
-  z-index: 1001;
+  z-index: 101;
 }
 
 @media (max-width: 767px) {

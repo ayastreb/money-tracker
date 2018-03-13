@@ -67,6 +67,7 @@ class App extends React.Component {
           page
           active={isMobile && isSidebarOpen}
           onClick={toggleSidebar}
+          style={{ zIndex: 100 }}
         />
         <SidebarMenu
           isOpen={!isMobile || isSidebarOpen}
