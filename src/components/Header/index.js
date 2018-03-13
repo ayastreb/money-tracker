@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon, Header } from 'semantic-ui-react'
+import Logo from '../Logo'
 import { toggleSidebar } from '../../actions/ui/sidebar'
 import { sync } from '../../actions/ui/sync'
 import { isUserAuthenticated } from '../../selectors/user'
@@ -19,6 +20,7 @@ const AppHeader = ({
   <header>
     <Header>
       {isMobile && <Icon name="bars" onClick={toggleSidebar} />}
+      {!isMobile && <Logo />}
       <Header.Content as="h2">{label}</Header.Content>
       {isAuthenticated &&
         (isSyncRunning ? (

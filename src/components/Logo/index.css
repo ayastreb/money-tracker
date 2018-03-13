@@ -1,15 +1,11 @@
 .logo {
-  background-color: #3F51B5;
+  position: relative;
+  height: 60px;
+  top: -16px;
+  left: -16px;
+  width: 150px;
+  text-align: center;
   padding: 15px;
-  border-bottom: solid 1px rgba(34, 36, 38, 0.15);
-  height: 62px;
-}
-
-@media (max-width: 767px) {
-  .logo {
-    padding: 9px;
-    height: 50px;
-  }
 }
 
 .logo img {

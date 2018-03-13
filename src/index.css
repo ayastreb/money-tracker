@@ -16,16 +16,32 @@ body {
 
 nav {
   position: fixed;
-  top: 0;
+  top: 60px;
   width: 150px;
   min-height: 100%;
+  transition: transform 0.5s ease;
+  z-index: 1001;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 767px) {
+  nav {
+    top: 50px;
+  }
+}
+
+@media (min-width: 1194px) {
   nav {
     box-shadow: 0 2px 6px 0 rgba(34, 36, 38, 0.15),
       0 2px 18px 0 rgba(34, 36, 38, 0.17);
   }
+}
+
+nav.open {
+  transform: translate(0, 0);
+}
+
+nav.closed {
+  transform: translate(-150px, 0);
 }
 
 nav .menu {
@@ -53,30 +69,6 @@ nav .menu .item:last-child {
 
 .ui.menu .active.item {
   box-shadow: inset 0 1px 4px 0 rgba(34, 36, 38, 0.12) !important;
-}
-
-.container {
-  min-height: 100vh;
-}
-
-.openSidebar .container {
-  transform: translate(150px, 0);
-  transition: transform 0.5s ease;
-}
-
-.closedSidebar .container {
-  transform: translate(0, 0);
-  transition: transform 0.5s ease;
-}
-
-.openSidebar nav {
-  transform: translate(0, 0);
-  transition: transform 0.5s ease;
-}
-
-.closedSidebar nav {
-  transform: translate(-150px, 0);
-  transition: transform 0.5s ease;
 }
 
 .container-raised-desktop {
@@ -127,6 +119,8 @@ nav .menu .item:last-child {
 @media (min-width: 768px) {
   .container {
     max-width: calc(100% - 150px);
+    margin-left: 150px;
+    margin-top: 1em;
   }
 
   .container-raised-desktop {
@@ -142,10 +136,6 @@ nav .menu .item:last-child {
   html,
   body {
     background-color: white;
-  }
-
-  nav {
-    box-shadow: none;
   }
 
   .container-full-page {

@@ -1,13 +1,11 @@
 import React from 'react'
 import { Route, Link } from 'react-router-dom'
 import { Icon, Menu } from 'semantic-ui-react'
-import Logo from '../components/Logo/index'
 import routes from '../router/routes'
 
-const SidebarMenu = () => (
-  <nav>
+const SidebarMenu = ({ isOpen, toggleSidebar }) => (
+  <nav className={isOpen ? 'open' : 'closed'} onClick={toggleSidebar}>
     <Menu fluid color="blue" vertical icon="labeled">
-      <Logo />
       {routes.map(route => (
         <Route
           key={route.path}

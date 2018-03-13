@@ -62,36 +62,34 @@ class App extends React.Component {
     }
     const { isSidebarOpen, isMobile, toggleSidebar } = this.props
     return (
-      <div
-        className={isSidebarOpen || !isMobile ? 'openSidebar' : 'closedSidebar'}
-        onClick={isSidebarOpen ? toggleSidebar : undefined}
-      >
-        <SidebarMenu />
-        <Dimmer.Dimmable
-          className="container"
-          onClick={isSidebarOpen ? toggleSidebar : undefined}
-        >
-          {flatten(routes).map(route => (
-            <Route
-              key={route.path}
-              path={route.path}
-              exact={route.exact}
-              render={props => (
-                <div>
-                  <Dimmer
-                    active={isMobile && isSidebarOpen}
-                    onClick={toggleSidebar}
-                  />
-                  <Header label={route.label} />
+      <React.Fragment>
+        <Dimmer
+          page
+          active={isMobile && isSidebarOpen}
+          onClick={toggleSidebar}
+        />
+        <SidebarMenu
+          isOpen={!isMobile || isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
+        {flatten(routes).map(route => (
+          <Route
+            key={route.path}
+            path={route.path}
+            exact={route.exact}
+            render={props => (
+              <React.Fragment>
+                <Header label={route.label} />
+                <div className="container">
                   <DemoNotice />
                   <SyncWarning />
                   <route.component {...props} />
                 </div>
-              )}
-            />
-          ))}
-        </Dimmer.Dimmable>
-      </div>
+              </React.Fragment>
+            )}
+          />
+        ))}
+      </React.Fragment>
     )
   }
 }
