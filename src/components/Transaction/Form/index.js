@@ -12,6 +12,7 @@ import { DropdownOption } from '../../types'
 import './index.css'
 
 class TransactionForm extends React.Component {
+  state = { searchQuery: '' }
   onChange = handler => (event, { value }) => handler(value)
 
   onAccountChange = handler => (event, { value }) => {
@@ -24,6 +25,8 @@ class TransactionForm extends React.Component {
   onTagAdd = (event, { value }) => {
     this.props.addTag({ kind: this.props.form.kind, tag: value })
   }
+  onTagSearchChange = (event, { searchQuery }) => this.setState({ searchQuery })
+  onTagClose = () => this.setState({ searchQuery: '' })
 
   getCurrencyOptions = accountId => {
     return this.props.accountCurrency[accountId].map(code => ({
@@ -97,6 +100,9 @@ class TransactionForm extends React.Component {
                         options={this.props.tagsOptions}
                         onChange={this.onChange(this.props.changeTags)}
                         onAddItem={this.onTagAdd}
+                        onClose={this.onTagClose}
+                        onSearchChange={this.onTagSearchChange}
+                        searchQuery={this.state.searchQuery}
                       />
                     </Form.Field>
                   </div>
