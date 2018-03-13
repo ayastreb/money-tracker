@@ -29,10 +29,3 @@ header .ui.header .icon {
 .ui.header .content {
   padding-left: 0.5rem !important;
 }
-
-@media (max-width: 767px) {
-  header {
-    padding: 10px;
-    height: 50px;
-  }
-}
