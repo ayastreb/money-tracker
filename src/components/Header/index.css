@@ -25,7 +25,3 @@ header .content {
 header .ui.header .icon {
   margin-top: 3px;
 }
-
-.ui.header .content {
-  padding-left: 0.5rem !important;
-}
