@@ -17,7 +17,7 @@ body {
 nav {
   position: fixed;
   top: 60px;
-  width: 150px;
+  width: 125px;
   min-height: 100%;
   transition: transform 0.5s ease;
   z-index: 101;
@@ -35,7 +35,7 @@ nav.open {
 }
 
 nav.closed {
-  transform: translate(-150px, 0);
+  transform: translate(-125px, 0);
 }
 
 nav .menu {
@@ -112,8 +112,8 @@ nav .menu .item:last-child {
 
 @media (min-width: 768px) {
   .container {
-    max-width: calc(100% - 150px);
-    margin-left: 150px;
+    max-width: calc(100% - 125px);
+    margin-left: 125px;
     margin-top: 1em;
   }
 
