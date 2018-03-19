@@ -48,7 +48,7 @@ class InitialSetup extends React.Component {
         </p>
         <AccountForm />
         {this.props.accounts.length > 0 && (
-          <div style={{ marginTop: '1em' }}>
+          <div style={{ margin: '1em' }}>
             <AccountList />
             <div className="form-submit">
               <Button
