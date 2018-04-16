@@ -22,9 +22,9 @@ const Transaction = {
     return KIND_LABEL[kind]
   },
   fromForm(data) {
+    const tags = data.tags[data.kind]
     return {
       ...data,
-      id: data.id || `T${Date.now()}`,
       amount: Currency.toInt(
         data.amount * (data.kind === EXPENSE ? -1 : 1),
         data.currency
@@ -33,8 +33,9 @@ const Transaction = {
         data.kind === TRANSFER
           ? Currency.toInt(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: data.tags[data.kind] || [],
-      date: data.date ? new Date(data.date).getTime() : undefined
+      note: data.note || undefined,
+      tags: tags && tags.length > 0 ? tags : undefined,
+      date: new Date(data.date).getTime()
     }
   },
   toForm(data) {
@@ -49,7 +50,8 @@ const Transaction = {
         data.kind === TRANSFER
           ? Currency.toFloat(data.linkedAmount, data.linkedCurrency)
           : undefined,
-      tags: { [EXPENSE]: [], [INCOME]: [], [data.kind]: data.tags },
+      note: data.note || '',
+      tags: { [EXPENSE]: [], [INCOME]: [], [data.kind]: data.tags || [] },
       date: data.date
         ? format(toLocalTimestamp(data.date), 'YYYY-MM-DD')
         : undefined
@@ -58,6 +60,7 @@ const Transaction = {
   fromStorage(data) {
     return {
       id: data._id,
+      date: parseInt(data._id.match(/T([0-9]+)-/)[1], 10),
       ...pick(data, Transaction.persistentKeys(data))
     }
   },
@@ -65,15 +68,7 @@ const Transaction = {
     return pick(data, Transaction.persistentKeys(data))
   },
   persistentKeys(data) {
-    const keys = [
-      'kind',
-      'date',
-      'note',
-      'tags',
-      'accountId',
-      'amount',
-      'currency'
-    ]
+    const keys = ['kind', 'note', 'tags', 'accountId', 'amount', 'currency']
     if (data.kind === TRANSFER) {
       keys.push(...['linkedAccountId', 'linkedAmount', 'linkedCurrency'])
     }

@@ -7,7 +7,8 @@ export const {
   loadRecentTransactionsSuccess,
   saveTransaction,
   saveTransactionSuccess,
-  removeTransaction
+  removeTransaction,
+  removeTransactionSuccess
 } = createActions(
   'LOAD_FILTER_TRANSACTIONS',
   'LOAD_FILTER_TRANSACTIONS_SUCCESS',
@@ -15,5 +16,6 @@ export const {
   'LOAD_RECENT_TRANSACTIONS_SUCCESS',
   'SAVE_TRANSACTION',
   'SAVE_TRANSACTION_SUCCESS',
-  'REMOVE_TRANSACTION'
+  'REMOVE_TRANSACTION',
+  'REMOVE_TRANSACTION_SUCCESS'
 )

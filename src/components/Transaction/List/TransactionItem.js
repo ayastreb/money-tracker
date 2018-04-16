@@ -28,7 +28,8 @@ class TransactionItem extends React.Component {
           {transaction.accountName}
           {this.renderArrow()}
           {transaction.kind === TRANSFER && transaction.linkedAccountName}
-          {transaction.tags.map(tag => <Label key={tag} content={tag} />)}
+          {transaction.tags &&
+            transaction.tags.map(tag => <Label key={tag} content={tag} />)}
           <span className="transaction-item__info__note">
             {transaction.note}
           </span>
@@ -50,7 +51,7 @@ class TransactionItem extends React.Component {
 
   renderArrow() {
     const { kind, tags, note } = this.props.transaction
-    if (kind !== TRANSFER && !tags.length && !note.length) return
+    if (kind !== TRANSFER && !tags && !note) return
 
     return (
       <Icon

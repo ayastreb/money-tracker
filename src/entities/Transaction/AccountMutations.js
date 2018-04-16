@@ -8,31 +8,13 @@ import { TRANSFER } from '../Transaction'
  * @return {array}
  */
 export default function getAccountsMutations(prev, next) {
-  const mutations = []
   const isNew = !prev
   const isRemoved = !next
 
-  if (isNew) {
-    mutations.push(...createTransaction(next))
-  } else if (isRemoved) {
-    mutations.push(...removeTransaction(prev))
-  } else if (isAmountChanged(prev, next)) {
-    mutations.push(...changeTransactionAmount(prev, next))
-  } else {
-    mutations.push(...removeTransaction(prev))
-    mutations.push(...createTransaction(next))
-  }
+  if (isNew) return createTransaction(next)
+  if (isRemoved) return removeTransaction(prev)
 
-  return mutations
-}
-
-function isAmountChanged(prev, next) {
-  const fields = ['kind', 'accountId', 'currency']
-  if (prev.kind === TRANSFER || next.kind === TRANSFER) {
-    fields.push('linkedAccountId', 'linkedCurrency')
-  }
-
-  return fields.every(field => prev[field] === next[field])
+  return [...removeTransaction(prev), ...createTransaction(next)]
 }
 
 function createTransaction(transaction) {
@@ -56,31 +38,6 @@ function createTransaction(transaction) {
       currency: transaction.linkedCurrency,
       amount: transaction.linkedAmount
     })
-  }
-
-  return mutations
-}
-
-function changeTransactionAmount(prev, next) {
-  const mutations = []
-  const amount = (next.amount - prev.amount) * (next.kind === TRANSFER ? -1 : 1)
-  if (amount !== 0) {
-    mutations.push({
-      accountId: next.accountId,
-      currency: next.currency,
-      amount
-    })
-  }
-
-  if (next.kind === TRANSFER) {
-    const linkedAmount = next.linkedAmount - prev.linkedAmount
-    if (linkedAmount !== 0) {
-      mutations.push({
-        accountId: next.linkedAccountId,
-        currency: next.linkedCurrency,
-        amount: linkedAmount
-      })
-    }
   }
 
   return mutations

@@ -5,6 +5,7 @@ import {
   saveAccount,
   saveAccountSuccess,
   saveAccountFailure,
+  updateAccount,
   removeAccount,
   removeAccountSuccess
 } from '../actions/entities/accounts'
@@ -29,6 +30,11 @@ export function* saveAccountSaga(action) {
   } catch (error) {
     yield put(saveAccountFailure(account.id))
   }
+}
+
+export function* updateAccountBalanceSaga(mutation) {
+  const account = yield call(AccountsStorage.mutateBalance, mutation)
+  yield put(updateAccount(account))
 }
 
 export function* removeAccountSaga(action) {

@@ -6,13 +6,13 @@ import {
   loadRecentTransactionsSuccess,
   saveTransaction,
   saveTransactionSuccess,
-  removeTransaction
+  removeTransaction,
+  removeTransactionSuccess
 } from '../actions/entities/transactions'
 import {
   changeFilterDate,
   applyFilters
 } from '../actions/ui/transaction/filter'
-import { updateAccount } from '../actions/entities/accounts'
 import {
   fillInTransactionForm,
   resetTransactionForm
@@ -20,10 +20,9 @@ import {
 import { getForm, getDefaultState } from '../selectors/ui/form/transaction'
 import { getFilters } from '../selectors/ui/transaction/filter'
 import getAccountsMutations from '../entities/Transaction/AccountMutations'
-import AccountsStorage from '../util/storage/accounts'
-import TagsStorage from '../util/storage/tags'
+import { updateAccountBalanceSaga } from './accounts'
+import { updateTagsUsage } from './tags'
 import TransactionsStorage from '../util/storage/transactions'
-import difference from '../util/SetDifference'
 
 export function* resetTransactionFormSaga() {
   const initialData = yield select(getDefaultState)
@@ -43,44 +42,33 @@ export function* loadRecentTransactionsSaga() {
 
 export function* removeTransactionSaga() {
   const form = yield select(getForm)
-  const transaction = yield call(TransactionsStorage.load, form.id)
-  if (transaction) {
-    yield call(updateAccountsBalance, transaction)
-    yield call(updateTagsUsage, transaction)
-    yield call(TransactionsStorage.remove, form.id)
-    yield call(loadRecentTransactionsSaga)
-    yield call(resetTransactionFormSaga)
-    yield call(loadFilterTransactionsSaga)
-  }
+  const prev = yield call(TransactionsStorage.remove, form.id)
+
+  yield call(updateAccountsBalance, prev)
+  yield call(updateTagsUsage, prev)
+  yield call(loadRecentTransactionsSaga)
+  yield call(loadFilterTransactionsSaga)
+  yield call(resetTransactionFormSaga)
+  yield put(removeTransactionSuccess())
 }
 
 export function* saveTransactionSaga(action) {
   const next = action.payload
-  const prev = yield call(TransactionsStorage.load, next.id)
+  const prev = yield call(TransactionsStorage.remove, next.id)
+  next.id = `T${next.date}-${Date.now()}`
 
   yield call(TransactionsStorage.save, next)
   yield call(updateAccountsBalance, prev, next)
   yield call(updateTagsUsage, prev, next)
-
+  yield call(loadRecentTransactionsSaga)
+  yield call(loadFilterTransactionsSaga)
+  yield call(resetTransactionFormSaga)
   yield put(saveTransactionSuccess())
 }
 
-export function* updateAccountsBalance(prev, next) {
+function* updateAccountsBalance(prev, next) {
   for (const mutation of getAccountsMutations(prev, next)) {
-    const account = yield call(AccountsStorage.mutateBalance, mutation)
-    yield put(updateAccount(account))
-  }
-}
-
-export function* updateTagsUsage(prev, next) {
-  const prevTags = new Set((prev && prev.tags) || [])
-  const nextTags = new Set((next && next.tags) || [])
-
-  for (const newTag of difference(nextTags, prevTags)) {
-    yield call(TagsStorage.updateUsage, next.kind, newTag, 1)
-  }
-  for (const oldTag of difference(prevTags, nextTags)) {
-    yield call(TagsStorage.updateUsage, prev.kind, oldTag, -1)
+    yield call(updateAccountBalanceSaga, mutation)
   }
 }
 

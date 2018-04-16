@@ -13,6 +13,12 @@ import './index.css'
 
 class TransactionForm extends React.Component {
   state = { searchQuery: '' }
+
+  onSubmit = event => {
+    event.preventDefault()
+    this.props.saveTransaction(Transaction.fromForm(this.props.form))
+  }
+
   onChange = handler => (event, { value }) => handler(value)
 
   onAccountChange = handler => (event, { value }) => {
@@ -42,6 +48,8 @@ class TransactionForm extends React.Component {
       : 'transaction-form-grid'
 
   render() {
+    if (!this.props.form.accountId) return null
+
     return (
       <React.Fragment>
         <Header
@@ -50,7 +58,7 @@ class TransactionForm extends React.Component {
           changeKind={this.props.changeKind}
         />
         <Segment attached="bottom">
-          <Form onSubmit={this.props.onSubmit} className="transaction-form">
+          <Form onSubmit={this.onSubmit} className="transaction-form">
             <Account
               label={this.props.form.kind === INCOME ? 'To' : 'From'}
               accountId={this.props.form.accountId}
@@ -153,8 +161,8 @@ TransactionForm.propTypes = {
     id: PropTypes.string,
     kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
     accountId: PropTypes.string,
-    amount: PropTypes.string.isRequired,
-    currency: PropTypes.string.isRequired,
+    amount: PropTypes.string,
+    currency: PropTypes.string,
     linkedAccountId: PropTypes.string,
     linkedAmount: PropTypes.string,
     linkedCurrency: PropTypes.string,
@@ -162,8 +170,8 @@ TransactionForm.propTypes = {
       [EXPENSE]: PropTypes.arrayOf(PropTypes.string),
       [INCOME]: PropTypes.arrayOf(PropTypes.string)
     }),
-    date: PropTypes.string.isRequired,
-    note: PropTypes.string.isRequired
+    date: PropTypes.string,
+    note: PropTypes.string
   }),
   accountCurrency: PropTypes.object.isRequired,
   accountOptions: PropTypes.arrayOf(DropdownOption).isRequired,
@@ -180,7 +188,7 @@ TransactionForm.propTypes = {
   changeDate: PropTypes.func.isRequired,
   changeNote: PropTypes.func.isRequired,
   loadTags: PropTypes.func,
-  onSubmit: PropTypes.func.isRequired
+  saveTransaction: PropTypes.func.isRequired
 }
 
 export default TransactionForm
