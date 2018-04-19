@@ -25,11 +25,21 @@ export default handleActions(
     }),
     [moveReportDateBackwards]: state => ({
       ...state,
-      date: Report.moveDateBackwards(state.date, state.timespan)
+      date: Report.moveDateBackwards(state.date, state.timespan),
+      data: {
+        ...state.data,
+        netWorthEnd: state.data.netWorthStart
+      },
+      netWorthStack: [state.data.netWorthEnd, ...state.netWorthStack]
     }),
     [moveReportDateForwards]: state => ({
       ...state,
-      date: Report.moveDateForwards(state.date, state.timespan)
+      date: Report.moveDateForwards(state.date, state.timespan),
+      data: {
+        ...state.data,
+        netWorthEnd: state.netWorthStack[0]
+      },
+      netWorthStack: state.netWorthStack.slice(1)
     }),
     [loadReport]: state => ({ ...state, isLoading: true }),
     [loadReportSuccess]: (state, { payload }) => ({
@@ -45,6 +55,7 @@ export default handleActions(
     kind: Report.defaultKind,
     timespan: Report.defaultTimespan,
     date: Report.defaultDate(),
-    accounts: []
+    accounts: [],
+    netWorthStack: []
   }
 )

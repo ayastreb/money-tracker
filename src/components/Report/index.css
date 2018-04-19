@@ -23,3 +23,12 @@
 .mt-report-expense-income .chartist-tooltip:before {
   border-top-color: #d4d4d5;
 }
+
+.mt-report-net-worth .ct-point,
+.mt-report-net-worth .ct-line {
+  stroke: #7cb342;
+}
+
+.mt-report-net-worth .ct-area {
+  fill: #7cb342;
+}

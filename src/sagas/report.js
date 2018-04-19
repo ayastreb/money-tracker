@@ -1,23 +1,25 @@
-import { takeLatest, put, call, select } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import {
+  changeReportAccounts,
   changeReportKind,
   changeReportTimespan,
-  changeReportAccounts,
-  moveReportDateBackwards,
-  moveReportDateForwards,
   loadReport,
+  loadReportFailure,
   loadReportSuccess,
-  loadReportFailure
+  moveReportDateBackwards,
+  moveReportDateForwards
 } from '../actions/ui/report'
-import { getReport } from '../selectors/ui/report'
-import { getBaseCurrency, getExchangeRate } from '../selectors/settings'
-import TransactionsStorage from '../util/storage/transactions'
 import Report from '../entities/Report'
+import { getNetWorth } from '../selectors/entities/accounts'
+import { getBaseCurrency, getExchangeRate } from '../selectors/settings'
+import { getReport } from '../selectors/ui/report'
+import TransactionsStorage from '../util/storage/transactions'
 
 export function* loadReportSaga() {
   const report = yield select(getReport)
   const base = yield select(getBaseCurrency)
   const exchangeRate = yield select(getExchangeRate)
+  const netWorthEnd = report.data.netWorthEnd || (yield select(getNetWorth))
   try {
     const transactions = yield call(
       TransactionsStorage.loadFiltered,
@@ -28,7 +30,8 @@ export function* loadReportSaga() {
       report,
       transactions,
       base,
-      exchangeRate
+      exchangeRate,
+      netWorthEnd
     )
     yield put(loadReportSuccess(data))
   } catch (error) {

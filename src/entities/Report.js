@@ -1,14 +1,15 @@
-import startOfYear from 'date-fns/start_of_year'
-import endOfYear from 'date-fns/end_of_year'
-import startOfMonth from 'date-fns/start_of_month'
-import endOfMonth from 'date-fns/end_of_month'
-import subMonths from 'date-fns/sub_months'
-import subYears from 'date-fns/sub_years'
 import addMonths from 'date-fns/add_months'
 import addYears from 'date-fns/add_years'
+import endOfMonth from 'date-fns/end_of_month'
+import endOfYear from 'date-fns/end_of_year'
 import format from 'date-fns/format'
-import ExpenseIncomeData from './Report/ExpenseIncomeData'
+import startOfMonth from 'date-fns/start_of_month'
+import startOfYear from 'date-fns/start_of_year'
+import subMonths from 'date-fns/sub_months'
+import subYears from 'date-fns/sub_years'
 import { toUtcTimestamp } from '../util/timezone'
+import ExpenseIncomeData from './Report/ExpenseIncomeData'
+import NetWorthData from './Report/NetWorthData'
 
 export const REPORT_EXPENSE_INCOME = 'expense_income'
 export const REPORT_EXPENSE_TAGS = 'expense_tags'
@@ -80,10 +81,18 @@ const Report = {
       accounts: report.accounts
     }
   },
-  prepareData(report, transactions, base, exchangeRate) {
+  prepareData(report, transactions, base, exchangeRate, netWorthEnd) {
     switch (report.kind) {
       case REPORT_EXPENSE_INCOME:
         return ExpenseIncomeData(report, transactions, base, exchangeRate)
+      case REPORT_NET_WORTH:
+        return NetWorthData(
+          report,
+          transactions,
+          base,
+          exchangeRate,
+          netWorthEnd
+        )
       default:
         return undefined
     }
