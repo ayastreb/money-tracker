@@ -10,7 +10,7 @@ export default function ExpenseTagsData(
   const data = new Map()
 
   for (const tx of transactions) {
-    if (tx.kind !== EXPENSE) continue
+    if (tx.kind !== EXPENSE || !tx.tags) continue
     for (const tag of tx.tags) {
       const tagAmount = data.get(tag) || 0
       const amount = Currency.convert(

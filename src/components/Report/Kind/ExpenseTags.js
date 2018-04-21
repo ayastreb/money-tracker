@@ -10,13 +10,13 @@ import ChartistGraph from 'react-chartist'
 class ExpenseTags extends React.Component {
   render() {
     const options = {
-      reverseData: true,
       axisY: {
         offset: 70
       },
       axisX: {
         labelInterpolationFnc: value => abbreviate(value, 2)
       },
+      reverseData: true,
       horizontalBars: true,
       plugins: [
         Chartist.plugins.tooltip({
@@ -30,7 +30,8 @@ class ExpenseTags extends React.Component {
     return (
       <ChartistGraph
         type="Bar"
-        className="ct-octave mt-report-expense-tags"
+        className="mt-report-expense-tags"
+        style={{ height: `${this.props.data.labels.length * 3}em` }}
         data={this.props.data}
         options={options}
       />

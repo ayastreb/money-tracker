@@ -35,7 +35,7 @@ export function* loadReportSaga() {
     )
     yield put(loadReportSuccess(data))
   } catch (error) {
-    yield put(loadReportFailure(error))
+    yield put(loadReportFailure(error.message))
   }
 }
 
