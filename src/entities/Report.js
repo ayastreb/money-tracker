@@ -10,6 +10,7 @@ import subYears from 'date-fns/sub_years'
 import { toUtcTimestamp } from '../util/timezone'
 import ExpenseIncomeData from './Report/ExpenseIncomeData'
 import NetWorthData from './Report/NetWorthData'
+import ExpenseTagsData from './Report/ExpenseTagsData'
 
 export const REPORT_EXPENSE_INCOME = 'expense_income'
 export const REPORT_EXPENSE_TAGS = 'expense_tags'
@@ -93,6 +94,8 @@ const Report = {
           exchangeRate,
           netWorthEnd
         )
+      case REPORT_EXPENSE_TAGS:
+        return ExpenseTagsData(report, transactions, base, exchangeRate)
       default:
         return undefined
     }

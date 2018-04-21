@@ -15,13 +15,10 @@
   stroke-opacity: 0.75;
 }
 
-.mt-report-expense-income .chartist-tooltip {
-  background: #d4d4d5;
-  border-radius: 3px;
-}
-
-.mt-report-expense-income .chartist-tooltip:before {
-  border-top-color: #d4d4d5;
+.mt-report-expense-tags .ct-bar {
+  stroke: #f44336;
+  stroke-width: 1em;
+  stroke-opacity: 0.75;
 }
 
 .mt-report-net-worth .ct-point,
@@ -31,4 +28,13 @@
 
 .mt-report-net-worth .ct-area {
   fill: #7cb342;
+}
+
+.chartist-tooltip {
+  background: #d4d4d5;
+  border-radius: 3px;
+}
+
+.chartist-tooltip:before {
+  border-top-color: #d4d4d5;
 }

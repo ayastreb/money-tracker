@@ -37,8 +37,8 @@ export default function NetWorthData(
 
     lastPeriod = period
 
-    data[period] += Currency.convert(
-      Math.abs(tx.amount) * (tx.kind === INCOME ? -1 : 1),
+    data[period] -= Currency.convert(
+      tx.amount,
       exchangeRate[tx.currency],
       base,
       tx.currency
