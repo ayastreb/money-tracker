@@ -18,6 +18,7 @@ class TransactionList extends React.Component {
           <div className="transactions-list__empty">No transactions found.</div>
         )}
         <ModalForm
+          currentTransactionId={this.props.currentTransactionId}
           EditForm={this.props.EditForm}
           isOpen={this.props.isModalOpen}
           isEdit={this.props.isEdit}
@@ -40,6 +41,7 @@ class TransactionList extends React.Component {
 TransactionList.propTypes = {
   isLoading: PropTypes.bool,
   transactions: PropTypes.arrayOf(PropTypes.object),
+  currentTransactionId: PropTypes.string,
   isModalOpen: PropTypes.bool,
   isEdit: PropTypes.bool,
   openTransactionInModal: PropTypes.func,

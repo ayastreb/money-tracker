@@ -11,6 +11,10 @@ import Transaction, {
 import { DropdownOption } from '../../types'
 import './index.css'
 
+const NoAccounts = () => (
+  <div className="transactions-form__empty">You don't have any accounts.</div>
+)
+
 class TransactionForm extends React.Component {
   state = { searchQuery: '' }
 
@@ -48,7 +52,7 @@ class TransactionForm extends React.Component {
       : 'transaction-form-grid'
 
   render() {
-    if (!this.props.form.accountId) return null
+    if (!this.props.form.accountId) return <NoAccounts />
 
     return (
       <React.Fragment>

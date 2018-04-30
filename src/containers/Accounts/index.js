@@ -1,15 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'semantic-ui-react'
-import { loadAccounts, removeAccount } from '../../actions/entities/accounts'
+import {
+  loadAccounts,
+  removeAccountRequest,
+  removeAccount
+} from '../../actions/entities/accounts'
 import {
   openAccountInModal,
   resetAccountForm
 } from '../../actions/ui/form/account'
-import { getForm } from '../../selectors/ui/form/account'
-import ModalForm from '../../components/Account/List/ModalForm'
+import { getForm, getModal } from '../../selectors/ui/form/account'
+import ModalForm from '../../components/Account/ModalForm'
 import AccountsList from './List'
 import AccountForm from './Form'
+import { getAccountsAsOptions } from '../../selectors/entities/accounts'
 
 class Accounts extends React.Component {
   componentWillMount() {
@@ -40,8 +45,11 @@ class Accounts extends React.Component {
 
 const mapStateToProps = state => ({
   form: getForm(state),
-  isModalOpen: getForm(state).isModalOpen,
+  modal: getModal(state),
   isEdit: getForm(state).id !== undefined,
+  accountOptions: getAccountsAsOptions(state).filter(
+    option => option.key !== getForm(state).id
+  ),
   EditForm: AccountForm
 })
 
@@ -49,5 +57,6 @@ export default connect(mapStateToProps, {
   loadAccounts,
   openAccountInModal,
   resetAccountForm,
+  removeAccountRequest,
   removeAccount
 })(Accounts)

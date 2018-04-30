@@ -14,13 +14,17 @@ import Account from '../../../entities/Account'
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
-    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
-    completed: false
+    completed: false,
+    isModalOpen: false,
+    isDeleteRequest: false,
+    isDeleteRunning: false,
+    itemsToProcess: Infinity,
+    itemsProcessed: 0
   })
 })
 
@@ -40,13 +44,17 @@ it('resets to initial state when account is created', () => {
       saveAccountSuccess()
     )
   ).toEqual({
-    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
-    completed: true
+    completed: true,
+    isModalOpen: false,
+    isDeleteRequest: false,
+    isDeleteRunning: false,
+    itemsToProcess: Infinity,
+    itemsProcessed: 0
   })
 })
 
@@ -57,13 +65,17 @@ it('resets to initial state', () => {
       resetAccountForm()
     )
   ).toEqual({
-    isModalOpen: false,
     name: '',
     group: Account.defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
-    completed: false
+    completed: false,
+    isModalOpen: false,
+    isDeleteRequest: false,
+    isDeleteRunning: false,
+    itemsToProcess: Infinity,
+    itemsProcessed: 0
   })
 })
 

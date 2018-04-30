@@ -1,11 +1,11 @@
 import { accountsDB, remoteAccountsDB, destroyAccountsDB } from './pouchdb'
-import TransactionsStorage from './transactions'
 import Account from '../../entities/Account'
 
 export default {
   sync,
   loadAll,
   save,
+  archive,
   mutateBalance,
   remove,
   destroy
@@ -59,6 +59,12 @@ function save(account) {
     })
 }
 
+function archive(accountId) {
+  return accountsDB()
+    .get(accountId)
+    .then(doc => accountsDB().put({ ...doc, archived: true }))
+}
+
 function mutateBalance({ accountId, currency, amount }) {
   return accountsDB()
     .get(accountId)
@@ -67,9 +73,9 @@ function mutateBalance({ accountId, currency, amount }) {
     .then(doc => Account.fromStorage(doc))
 }
 
-function remove(id) {
-  return TransactionsStorage.removeByAccount(id)
-    .then(() => accountsDB().get(id))
+function remove(accountId) {
+  return accountsDB()
+    .get(accountId)
     .then(doc => accountsDB().put({ ...doc, _deleted: true }))
     .catch(err => {
       if (err.status !== 404) throw err

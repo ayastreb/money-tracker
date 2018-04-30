@@ -1,5 +1,4 @@
 import { handleActions, combineActions } from 'redux-actions'
-
 import pick from 'lodash/pick'
 import {
   fillInAccountForm,
@@ -13,7 +12,11 @@ import {
 } from '../../../actions/ui/form/account'
 import {
   saveAccountSuccess,
-  removeAccountSuccess
+  removeAccountRequest,
+  removeAccountStart,
+  removeAccountFailure,
+  removeAccountSuccess,
+  removeAccountItemProcessed
 } from '../../../actions/entities/accounts'
 import { changeSettingsCurrency } from '../../../actions/settings'
 import Account from '../../../entities/Account'
@@ -25,7 +28,11 @@ const initialState = {
   currencies: [],
   on_dashboard: true,
   completed: false,
-  isModalOpen: false
+  isModalOpen: false,
+  isDeleteRequest: false,
+  isDeleteRunning: false,
+  itemsToProcess: Infinity,
+  itemsProcessed: 0
 }
 export default handleActions(
   {
@@ -77,6 +84,23 @@ export default handleActions(
     [fillInAccountForm]: (state, { payload }) => ({
       ...state,
       ...Account.toForm(payload)
+    }),
+    [removeAccountRequest]: state => ({
+      ...state,
+      isDeleteRequest: !state.isDeleteRequest
+    }),
+    [removeAccountStart]: (state, action) => ({
+      ...state,
+      isDeleteRunning: true,
+      itemsToProcess: action.payload
+    }),
+    [combineActions(removeAccountSuccess, removeAccountFailure)]: state => ({
+      ...state,
+      isDeleteRunning: false
+    }),
+    [removeAccountItemProcessed]: (state, action) => ({
+      ...state,
+      itemsProcessed: action.payload
     })
   },
   initialState

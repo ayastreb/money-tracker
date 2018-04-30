@@ -35,7 +35,7 @@ class Filter extends React.Component {
               icon="plus"
               labelPosition="left"
               content="New"
-              onClick={this.props.openTransactionInModal}
+              onClick={() => this.props.openTransactionInModal()}
             />
             <Dropdown
               button

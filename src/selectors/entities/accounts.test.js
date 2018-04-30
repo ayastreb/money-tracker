@@ -81,15 +81,15 @@ it('gets list of used currencies', () => {
 it('gets accounts as dropdown options list', () => {
   const expectedOptions = [
     {
-      key: 'A12345',
-      value: 'A12345',
-      text: 'foo',
-      description: 'Cash'
-    },
-    {
       key: 'A12346',
       value: 'A12346',
       text: 'bar',
+      description: 'Cash'
+    },
+    {
+      key: 'A12345',
+      value: 'A12345',
+      text: 'foo',
       description: 'Cash'
     },
     {
@@ -129,20 +129,20 @@ it('get grouped accounts map with calculated base total', () => {
       total: 1275, // => $3.66 + $9.09
       accounts: [
         {
-          id: 'A12345',
-          name: 'foo',
-          group: 'cash',
-          balance: { USD: 100, EUR: 200 }, // => $1 + $2.66 => $3.66
-          currencies: ['USD', 'EUR'],
-          on_dashboard: true
-        },
-        {
           id: 'A12346',
           name: 'bar',
           group: 'cash',
           balance: { JPY: 1000 }, // => $9.09
           currencies: ['JPY'],
           on_dashboard: false
+        },
+        {
+          id: 'A12345',
+          name: 'foo',
+          group: 'cash',
+          balance: { USD: 100, EUR: 200 }, // => $1 + $2.66 => $3.66
+          currencies: ['USD', 'EUR'],
+          on_dashboard: true
         }
       ]
     },

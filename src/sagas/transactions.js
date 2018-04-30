@@ -17,7 +17,7 @@ import {
   fillInTransactionForm,
   resetTransactionForm
 } from '../actions/ui/form/transaction'
-import { getForm, getDefaultState } from '../selectors/ui/form/transaction'
+import { getDefaultState } from '../selectors/ui/form/transaction'
 import { getFilters } from '../selectors/ui/transaction/filter'
 import getAccountsMutations from '../entities/Transaction/AccountMutations'
 import { updateAccountBalanceSaga } from './accounts'
@@ -40,9 +40,8 @@ export function* loadRecentTransactionsSaga() {
   yield put(loadRecentTransactionsSuccess(transactions))
 }
 
-export function* removeTransactionSaga() {
-  const form = yield select(getForm)
-  const prev = yield call(TransactionsStorage.remove, form.id)
+export function* removeTransactionSaga(action) {
+  const prev = yield call(TransactionsStorage.remove, action.payload)
 
   yield call(updateAccountsBalance, prev)
   yield call(updateTagsUsage, prev)

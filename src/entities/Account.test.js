@@ -151,6 +151,7 @@ it('skips id from data when write to storage', () => {
 it('returns new record when mutating balance', () => {
   const original = {
     name: 'Test',
+    currencies: ['USD', 'JPY'],
     balance: {
       USD: 10095,
       JPY: 2200
@@ -161,6 +162,7 @@ it('returns new record when mutating balance', () => {
   expect(original === mutated1).toBeFalsy()
   expect(original).toEqual({
     name: 'Test',
+    currencies: ['USD', 'JPY'],
     balance: {
       USD: 10095,
       JPY: 2200
@@ -168,6 +170,7 @@ it('returns new record when mutating balance', () => {
   })
   expect(mutated1).toEqual({
     name: 'Test',
+    currencies: ['USD', 'JPY'],
     balance: {
       USD: 10195,
       JPY: 2200
@@ -175,6 +178,7 @@ it('returns new record when mutating balance', () => {
   })
   expect(mutated2).toEqual({
     name: 'Test',
+    currencies: ['USD', 'JPY'],
     balance: {
       USD: 10095,
       JPY: 2000

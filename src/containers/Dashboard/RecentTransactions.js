@@ -10,6 +10,7 @@ import { getForm } from '../../selectors/ui/form/transaction'
 import TransactionForm from '../Transactions/Form'
 
 const mapStateToProps = state => ({
+  currentTransactionId: getForm(state).id,
   transactions: getRecentTransactions(state),
   isModalOpen: getForm(state).isModalOpen,
   isEdit: getForm(state).id !== undefined,

@@ -1,41 +1,68 @@
 import format from 'date-fns/format'
 import { createSelector } from 'reselect'
-import { getAccountsList } from '../../entities/accounts'
+import {
+  getAccountsCurrencyMap,
+  getAccountsAsOptions
+} from '../../entities/accounts'
 import { getBaseCurrency } from '../../settings'
 import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction'
 
 export const getForm = state => state.ui.form.transaction
 
-export const getDefaultState = createSelector(
-  getAccountsList,
-  getBaseCurrency,
-  (accounts, base) => {
-    const accountId = accounts[0].id
-    const currency = accounts[0].currencies.includes(base)
-      ? base
-      : accounts[0].currencies[0]
-    let linkedAccountId = null
-    let linkedCurrency = null
-    if (accounts.length > 1 || accounts[0].currencies.length > 1) {
-      if (accounts.length > 1) {
-        linkedAccountId = accounts[1].id
-        linkedCurrency = accounts[1].currencies.includes(base)
-          ? base
-          : accounts[1].currencies[0]
-      } else {
-        linkedAccountId = accounts[0].id
-        linkedCurrency = accounts[0].currencies[1]
-      }
-    }
+const getDefaultAccountId = createSelector(
+  getAccountsAsOptions,
+  options => options.length > 0 && options[0].key
+)
 
+const getDefaultCurrency = createSelector(
+  getDefaultAccountId,
+  getAccountsCurrencyMap,
+  getBaseCurrency,
+  (accountId, currencies, base) =>
+    accountId &&
+    (currencies[accountId].includes(base) ? base : currencies[accountId][0])
+)
+
+const getDefaultLinkedAccountId = createSelector(
+  getAccountsAsOptions,
+  getDefaultAccountId,
+  getAccountsCurrencyMap,
+  (options, defaultAccountId, currencies) =>
+    options.length > 1
+      ? options[1].key
+      : defaultAccountId &&
+        currencies[defaultAccountId].length > 1 &&
+        defaultAccountId
+)
+
+const getDefaultLinkedCurrency = createSelector(
+  getDefaultAccountId,
+  getDefaultLinkedAccountId,
+  getAccountsCurrencyMap,
+  getBaseCurrency,
+  (accountId, linkedAccountId, currencies, base) =>
+    accountId && accountId === linkedAccountId
+      ? currencies[accountId][1]
+      : linkedAccountId &&
+        (currencies[linkedAccountId].includes(base)
+          ? base
+          : currencies[linkedAccountId][0])
+)
+
+export const getDefaultState = createSelector(
+  getDefaultAccountId,
+  getDefaultCurrency,
+  getDefaultLinkedAccountId,
+  getDefaultLinkedCurrency,
+  (accountId, currency, linkedAccountId, linkedCurrency) => {
     return {
       kind: Transaction.defaultKind,
       isModalOpen: false,
-      accountId,
-      currency,
+      accountId: accountId || null,
+      currency: currency || null,
       amount: '',
-      linkedAccountId,
-      linkedCurrency,
+      linkedAccountId: linkedAccountId || null,
+      linkedCurrency: linkedCurrency || null,
       linkedAmount: '',
       tags: {
         [EXPENSE]: [],

@@ -17,18 +17,15 @@ export const getAccountByName = name =>
 export const getAccountsList = state =>
   EntityMap.map(state.entities.accounts, account => ({ ...account }))
 
-export const getDashboardAccountsList = createSelector(
+export const getVisibleAccountsList = createSelector(
   getAccountsList,
-  accounts => accounts.filter(account => account.on_dashboard)
+  accounts => accounts.filter(account => !account.archived)
 )
 
-export const getAccountsAsOptions = state =>
-  EntityMap.map(state.entities.accounts, account => ({
-    key: account.id,
-    value: account.id,
-    text: account.name,
-    description: Account.groupName(account.group)
-  }))
+export const getDashboardAccountsList = createSelector(
+  getVisibleAccountsList,
+  accounts => accounts.filter(account => account.on_dashboard)
+)
 
 export const getAccountsNameMap = createSelector(getAccountsList, accounts =>
   accounts.reduce((acc, account) => {
@@ -58,8 +55,8 @@ export const getAccountsCurrencyList = createSelector(
     )
 )
 
-const groupAccounts = (accounts, base, rate) =>
-  accounts.reduce((grouped, account) => {
+const groupAccounts = (accounts, base, rate) => {
+  const grouped = accounts.reduce((grouped, account) => {
     const group = account.group
     if (!grouped[group]) {
       grouped[group] = {
@@ -75,6 +72,20 @@ const groupAccounts = (accounts, base, rate) =>
     return grouped
   }, {})
 
+  for (const group of Object.keys(grouped)) {
+    grouped[group].accounts.sort((a, b) => a.name > b.name)
+  }
+
+  return grouped
+}
+
+export const getVisibleGroupedAccounts = createSelector(
+  getVisibleAccountsList,
+  getBaseCurrency,
+  getExchangeRate,
+  groupAccounts
+)
+
 export const getDashboardGroupedAccounts = createSelector(
   getDashboardAccountsList,
   getBaseCurrency,
@@ -87,6 +98,24 @@ export const getGroupedAccounts = createSelector(
   getBaseCurrency,
   getExchangeRate,
   groupAccounts
+)
+
+export const getAccountsAsOptions = createSelector(
+  getVisibleGroupedAccounts,
+  groups => {
+    const options = []
+    for (const group of Object.keys(groups)) {
+      for (const account of groups[group].accounts) {
+        options.push({
+          key: account.id,
+          value: account.id,
+          text: account.name,
+          description: Account.groupName(group)
+        })
+      }
+    }
+    return options
+  }
 )
 
 export const getNetWorth = createSelector(

@@ -13,7 +13,6 @@ export default {
   loadFiltered,
   save,
   remove,
-  removeByAccount,
   destroy
 }
 
@@ -91,6 +90,7 @@ function loadFiltered(filters = {}) {
  * @return {array}
  */
 function filterByAccount(docs, accounts) {
+  if (Array.isArray(accounts)) accounts = new Set(accounts)
   if (!accounts || !accounts.size) return docs
 
   return docs.filter(
@@ -141,10 +141,6 @@ function remove(id) {
       if (err.status !== 404) throw err
       return false
     })
-}
-
-async function removeByAccount(accountId) {
-  return true
 }
 
 function destroy() {

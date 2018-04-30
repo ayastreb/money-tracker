@@ -15,7 +15,7 @@ export const getRecentTransactions = createSelector(
   (transactions, accounts) =>
     EntityMap.map(
       transactions,
-      transaction => joinAccountName(transaction, accounts),
+      transaction => joinAccount(transaction, accounts),
       Transaction.recentListLimit
     )
 )
@@ -27,17 +27,20 @@ export const getFilterTransactions = createSelector(
   (transactions, page, accounts) =>
     EntityMap.map(
       transactions,
-      transaction => joinAccountName(transaction, accounts),
+      transaction => joinAccount(transaction, accounts),
       Transaction.rowsPerSearchPage,
       page * Transaction.rowsPerSearchPage
     )
 )
 
-function joinAccountName(transaction, accounts) {
+function joinAccount(transaction, accounts) {
+  const account = EntityMap.get(accounts, transaction.accountId)
+  const linked = EntityMap.get(accounts, transaction.linkedAccountId)
   return {
     ...transaction,
-    accountName: EntityMap.get(accounts, transaction.accountId).name,
-    linkedAccountName: EntityMap.get(accounts, transaction.linkedAccountId).name
+    archived: account.archived || linked.archived,
+    accountName: account.name,
+    linkedAccountName: linked.name
   }
 }
 

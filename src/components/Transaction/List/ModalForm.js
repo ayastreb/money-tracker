@@ -24,7 +24,7 @@ const ModalForm = props => (
           icon="trash"
           content="Delete"
           labelPosition="right"
-          onClick={props.removeTransaction}
+          onClick={() => props.removeTransaction(props.currentTransactionId)}
         />
       </Modal.Actions>
     )}
@@ -32,6 +32,7 @@ const ModalForm = props => (
 )
 
 ModalForm.propTypes = {
+  currentTransactionId: PropTypes.string,
   isOpen: PropTypes.bool,
   isEdit: PropTypes.bool,
   resetTransactionForm: PropTypes.func,

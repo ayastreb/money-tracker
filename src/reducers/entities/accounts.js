@@ -4,7 +4,7 @@ import {
   saveAccount,
   saveAccountFailure,
   updateAccount,
-  removeAccount
+  removeAccountSuccess
 } from '../../actions/entities/accounts'
 import { signOutComplete } from '../../actions/user'
 import EntityMap from '../../entities/EntityMap'
@@ -21,7 +21,10 @@ export default handleActions(
       const account = action.payload
       return EntityMap.set(state, account)
     },
-    [combineActions(removeAccount, saveAccountFailure)]: (state, action) => {
+    [combineActions(removeAccountSuccess, saveAccountFailure)]: (
+      state,
+      action
+    ) => {
       const accountId = action.payload
       return EntityMap.remove(state, accountId)
     },

@@ -7,6 +7,21 @@
   font-family: 'Roboto Mono', monospace !important;
 }
 
+.transactions-form__empty {
+  border: solid 1px #d4d4d5;
+  border-radius: 0.28571429rem;
+  padding: 1em;
+  font-size: 1rem;
+}
+
+@media (max-width: 767px) {
+  .transactions-form__empty {
+    border: none;
+    border-top: solid 1px #d4d4d5;
+    border-radius: 0;
+  }
+}
+
 .transaction-form .ui.labeled.input .label {
   width: 4.9em !important;
   font-family: 'Roboto Mono', monospace !important;

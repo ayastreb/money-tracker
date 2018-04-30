@@ -10,6 +10,7 @@ it('returns default state for single account, single currency', () => {
         {
           id: 'A12345',
           name: 'foo',
+          group: 'cash',
           balance: { USD: 199 },
           currencies: ['USD']
         }
@@ -18,6 +19,9 @@ it('returns default state for single account, single currency', () => {
     settings: {
       currency: {
         base: 'USD'
+      },
+      exchangeRate: {
+        USD: 1
       }
     }
   }
@@ -48,6 +52,7 @@ it('returns default state for single account, multiple currencies', () => {
         {
           id: 'A12345',
           name: 'foo',
+          group: 'cash',
           balance: { USD: 199, JPY: 2000 },
           currencies: ['USD', 'JPY']
         }
@@ -56,6 +61,10 @@ it('returns default state for single account, multiple currencies', () => {
     settings: {
       currency: {
         base: 'USD'
+      },
+      exchangeRate: {
+        USD: 1,
+        JPY: 0.01
       }
     }
   }
@@ -85,13 +94,15 @@ it('returns default state for multiple accounts', () => {
       accounts: EntityMap.fromArray([
         {
           id: 'A12345',
-          name: 'foo',
+          name: '1.foo',
+          group: 'cash',
           balance: { USD: 199, JPY: 2000 },
           currencies: ['USD', 'JPY']
         },
         {
           id: 'A12346',
-          name: 'bar',
+          name: '2.bar',
+          group: 'cash',
           balance: { EUR: 100 },
           currencies: ['EUR']
         }
@@ -100,6 +111,11 @@ it('returns default state for multiple accounts', () => {
     settings: {
       currency: {
         base: 'JPY'
+      },
+      exchangeRate: {
+        USD: 108,
+        EUR: 126,
+        JPY: 1
       }
     }
   }

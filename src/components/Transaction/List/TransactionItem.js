@@ -43,7 +43,13 @@ class TransactionItem extends React.Component {
           {transaction.kind === TRANSFER && this.renderLinkedAmount()}
         </div>
         <div className="transaction-item__edit">
-          <Button circular basic icon="pencil" onClick={this.handleEditClick} />
+          <Button
+            circular
+            basic
+            icon="pencil"
+            onClick={this.handleEditClick}
+            disabled={transaction.archived}
+          />
         </div>
       </div>
     )
