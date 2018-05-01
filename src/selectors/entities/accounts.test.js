@@ -74,7 +74,7 @@ it('gets accounts currency map', () => {
 })
 
 it('gets list of used currencies', () => {
-  const expectedCurrencyList = ['USD', 'EUR', 'JPY']
+  const expectedCurrencyList = ['JPY', 'USD', 'EUR']
   expect(getAccountsCurrencyList(state)).toEqual(expectedCurrencyList)
 })
 

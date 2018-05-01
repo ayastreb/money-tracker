@@ -15,7 +15,9 @@ export const getAccountByName = name =>
   )
 
 export const getAccountsList = state =>
-  EntityMap.map(state.entities.accounts, account => ({ ...account }))
+  EntityMap.map(state.entities.accounts, account => ({ ...account })).sort(
+    (a, b) => a.name > b.name
+  )
 
 export const getVisibleAccountsList = createSelector(
   getAccountsList,
