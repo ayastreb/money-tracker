@@ -3,36 +3,35 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "auth0-js": "9.3.3",
+    "auth0-js": "9.5.1",
     "chartist": "^0.11.0",
     "chartist-plugin-tooltips": "0.0.17",
     "date-fns": "^1.29.0",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "number-abbreviate": "^2.0.0",
     "pouchdb": "^6.4.3",
-    "pouchdb-find": "^6.4.3",
     "prop-types": "^15.6.1",
-    "react": "^16.2.0",
+    "react": "^16.3.2",
     "react-chartist": "^0.13.1",
-    "react-day-picker": "^7.1.2",
-    "react-dom": "^16.2.0",
+    "react-day-picker": "^7.1.6",
+    "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.0.17",
-    "redux": "^3.7.2",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
     "redux-actions": "^2.3.0",
     "redux-devtools-extension": "^2.13.2",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
     "semantic-ui-css": "2.2.14",
-    "semantic-ui-react": "0.78.3"
+    "semantic-ui-react": "0.79.1"
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.7.0",
-    "react-test-renderer": "^16.2.0",
-    "surge": "^0.19.0"
+    "react-test-renderer": "^16.3.2",
+    "surge": "^0.20.1"
   },
   "scripts": {
     "pretty": "prettier --write --single-quote --no-semi 'src/**/*.js'",
@@ -40,7 +39,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy":
-      "npm run build && cd build && mv index.html 200.html && surge ./ app.moneytracker.cc && surge ./ demo.moneytracker.cc"
+    "deploy": "npm run build && cd build && mv index.html 200.html && surge ./ app.moneytracker.cc && surge ./ demo.moneytracker.cc"
   }
 }
