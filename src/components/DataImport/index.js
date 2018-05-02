@@ -7,8 +7,6 @@ import './index.css'
 class DataImport extends React.Component {
   handleFileChange = event => this.props.openImportFile(event.target.files[0])
   handleOpenFile = () => this.fileInput.click()
-  handleDiscard = () => this.props.discardImportFile()
-  handleStart = () => this.props.startDataImport()
 
   render() {
     return (
@@ -23,7 +21,7 @@ class DataImport extends React.Component {
           />
         )}
         {!this.props.isFileSelected && (
-          <div>
+          <React.Fragment>
             <Button
               content="Open File"
               icon="file text"
@@ -37,10 +35,10 @@ class DataImport extends React.Component {
               }}
               onChange={this.handleFileChange}
             />
-          </div>
+          </React.Fragment>
         )}
         {this.props.isFileSelected && (
-          <div>
+          <React.Fragment>
             <p>
               Selected file:{' '}
               <strong>
@@ -49,9 +47,11 @@ class DataImport extends React.Component {
             </p>
             {!this.props.isProcessing && (
               <Button.Group>
-                <Button onClick={this.handleDiscard}>Discard File</Button>
+                <Button onClick={this.props.discardImportFile}>
+                  Discard File
+                </Button>
                 <Button.Or />
-                <Button onClick={this.handleStart} positive>
+                <Button onClick={this.props.startDataImport} positive>
                   Start Import
                 </Button>
               </Button.Group>
@@ -65,7 +65,7 @@ class DataImport extends React.Component {
                 value={this.props.linesProcessed}
               />
             )}
-          </div>
+          </React.Fragment>
         )}
       </div>
     )

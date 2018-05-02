@@ -30,7 +30,7 @@ class BalanceTable extends React.Component {
   }
 
   handleBalanceChange = code => (event, { value }) => {
-    this.props.changeBalance({ code: code, balance: value })
+    this.props.changeBalance({ code, balance: value })
   }
 
   render() {

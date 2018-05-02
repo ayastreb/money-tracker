@@ -14,7 +14,6 @@ class AccountForm extends React.Component {
 
   handleNameChange = (event, { value }) => this.props.changeName(value)
   handleGroupChange = (event, { value }) => this.props.changeGroup(value)
-  toggleOnDashboard = event => this.props.toggleOnDashboard()
 
   handleSubmit = event => {
     event.preventDefault()
@@ -47,7 +46,7 @@ class AccountForm extends React.Component {
             <Checkbox
               label="Show on Dashboard"
               checked={this.props.form.on_dashboard}
-              onChange={this.toggleOnDashboard}
+              onChange={this.props.toggleOnDashboard}
             />
           </Form.Field>
           <Form.Button width={7} primary fluid content="Save Account" />

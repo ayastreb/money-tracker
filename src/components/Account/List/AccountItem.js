@@ -20,9 +20,11 @@ class AccountItem extends React.Component {
         </div>
         <div className="account-widget-account__balance">
           {this.props.account.currencies.map(code => (
-            <div key={code}>
-              <Amount value={this.props.account.balance[code]} code={code} />
-            </div>
+            <Amount
+              key={code}
+              value={this.props.account.balance[code]}
+              code={code}
+            />
           ))}
         </div>
         {this.props.openAccountInModal && (
