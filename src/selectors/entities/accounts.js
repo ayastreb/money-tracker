@@ -3,6 +3,7 @@ import { getBaseCurrency, getExchangeRate } from '../settings'
 import Account from '../../entities/Account'
 import Currency from '../../entities/Currency'
 import EntityMap from '../../entities/EntityMap'
+import sortByName from '../../util/sortByName'
 
 export const getAccountsMap = state => state.entities.accounts
 
@@ -16,7 +17,7 @@ export const getAccountByName = name =>
 
 export const getAccountsList = state =>
   EntityMap.map(state.entities.accounts, account => ({ ...account })).sort(
-    (a, b) => a.name > b.name
+    sortByName
   )
 
 export const getVisibleAccountsList = createSelector(
@@ -75,7 +76,7 @@ const groupAccounts = (accounts, base, rate) => {
   }, {})
 
   for (const group of Object.keys(grouped)) {
-    grouped[group].accounts.sort((a, b) => a.name > b.name)
+    grouped[group].accounts.sort(sortByName)
   }
 
   return grouped
