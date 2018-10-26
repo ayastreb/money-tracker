@@ -27,16 +27,16 @@ const Report = {
   moveDateBackwards(date, timespan) {
     return dateRange(
       timespan === TIMESPAN_YEARLY
-        ? subYears(date.start, 1)
-        : subMonths(date.start, 1),
+        ? subYears(date.end, 1)
+        : subMonths(date.end, 1),
       timespan
     )
   },
   moveDateForwards(date, timespan) {
     return dateRange(
       timespan === TIMESPAN_YEARLY
-        ? addYears(date.start, 1)
-        : addMonths(date.start, 1),
+        ? addYears(date.end, 1)
+        : addMonths(date.end, 1),
       timespan
     )
   },
@@ -106,7 +106,7 @@ export default Report
 
 function dateRange(date, timespan) {
   const start = timespan === TIMESPAN_YEARLY ? startOfYear : startOfMonth
-  const end = timespan === TIMESPAN_YEARLY ? endOfYear : endOfMonth
+  const end = timespan === TIMESPAN_YEARLY ? endOfYear : endOfMonth 
   return {
     start: toUtcTimestamp(start(date)),
     end: toUtcTimestamp(end(date))
