@@ -17,13 +17,17 @@ it('returns default state', () => {
 it('loads expense tags', () => {
   expect(
     reducer({ [EXPENSE]: [] }, loadExpenseTagsSuccess(['food', 'groceries']))
-  ).toEqual({ [EXPENSE]: ['food', 'groceries'] })
+  ).toEqual({
+    [EXPENSE]: ['food', 'groceries']
+  })
 })
 
 it('loads income tags', () => {
   expect(
     reducer({ [INCOME]: [] }, loadIncomeTagsSuccess(['salary', 'dividends']))
-  ).toEqual({ [INCOME]: ['salary', 'dividends'] })
+  ).toEqual({
+    [INCOME]: ['salary', 'dividends']
+  })
 })
 
 it('adds tag to expense tags', () => {

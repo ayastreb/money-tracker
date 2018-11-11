@@ -129,7 +129,10 @@ describe('toggling currency checkbox', () => {
         { balance: { EUR: 155 }, currencies: ['EUR'] },
         toggleCurrency('EUR')
       )
-    ).toEqual({ balance: { EUR: 155 }, currencies: ['EUR'] })
+    ).toEqual({
+      balance: { EUR: 155 },
+      currencies: ['EUR']
+    })
   })
 })
 

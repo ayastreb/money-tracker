@@ -44,6 +44,7 @@ const mapStateToProps = (state, ownProps) => ({
   collapsed: getCollapsedSections(state)
 })
 
-export default connect(mapStateToProps, { toggle: toggleSectionCollapse })(
-  CollapsibleSection
-)
+export default connect(
+  mapStateToProps,
+  { toggle: toggleSectionCollapse }
+)(CollapsibleSection)

@@ -38,9 +38,12 @@ class Transactions extends React.Component {
   }
 }
 
-export default connect(undefined, {
-  loadAccounts,
-  loadTags,
-  loadFilterTransactions,
-  applyFilters
-})(Transactions)
+export default connect(
+  undefined,
+  {
+    loadAccounts,
+    loadTags,
+    loadFilterTransactions,
+    applyFilters
+  }
+)(Transactions)

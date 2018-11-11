@@ -12,7 +12,10 @@ const mapStateToProps = (state, ownProps) => ({
   groups: getVisibleGroupedAccounts(state)
 })
 
-export default connect(mapStateToProps, {
-  toggleSectionCollapse,
-  openAccountInModal
-})(AccountsList)
+export default connect(
+  mapStateToProps,
+  {
+    toggleSectionCollapse,
+    openAccountInModal
+  }
+)(AccountsList)

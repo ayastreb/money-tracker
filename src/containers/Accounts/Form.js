@@ -17,12 +17,15 @@ const mapStateToProps = state => ({
   secondary: getSecondaryCurrency(state)
 })
 
-export default connect(mapStateToProps, {
-  changeName,
-  changeGroup,
-  changeBalance,
-  toggleCurrency,
-  toggleOnDashboard,
-  saveAccount,
-  removeAccount
-})(AccountForm)
+export default connect(
+  mapStateToProps,
+  {
+    changeName,
+    changeGroup,
+    changeBalance,
+    toggleCurrency,
+    toggleOnDashboard,
+    saveAccount,
+    removeAccount
+  }
+)(AccountForm)

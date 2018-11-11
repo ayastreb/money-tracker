@@ -53,10 +53,13 @@ const mapStateToProps = state => ({
   EditForm: AccountForm
 })
 
-export default connect(mapStateToProps, {
-  loadAccounts,
-  openAccountInModal,
-  resetAccountForm,
-  removeAccountRequest,
-  removeAccount
-})(Accounts)
+export default connect(
+  mapStateToProps,
+  {
+    loadAccounts,
+    openAccountInModal,
+    resetAccountForm,
+    removeAccountRequest,
+    removeAccount
+  }
+)(Accounts)

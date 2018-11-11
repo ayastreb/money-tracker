@@ -11,4 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
   groups: getDashboardGroupedAccounts(state)
 })
 
-export default connect(mapStateToProps, { toggleSectionCollapse })(AccountsList)
+export default connect(
+  mapStateToProps,
+  { toggleSectionCollapse }
+)(AccountsList)

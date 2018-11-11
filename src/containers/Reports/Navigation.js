@@ -17,9 +17,12 @@ const mapStateToProps = state => ({
   timespanLabel: getTimespanLabel(state)
 })
 
-export default connect(mapStateToProps, {
-  changeReportKind,
-  changeReportTimespan,
-  moveReportDateBackwards,
-  moveReportDateForwards
-})(Navigation)
+export default connect(
+  mapStateToProps,
+  {
+    changeReportKind,
+    changeReportTimespan,
+    moveReportDateBackwards,
+    moveReportDateForwards
+  }
+)(Navigation)

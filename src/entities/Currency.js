@@ -199,7 +199,7 @@ const Currency = {
       : num.toString()
   },
   convert(value, rate, from, to) {
-    return value / rate * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp)
+    return (value / rate) * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp)
   }
 }
 

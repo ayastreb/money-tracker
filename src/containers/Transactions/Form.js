@@ -28,18 +28,21 @@ const mapStateToProps = state => ({
   tagsOptions: getTagOptions(state)
 })
 
-export default connect(mapStateToProps, {
-  changeKind,
-  changeAccount,
-  changeAmount,
-  changeCurrency,
-  changeLinkedAccount,
-  changeLinkedAmount,
-  changeLinkedCurrency,
-  changeDate,
-  changeNote,
-  addTag,
-  changeTags,
-  loadTags,
-  saveTransaction
-})(TransactionForm)
+export default connect(
+  mapStateToProps,
+  {
+    changeKind,
+    changeAccount,
+    changeAmount,
+    changeCurrency,
+    changeLinkedAccount,
+    changeLinkedAmount,
+    changeLinkedCurrency,
+    changeDate,
+    changeNote,
+    addTag,
+    changeTags,
+    loadTags,
+    saveTransaction
+  }
+)(TransactionForm)

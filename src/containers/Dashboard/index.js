@@ -53,8 +53,11 @@ Dashboard.propTypes = {
   loadRecentTransactions: PropTypes.func
 }
 
-export default connect(undefined, {
-  loadTags,
-  loadAccounts,
-  loadRecentTransactions
-})(Dashboard)
+export default connect(
+  undefined,
+  {
+    loadTags,
+    loadAccounts,
+    loadRecentTransactions
+  }
+)(Dashboard)

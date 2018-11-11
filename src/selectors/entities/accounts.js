@@ -8,11 +8,15 @@ import sortByName from '../../util/sortByName'
 export const getAccountsMap = state => state.entities.accounts
 
 export const getAccount = id =>
-  createSelector(getAccountsMap, accounts => EntityMap.get(accounts, id))
+  createSelector(
+    getAccountsMap,
+    accounts => EntityMap.get(accounts, id)
+  )
 
 export const getAccountByName = name =>
-  createSelector(getAccountsList, accounts =>
-    accounts.find(account => account.name === name)
+  createSelector(
+    getAccountsList,
+    accounts => accounts.find(account => account.name === name)
   )
 
 export const getAccountsList = state =>
@@ -30,11 +34,13 @@ export const getDashboardAccountsList = createSelector(
   accounts => accounts.filter(account => account.on_dashboard)
 )
 
-export const getAccountsNameMap = createSelector(getAccountsList, accounts =>
-  accounts.reduce((acc, account) => {
-    acc[account.id] = account.name
-    return acc
-  }, {})
+export const getAccountsNameMap = createSelector(
+  getAccountsList,
+  accounts =>
+    accounts.reduce((acc, account) => {
+      acc[account.id] = account.name
+      return acc
+    }, {})
 )
 
 export const getAccountsCurrencyMap = createSelector(

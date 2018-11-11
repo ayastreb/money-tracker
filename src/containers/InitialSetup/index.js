@@ -42,7 +42,8 @@ class InitialSetup extends React.Component {
         <CurrencyExchangeRate />
         <Header as="h2">Accounts</Header>
         <p>
-          Create accounts that you would like to keep track of.<br />
+          Create accounts that you would like to keep track of.
+          <br />
           It could be cash in your wallet, bank accounts, credit cards or even a
           loan to your friend.
         </p>
@@ -76,6 +77,7 @@ const mapStateToProps = state => ({
   accounts: getAccountsList(state)
 })
 
-export default connect(mapStateToProps, { loadAccounts, completeSetup })(
-  InitialSetup
-)
+export default connect(
+  mapStateToProps,
+  { loadAccounts, completeSetup }
+)(InitialSetup)

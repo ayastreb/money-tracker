@@ -45,18 +45,18 @@ const Report = {
       {
         key: REPORT_EXPENSE_INCOME,
         value: REPORT_EXPENSE_INCOME,
-        text: 'Expense & Income',
+        text: 'Expense & Income'
       },
       {
         key: REPORT_EXPENSE_TAGS,
         value: REPORT_EXPENSE_TAGS,
-        text: 'Expense by Tags',
+        text: 'Expense by Tags'
       },
       {
         key: REPORT_NET_WORTH,
         value: REPORT_NET_WORTH,
-        text: 'Net Worth',
-      },
+        text: 'Net Worth'
+      }
     ]
   },
   timespanOptions() {
@@ -64,13 +64,13 @@ const Report = {
       {
         key: TIMESPAN_YEARLY,
         value: TIMESPAN_YEARLY,
-        text: 'Yearly',
+        text: 'Yearly'
       },
       {
         key: TIMESPAN_MONTHLY,
         value: TIMESPAN_MONTHLY,
-        text: 'Monthly',
-      },
+        text: 'Monthly'
+      }
     ]
   },
   timespanLabel(date, timespan) {
@@ -79,7 +79,7 @@ const Report = {
   transactionFilters(report) {
     return {
       date: report.date,
-      accounts: report.accounts,
+      accounts: report.accounts
     }
   },
   prepareData(report, transactions, base, exchangeRate, netWorthEnd) {
@@ -99,7 +99,7 @@ const Report = {
       default:
         return undefined
     }
-  },
+  }
 }
 
 export default Report
@@ -111,6 +111,6 @@ function dateRange(date, timespan) {
   tempDate.setDate(tempDate.getDate() + 1)
   return {
     start: toUtcTimestamp(start(tempDate)),
-    end: toUtcTimestamp(end(tempDate)),
+    end: toUtcTimestamp(end(tempDate))
   }
 }

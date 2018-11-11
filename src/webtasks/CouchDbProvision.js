@@ -111,6 +111,8 @@ function CouchDbProvision(user, context, callback) {
   }
 
   function databaseUri(name) {
-    return `${configuration['CouchHost']}/${name}_${user.app_metadata.couchDB.username}`
+    return `${configuration['CouchHost']}/${name}_${
+      user.app_metadata.couchDB.username
+    }`
   }
 }

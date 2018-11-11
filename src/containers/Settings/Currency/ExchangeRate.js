@@ -14,4 +14,7 @@ const mapStateToProps = state => ({
   isLoading: state.ui.settings.isExchangeLoading
 })
 
-export default connect(mapStateToProps, { updateExchangeRate })(ExchangeRate)
+export default connect(
+  mapStateToProps,
+  { updateExchangeRate }
+)(ExchangeRate)

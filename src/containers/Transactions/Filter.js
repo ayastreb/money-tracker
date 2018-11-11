@@ -26,10 +26,13 @@ const mapStateToProps = state => ({
   appliedTags: state.ui.transaction.filter.applied.tags || []
 })
 
-export default connect(mapStateToProps, {
-  changeFilterDate,
-  toggleFilterCalendar,
-  toggleFilterModal,
-  applyFilters,
-  openTransactionInModal
-})(Filter)
+export default connect(
+  mapStateToProps,
+  {
+    changeFilterDate,
+    toggleFilterCalendar,
+    toggleFilterModal,
+    applyFilters,
+    openTransactionInModal
+  }
+)(Filter)

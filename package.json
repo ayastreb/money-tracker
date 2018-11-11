@@ -34,7 +34,7 @@
     "surge": "^0.20.1"
   },
   "scripts": {
-    "pretty": "prettier --write --single-quote --no-semi 'src/**/*.js'",
+    "pretty": "prettier --write 'src/**/*.js'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

@@ -130,8 +130,11 @@ const mapStateToProps = (state, ownProps) => ({
   isSidebarOpen: state.ui.isSidebarOpen
 })
 
-export default connect(mapStateToProps, {
-  bootstrap,
-  windowResize,
-  toggleSidebar
-})(App)
+export default connect(
+  mapStateToProps,
+  {
+    bootstrap,
+    windowResize,
+    toggleSidebar
+  }
+)(App)

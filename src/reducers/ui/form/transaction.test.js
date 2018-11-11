@@ -136,7 +136,9 @@ it('changes linked amount', () => {
 it('changes linked currency', () => {
   expect(
     reducer({ linkedCurrency: 'USD' }, changeLinkedCurrency('EUR'))
-  ).toEqual({ linkedCurrency: 'EUR' })
+  ).toEqual({
+    linkedCurrency: 'EUR'
+  })
 })
 
 it('changes date', () => {

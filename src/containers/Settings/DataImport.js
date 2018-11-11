@@ -20,8 +20,11 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps, {
-  openImportFile,
-  discardImportFile,
-  startDataImport
-})(DataImport)
+export default connect(
+  mapStateToProps,
+  {
+    openImportFile,
+    discardImportFile,
+    startDataImport
+  }
+)(DataImport)

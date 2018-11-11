@@ -64,4 +64,7 @@ const mapStateToProps = state => ({
   isSignOutComplete: state.user.isSignOutComplete
 })
 
-export default connect(mapStateToProps, { signOut })(User)
+export default connect(
+  mapStateToProps,
+  { signOut }
+)(User)

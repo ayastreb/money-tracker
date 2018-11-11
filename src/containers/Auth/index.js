@@ -15,10 +15,13 @@ const mapStateToProps = state => ({
   isAuthenticated: isUserAuthenticated(state)
 })
 
-export default connect(mapStateToProps, {
-  changeEmail,
-  changeCode,
-  sendCode,
-  verifyCode,
-  finishAuth
-})(Auth)
+export default connect(
+  mapStateToProps,
+  {
+    changeEmail,
+    changeCode,
+    sendCode,
+    verifyCode,
+    finishAuth
+  }
+)(Auth)

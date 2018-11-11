@@ -31,4 +31,7 @@ const mapStateToProps = state => ({
   data: state.ui.report.data
 })
 
-export default connect(mapStateToProps, { loadAccounts, loadReport })(Reports)
+export default connect(
+  mapStateToProps,
+  { loadAccounts, loadReport }
+)(Reports)

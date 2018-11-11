@@ -62,10 +62,14 @@ it('updates exchange rate with initial state', () => {
 it('collapses section if it is not yet collapsed', () => {
   expect(
     reducer({ collapsedSections: [] }, toggleSectionCollapse('cash'))
-  ).toEqual({ collapsedSections: ['cash'] })
+  ).toEqual({
+    collapsedSections: ['cash']
+  })
   expect(
     reducer({ collapsedSections: ['bank'] }, toggleSectionCollapse('cash'))
-  ).toEqual({ collapsedSections: ['bank', 'cash'] })
+  ).toEqual({
+    collapsedSections: ['bank', 'cash']
+  })
 })
 
 it('un-collapses section if it is already collapsed', () => {
@@ -74,5 +78,7 @@ it('un-collapses section if it is already collapsed', () => {
       { collapsedSections: ['bank', 'cash'] },
       toggleSectionCollapse('bank')
     )
-  ).toEqual({ collapsedSections: ['cash'] })
+  ).toEqual({
+    collapsedSections: ['cash']
+  })
 })

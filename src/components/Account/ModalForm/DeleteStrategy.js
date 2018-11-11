@@ -48,18 +48,17 @@ class DeleteStrategy extends React.Component {
               />
             </Form.Field>
           ))}
-          {hasMultipleAccounts &&
-            this.state.strategy === DELETE_STRATEGY_MOVE && (
-              <Form.Field>
-                <Dropdown
-                  selection
-                  value={this.getMoveTo()}
-                  options={this.props.accountOptions}
-                  onChange={this.onAccountChange}
-                  disabled={this.props.modal.isDeleteRunning}
-                />
-              </Form.Field>
-            )}
+          {hasMultipleAccounts && this.state.strategy === DELETE_STRATEGY_MOVE && (
+            <Form.Field>
+              <Dropdown
+                selection
+                value={this.getMoveTo()}
+                options={this.props.accountOptions}
+                onChange={this.onAccountChange}
+                disabled={this.props.modal.isDeleteRunning}
+              />
+            </Form.Field>
+          )}
           <Form.Field>
             {this.props.modal.isDeleteRunning ? (
               <Progress

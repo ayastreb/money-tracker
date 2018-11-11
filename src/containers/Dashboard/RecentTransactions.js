@@ -17,8 +17,11 @@ const mapStateToProps = state => ({
   EditForm: TransactionForm
 })
 
-export default connect(mapStateToProps, {
-  openTransactionInModal,
-  resetTransactionForm,
-  removeTransaction
-})(TransactionList)
+export default connect(
+  mapStateToProps,
+  {
+    openTransactionInModal,
+    resetTransactionForm,
+    removeTransaction
+  }
+)(TransactionList)

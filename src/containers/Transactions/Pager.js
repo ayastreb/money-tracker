@@ -8,4 +8,7 @@ const mapStateToProps = state => ({
   pages: getVisiblePages(state)
 })
 
-export default connect(mapStateToProps, { changeFilterPage })(Pager)
+export default connect(
+  mapStateToProps,
+  { changeFilterPage }
+)(Pager)

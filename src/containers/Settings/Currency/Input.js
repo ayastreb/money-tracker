@@ -11,4 +11,7 @@ const mapStateToProps = state => ({
   secondary: getSecondaryCurrency(state)
 })
 
-export default connect(mapStateToProps, { changeSettingsCurrency })(Input)
+export default connect(
+  mapStateToProps,
+  { changeSettingsCurrency }
+)(Input)

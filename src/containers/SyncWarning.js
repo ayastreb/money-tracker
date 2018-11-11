@@ -34,4 +34,7 @@ const mapStateToProps = state => ({
   isVisible: !isUserAuthenticated(state) && state.ui.sync.isWarningVisible
 })
 
-export default connect(mapStateToProps, { dismissSyncWarning })(SyncWarning)
+export default connect(
+  mapStateToProps,
+  { dismissSyncWarning }
+)(SyncWarning)

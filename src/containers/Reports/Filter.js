@@ -8,4 +8,7 @@ const mapStateToProps = state => ({
   accountOptions: getAccountsAsOptions(state)
 })
 
-export default connect(mapStateToProps, { changeReportAccounts })(Filter)
+export default connect(
+  mapStateToProps,
+  { changeReportAccounts }
+)(Filter)

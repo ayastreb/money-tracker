@@ -73,7 +73,9 @@ function getAmount(row) {
 function getKind(row) {
   return row[COLUMN.TRANSFER].trim()
     ? TRANSFER
-    : getAmount(row) < 0 ? EXPENSE : INCOME
+    : getAmount(row) < 0
+    ? EXPENSE
+    : INCOME
 }
 
 function getAccount(row) {

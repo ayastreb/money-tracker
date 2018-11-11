@@ -54,4 +54,7 @@ const mapStateToProps = (state, ownProps) => ({
   hasPendingChanges: state.ui.sync.hasPendingChanges
 })
 
-export default connect(mapStateToProps, { toggleSidebar, sync })(AppHeader)
+export default connect(
+  mapStateToProps,
+  { toggleSidebar, sync }
+)(AppHeader)

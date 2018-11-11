@@ -68,7 +68,7 @@ module.exports = function(context, respond) {
       rate: Number(
         source === BASE
           ? baseRate[target]
-          : 1 / baseRate[source] * baseRate[target]
+          : (1 / baseRate[source]) * baseRate[target]
       ).toFixed(6)
     }
   }
@@ -139,10 +139,8 @@ module.exports = function(context, respond) {
    */
   function writeCachedRate(rate) {
     return new Promise((resolve, reject) => {
-      context.storage.set(
-        rate,
-        { force: 1 },
-        error => (error ? reject(error) : resolve())
+      context.storage.set(rate, { force: 1 }, error =>
+        error ? reject(error) : resolve()
       )
     })
   }
