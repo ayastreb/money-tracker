@@ -107,8 +107,10 @@ export default Report
 function dateRange(date, timespan) {
   const start = timespan === TIMESPAN_YEARLY ? startOfYear : startOfMonth
   const end = timespan === TIMESPAN_YEARLY ? endOfYear : endOfMonth
+  let tempDate = new Date(date);
+  tempDate.setDate(tempDate.getDate()+1);
   return {
-    start: toUtcTimestamp(start(date)),
-    end: toUtcTimestamp(end(date))
+    start: toUtcTimestamp(start(tempDate)),
+    end: toUtcTimestamp(end(tempDate))
   }
 }
