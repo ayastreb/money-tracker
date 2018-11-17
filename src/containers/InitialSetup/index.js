@@ -1,20 +1,20 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { Button, Divider, Header } from 'semantic-ui-react'
-import CurrencyInput from '../Settings/Currency/Input'
-import CurrencyExchangeRate from '../Settings/Currency/ExchangeRate'
-import AccountForm from '../Accounts/Form'
-import AccountList from '../Accounts/List'
-import { completeSetup } from '../../actions/settings'
-import { loadAccounts } from '../../actions/entities/accounts'
-import { getAccountsList } from '../../selectors/entities/accounts'
-import { isUserAuthenticated } from '../../selectors/user'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Button, Divider, Header } from 'semantic-ui-react';
+import CurrencyInput from '../Settings/Currency/Input';
+import CurrencyExchangeRate from '../Settings/Currency/ExchangeRate';
+import AccountForm from '../Accounts/Form';
+import AccountList from '../Accounts/List';
+import { completeSetup } from '../../actions/settings';
+import { loadAccounts } from '../../actions/entities/accounts';
+import { getAccountsList } from '../../selectors/entities/accounts';
+import { isUserAuthenticated } from '../../selectors/user';
 
 class InitialSetup extends React.Component {
   componentDidMount() {
-    this.props.loadAccounts()
+    this.props.loadAccounts();
   }
 
   render() {
@@ -61,7 +61,7 @@ class InitialSetup extends React.Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -70,14 +70,14 @@ InitialSetup.propTypes = {
   accounts: PropTypes.arrayOf(PropTypes.object),
   loadAccounts: PropTypes.func,
   completeSetup: PropTypes.func
-}
+};
 
 const mapStateToProps = state => ({
   isAuthenticated: isUserAuthenticated(state),
   accounts: getAccountsList(state)
-})
+});
 
 export default connect(
   mapStateToProps,
   { loadAccounts, completeSetup }
-)(InitialSetup)
+)(InitialSetup);

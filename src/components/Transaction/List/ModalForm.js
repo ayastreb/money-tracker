@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Modal, Button, Header } from 'semantic-ui-react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Modal, Button, Header } from 'semantic-ui-react';
 
 const ModalForm = props => (
   <Modal
@@ -29,7 +29,7 @@ const ModalForm = props => (
       </Modal.Actions>
     )}
   </Modal>
-)
+);
 
 ModalForm.propTypes = {
   currentTransactionId: PropTypes.string,
@@ -38,6 +38,6 @@ ModalForm.propTypes = {
   resetTransactionForm: PropTypes.func,
   removeTransaction: PropTypes.func,
   EditForm: PropTypes.func
-}
+};
 
-export default ModalForm
+export default ModalForm;

@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import AccountItem from './AccountItem'
-import Amount from '../../Amount'
+import React from 'react';
+import PropTypes from 'prop-types';
+import AccountItem from './AccountItem';
+import Amount from '../../Amount';
 
 const Group = ({
   baseCurrency,
@@ -26,7 +26,7 @@ const Group = ({
         />
       ))}
   </div>
-)
+);
 
 Group.propTypes = {
   baseCurrency: PropTypes.string.isRequired,
@@ -38,6 +38,6 @@ Group.propTypes = {
   isCollapsed: PropTypes.bool.isRequired,
   toggleGroupCollapse: PropTypes.func.isRequired,
   openAccountInModal: PropTypes.func
-}
+};
 
-export default Group
+export default Group;

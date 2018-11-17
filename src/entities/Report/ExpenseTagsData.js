@@ -1,5 +1,5 @@
-import Currency from '../Currency'
-import { EXPENSE } from '../Transaction'
+import Currency from '../Currency';
+import { TransationKindT } from '../Transaction';
 
 export default function ExpenseTagsData(
   report,
@@ -7,23 +7,23 @@ export default function ExpenseTagsData(
   base,
   exchangeRate
 ) {
-  const data = new Map()
+  const data = new Map();
 
   for (const tx of transactions) {
-    if (tx.kind !== EXPENSE || !tx.tags) continue
+    if (tx.kind !== TransationKindT.Expense || !tx.tags) continue;
     for (const tag of tx.tags) {
-      const tagAmount = data.get(tag) || 0
+      const tagAmount = data.get(tag) || 0;
       const amount = Currency.convert(
         Math.abs(tx.amount),
         exchangeRate[tx.currency],
         base,
         tx.currency
-      )
-      data.set(tag, tagAmount + amount)
+      );
+      data.set(tag, tagAmount + amount);
     }
   }
 
-  const sorted = new Map([...data.entries()].sort((a, b) => b[1] - a[1]))
+  const sorted = new Map([...data.entries()].sort((a, b) => b[1] - a[1]));
 
   return {
     labels: [...sorted.keys()],
@@ -32,5 +32,5 @@ export default function ExpenseTagsData(
         Math.floor(Currency.toFloat(amount, base, false))
       )
     ]
-  }
+  };
 }

@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Icon } from 'semantic-ui-react'
-import { toggleSectionCollapse } from '../../actions/settings'
-import { getCollapsedSections } from '../../selectors/settings'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Icon } from 'semantic-ui-react';
+import { toggleSectionCollapse } from '../../actions/settings';
+import { getCollapsedSections } from '../../selectors/settings';
+import './index.css';
 
 const CollapsibleSection = ({
   name,
@@ -29,7 +29,7 @@ const CollapsibleSection = ({
       <div className="section__body">{children}</div>
     )}
   </div>
-)
+);
 
 CollapsibleSection.propTypes = {
   name: PropTypes.string.isRequired,
@@ -37,14 +37,14 @@ CollapsibleSection.propTypes = {
   LabelComponent: PropTypes.func,
   collapsed: PropTypes.arrayOf(PropTypes.string),
   toggle: PropTypes.func
-}
+};
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   collapsed: getCollapsedSections(state)
-})
+});
 
 export default connect(
   mapStateToProps,
   { toggle: toggleSectionCollapse }
-)(CollapsibleSection)
+)(CollapsibleSection);

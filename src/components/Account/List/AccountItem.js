@@ -1,14 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Button } from 'semantic-ui-react'
-import Amount from '../../Amount'
-import Account from '../../../entities/Account'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
+import Amount from '../../Amount';
+import { stateToForm } from '../../../entities/Account';
 
 class AccountItem extends React.Component {
   handleEditClick = () => {
-    this.props.openAccountInModal(Account.toForm(this.props.account))
-  }
+    this.props.openAccountInModal(stateToForm(this.props.account));
+  };
 
   render() {
     return (
@@ -38,7 +38,7 @@ class AccountItem extends React.Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
@@ -48,6 +48,6 @@ AccountItem.propTypes = {
     balance: PropTypes.objectOf(PropTypes.number).isRequired
   }).isRequired,
   openAccountInModal: PropTypes.func
-}
+};
 
-export default AccountItem
+export default AccountItem;

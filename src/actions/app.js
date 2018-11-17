@@ -1,3 +1,3 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions';
 
-export const bootstrap = createAction('BOOTSTRAP')
+export const bootstrap = createAction('BOOTSTRAP');

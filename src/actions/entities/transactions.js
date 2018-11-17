@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   loadFilterTransactions,
@@ -18,4 +18,4 @@ export const {
   'SAVE_TRANSACTION_SUCCESS',
   'REMOVE_TRANSACTION',
   'REMOVE_TRANSACTION_SUCCESS'
-)
+);

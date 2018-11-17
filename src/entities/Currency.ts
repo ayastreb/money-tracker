@@ -1,4 +1,15 @@
-const CURRENCY = {
+type CurrencyT = {
+  name: string;
+  symbol: string;
+  exp: number;
+  flag?: string;
+};
+
+type AvailableCurrencyT = {
+  [code: string]: CurrencyT;
+};
+
+const CURRENCY: AvailableCurrencyT = {
   AED: { name: 'Emirati Dirham', symbol: '.د.ب', exp: 2, flag: 'ae' },
   AFN: { name: 'Afghan Afghani', symbol: '؋', exp: 2, flag: 'af' },
   ALL: { name: 'Albanian lek', symbol: 'lek', exp: 2, flag: 'al' },
@@ -149,58 +160,58 @@ const CURRENCY = {
   ZMW: { name: 'Zambian Kwacha', symbol: 'ZMK', exp: 2, flag: 'zm' },
   ZWD: { name: 'Zimbabwean Dollar', symbol: 'Z$', exp: 2, flag: 'zw' },
   XAU: { name: 'Gold, troy ounce', symbol: 'XAU', exp: 2 }
-}
+};
+
+type CurrencyOptionT = {
+  key: string;
+  value: string;
+  text: string;
+  flag?: string;
+};
 
 const Currency = {
   defaultBase: 'USD',
-  options() {
+  options(): CurrencyOptionT[] {
     return Object.keys(CURRENCY).map(code => ({
       key: code,
       value: code,
       flag: CURRENCY[code].flag,
       text: `${code}, ${CURRENCY[code].name}`
-    }))
+    }));
   },
-  name(code) {
-    return CURRENCY[code].name
+  name(code: string) {
+    return CURRENCY[code].name;
   },
-  symbol(code) {
-    return CURRENCY[code].symbol
+  symbol(code: string) {
+    return CURRENCY[code].symbol;
   },
-  minAmount(code) {
-    return Number(`1e-${CURRENCY[code].exp}`)
+  minAmount(code: string) {
+    return Number(`1e-${CURRENCY[code].exp}`);
   },
   /**
    * Convert value to currency's subunit (e.g. cents for USD).
    * Subunit is the minimal currency unit and it is always whole integer.
-   *
-   * @param {number} value
-   * @param {string} code
    */
-  toInt(value, code) {
-    return Math.round(`${value}e${CURRENCY[code].exp}`)
+  toInt(value: string | number, code: string) {
+    return Math.round(parseFloat(`${value}e${CURRENCY[code].exp}`));
   },
   /**
    * Convert value from subunit back to float representation with formatting.
    * For example 199001 USD becomes 1,990.01 USD
-   *
-   * @param {number} value
-   * @param {string} code
-   * @param {bool} format
    */
-  toFloat(value, code, format = true) {
-    const exp = CURRENCY[code].exp
-    const num = Number(`${value}e-${exp}`)
+  toFloat(value: number, code: string, format: boolean = true): string {
+    const exp = CURRENCY[code].exp;
+    const num = Number(`${value}e-${exp}`);
     return format
       ? num.toLocaleString(undefined, {
           minimumFractionDigits: exp,
           maximumFractionDigits: exp
         })
-      : num.toString()
+      : num.toString();
   },
-  convert(value, rate, from, to) {
-    return (value / rate) * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp)
+  convert(value: number, rate: number, from: string, to: string) {
+    return (value / rate) * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp);
   }
-}
+};
 
-export default Currency
+export default Currency;

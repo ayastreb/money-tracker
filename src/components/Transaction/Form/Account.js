@@ -1,8 +1,8 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Dropdown, Form, Input } from 'semantic-ui-react'
-import { DropdownOption } from '../../types'
-import Currency from '../../../entities/Currency'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Dropdown, Form, Input } from 'semantic-ui-react';
+import { DropdownOption } from '../../types';
+import Currency from '../../../entities/Currency';
 
 const Account = props => (
   <Form.Group>
@@ -38,7 +38,7 @@ const Account = props => (
       />
     </Form.Field>
   </Form.Group>
-)
+);
 
 Account.propTypes = {
   label: PropTypes.string,
@@ -50,6 +50,6 @@ Account.propTypes = {
   onAccountChange: PropTypes.func,
   onAmountChange: PropTypes.func,
   onCurrencyChange: PropTypes.func
-}
+};
 
-export default Account
+export default Account;

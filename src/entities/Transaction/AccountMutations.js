@@ -1,4 +1,6 @@
-import { TRANSFER } from '../Transaction'
+import { TransationKindT } from '../Transaction';
+
+const { Transfer } = TransationKindT;
 
 /**
  * Get all necessary accounts balance mutations for given transaction change.
@@ -8,55 +10,55 @@ import { TRANSFER } from '../Transaction'
  * @return {array}
  */
 export default function getAccountsMutations(prev, next) {
-  const isNew = !prev
-  const isRemoved = !next
+  const isNew = !prev;
+  const isRemoved = !next;
 
-  if (isNew) return createTransaction(next)
-  if (isRemoved) return removeTransaction(prev)
+  if (isNew) return createTransaction(next);
+  if (isRemoved) return removeTransaction(prev);
 
-  return [...removeTransaction(prev), ...createTransaction(next)]
+  return [...removeTransaction(prev), ...createTransaction(next)];
 }
 
 function createTransaction(transaction) {
-  const mutations = []
+  const mutations = [];
   if (
-    transaction.kind === TRANSFER &&
+    transaction.kind === Transfer &&
     transaction.accountId === transaction.linkedAccountId &&
     transaction.currency === transaction.linkedCurrency
   ) {
-    return mutations
+    return mutations;
   }
 
   mutations.push({
     accountId: transaction.accountId,
     currency: transaction.currency,
-    amount: transaction.amount * (transaction.kind === TRANSFER ? -1 : 1)
-  })
-  if (transaction.kind === TRANSFER) {
+    amount: transaction.amount * (transaction.kind === Transfer ? -1 : 1)
+  });
+  if (transaction.kind === Transfer) {
     mutations.push({
       accountId: transaction.linkedAccountId,
       currency: transaction.linkedCurrency,
       amount: transaction.linkedAmount
-    })
+    });
   }
 
-  return mutations
+  return mutations;
 }
 
 function removeTransaction(transaction) {
-  const mutations = []
+  const mutations = [];
   mutations.push({
     accountId: transaction.accountId,
     currency: transaction.currency,
-    amount: transaction.amount * (transaction.kind === TRANSFER ? 1 : -1)
-  })
-  if (transaction.kind === TRANSFER) {
+    amount: transaction.amount * (transaction.kind === Transfer ? 1 : -1)
+  });
+  if (transaction.kind === Transfer) {
     mutations.push({
       accountId: transaction.linkedAccountId,
       currency: transaction.linkedCurrency,
       amount: transaction.linkedAmount * -1
-    })
+    });
   }
 
-  return mutations
+  return mutations;
 }

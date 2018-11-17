@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   changeReportAccounts,
   changeReportKind,
@@ -8,23 +8,23 @@ import {
   loadReportSuccess,
   moveReportDateBackwards,
   moveReportDateForwards
-} from '../actions/ui/report'
-import Report from '../entities/Report'
-import { getNetWorth } from '../selectors/entities/accounts'
-import { getBaseCurrency, getExchangeRate } from '../selectors/settings'
-import { getReport } from '../selectors/ui/report'
-import TransactionsStorage from '../util/storage/transactions'
+} from '../actions/ui/report';
+import Report from '../entities/Report';
+import { getNetWorth } from '../selectors/entities/accounts';
+import { getBaseCurrency, getExchangeRate } from '../selectors/settings';
+import { getReport } from '../selectors/ui/report';
+import TransactionsStorage from '../util/storage/transactions';
 
 export function* loadReportSaga() {
-  const report = yield select(getReport)
-  const base = yield select(getBaseCurrency)
-  const exchangeRate = yield select(getExchangeRate)
-  const netWorthEnd = report.data.netWorthEnd || (yield select(getNetWorth))
+  const report = yield select(getReport);
+  const base = yield select(getBaseCurrency);
+  const exchangeRate = yield select(getExchangeRate);
+  const netWorthEnd = report.data.netWorthEnd || (yield select(getNetWorth));
   try {
     const transactions = yield call(
       TransactionsStorage.loadFiltered,
       Report.transactionFilters(report)
-    )
+    );
     const data = yield call(
       Report.prepareData,
       report,
@@ -32,15 +32,15 @@ export function* loadReportSaga() {
       base,
       exchangeRate,
       netWorthEnd
-    )
-    yield put(loadReportSuccess(data))
+    );
+    yield put(loadReportSuccess(data));
   } catch (error) {
-    yield put(loadReportFailure(error.message))
+    yield put(loadReportFailure(error.message));
   }
 }
 
 export function* refreshReportSaga() {
-  yield put(loadReport())
+  yield put(loadReport());
 }
 
 export default [
@@ -50,4 +50,4 @@ export default [
   takeLatest(changeReportAccounts, refreshReportSaga),
   takeLatest(moveReportDateBackwards, refreshReportSaga),
   takeLatest(moveReportDateForwards, refreshReportSaga)
-]
+];

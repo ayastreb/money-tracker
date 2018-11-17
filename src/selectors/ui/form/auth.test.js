@@ -1,4 +1,4 @@
-import { getAuthCode, getAuthEmail } from './auth'
+import { getAuthCode, getAuthEmail } from './auth';
 
 it('gets auth code', () => {
   const state = {
@@ -10,9 +10,9 @@ it('gets auth code', () => {
         }
       }
     }
-  }
-  expect(getAuthCode(state)).toEqual('foo')
-})
+  };
+  expect(getAuthCode(state)).toEqual('foo');
+});
 
 it('gets auth email', () => {
   const state = {
@@ -24,6 +24,6 @@ it('gets auth email', () => {
         }
       }
     }
-  }
-  expect(getAuthEmail(state)).toEqual('bar@foo')
-})
+  };
+  expect(getAuthEmail(state)).toEqual('bar@foo');
+});

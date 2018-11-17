@@ -1,58 +1,59 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Form, Button, Dropdown, Input, Segment } from 'semantic-ui-react'
-import Header from './Header'
-import Account from './Account'
-import Transaction, {
-  EXPENSE,
-  TRANSFER,
-  INCOME
-} from '../../../entities/Transaction'
-import { DropdownOption } from '../../types'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Form, Button, Dropdown, Input, Segment } from 'semantic-ui-react';
+import Header from './Header';
+import Account from './Account';
+import {
+  TransationKindT,
+  kindLabel,
+  formToState
+} from '../../../entities/Transaction';
+import { DropdownOption } from '../../types';
+import './index.css';
 
+const { Expense, Transfer, Income } = TransationKindT;
 const NoAccounts = () => (
   <div className="transactions-form__empty">You don't have any accounts.</div>
-)
+);
 
 class TransactionForm extends React.Component {
-  state = { searchQuery: '' }
+  state = { searchQuery: '' };
 
   onSubmit = event => {
-    event.preventDefault()
-    this.props.saveTransaction(Transaction.fromForm(this.props.form))
-  }
+    event.preventDefault();
+    this.props.saveTransaction(formToState(this.props.form));
+  };
 
-  onChange = handler => (event, { value }) => handler(value)
+  onChange = handler => (_, { value }) => handler(value);
 
-  onAccountChange = handler => (event, { value }) => {
+  onAccountChange = handler => (_, { value }) => {
     handler({
       accountId: value,
       currency: this.props.accountCurrency[value]
-    })
-  }
+    });
+  };
 
-  onTagAdd = (event, { value }) => {
-    this.props.addTag({ kind: this.props.form.kind, tag: value })
-  }
-  onTagSearchChange = (event, { searchQuery }) => this.setState({ searchQuery })
-  onTagClose = () => this.setState({ searchQuery: '' })
+  onTagAdd = (_, { value }) => {
+    this.props.addTag({ kind: this.props.form.kind, tag: value });
+  };
+  onTagSearchChange = (_, { searchQuery }) => this.setState({ searchQuery });
+  onTagClose = () => this.setState({ searchQuery: '' });
 
   getCurrencyOptions = accountId => {
     return this.props.accountCurrency[accountId].map(code => ({
       key: code,
       value: code,
       text: code
-    }))
-  }
+    }));
+  };
 
   getGridClassName = () =>
-    this.props.form.kind === TRANSFER
+    this.props.form.kind === Transfer
       ? 'transaction-form-grid single-line'
-      : 'transaction-form-grid'
+      : 'transaction-form-grid';
 
   render() {
-    if (!this.props.form.accountId) return <NoAccounts />
+    if (!this.props.form.accountId) return <NoAccounts />;
 
     return (
       <React.Fragment>
@@ -64,7 +65,7 @@ class TransactionForm extends React.Component {
         <Segment attached="bottom">
           <Form onSubmit={this.onSubmit} className="transaction-form">
             <Account
-              label={this.props.form.kind === INCOME ? 'To' : 'From'}
+              label={this.props.form.kind === Income ? 'To' : 'From'}
               accountId={this.props.form.accountId}
               amount={this.props.form.amount}
               currency={this.props.form.currency}
@@ -76,7 +77,7 @@ class TransactionForm extends React.Component {
               onAmountChange={this.onChange(this.props.changeAmount)}
               onCurrencyChange={this.onChange(this.props.changeCurrency)}
             />
-            {this.props.form.kind === TRANSFER && (
+            {this.props.form.kind === Transfer && (
               <Account
                 label="To"
                 accountId={this.props.form.linkedAccountId}
@@ -97,7 +98,7 @@ class TransactionForm extends React.Component {
             )}
             <div className={this.getGridClassName()}>
               <div className="transaction-form-grid__column-wide">
-                {this.props.form.kind !== TRANSFER && (
+                {this.props.form.kind !== Transfer && (
                   <div className="transaction-form-grid__field">
                     <Form.Field>
                       <label>Tags</label>
@@ -148,7 +149,7 @@ class TransactionForm extends React.Component {
                     disabled={parseFloat(this.props.form.amount) === 0}
                   >
                     {this.props.form.id ? 'Save' : 'Add'}{' '}
-                    {Transaction.kindLabel(this.props.form.kind)}
+                    {kindLabel(this.props.form.kind)}
                   </Button>
                 </div>
               </div>
@@ -156,14 +157,14 @@ class TransactionForm extends React.Component {
           </Form>
         </Segment>
       </React.Fragment>
-    )
+    );
   }
 }
 
 TransactionForm.propTypes = {
   form: PropTypes.shape({
     id: PropTypes.string,
-    kind: PropTypes.oneOf([EXPENSE, TRANSFER, INCOME]),
+    kind: PropTypes.oneOf([Expense, Transfer, Income]),
     accountId: PropTypes.string,
     amount: PropTypes.string,
     currency: PropTypes.string,
@@ -171,8 +172,8 @@ TransactionForm.propTypes = {
     linkedAmount: PropTypes.string,
     linkedCurrency: PropTypes.string,
     tags: PropTypes.shape({
-      [EXPENSE]: PropTypes.arrayOf(PropTypes.string),
-      [INCOME]: PropTypes.arrayOf(PropTypes.string)
+      [Expense]: PropTypes.arrayOf(PropTypes.string),
+      [Income]: PropTypes.arrayOf(PropTypes.string)
     }),
     date: PropTypes.string,
     note: PropTypes.string
@@ -193,6 +194,6 @@ TransactionForm.propTypes = {
   changeNote: PropTypes.func.isRequired,
   loadTags: PropTypes.func,
   saveTransaction: PropTypes.func.isRequired
-}
+};
 
-export default TransactionForm
+export default TransactionForm;

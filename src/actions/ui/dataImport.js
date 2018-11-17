@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   openImportFile,
@@ -14,4 +14,4 @@ export const {
   'IMPORT_FILE_READ_SUCCESS',
   'IMPORT_LINE_PROCESSED',
   'IMPORT_FAILURE'
-)
+);

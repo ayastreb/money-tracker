@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   loadTags,
@@ -8,4 +8,4 @@ export const {
   'LOAD_TAGS',
   'LOAD_EXPENSE_TAGS_SUCCESS',
   'LOAD_INCOME_TAGS_SUCCESS'
-)
+);

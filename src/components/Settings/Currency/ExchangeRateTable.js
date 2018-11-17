@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Table } from 'semantic-ui-react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
 
 class ExchangeRateTable extends React.Component {
   render() {
-    const { base, secondary, exchangeRate } = this.props
+    const { base, secondary, exchangeRate } = this.props;
     return (
       <Table basic>
         <Table.Body>
@@ -20,7 +20,7 @@ class ExchangeRateTable extends React.Component {
           ))}
         </Table.Body>
       </Table>
-    )
+    );
   }
 }
 
@@ -28,6 +28,6 @@ ExchangeRateTable.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
   exchangeRate: PropTypes.objectOf(PropTypes.number)
-}
+};
 
-export default ExchangeRateTable
+export default ExchangeRateTable;

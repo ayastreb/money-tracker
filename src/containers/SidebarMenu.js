@@ -1,7 +1,7 @@
-import React from 'react'
-import { Route, Link } from 'react-router-dom'
-import { Icon, Menu } from 'semantic-ui-react'
-import routes from '../router/routes'
+import React from 'react';
+import { Route, Link } from 'react-router-dom';
+import { Icon, Menu } from 'semantic-ui-react';
+import routes from '../router/routes';
 
 const SidebarMenu = ({ isOpen, toggleSidebar }) => (
   <nav className={isOpen ? 'open' : 'closed'} onClick={toggleSidebar}>
@@ -21,6 +21,6 @@ const SidebarMenu = ({ isOpen, toggleSidebar }) => (
       ))}
     </Menu>
   </nav>
-)
+);
 
-export default SidebarMenu
+export default SidebarMenu;

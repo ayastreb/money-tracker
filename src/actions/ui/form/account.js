@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   fillInAccountForm,
@@ -18,4 +18,4 @@ export const {
   'CHANGE_BALANCE',
   'TOGGLE_CURRENCY',
   'TOGGLE_ON_DASHBOARD'
-)
+);

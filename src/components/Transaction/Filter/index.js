@@ -1,30 +1,30 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Dropdown, Button } from 'semantic-ui-react'
-import Calendar from './Calendar'
-import Filters from './Filters'
-import AppliedFilters from './AppliedFilters'
-import DateRange from '../../../entities/Transaction/FilterDateRange'
-import { DropdownOption } from '../../types'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Dropdown, Button } from 'semantic-ui-react';
+import Calendar from './Calendar';
+import Filters from './Filters';
+import AppliedFilters from './AppliedFilters';
+import DateRange from '../../../entities/Transaction/FilterDateRange';
+import { DropdownOption } from '../../types';
+import './index.css';
 
 class Filter extends React.Component {
-  options = DateRange.options()
-  lastValue = DateRange.defaultRange
+  options = DateRange.options();
+  lastValue = DateRange.defaultRange;
 
   handleDateRange = (event, { value }) => {
-    if (value === this.lastValue) return
+    if (value === this.lastValue) return;
 
     if (value === 'custom') {
-      this.props.toggleFilterCalendar()
+      this.props.toggleFilterCalendar();
     } else {
       this.props.changeFilterDate({
         dateStart: DateRange.rangeStart(value),
         dateEnd: DateRange.rangeEnd(value)
-      })
-      this.lastValue = value
+      });
+      this.lastValue = value;
     }
-  }
+  };
 
   render() {
     return (
@@ -54,7 +54,7 @@ class Filter extends React.Component {
         </div>
         <AppliedFilters {...this.props} />
       </React.Fragment>
-    )
+    );
   }
 }
 
@@ -73,6 +73,6 @@ Filter.propTypes = {
   toggleFilterModal: PropTypes.func,
   applyFilters: PropTypes.func,
   openTransactionInModal: PropTypes.func
-}
+};
 
-export default Filter
+export default Filter;

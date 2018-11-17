@@ -1,37 +1,37 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Checkbox, Input, Form } from 'semantic-ui-react'
-import Amount from '../../../components/Amount'
-import Currency from '../../../entities/Currency'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Checkbox, Input, Form } from 'semantic-ui-react';
+import Amount from '../../../components/Amount';
+import Currency from '../../../entities/Currency';
 
 class BalanceTable extends React.Component {
   componentWillMount() {
-    this.updateCurrencyList(this.props.base, this.props.secondary)
-    this.setInitialCurrencyCheckbox(this.props.base)
+    this.updateCurrencyList(this.props.base, this.props.secondary);
+    this.setInitialCurrencyCheckbox(this.props.base);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.updateCurrencyList(nextProps.base, nextProps.secondary)
-    this.setInitialCurrencyCheckbox(nextProps.base)
+    this.updateCurrencyList(nextProps.base, nextProps.secondary);
+    this.setInitialCurrencyCheckbox(nextProps.base);
   }
 
   updateCurrencyList(base, secondary) {
-    this.currencies = [base, ...secondary]
+    this.currencies = [base, ...secondary];
   }
 
   setInitialCurrencyCheckbox(base) {
     if (this.props.form.currencies.length === 0) {
-      this.props.toggleCurrency(base)
+      this.props.toggleCurrency(base);
     }
   }
 
   handleCurrencyChange = (event, { value }) => {
-    this.props.toggleCurrency(value)
-  }
+    this.props.toggleCurrency(value);
+  };
 
   handleBalanceChange = code => (event, { value }) => {
-    this.props.changeBalance({ code, balance: value })
-  }
+    this.props.changeBalance({ code, balance: value });
+  };
 
   render() {
     return this.currencies.map(code => (
@@ -68,7 +68,7 @@ class BalanceTable extends React.Component {
           )}
         </Form.Field>
       </Form.Group>
-    ))
+    ));
   }
 }
 
@@ -82,6 +82,6 @@ BalanceTable.propTypes = {
   }).isRequired,
   toggleCurrency: PropTypes.func.isRequired,
   changeBalance: PropTypes.func.isRequired
-}
+};
 
-export default BalanceTable
+export default BalanceTable;

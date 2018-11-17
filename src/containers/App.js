@@ -1,27 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Router, Route, Switch, Redirect } from 'react-router-dom'
-import { Dimmer, Loader } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import throttle from 'lodash/throttle'
-import routes from '../router/routes'
-import Auth from './Auth'
-import InitialSetup from './InitialSetup'
-import SidebarMenu from './SidebarMenu'
-import Header from '../components/Header'
-import DemoNotice from './DemoNotice'
-import SyncWarning from './SyncWarning'
-import { windowResize } from '../actions/ui/windowResize'
-import { toggleSidebar } from '../actions/ui/sidebar'
-import { bootstrap } from '../actions/app'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Dimmer, Loader } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import throttle from 'lodash/throttle';
+import routes from '../router/routes';
+import Auth from './Auth';
+import InitialSetup from './InitialSetup';
+import SidebarMenu from './SidebarMenu';
+import Header from '../components/Header';
+import DemoNotice from './DemoNotice';
+import SyncWarning from './SyncWarning';
+import { windowResize } from '../actions/ui/windowResize';
+import { toggleSidebar } from '../actions/ui/sidebar';
+import { bootstrap } from '../actions/app';
 
 class App extends React.Component {
   componentWillMount() {
-    window.addEventListener('resize', throttle(this.props.windowResize, 500))
+    window.addEventListener('resize', throttle(this.props.windowResize, 500));
   }
 
   componentDidMount() {
-    this.props.bootstrap()
+    this.props.bootstrap();
   }
 
   render() {
@@ -34,7 +34,7 @@ class App extends React.Component {
             'Synchronizing data, this might take a moment...'
           }
         />
-      )
+      );
     }
 
     return (
@@ -48,7 +48,7 @@ class App extends React.Component {
           )}
         </Switch>
       </Router>
-    )
+    );
   }
 
   /**
@@ -58,9 +58,9 @@ class App extends React.Component {
    */
   renderNavigationRoutes = () => {
     if (window.location.pathname.endsWith('index.html')) {
-      return <Redirect to="/" />
+      return <Redirect to="/" />;
     }
-    const { isSidebarOpen, isMobile, toggleSidebar } = this.props
+    const { isSidebarOpen, isMobile, toggleSidebar } = this.props;
     return (
       <React.Fragment>
         <Dimmer
@@ -91,22 +91,22 @@ class App extends React.Component {
           />
         ))}
       </React.Fragment>
-    )
-  }
+    );
+  };
 }
 
 function flatten(routes) {
-  let flatRoutes = []
+  let flatRoutes = [];
   routes.forEach(route => {
     if (route.routes) {
-      flatRoutes.push({ ...route, exact: true })
-      flatRoutes.push(...flatten(route.routes))
+      flatRoutes.push({ ...route, exact: true });
+      flatRoutes.push(...flatten(route.routes));
     } else {
-      flatRoutes.push(route)
+      flatRoutes.push(route);
     }
-  })
+  });
 
-  return flatRoutes
+  return flatRoutes;
 }
 
 App.propTypes = {
@@ -119,7 +119,7 @@ App.propTypes = {
   bootstrap: PropTypes.func,
   windowResize: PropTypes.func,
   toggleSidebar: PropTypes.func
-}
+};
 
 const mapStateToProps = (state, ownProps) => ({
   history: ownProps.history,
@@ -128,7 +128,7 @@ const mapStateToProps = (state, ownProps) => ({
   isSetupComplete: state.settings.isSetupComplete,
   isMobile: state.ui.isMobile,
   isSidebarOpen: state.ui.isSidebarOpen
-})
+});
 
 export default connect(
   mapStateToProps,
@@ -137,4 +137,4 @@ export default connect(
     windowResize,
     toggleSidebar
   }
-)(App)
+)(App);

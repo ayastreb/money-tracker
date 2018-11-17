@@ -1,5 +1,5 @@
-import { handleActions, combineActions } from 'redux-actions'
-import pick from 'lodash/pick'
+import { handleActions, combineActions } from 'redux-actions';
+import pick from 'lodash/pick';
 import {
   fillInAccountForm,
   openAccountInModal,
@@ -9,7 +9,7 @@ import {
   changeBalance,
   changeGroup,
   changeName
-} from '../../../actions/ui/form/account'
+} from '../../../actions/ui/form/account';
 import {
   saveAccountSuccess,
   removeAccountRequest,
@@ -17,13 +17,13 @@ import {
   removeAccountFailure,
   removeAccountSuccess,
   removeAccountItemProcessed
-} from '../../../actions/entities/accounts'
-import { changeSettingsCurrency } from '../../../actions/settings'
-import Account from '../../../entities/Account'
+} from '../../../actions/entities/accounts';
+import { changeSettingsCurrency } from '../../../actions/settings';
+import { defaultGroup, stateToForm } from '../../../entities/Account';
 
 const initialState = {
   name: '',
-  group: Account.defaultGroup,
+  group: defaultGroup,
   balance: {},
   currencies: [],
   on_dashboard: true,
@@ -33,14 +33,14 @@ const initialState = {
   isDeleteRunning: false,
   itemsToProcess: Infinity,
   itemsProcessed: 0
-}
+};
 export default handleActions(
   {
     [changeGroup]: (state, { payload }) => ({ ...state, group: payload }),
     [changeName]: (state, { payload }) => ({ ...state, name: payload }),
     [toggleCurrency]: (state, { payload }) => {
-      const isChecked = state.currencies.includes(payload)
-      if (isChecked && state.currencies.length === 1) return state
+      const isChecked = state.currencies.includes(payload);
+      if (isChecked && state.currencies.length === 1) return state;
       return {
         ...state,
         currencies: isChecked
@@ -50,7 +50,7 @@ export default handleActions(
           !isChecked && state.balance[payload] === undefined
             ? { ...state.balance, [payload]: '' }
             : state.balance
-      }
+      };
     },
     [changeBalance]: (state, { payload }) => ({
       ...state,
@@ -64,12 +64,12 @@ export default handleActions(
       on_dashboard: !state.on_dashboard
     }),
     [changeSettingsCurrency]: (state, { payload }) => {
-      const currencies = new Set([payload.base, ...payload.secondary])
+      const currencies = new Set([payload.base, ...payload.secondary]);
       return {
         ...state,
         currencies: state.currencies.filter(code => currencies.has(code)),
         balance: pick(state.balance, [...currencies])
-      }
+      };
     },
     [openAccountInModal]: (state, { payload }) => ({
       ...state,
@@ -83,7 +83,7 @@ export default handleActions(
     }),
     [fillInAccountForm]: (state, { payload }) => ({
       ...state,
-      ...Account.toForm(payload)
+      ...stateToForm(payload)
     }),
     [removeAccountRequest]: state => ({
       ...state,
@@ -104,4 +104,4 @@ export default handleActions(
     })
   },
   initialState
-)
+);

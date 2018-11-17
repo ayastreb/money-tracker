@@ -2,9 +2,13 @@ import {
   transactionsDB,
   remoteTransactionsDB,
   destroyTransactionsDB
-} from './pouchdb'
-import Transaction from '../../entities/Transaction'
-import intersection from 'lodash/intersection'
+} from './pouchdb';
+import {
+  recentListLimit,
+  storageToState,
+  stateToStorage
+} from '../../entities/Transaction';
+import intersection from 'lodash/intersection';
 
 export default {
   sync,
@@ -14,20 +18,20 @@ export default {
   save,
   remove,
   destroy
-}
+};
 
 async function sync(readOnly = true) {
-  if (!remoteTransactionsDB()) return
-  const options = { batch_size: 500 }
+  if (!remoteTransactionsDB()) return;
+  const options = { batch_size: 500 };
 
   await transactionsDB()
     .replicate.from(remoteTransactionsDB(), options)
     .on('change', async update => {
-      await Promise.all(update.docs.map(processIncomingTransaction))
-    })
+      await Promise.all(update.docs.map(processIncomingTransaction));
+    });
 
   if (!readOnly) {
-    await transactionsDB().replicate.to(remoteTransactionsDB(), options)
+    await transactionsDB().replicate.to(remoteTransactionsDB(), options);
   }
 }
 
@@ -39,23 +43,23 @@ async function processIncomingTransaction(tx) {
       date: undefined,
       tags: tx.tags && tx.tags.length ? tx.tags : undefined,
       note: tx.note && tx.note.length ? tx.note : undefined
-    })
-    await transactionsDB().remove(tx)
+    });
+    await transactionsDB().remove(tx);
   }
 
-  return tx
+  return tx;
 }
 
 function load(id) {
   return transactionsDB()
     .get(id)
-    .then(Transaction.fromStorage)
+    .then(storageToState)
     .catch(error => {
-      if (error.status !== 404) throw error
-    })
+      if (error.status !== 404) throw error;
+    });
 }
 
-function loadRecent(limit = Transaction.recentListLimit) {
+function loadRecent(limit = recentListLimit) {
   return transactionsDB()
     .allDocs({
       include_docs: true,
@@ -65,7 +69,7 @@ function loadRecent(limit = Transaction.recentListLimit) {
       limit
     })
     .then(response => response.rows.map(row => row.doc))
-    .then(docs => docs.map(Transaction.fromStorage))
+    .then(docs => docs.map(storageToState));
 }
 
 function loadFiltered(filters = {}) {
@@ -79,7 +83,7 @@ function loadFiltered(filters = {}) {
     .then(response => response.rows.map(row => row.doc))
     .then(docs => filterByAccount(docs, filters.accounts))
     .then(docs => filterByTags(docs, filters.tags))
-    .then(docs => docs.map(doc => Transaction.fromStorage(doc)))
+    .then(docs => docs.map(doc => storageToState(doc)));
 }
 
 /**
@@ -90,12 +94,12 @@ function loadFiltered(filters = {}) {
  * @return {array}
  */
 function filterByAccount(docs, accounts) {
-  if (Array.isArray(accounts)) accounts = new Set(accounts)
-  if (!accounts || !accounts.size) return docs
+  if (Array.isArray(accounts)) accounts = new Set(accounts);
+  if (!accounts || !accounts.size) return docs;
 
   return docs.filter(
     tx => accounts.has(tx.accountId) || accounts.has(tx.linkedAccountId)
-  )
+  );
 }
 
 /**
@@ -108,27 +112,30 @@ function filterByAccount(docs, accounts) {
 function filterByTags(docs, tags) {
   return tags && tags.length > 0
     ? docs.filter(tx => intersection(tx.tags, tags).length > 0)
-    : docs
+    : docs;
 }
 
 function save(transaction) {
   return transactionsDB()
     .get(transaction.id)
     .then(doc =>
-      transactionsDB().put({ ...doc, ...Transaction.toStorage(transaction) })
+      transactionsDB().put({
+        ...doc,
+        ...stateToStorage(transaction)
+      })
     )
     .catch(err => {
-      if (err.status !== 404) throw err
+      if (err.status !== 404) throw err;
 
       return transactionsDB().put({
         _id: transaction.id,
-        ...Transaction.toStorage(transaction)
-      })
-    })
+        ...stateToStorage(transaction)
+      });
+    });
 }
 
 function remove(id) {
-  if (!id) return false
+  if (!id) return false;
 
   return transactionsDB()
     .get(id)
@@ -138,11 +145,11 @@ function remove(id) {
         .then(() => doc)
     )
     .catch(err => {
-      if (err.status !== 404) throw err
-      return false
-    })
+      if (err.status !== 404) throw err;
+      return false;
+    });
 }
 
 function destroy() {
-  return destroyTransactionsDB()
+  return destroyTransactionsDB();
 }

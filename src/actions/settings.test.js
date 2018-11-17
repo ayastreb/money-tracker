@@ -4,14 +4,14 @@ import {
   updateExchangeRateSuccess,
   toggleSectionCollapse,
   completeSetup
-} from './settings'
+} from './settings';
 
 it('creates load success action', () => {
   expect(loadSettingsSuccess('foo')).toEqual({
     type: 'LOAD_SETTINGS_SUCCESS',
     payload: 'foo'
-  })
-})
+  });
+});
 
 it('creates change currency action', () => {
   expect(
@@ -22,25 +22,25 @@ it('creates change currency action', () => {
       base: 'EUR',
       secondary: ['USD', 'JPY']
     }
-  })
-})
+  });
+});
 
 it('creates update exchange rate success action', () => {
   expect(updateExchangeRateSuccess('foo')).toEqual({
     type: 'UPDATE_EXCHANGE_RATE_SUCCESS',
     payload: 'foo'
-  })
-})
+  });
+});
 
 it('creates toggle section action', () => {
   expect(toggleSectionCollapse('foo')).toEqual({
     type: 'TOGGLE_SECTION_COLLAPSE',
     payload: 'foo'
-  })
-})
+  });
+});
 
 it('creates complete setup action', () => {
   expect(completeSetup()).toEqual({
     type: 'COMPLETE_SETUP'
-  })
-})
+  });
+});

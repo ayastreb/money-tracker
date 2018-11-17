@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   dismissSyncWarning,
@@ -14,4 +14,4 @@ export const {
   'SYNC_REQUEST',
   'SYNC_SUCCESS',
   'SYNC_FAILURE'
-)
+);

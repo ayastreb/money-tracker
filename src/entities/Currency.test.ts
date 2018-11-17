@@ -15,8 +15,11 @@ it('returns list of options', () => {
   expect(options[0]).toHaveProperty('text')
 
   const usdOption = options.find(option => option.key === 'USD')
-  expect(usdOption.text).toEqual('USD, US Dollar')
-  expect(usdOption.flag).toEqual('us')
+  expect(usdOption).toBeTruthy()
+  if (usdOption) {
+    expect(usdOption.text).toEqual('USD, US Dollar')
+    expect(usdOption.flag).toEqual('us')
+  }
 })
 
 it('returns currency name', () => {

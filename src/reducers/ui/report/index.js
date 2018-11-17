@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   changeReportKind,
   changeReportTimespan,
@@ -8,8 +8,8 @@ import {
   loadReport,
   loadReportSuccess,
   loadReportFailure
-} from '../../../actions/ui/report'
-import Report from '../../../entities/Report'
+} from '../../../actions/ui/report';
+import Report from '../../../entities/Report';
 
 export default handleActions(
   {
@@ -58,4 +58,4 @@ export default handleActions(
     accounts: [],
     netWorthStack: []
   }
-)
+);

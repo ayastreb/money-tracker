@@ -1,18 +1,18 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   changeFilterDate,
   changeFilterPage,
   toggleFilterCalendar,
   toggleFilterModal,
   applyFilters
-} from '../../../actions/ui/transaction/filter'
+} from '../../../actions/ui/transaction/filter';
 import {
   loadFilterTransactions,
   loadFilterTransactionsSuccess
-} from '../../../actions/entities/transactions'
-import DateRange from '../../../entities/Transaction/FilterDateRange'
-import Transaction from '../../../entities/Transaction'
-import { toUtcTimestamp } from '../../../util/timezone'
+} from '../../../actions/entities/transactions';
+import DateRange from '../../../entities/Transaction/FilterDateRange';
+import { rowsPerSearchPage } from '../../../entities/Transaction';
+import { toUtcTimestamp } from '../../../util/timezone';
 
 const initialState = {
   dateStart: toUtcTimestamp(DateRange.defaultStart),
@@ -23,8 +23,8 @@ const initialState = {
   isLoading: false,
   totalRows: 0,
   page: 0,
-  perPage: Transaction.rowsPerSearchPage
-}
+  perPage: rowsPerSearchPage
+};
 
 export default handleActions(
   {
@@ -53,4 +53,4 @@ export default handleActions(
     [applyFilters]: (state, { payload }) => ({ ...state, applied: payload })
   },
   initialState
-)
+);

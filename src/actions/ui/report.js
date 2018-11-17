@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   changeReportKind,
@@ -18,4 +18,4 @@ export const {
   'LOAD_REPORT',
   'LOAD_REPORT_SUCCESS',
   'LOAD_REPORT_FAILURE'
-)
+);

@@ -28,10 +28,12 @@
  *   ]
  * }
  */
-module.exports = function(context, respond) {
-  const request = require('request')
-  const BASE = 'USD'
-  const pairs = context.query.pairs.toUpperCase().split(',')
+export default CurrencyExchange;
+
+function CurrencyExchange(context, respond) {
+  const request = require('request');
+  const BASE = 'USD';
+  const pairs = context.query.pairs.toUpperCase().split(',');
 
   return getBaseRate()
     .then(baseRate =>
@@ -40,7 +42,7 @@ module.exports = function(context, respond) {
         rates: pairs.map(pair => getRateForPair(baseRate, pair))
       })
     )
-    .catch(error => respond(error))
+    .catch(error => respond(error));
 
   /**
    * Get exchange rate for given pair using given base exchange rate.
@@ -54,14 +56,14 @@ module.exports = function(context, respond) {
     if (pair.length != 6) {
       throw new Error(
         `Invalid pair "${pair}". Must be 6-char string, e.g. "USDEUR"`
-      )
+      );
     }
 
-    const source = pair.substr(0, 3)
-    const target = pair.substr(3, 3)
+    const source = pair.substr(0, 3);
+    const target = pair.substr(3, 3);
 
-    if (!baseRate[source]) throw new Error(`Unknown currency code "${source}"`)
-    if (!baseRate[target]) throw new Error(`Unknown currency code "${target}"`)
+    if (!baseRate[source]) throw new Error(`Unknown currency code "${source}"`);
+    if (!baseRate[target]) throw new Error(`Unknown currency code "${target}"`);
 
     return {
       id: pair,
@@ -70,7 +72,7 @@ module.exports = function(context, respond) {
           ? baseRate[target]
           : (1 / baseRate[source]) * baseRate[target]
       ).toFixed(6)
-    }
+    };
   }
 
   /**
@@ -82,7 +84,7 @@ module.exports = function(context, respond) {
     return fetchCachedRate()
       .then(rate => rate, error => fetchLiveRate())
       .then(checkCachedRateAge)
-      .then(convertRate)
+      .then(convertRate);
   }
 
   /**
@@ -94,12 +96,12 @@ module.exports = function(context, respond) {
   function fetchCachedRate() {
     return new Promise((resolve, reject) => {
       context.storage.get((error, rate) => {
-        if (error) return reject(error)
-        if (rate === undefined) return reject()
+        if (error) return reject(error);
+        if (rate === undefined) return reject();
 
-        resolve(rate)
-      })
-    })
+        resolve(rate);
+      });
+    });
   }
 
   /**
@@ -112,7 +114,7 @@ module.exports = function(context, respond) {
    */
   function fetchLiveRate() {
     return new Promise(resolve => {
-      const apiKey = context.secrets.apiKey
+      const apiKey = context.secrets.apiKey;
       request(
         {
           method: 'GET',
@@ -121,13 +123,13 @@ module.exports = function(context, respond) {
         },
         (error, response, body) => {
           if (error || !body.success) {
-            fetchCachedRate().then(rate => resolve(rate))
+            fetchCachedRate().then(rate => resolve(rate));
           } else {
-            writeCachedRate(body).then(() => resolve(body))
+            writeCachedRate(body).then(() => resolve(body));
           }
         }
-      )
-    })
+      );
+    });
   }
 
   /**
@@ -141,8 +143,8 @@ module.exports = function(context, respond) {
     return new Promise((resolve, reject) => {
       context.storage.set(rate, { force: 1 }, error =>
         error ? reject(error) : resolve()
-      )
-    })
+      );
+    });
   }
 
   /**
@@ -151,8 +153,8 @@ module.exports = function(context, respond) {
    * @param {object} rate
    */
   function checkCachedRateAge(rate) {
-    const expiryDate = Math.floor(Date.now() / 1000) - 3600
-    return rate.timestamp < expiryDate ? fetchLiveRate() : rate
+    const expiryDate = Math.floor(Date.now() / 1000) - 3600;
+    return rate.timestamp < expiryDate ? fetchLiveRate() : rate;
   }
 
   /**
@@ -163,9 +165,9 @@ module.exports = function(context, respond) {
    */
   function convertRate(rate) {
     return Object.keys(rate.quotes).reduce((acc, pair) => {
-      const code = pair.substr(3, 3)
-      acc[code] = rate.quotes[pair]
-      return acc
-    }, {})
+      const code = pair.substr(3, 3);
+      acc[code] = rate.quotes[pair];
+      return acc;
+    }, {});
   }
 }

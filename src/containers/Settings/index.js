@@ -1,9 +1,9 @@
-import React from 'react'
-import CurrencyInput from './Currency/Input'
-import CurrenchExchangeRate from './Currency/ExchangeRate'
-import DataImport from './DataImport'
-import User from './User'
-import CollapsibleSection from '../../components/CollapsibleSection'
+import React from 'react';
+import CurrencyInput from './Currency/Input';
+import CurrenchExchangeRate from './Currency/ExchangeRate';
+import DataImport from './DataImport';
+import User from './User';
+import CollapsibleSection from '../../components/CollapsibleSection';
 
 const Settings = () => (
   <div className="container-full-page mt-settings">
@@ -18,6 +18,6 @@ const Settings = () => (
       <User />
     </CollapsibleSection>
   </div>
-)
+);
 
-export default Settings
+export default Settings;

@@ -1,13 +1,13 @@
-import { createSelector } from 'reselect'
-import { getAccountsMap } from './accounts'
-import { getBaseCurrency, getExchangeRate } from '../settings'
-import { getPage } from '../ui/transaction/filter'
-import Transaction from '../../entities/Transaction'
-import Currency from '../../entities/Currency'
-import EntityMap from '../../entities/EntityMap'
+import { createSelector } from 'reselect';
+import { getAccountsMap } from './accounts';
+import { getBaseCurrency, getExchangeRate } from '../settings';
+import { getPage } from '../ui/transaction/filter';
+import { recentListLimit, rowsPerSearchPage } from '../../entities/Transaction';
+import Currency from '../../entities/Currency';
+import EntityMap from '../../entities/EntityMap';
 
-const recentTransactionsSelector = state => state.entities.transactions.recent
-const filterTransactionsSelector = state => state.entities.transactions.filter
+const recentTransactionsSelector = state => state.entities.transactions.recent;
+const filterTransactionsSelector = state => state.entities.transactions.filter;
 
 export const getRecentTransactions = createSelector(
   recentTransactionsSelector,
@@ -16,9 +16,9 @@ export const getRecentTransactions = createSelector(
     EntityMap.map(
       transactions,
       transaction => joinAccount(transaction, accounts),
-      Transaction.recentListLimit
+      recentListLimit
     )
-)
+);
 
 export const getFilterTransactions = createSelector(
   filterTransactionsSelector,
@@ -28,20 +28,20 @@ export const getFilterTransactions = createSelector(
     EntityMap.map(
       transactions,
       transaction => joinAccount(transaction, accounts),
-      Transaction.rowsPerSearchPage,
-      page * Transaction.rowsPerSearchPage
+      rowsPerSearchPage,
+      page * rowsPerSearchPage
     )
-)
+);
 
 function joinAccount(transaction, accounts) {
-  const account = EntityMap.get(accounts, transaction.accountId)
-  const linked = EntityMap.get(accounts, transaction.linkedAccountId)
+  const account = EntityMap.get(accounts, transaction.accountId);
+  const linked = EntityMap.get(accounts, transaction.linkedAccountId);
   return {
     ...transaction,
     archived: account.archived || linked.archived,
     accountName: account.name,
     linkedAccountName: linked.name
-  }
+  };
 }
 
 export const getFilterTotal = kind =>
@@ -58,4 +58,4 @@ export const getFilterTotal = kind =>
           ),
         0
       )
-  )
+  );

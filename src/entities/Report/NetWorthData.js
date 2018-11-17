@@ -1,10 +1,12 @@
-import format from 'date-fns/format'
-import getDaysInMonth from 'date-fns/get_days_in_month'
-import range from 'lodash/range'
-import { toUtcTimestamp } from '../../util/timezone'
-import Currency from '../Currency'
-import { TIMESPAN_YEARLY } from '../Report'
-import { EXPENSE, INCOME } from '../Transaction'
+import format from 'date-fns/format';
+import getDaysInMonth from 'date-fns/get_days_in_month';
+import range from 'lodash/range';
+import { toUtcTimestamp } from '../../util/timezone';
+import Currency from '../Currency';
+import { TIMESPAN_YEARLY } from '../Report';
+import { TransationKindT } from '../Transaction';
+
+const { Expense, Income } = TransationKindT;
 
 export default function NetWorthData(
   report,
@@ -16,38 +18,38 @@ export default function NetWorthData(
   const labels =
     report.timespan === TIMESPAN_YEARLY
       ? range(0, 12).map(month => format(new Date().setMonth(month), 'MMM'))
-      : range(1, getDaysInMonth(report.date.start) + 1)
-  const data = []
-  let lastPeriod
+      : range(1, getDaysInMonth(report.date.start) + 1);
+  const data = [];
+  let lastPeriod;
   for (const tx of transactions) {
-    if (tx.kind !== EXPENSE && tx.kind !== INCOME) continue
+    if (tx.kind !== Expense && tx.kind !== Income) continue;
 
     const period =
       format(
         toUtcTimestamp(tx.date),
         report.timespan === TIMESPAN_YEARLY ? 'M' : 'D'
-      ) - 1
+      ) - 1;
     if (period !== lastPeriod) {
       if (lastPeriod === undefined) {
-        lastPeriod = period + 1
-        data[lastPeriod] = netWorthEnd
+        lastPeriod = period + 1;
+        data[lastPeriod] = netWorthEnd;
       }
-      data[period] = data[lastPeriod]
+      data[period] = data[lastPeriod];
     }
 
-    lastPeriod = period
+    lastPeriod = period;
 
     data[period] -= Currency.convert(
       tx.amount,
       exchangeRate[tx.currency],
       base,
       tx.currency
-    )
+    );
   }
 
-  if (lastPeriod > 0) data[0] = data[lastPeriod]
+  if (lastPeriod > 0) data[0] = data[lastPeriod];
   if (report.date.end < Date.now() && data.length < labels.length) {
-    data[labels.length - 1] = data[data.length - 1]
+    data[labels.length - 1] = data[data.length - 1];
   }
 
   return {
@@ -57,5 +59,5 @@ export default function NetWorthData(
     ],
     netWorthStart: data[0],
     netWorthEnd
-  }
+  };
 }

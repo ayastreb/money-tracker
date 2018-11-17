@@ -1,14 +1,14 @@
-import pick from 'lodash/pick'
-import { handleActions } from 'redux-actions'
+import pick from 'lodash/pick';
+import { handleActions } from 'redux-actions';
 import {
   loadSettingsSuccess,
   changeSettingsCurrency,
   updateExchangeRateSuccess,
   toggleSectionCollapse,
   completeSetup
-} from '../actions/settings'
-import { signOutComplete } from '../actions/user'
-import Currency from '../entities/Currency'
+} from '../actions/settings';
+import { signOutComplete } from '../actions/user';
+import Currency from '../entities/Currency';
 
 const initialState = {
   isLoaded: false,
@@ -16,7 +16,7 @@ const initialState = {
   currency: { base: Currency.defaultBase, secondary: [] },
   exchangeRate: { [Currency.defaultBase]: 1.0 },
   collapsedSections: []
-}
+};
 
 export default handleActions(
   {
@@ -26,14 +26,14 @@ export default handleActions(
       ...pick(payload, Object.keys(state))
     }),
     [changeSettingsCurrency]: (state, { payload }) => {
-      let { base, secondary } = payload
+      let { base, secondary } = payload;
       if (secondary.includes(base)) {
         secondary = secondary
           .concat(state.currency.base)
-          .filter(code => code !== base)
+          .filter(code => code !== base);
       }
 
-      return { ...state, currency: { base, secondary } }
+      return { ...state, currency: { base, secondary } };
     },
     [updateExchangeRateSuccess]: (state, { payload }) => ({
       ...state,
@@ -49,4 +49,4 @@ export default handleActions(
     [signOutComplete]: () => initialState
   },
   initialState
-)
+);

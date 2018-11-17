@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Message, Button } from 'semantic-ui-react'
-import { isDemo } from '../selectors/user'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Message, Button } from 'semantic-ui-react';
+import { isDemo } from '../selectors/user';
 
 class DemoNotice extends React.Component {
   render() {
-    if (!this.props.isVisible) return null
+    if (!this.props.isVisible) return null;
 
     return (
       <Message
@@ -35,16 +35,16 @@ class DemoNotice extends React.Component {
           </div>
         }
       />
-    )
+    );
   }
 }
 
 DemoNotice.propTypes = {
   isVisible: PropTypes.bool
-}
+};
 
 const mapStateToProps = state => ({
   isVisible: isDemo(state)
-})
+});
 
-export default connect(mapStateToProps)(DemoNotice)
+export default connect(mapStateToProps)(DemoNotice);

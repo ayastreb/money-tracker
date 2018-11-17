@@ -9,8 +9,8 @@ import {
   getDashboardGroupedAccounts,
   getGroupedAccounts,
   getNetWorth
-} from './accounts'
-import EntityMap from '../../entities/EntityMap'
+} from './accounts';
+import EntityMap from '../../entities/EntityMap';
 
 const state = {
   settings: {
@@ -51,7 +51,7 @@ const state = {
       }
     ])
   }
-}
+};
 
 it('gets account by name', () => {
   expect(getAccountByName('baz')(state)).toEqual({
@@ -61,22 +61,22 @@ it('gets account by name', () => {
     balance: { USD: 200, JPY: 100 },
     currencies: ['USD', 'JPY'],
     on_dashboard: false
-  })
-})
+  });
+});
 
 it('gets accounts currency map', () => {
   const expectedCurrencyMap = {
     A12345: ['USD', 'EUR'],
     A12346: ['JPY'],
     A12347: ['USD', 'JPY']
-  }
-  expect(getAccountsCurrencyMap(state)).toEqual(expectedCurrencyMap)
-})
+  };
+  expect(getAccountsCurrencyMap(state)).toEqual(expectedCurrencyMap);
+});
 
 it('gets list of used currencies', () => {
-  const expectedCurrencyList = ['JPY', 'USD', 'EUR']
-  expect(getAccountsCurrencyList(state)).toEqual(expectedCurrencyList)
-})
+  const expectedCurrencyList = ['JPY', 'USD', 'EUR'];
+  expect(getAccountsCurrencyList(state)).toEqual(expectedCurrencyList);
+});
 
 it('gets accounts as dropdown options list', () => {
   const expectedOptions = [
@@ -98,9 +98,9 @@ it('gets accounts as dropdown options list', () => {
       text: 'baz',
       description: 'Bank Account'
     }
-  ]
-  expect(getAccountsAsOptions(state)).toEqual(expectedOptions)
-})
+  ];
+  expect(getAccountsAsOptions(state)).toEqual(expectedOptions);
+});
 
 it('get grouped accounts map for dashboard', () => {
   const expectedGroups = {
@@ -118,9 +118,9 @@ it('get grouped accounts map for dashboard', () => {
         }
       ]
     }
-  }
-  expect(getDashboardGroupedAccounts(state)).toEqual(expectedGroups)
-})
+  };
+  expect(getDashboardGroupedAccounts(state)).toEqual(expectedGroups);
+});
 
 it('get grouped accounts map with calculated base total', () => {
   const expectedGroups = {
@@ -160,11 +160,11 @@ it('get grouped accounts map with calculated base total', () => {
         }
       ]
     }
-  }
-  expect(getGroupedAccounts(state)).toEqual(expectedGroups)
-})
+  };
+  expect(getGroupedAccounts(state)).toEqual(expectedGroups);
+});
 
 it('calculates net worth = sum of all accounts base total', () => {
-  const expectedNetWorth = 1565 // $12.75 + $2.90
-  expect(getNetWorth(state)).toEqual(expectedNetWorth)
-})
+  const expectedNetWorth = 1565; // $12.75 + $2.90
+  expect(getNetWorth(state)).toEqual(expectedNetWorth);
+});

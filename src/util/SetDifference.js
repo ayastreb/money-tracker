@@ -6,10 +6,10 @@
  * @return {Set}
  */
 export default function difference(left, right) {
-  const diff = new Set()
+  const diff = new Set();
   for (const item of left) {
-    if (!right.has(item)) diff.add(item)
+    if (!right.has(item)) diff.add(item);
   }
 
-  return diff
+  return diff;
 }

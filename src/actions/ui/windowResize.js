@@ -1,3 +1,3 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions';
 
-export const windowResize = createAction('WINDOW_RESIZE')
+export const windowResize = createAction('WINDOW_RESIZE');

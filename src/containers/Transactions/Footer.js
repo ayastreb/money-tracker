@@ -1,13 +1,13 @@
-import { connect } from 'react-redux'
-import Footer from '../../components/Transaction/List/Footer'
-import { getFilterTotal } from '../../selectors/entities/transactions'
-import { getBaseCurrency } from '../../selectors/settings'
-import { INCOME, EXPENSE } from '../../entities/Transaction'
+import { connect } from 'react-redux';
+import Footer from '../../components/Transaction/List/Footer';
+import { getFilterTotal } from '../../selectors/entities/transactions';
+import { getBaseCurrency } from '../../selectors/settings';
+import { TransationKindT } from '../../entities/Transaction';
 
 const mapStateToProps = state => ({
   base: getBaseCurrency(state),
-  income: getFilterTotal(INCOME)(state),
-  expense: getFilterTotal(EXPENSE)(state)
-})
+  income: getFilterTotal(TransationKindT.Income)(state),
+  expense: getFilterTotal(TransationKindT.Expense)(state)
+});
 
-export default connect(mapStateToProps)(Footer)
+export default connect(mapStateToProps)(Footer);

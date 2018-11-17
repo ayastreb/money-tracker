@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   fillInTransactionForm,
@@ -30,4 +30,4 @@ export const {
   'ADD_TAG',
   'CHANGE_TAGS',
   'CHANGE_NOTE'
-)
+);

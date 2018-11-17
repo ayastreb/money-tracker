@@ -1,3 +1,3 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
-export const { showError } = createActions('SHOW_ERROR')
+export const { showError } = createActions('SHOW_ERROR');

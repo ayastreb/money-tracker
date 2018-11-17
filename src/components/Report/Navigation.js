@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Dropdown, Button } from 'semantic-ui-react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Dropdown, Button } from 'semantic-ui-react';
 
 class Navigation extends React.Component {
   handleKindChange = (_, { value }) => {
-    this.props.changeReportKind(value)
-  }
+    this.props.changeReportKind(value);
+  };
 
   handleTimespanChange = (_, { value }) => {
-    this.props.changeReportTimespan(value)
-  }
+    this.props.changeReportTimespan(value);
+  };
 
   render() {
     return (
@@ -40,7 +40,7 @@ class Navigation extends React.Component {
           />
         </Button.Group>
       </div>
-    )
+    );
   }
 }
 
@@ -54,6 +54,6 @@ Navigation.propTypes = {
   changeReportTimespan: PropTypes.func,
   moveReportDateBackwards: PropTypes.func,
   moveReportDateForwards: PropTypes.func
-}
+};
 
-export default Navigation
+export default Navigation;

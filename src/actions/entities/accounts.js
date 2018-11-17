@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   loadAccounts,
@@ -26,4 +26,4 @@ export const {
   'REMOVE_ACCOUNT_ITEM_PROCESSED',
   'REMOVE_ACCOUNT_FAILURE',
   'REMOVE_ACCOUNT_SUCCESS'
-)
+);

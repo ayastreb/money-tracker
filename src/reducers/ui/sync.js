@@ -1,11 +1,11 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   dismissSyncWarning,
   setPendingChangesFlag,
   syncRequest,
   syncSuccess,
   syncFailure
-} from '../../actions/ui/sync'
+} from '../../actions/ui/sync';
 
 export default handleActions(
   {
@@ -24,4 +24,4 @@ export default handleActions(
     isWarningVisible: true,
     hasPendingChanges: false
   }
-)
+);

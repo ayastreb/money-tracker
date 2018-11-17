@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Icon, Header } from 'semantic-ui-react'
-import Logo from '../Logo'
-import { toggleSidebar } from '../../actions/ui/sidebar'
-import { sync } from '../../actions/ui/sync'
-import { isUserAuthenticated } from '../../selectors/user'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Icon, Header } from 'semantic-ui-react';
+import Logo from '../Logo';
+import { toggleSidebar } from '../../actions/ui/sidebar';
+import { sync } from '../../actions/ui/sync';
+import { isUserAuthenticated } from '../../selectors/user';
+import './index.css';
 
 const AppHeader = ({
   label,
@@ -35,7 +35,7 @@ const AppHeader = ({
         ))}
     </Header>
   </header>
-)
+);
 
 AppHeader.propTypes = {
   label: PropTypes.string.isRequired,
@@ -44,7 +44,7 @@ AppHeader.propTypes = {
   isSyncRunning: PropTypes.bool,
   toggleSidebar: PropTypes.func,
   sync: PropTypes.func
-}
+};
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
@@ -52,9 +52,9 @@ const mapStateToProps = (state, ownProps) => ({
   isAuthenticated: isUserAuthenticated(state),
   isSyncRunning: state.ui.sync.isRunning,
   hasPendingChanges: state.ui.sync.hasPendingChanges
-})
+});
 
 export default connect(
   mapStateToProps,
   { toggleSidebar, sync }
-)(AppHeader)
+)(AppHeader);

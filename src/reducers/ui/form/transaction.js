@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   fillInTransactionForm,
   openTransactionInModal,
@@ -12,13 +12,13 @@ import {
   changeTags,
   changeDate,
   changeNote
-} from '../../../actions/ui/form/transaction'
-import Transaction from '../../../entities/Transaction'
+} from '../../../actions/ui/form/transaction';
+import { defaultKind } from '../../../entities/Transaction';
 
 const initialState = {
-  kind: Transaction.defaultKind,
+  kind: defaultKind,
   isModalOpen: false
-}
+};
 
 export default handleActions(
   {
@@ -74,4 +74,4 @@ export default handleActions(
     [changeNote]: (state, { payload }) => ({ ...state, note: payload })
   },
   initialState
-)
+);

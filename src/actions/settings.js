@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   loadSettingsSuccess,
@@ -16,4 +16,4 @@ export const {
   'UPDATE_EXCHANGE_RATE_FAILURE',
   'COMPLETE_SETUP',
   'TOGGLE_SECTION_COLLAPSE'
-)
+);

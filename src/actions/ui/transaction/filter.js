@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   changeFilterDate,
@@ -12,4 +12,4 @@ export const {
   'CHANGE_FILTER_PAGE',
   'TOGGLE_FILTER_MODAL',
   'APPLY_FILTERS'
-)
+);

@@ -1,5 +1,5 @@
-import { getRecentTransactions } from './transactions'
-import EntityMap from '../../entities/EntityMap'
+import { getRecentTransactions } from './transactions';
+import EntityMap from '../../entities/EntityMap';
 
 it('returns recent transactions', () => {
   const state = {
@@ -22,7 +22,7 @@ it('returns recent transactions', () => {
         ])
       }
     }
-  }
+  };
 
   const expectedTransactions = [
     { id: 'T12345', accountId: 'A12345', amount: 10, accountName: 'foo acc' },
@@ -36,7 +36,7 @@ it('returns recent transactions', () => {
       accountName: 'bar acc',
       linkedAccountName: 'foo acc'
     }
-  ]
+  ];
 
-  expect(getRecentTransactions(state)).toEqual(expectedTransactions)
-})
+  expect(getRecentTransactions(state)).toEqual(expectedTransactions);
+});

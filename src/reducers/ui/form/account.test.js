@@ -1,4 +1,4 @@
-import reducer from './account'
+import reducer from './account';
 import {
   resetAccountForm,
   fillInAccountForm,
@@ -7,15 +7,15 @@ import {
   changeBalance,
   toggleCurrency,
   toggleOnDashboard
-} from '../../../actions/ui/form/account.js'
-import { saveAccountSuccess } from '../../../actions/entities/accounts'
-import { changeSettingsCurrency } from '../../../actions/settings'
-import Account from '../../../entities/Account'
+} from '../../../actions/ui/form/account.js';
+import { saveAccountSuccess } from '../../../actions/entities/accounts';
+import { changeSettingsCurrency } from '../../../actions/settings';
+import { defaultGroup } from '../../../entities/Account';
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
     name: '',
-    group: Account.defaultGroup,
+    group: defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
@@ -25,8 +25,8 @@ it('returns initial state', () => {
     isDeleteRunning: false,
     itemsToProcess: Infinity,
     itemsProcessed: 0
-  })
-})
+  });
+});
 
 it('fills form with given values', () => {
   expect(
@@ -34,8 +34,8 @@ it('fills form with given values', () => {
       { name: '' },
       fillInAccountForm({ name: 'foo', group: 'bank', balance: { USD: 990 } })
     )
-  ).toEqual({ name: 'foo', group: 'bank', balance: { USD: '9.9' } })
-})
+  ).toEqual({ name: 'foo', group: 'bank', balance: { USD: '9.9' } });
+});
 
 it('resets to initial state when account is created', () => {
   expect(
@@ -45,7 +45,7 @@ it('resets to initial state when account is created', () => {
     )
   ).toEqual({
     name: '',
-    group: Account.defaultGroup,
+    group: defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
@@ -55,8 +55,8 @@ it('resets to initial state when account is created', () => {
     isDeleteRunning: false,
     itemsToProcess: Infinity,
     itemsProcessed: 0
-  })
-})
+  });
+});
 
 it('resets to initial state', () => {
   expect(
@@ -66,7 +66,7 @@ it('resets to initial state', () => {
     )
   ).toEqual({
     name: '',
-    group: Account.defaultGroup,
+    group: defaultGroup,
     balance: {},
     currencies: [],
     on_dashboard: true,
@@ -76,18 +76,18 @@ it('resets to initial state', () => {
     isDeleteRunning: false,
     itemsToProcess: Infinity,
     itemsProcessed: 0
-  })
-})
+  });
+});
 
 it('changes account form group', () => {
   expect(reducer({ group: 'cash' }, changeGroup('bank'))).toEqual({
     group: 'bank'
-  })
-})
+  });
+});
 
 it('changes account form name', () => {
-  expect(reducer({ name: 'foo' }, changeName('bar'))).toEqual({ name: 'bar' })
-})
+  expect(reducer({ name: 'foo' }, changeName('bar'))).toEqual({ name: 'bar' });
+});
 
 describe('toggling currency checkbox', () => {
   it('checks first checkbox', () => {
@@ -96,8 +96,8 @@ describe('toggling currency checkbox', () => {
     ).toEqual({
       balance: { EUR: '' },
       currencies: ['EUR']
-    })
-  })
+    });
+  });
 
   it('checks second checkbox', () => {
     expect(
@@ -111,8 +111,8 @@ describe('toggling currency checkbox', () => {
         USD: ''
       },
       currencies: ['EUR', 'USD']
-    })
-  })
+    });
+  });
 
   it('un-checks second checkbox', () => {
     expect(
@@ -120,8 +120,8 @@ describe('toggling currency checkbox', () => {
         { balance: { EUR: 155, USD: 156 }, currencies: ['EUR', 'USD'] },
         toggleCurrency('USD')
       )
-    ).toEqual({ balance: { EUR: 155, USD: 156 }, currencies: ['EUR'] })
-  })
+    ).toEqual({ balance: { EUR: 155, USD: 156 }, currencies: ['EUR'] });
+  });
 
   it('does not allow to uncheck last checkbox', () => {
     expect(
@@ -132,9 +132,9 @@ describe('toggling currency checkbox', () => {
     ).toEqual({
       balance: { EUR: 155 },
       currencies: ['EUR']
-    })
-  })
-})
+    });
+  });
+});
 
 describe('changing currency balance', () => {
   it('changes balance of unchecked currency', () => {
@@ -146,7 +146,7 @@ describe('changing currency balance', () => {
     ).toEqual({
       balance: { USD: 200 },
       currencies: ['USD']
-    })
+    });
     expect(
       reducer(
         { balance: { USD: 200 }, currencies: ['USD'] },
@@ -158,8 +158,8 @@ describe('changing currency balance', () => {
         EUR: 150
       },
       currencies: ['USD', 'EUR']
-    })
-  })
+    });
+  });
 
   it('changes balance of checked currency', () => {
     expect(
@@ -170,9 +170,9 @@ describe('changing currency balance', () => {
     ).toEqual({
       balance: { USD: 200.56 },
       currencies: ['USD']
-    })
-  })
-})
+    });
+  });
+});
 
 describe('changing currency settings', () => {
   it('filters out unused currencies', () => {
@@ -184,7 +184,7 @@ describe('changing currency settings', () => {
     ).toEqual({
       balance: { USD: 100 },
       currencies: ['USD']
-    })
+    });
 
     expect(
       reducer(
@@ -200,20 +200,20 @@ describe('changing currency settings', () => {
         CAD: 102
       },
       currencies: ['EUR', 'CAD']
-    })
-  })
-})
+    });
+  });
+});
 
 describe('toggling display on dashboard checkbox', () => {
   it('sets on dashboard checkbox on', () => {
     expect(reducer({ on_dashboard: false }, toggleOnDashboard())).toEqual({
       on_dashboard: true
-    })
-  })
+    });
+  });
 
   it('sets on dashboard checkbox off', () => {
     expect(reducer({ on_dashboard: true }, toggleOnDashboard())).toEqual({
       on_dashboard: false
-    })
-  })
-})
+    });
+  });
+});

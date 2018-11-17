@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   changeEmail,
@@ -20,4 +20,4 @@ export const {
   'VERIFY_CODE_SUCCESS',
   'VERIFY_CODE_FAILURE',
   'FINISH_AUTH'
-)
+);

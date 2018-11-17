@@ -1,1 +1,1 @@
-export const getImportFile = state => state.ui.dataImport.file
+export const getImportFile = state => state.ui.dataImport.file;

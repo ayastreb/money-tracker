@@ -1,11 +1,13 @@
-function CouchDbProvision(user, context, callback) {
-  const request = require('request')
-  const uuidv4 = require('uuid').v4
-  const databases = ['accounts', 'transactions', 'tags', 'settings']
-  var cookie
+export default CouchDbProvision;
 
-  user.app_metadata = user.app_metadata || {}
-  user.app_metadata.couchDB = user.app_metadata.couchDB || {}
+function CouchDbProvision(user, context, callback) {
+  const request = require('request');
+  const uuidv4 = require('uuid').v4;
+  const databases = ['accounts', 'transactions', 'tags', 'settings'];
+  var cookie;
+
+  user.app_metadata = user.app_metadata || {};
+  user.app_metadata.couchDB = user.app_metadata.couchDB || {};
 
   loginAsAdmin()
     .then(provisionUser)
@@ -13,7 +15,7 @@ function CouchDbProvision(user, context, callback) {
     .then(() => Promise.all(databases.map(provisionSecurity)))
     .then(() => auth0.users.updateAppMetadata(user.user_id, user.app_metadata))
     .then(() => callback(null, user, context))
-    .catch(err => callback(err))
+    .catch(err => callback(err));
 
   function loginAsAdmin() {
     return new Promise((resolve, reject) => {
@@ -28,21 +30,21 @@ function CouchDbProvision(user, context, callback) {
           }
         },
         (err, response) => {
-          if (err) return reject(err)
+          if (err) return reject(err);
 
-          cookie = response.headers['set-cookie']
-          resolve()
+          cookie = response.headers['set-cookie'];
+          resolve();
         }
-      )
-    })
+      );
+    });
   }
 
   function provisionUser() {
     return new Promise((resolve, reject) => {
-      if (user.app_metadata.couchDB.username) return resolve()
+      if (user.app_metadata.couchDB.username) return resolve();
 
-      const name = uuidv4()
-      const password = uuidv4()
+      const name = uuidv4();
+      const password = uuidv4();
       request(
         {
           method: 'PUT',
@@ -52,20 +54,20 @@ function CouchDbProvision(user, context, callback) {
           body: { name, password, roles: [], type: 'user' }
         },
         (err, response, body) => {
-          if (err) return reject(err)
-          if (!body.ok) return reject('Could not create user')
+          if (err) return reject(err);
+          if (!body.ok) return reject('Could not create user');
 
-          user.app_metadata.couchDB.username = name
-          user.app_metadata.couchDB.password = password
-          resolve()
+          user.app_metadata.couchDB.username = name;
+          user.app_metadata.couchDB.password = password;
+          resolve();
         }
-      )
-    })
+      );
+    });
   }
 
   function provisionDatabase(name) {
     return new Promise((resolve, reject) => {
-      if (user.app_metadata.couchDB[name]) return resolve()
+      if (user.app_metadata.couchDB[name]) return resolve();
 
       request(
         {
@@ -75,18 +77,18 @@ function CouchDbProvision(user, context, callback) {
           json: true
         },
         (err, response, body) => {
-          if (err) return reject(err)
-          if (!body.ok) return reject('Could not create database')
+          if (err) return reject(err);
+          if (!body.ok) return reject('Could not create database');
 
-          resolve()
+          resolve();
         }
-      )
-    })
+      );
+    });
   }
 
   function provisionSecurity(name) {
     return new Promise((resolve, reject) => {
-      if (user.app_metadata.couchDB[name]) return resolve()
+      if (user.app_metadata.couchDB[name]) return resolve();
 
       request(
         {
@@ -100,19 +102,19 @@ function CouchDbProvision(user, context, callback) {
           }
         },
         (err, response, body) => {
-          if (err) return reject(err)
-          if (!body.ok) return reject('Could not set database security')
+          if (err) return reject(err);
+          if (!body.ok) return reject('Could not set database security');
 
-          user.app_metadata.couchDB[name] = databaseUri(name)
-          resolve()
+          user.app_metadata.couchDB[name] = databaseUri(name);
+          resolve();
         }
-      )
-    })
+      );
+    });
   }
 
   function databaseUri(name) {
     return `${configuration['CouchHost']}/${name}_${
       user.app_metadata.couchDB.username
-    }`
+    }`;
   }
 }

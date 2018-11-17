@@ -1,24 +1,24 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Form, Checkbox } from 'semantic-ui-react'
-import BalanceTable from './BalanceTable'
-import Account from '../../../entities/Account'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Form, Checkbox } from 'semantic-ui-react';
+import BalanceTable from './BalanceTable';
+import { groupOptions, formTostate } from '../../../entities/Account';
+import './index.css';
 
 class AccountForm extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
-    this.groups = Account.groupOptions()
+    this.groups = groupOptions();
   }
 
-  handleNameChange = (event, { value }) => this.props.changeName(value)
-  handleGroupChange = (event, { value }) => this.props.changeGroup(value)
+  handleNameChange = (event, { value }) => this.props.changeName(value);
+  handleGroupChange = (event, { value }) => this.props.changeGroup(value);
 
   handleSubmit = event => {
-    event.preventDefault()
-    this.props.saveAccount(Account.fromForm(this.props.form))
-  }
+    event.preventDefault();
+    this.props.saveAccount(formTostate(this.props.form));
+  };
 
   render() {
     return (
@@ -52,7 +52,7 @@ class AccountForm extends React.Component {
           <Form.Button width={7} primary fluid content="Save Account" />
         </Form.Group>
       </Form>
-    )
+    );
   }
 }
 
@@ -73,6 +73,6 @@ AccountForm.propTypes = {
   toggleCurrency: PropTypes.func.isRequired,
   changeBalance: PropTypes.func.isRequired,
   saveAccount: PropTypes.func
-}
+};
 
-export default AccountForm
+export default AccountForm;

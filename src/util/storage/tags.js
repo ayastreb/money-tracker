@@ -1,27 +1,27 @@
-import { tagsDB, remoteTagsDB, destroyTagsDB } from './pouchdb'
+import { tagsDB, remoteTagsDB, destroyTagsDB } from './pouchdb';
 
 export default {
   sync,
   load,
   updateUsage,
   destroy
-}
+};
 
 async function sync(readOnly = false) {
-  let hasChanges = false
-  if (!remoteTagsDB()) return hasChanges
+  let hasChanges = false;
+  if (!remoteTagsDB()) return hasChanges;
 
-  const from = await tagsDB().replicate.from(remoteTagsDB())
-  if (from.docs_written > 0) hasChanges = true
-  if (readOnly) return hasChanges
+  const from = await tagsDB().replicate.from(remoteTagsDB());
+  if (from.docs_written > 0) hasChanges = true;
+  if (readOnly) return hasChanges;
 
-  await tagsDB().replicate.to(remoteTagsDB())
+  await tagsDB().replicate.to(remoteTagsDB());
 
-  return hasChanges
+  return hasChanges;
 }
 
 function destroy() {
-  return destroyTagsDB()
+  return destroyTagsDB();
 }
 
 function load(kind) {
@@ -38,19 +38,19 @@ function load(kind) {
       }))
     )
     .then(docs => docs.sort((a, b) => b.usage - a.usage))
-    .then(docs => docs.map(doc => doc.tag))
+    .then(docs => docs.map(doc => doc.tag));
 }
 
 function updateUsage(kind, tag, delta) {
-  const id = `t${kind}/${tag}`
+  const id = `t${kind}/${tag}`;
   return tagsDB()
     .get(id)
     .then(doc =>
       tagsDB().put({ ...doc, usage: parseInt(doc.usage, 10) + delta })
     )
     .catch(err => {
-      if (err.status !== 404) throw err
+      if (err.status !== 404) throw err;
 
-      return tagsDB().put({ _id: id, usage: 1 })
-    })
+      return tagsDB().put({ _id: id, usage: 1 });
+    });
 }

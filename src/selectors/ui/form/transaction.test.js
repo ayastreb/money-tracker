@@ -1,7 +1,9 @@
-import format from 'date-fns/format'
-import { getDefaultState } from './transaction'
-import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction'
-import EntityMap from '../../../entities/EntityMap'
+import format from 'date-fns/format';
+import { getDefaultState } from './transaction';
+import { defaultKind, TransationKindT } from '../../../entities/Transaction';
+import EntityMap from '../../../entities/EntityMap';
+
+const { Expense, Income } = TransationKindT;
 
 it('returns default state for single account, single currency', () => {
   const state = {
@@ -24,9 +26,9 @@ it('returns default state for single account, single currency', () => {
         USD: 1
       }
     }
-  }
+  };
   const expectedDefault = {
-    kind: Transaction.defaultKind,
+    kind: defaultKind,
     isModalOpen: false,
     accountId: 'A12345',
     amount: '',
@@ -35,15 +37,15 @@ it('returns default state for single account, single currency', () => {
     linkedAmount: '',
     linkedCurrency: null,
     tags: {
-      [EXPENSE]: [],
-      [INCOME]: []
+      [Expense]: [],
+      [Income]: []
     },
     date: format(new Date(), 'YYYY-MM-DD'),
     note: ''
-  }
+  };
 
-  expect(getDefaultState(state)).toEqual(expectedDefault)
-})
+  expect(getDefaultState(state)).toEqual(expectedDefault);
+});
 
 it('returns default state for single account, multiple currencies', () => {
   const state = {
@@ -67,9 +69,9 @@ it('returns default state for single account, multiple currencies', () => {
         JPY: 0.01
       }
     }
-  }
+  };
   const expectedDefault = {
-    kind: Transaction.defaultKind,
+    kind: defaultKind,
     isModalOpen: false,
     accountId: 'A12345',
     amount: '',
@@ -78,15 +80,15 @@ it('returns default state for single account, multiple currencies', () => {
     linkedAmount: '',
     linkedCurrency: 'JPY',
     tags: {
-      [EXPENSE]: [],
-      [INCOME]: []
+      [Expense]: [],
+      [Income]: []
     },
     date: format(new Date(), 'YYYY-MM-DD'),
     note: ''
-  }
+  };
 
-  expect(getDefaultState(state)).toEqual(expectedDefault)
-})
+  expect(getDefaultState(state)).toEqual(expectedDefault);
+});
 
 it('returns default state for multiple accounts', () => {
   const state = {
@@ -118,9 +120,9 @@ it('returns default state for multiple accounts', () => {
         JPY: 1
       }
     }
-  }
+  };
   const expectedDefault = {
-    kind: Transaction.defaultKind,
+    kind: defaultKind,
     isModalOpen: false,
     accountId: 'A12345',
     amount: '',
@@ -129,12 +131,12 @@ it('returns default state for multiple accounts', () => {
     linkedAmount: '',
     linkedCurrency: 'EUR',
     tags: {
-      [EXPENSE]: [],
-      [INCOME]: []
+      [Expense]: [],
+      [Income]: []
     },
     date: format(new Date(), 'YYYY-MM-DD'),
     note: ''
-  }
+  };
 
-  expect(getDefaultState(state)).toEqual(expectedDefault)
-})
+  expect(getDefaultState(state)).toEqual(expectedDefault);
+});

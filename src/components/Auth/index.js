@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Redirect, Link } from 'react-router-dom'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Redirect, Link } from 'react-router-dom';
 import {
   Header,
   Divider,
@@ -9,25 +9,25 @@ import {
   Input,
   Message,
   Loader
-} from 'semantic-ui-react'
-import './index.css'
+} from 'semantic-ui-react';
+import './index.css';
 
 class Auth extends React.Component {
   componentDidMount() {
     if (this.props.location.hash) {
-      this.props.finishAuth(this.props.location.hash)
+      this.props.finishAuth(this.props.location.hash);
     }
   }
 
   render() {
-    if (this.props.isAuthenticated) return <Redirect to="/" />
+    if (this.props.isAuthenticated) return <Redirect to="/" />;
     if (this.props.location.hash)
       return (
         <Loader
           active
           content="Synchronizing data, this might take a moment..."
         />
-      )
+      );
 
     return (
       <div className="container-raised-desktop">
@@ -47,7 +47,7 @@ class Auth extends React.Component {
           <Link to="/">Back</Link>
         </p>
       </div>
-    )
+    );
   }
 
   renderSendCodeForm = () => (
@@ -84,7 +84,7 @@ class Auth extends React.Component {
         data among different devices as well as for back up.
       </p>
     </React.Fragment>
-  )
+  );
 
   renderVerifyCodeForm = () => (
     <Form onSubmit={this.props.verifyCode}>
@@ -113,9 +113,9 @@ class Auth extends React.Component {
         </Button>
       </div>
     </Form>
-  )
+  );
 
-  handleChange = handler => (event, { value }) => handler(value)
+  handleChange = handler => (event, { value }) => handler(value);
 }
 
 Auth.propTypes = {
@@ -132,6 +132,6 @@ Auth.propTypes = {
   sendCode: PropTypes.func,
   verifyCode: PropTypes.func,
   finishAuth: PropTypes.func
-}
+};
 
-export default Auth
+export default Auth;

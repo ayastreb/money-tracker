@@ -1,18 +1,20 @@
-import format from 'date-fns/format'
-import { createSelector } from 'reselect'
+import format from 'date-fns/format';
+import { createSelector } from 'reselect';
 import {
   getAccountsCurrencyMap,
   getAccountsAsOptions
-} from '../../entities/accounts'
-import { getBaseCurrency } from '../../settings'
-import Transaction, { EXPENSE, INCOME } from '../../../entities/Transaction'
+} from '../../entities/accounts';
+import { getBaseCurrency } from '../../settings';
+import { defaultKind, TransationKindT } from '../../../entities/Transaction';
 
-export const getForm = state => state.ui.form.transaction
+const { Expense, Income } = TransationKindT;
+
+export const getForm = state => state.ui.form.transaction;
 
 const getDefaultAccountId = createSelector(
   getAccountsAsOptions,
   options => options.length > 0 && options[0].key
-)
+);
 
 const getDefaultCurrency = createSelector(
   getDefaultAccountId,
@@ -21,7 +23,7 @@ const getDefaultCurrency = createSelector(
   (accountId, currencies, base) =>
     accountId &&
     (currencies[accountId].includes(base) ? base : currencies[accountId][0])
-)
+);
 
 const getDefaultLinkedAccountId = createSelector(
   getAccountsAsOptions,
@@ -33,7 +35,7 @@ const getDefaultLinkedAccountId = createSelector(
       : defaultAccountId &&
         currencies[defaultAccountId].length > 1 &&
         defaultAccountId
-)
+);
 
 const getDefaultLinkedCurrency = createSelector(
   getDefaultAccountId,
@@ -47,7 +49,7 @@ const getDefaultLinkedCurrency = createSelector(
         (currencies[linkedAccountId].includes(base)
           ? base
           : currencies[linkedAccountId][0])
-)
+);
 
 export const getDefaultState = createSelector(
   getDefaultAccountId,
@@ -56,7 +58,7 @@ export const getDefaultState = createSelector(
   getDefaultLinkedCurrency,
   (accountId, currency, linkedAccountId, linkedCurrency) => {
     return {
-      kind: Transaction.defaultKind,
+      kind: defaultKind,
       isModalOpen: false,
       accountId: accountId || null,
       currency: currency || null,
@@ -65,11 +67,11 @@ export const getDefaultState = createSelector(
       linkedCurrency: linkedCurrency || null,
       linkedAmount: '',
       tags: {
-        [EXPENSE]: [],
-        [INCOME]: []
+        [Expense]: [],
+        [Income]: []
       },
       date: format(new Date(), 'YYYY-MM-DD'),
       note: ''
-    }
+    };
   }
-)
+);

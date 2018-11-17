@@ -1,4 +1,4 @@
-import { createActions } from 'redux-actions'
+import { createActions } from 'redux-actions';
 
 export const {
   userLoggedIn,
@@ -10,4 +10,4 @@ export const {
   'DEMO_USER',
   'SIGN_OUT',
   'SIGN_OUT_COMPLETE'
-)
+);

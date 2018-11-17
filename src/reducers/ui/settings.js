@@ -1,10 +1,10 @@
-import { handleActions, combineActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions';
 import {
   changeSettingsCurrency,
   updateExchangeRate,
   updateExchangeRateSuccess,
   updateExchangeRateFailure
-} from '../../actions/settings'
+} from '../../actions/settings';
 
 export default handleActions(
   {
@@ -21,4 +21,4 @@ export default handleActions(
     })
   },
   { isExchangeLoading: false }
-)
+);

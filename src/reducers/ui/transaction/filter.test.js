@@ -1,11 +1,11 @@
-import reducer from './filter'
+import reducer from './filter';
 import {
   changeFilterDate,
   toggleFilterCalendar
-} from '../../../actions/ui/transaction/filter'
-import DateRange from '../../../entities/Transaction/FilterDateRange'
-import Transaction from '../../../entities/Transaction'
-import { toUtcTimestamp } from '../../../util/timezone'
+} from '../../../actions/ui/transaction/filter';
+import DateRange from '../../../entities/Transaction/FilterDateRange';
+import { rowsPerSearchPage } from '../../../entities/Transaction';
+import { toUtcTimestamp } from '../../../util/timezone';
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
@@ -17,9 +17,9 @@ it('returns initial state', () => {
     isLoading: false,
     totalRows: 0,
     page: 0,
-    perPage: Transaction.rowsPerSearchPage
-  })
-})
+    perPage: rowsPerSearchPage
+  });
+});
 
 it('changes filter date range', () => {
   expect(
@@ -37,14 +37,14 @@ it('changes filter date range', () => {
     dateStart: toUtcTimestamp(new Date('2017-12-05 00:00:00')),
     dateEnd: toUtcTimestamp(new Date('2017-12-05 23:59:59')),
     isLoading: true
-  })
-})
+  });
+});
 
 it('toggles calendar visibility', () => {
   expect(reducer({ isCalendarOpen: false }, toggleFilterCalendar())).toEqual({
     isCalendarOpen: true
-  })
+  });
   expect(reducer({ isCalendarOpen: true }, toggleFilterCalendar())).toEqual({
     isCalendarOpen: false
-  })
-})
+  });
+});

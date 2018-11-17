@@ -1,34 +1,34 @@
-import { handleActions, combineActions } from 'redux-actions'
+import { handleActions, combineActions } from 'redux-actions';
 import {
   loadAccountsSuccess,
   saveAccount,
   saveAccountFailure,
   updateAccount,
   removeAccountSuccess
-} from '../../actions/entities/accounts'
-import { signOutComplete } from '../../actions/user'
-import EntityMap from '../../entities/EntityMap'
+} from '../../actions/entities/accounts';
+import { signOutComplete } from '../../actions/user';
+import EntityMap from '../../entities/EntityMap';
 
-const initialState = EntityMap.fromArray([])
+const initialState = EntityMap.fromArray([]);
 
 export default handleActions(
   {
     [loadAccountsSuccess]: (state, action) => {
-      const accounts = action.payload
-      return EntityMap.fromArray(accounts)
+      const accounts = action.payload;
+      return EntityMap.fromArray(accounts);
     },
     [combineActions(saveAccount, updateAccount)]: (state, action) => {
-      const account = action.payload
-      return EntityMap.set(state, account)
+      const account = action.payload;
+      return EntityMap.set(state, account);
     },
     [combineActions(removeAccountSuccess, saveAccountFailure)]: (
       state,
       action
     ) => {
-      const accountId = action.payload
-      return EntityMap.remove(state, accountId)
+      const accountId = action.payload;
+      return EntityMap.remove(state, accountId);
     },
     [signOutComplete]: () => initialState
   },
   initialState
-)
+);

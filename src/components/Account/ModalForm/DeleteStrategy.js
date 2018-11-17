@@ -1,34 +1,38 @@
-import React from 'react'
-import { Button, Radio, Dropdown, Form, Progress } from 'semantic-ui-react'
-import Account, { DELETE_STRATEGY_MOVE } from '../../../entities/Account'
+import React from 'react';
+import { Button, Radio, Dropdown, Form, Progress } from 'semantic-ui-react';
+import {
+  defaultDeleteStrategy,
+  deleteStartegies,
+  DeleteStrategyT
+} from '../../../entities/Account';
 
 class DeleteStrategy extends React.Component {
   state = {
-    strategy: Account.defaultDeleteStrategy
-  }
+    strategy: defaultDeleteStrategy
+  };
 
   onStrategyChange = (e, { value }) => {
-    this.setState({ ...this.state, strategy: value })
-  }
+    this.setState({ ...this.state, strategy: value });
+  };
 
   onAccountChange = (e, { value }) => {
-    this.setState({ ...this.state, moveTo: value })
-  }
+    this.setState({ ...this.state, moveTo: value });
+  };
 
   onProceed = () => {
     this.props.removeAccount({
       id: this.props.form.id,
       strategy: this.state.strategy,
       moveTo: this.getMoveTo()
-    })
-  }
+    });
+  };
 
   getMoveTo = () =>
     this.state.moveTo ||
-    (this.props.accountOptions.length && this.props.accountOptions[0].key)
+    (this.props.accountOptions.length && this.props.accountOptions[0].key);
 
   render() {
-    const hasMultipleAccounts = this.props.accountOptions.length > 0
+    const hasMultipleAccounts = this.props.accountOptions.length > 0;
     return (
       <React.Fragment>
         <h3>You are about to delete account "{this.props.form.name}"</h3>
@@ -36,7 +40,7 @@ class DeleteStrategy extends React.Component {
           What should we do with transactions linked to this account?
         </p>
         <Form>
-          {Account.deleteStartegies(hasMultipleAccounts).map(strategy => (
+          {deleteStartegies(hasMultipleAccounts).map(strategy => (
             <Form.Field key={strategy.key}>
               <Radio
                 name="deleteStrategy"
@@ -48,7 +52,7 @@ class DeleteStrategy extends React.Component {
               />
             </Form.Field>
           ))}
-          {hasMultipleAccounts && this.state.strategy === DELETE_STRATEGY_MOVE && (
+          {hasMultipleAccounts && this.state.strategy === DeleteStrategyT.Move && (
             <Form.Field>
               <Dropdown
                 selection
@@ -77,8 +81,8 @@ class DeleteStrategy extends React.Component {
           </Form.Field>
         </Form>
       </React.Fragment>
-    )
+    );
   }
 }
 
-export default DeleteStrategy
+export default DeleteStrategy;

@@ -1,10 +1,10 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   userLoggedIn,
   demoUser,
   signOut,
   signOutComplete
-} from '../actions/user'
+} from '../actions/user';
 
 export default handleActions(
   {
@@ -24,4 +24,4 @@ export default handleActions(
     isSignOutRunning: false,
     isSignOutComplete: false
   }
-)
+);

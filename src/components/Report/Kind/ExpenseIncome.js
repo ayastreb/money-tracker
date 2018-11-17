@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ChartistGraph from 'react-chartist'
-import Chartist from 'chartist'
-import abbreviate from 'number-abbreviate'
-import 'chartist-plugin-tooltips'
-import 'chartist/dist/chartist.min.css'
-import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import ChartistGraph from 'react-chartist';
+import Chartist from 'chartist';
+import abbreviate from 'number-abbreviate';
+import 'chartist-plugin-tooltips';
+import 'chartist/dist/chartist.min.css';
+import 'chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css';
 
 class ExpenseIncome extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class ExpenseIncome extends React.Component {
           anchorToPoint: true
         })
       ]
-    }
+    };
 
     return (
       <ChartistGraph
@@ -29,7 +29,7 @@ class ExpenseIncome extends React.Component {
         data={this.props.data}
         options={options}
       />
-    )
+    );
   }
 }
 
@@ -39,6 +39,6 @@ ExpenseIncome.propTypes = {
     labels: PropTypes.array,
     series: PropTypes.array
   })
-}
+};
 
-export default ExpenseIncome
+export default ExpenseIncome;

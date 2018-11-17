@@ -1,4 +1,4 @@
-import { WebAuth } from 'auth0-js'
+import { WebAuth } from 'auth0-js';
 /**
  * @see https://auth0.com/docs/connections/passwordless/spa-email-code/v8
  */
@@ -7,14 +7,14 @@ const auth0 = new WebAuth({
   clientID: process.env.REACT_APP_AUTH_CLIENT_ID,
   redirectUri: process.env.REACT_APP_AUTH_REDIRECT,
   responseType: 'token'
-})
+});
 
 export default {
   sendCode,
   verifyCode,
   parseHash,
   getUserInfo
-}
+};
 
 function sendCode(email) {
   return new Promise((resolve, reject) => {
@@ -25,8 +25,8 @@ function sendCode(email) {
         email
       },
       (error, result) => (error ? reject(error) : resolve(result))
-    )
-  })
+    );
+  });
 }
 
 function verifyCode(email, verificationCode) {
@@ -38,26 +38,26 @@ function verifyCode(email, verificationCode) {
         verificationCode
       },
       (error, result) => (error ? reject(error) : resolve(result))
-    )
-  })
+    );
+  });
 }
 
 function parseHash(hash) {
   return new Promise((resolve, reject) => {
     auth0.parseHash(hash, (error, authResult) => {
-      if (error) return reject(error)
+      if (error) return reject(error);
 
-      resolve(authResult.accessToken)
-    })
-  })
+      resolve(authResult.accessToken);
+    });
+  });
 }
 
 function getUserInfo(accessToken) {
   return new Promise((resolve, reject) => {
     auth0.client.userInfo(accessToken, (error, userInfo) => {
-      if (error) return reject(error)
+      if (error) return reject(error);
 
-      resolve({ accessToken, couchDB: userInfo.couchDB })
-    })
-  })
+      resolve({ accessToken, couchDB: userInfo.couchDB });
+    });
+  });
 }

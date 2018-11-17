@@ -1,28 +1,28 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Label } from 'semantic-ui-react'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Label } from 'semantic-ui-react';
 
 class AppliedFilters extends React.Component {
   removeAppliedAccount = accountId => () => {
     this.props.applyFilters({
       accounts: this.props.appliedAccounts.filter(acc => acc !== accountId),
       tags: this.props.appliedTags
-    })
-  }
+    });
+  };
 
   removeAppliedTag = tag => () => {
     this.props.applyFilters({
       accounts: this.props.appliedAccounts,
       tags: this.props.appliedTags.filter(t => t !== tag)
-    })
-  }
+    });
+  };
 
   render() {
     if (
       this.props.appliedAccounts.length === 0 &&
       this.props.appliedTags.length === 0
     ) {
-      return null
+      return null;
     }
 
     return (
@@ -44,7 +44,7 @@ class AppliedFilters extends React.Component {
           />
         ))}
       </div>
-    )
+    );
   }
 }
 
@@ -53,6 +53,6 @@ AppliedFilters.propTypes = {
   appliedAccounts: PropTypes.arrayOf(PropTypes.string),
   accountNameMap: PropTypes.object,
   applyFilters: PropTypes.func
-}
+};
 
-export default AppliedFilters
+export default AppliedFilters;

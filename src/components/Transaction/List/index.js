@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Segment, Dimmer, Loader } from 'semantic-ui-react'
-import TransactionItem from './TransactionItem'
-import ModalForm from './ModalForm'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Segment, Dimmer, Loader } from 'semantic-ui-react';
+import TransactionItem from './TransactionItem';
+import ModalForm from './ModalForm';
+import './index.css';
 
 class TransactionList extends React.Component {
   render() {
@@ -26,7 +26,7 @@ class TransactionList extends React.Component {
           removeTransaction={this.props.removeTransaction}
         />
       </Segment>
-    )
+    );
   }
 
   renderTransaction = transaction => (
@@ -35,7 +35,7 @@ class TransactionList extends React.Component {
       transaction={transaction}
       openTransactionInModal={this.props.openTransactionInModal}
     />
-  )
+  );
 }
 
 TransactionList.propTypes = {
@@ -48,6 +48,6 @@ TransactionList.propTypes = {
   resetTransactionForm: PropTypes.func,
   removeTransaction: PropTypes.func,
   EditForm: PropTypes.func
-}
+};
 
-export default TransactionList
+export default TransactionList;

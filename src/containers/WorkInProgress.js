@@ -1,5 +1,5 @@
-import React from 'react'
-import { Message } from 'semantic-ui-react'
+import React from 'react';
+import { Message } from 'semantic-ui-react';
 
 export default () => (
   <Message
@@ -8,4 +8,4 @@ export default () => (
     header="Work in Progress"
     content="This page is not ready yet, check back later 😉"
   />
-)
+);

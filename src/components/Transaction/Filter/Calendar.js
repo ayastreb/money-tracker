@@ -1,24 +1,24 @@
-import React from 'react'
-import { Modal, Button } from 'semantic-ui-react'
-import DayPicker, { DateUtils } from 'react-day-picker'
-import 'react-day-picker/lib/style.css'
+import React from 'react';
+import { Modal, Button } from 'semantic-ui-react';
+import DayPicker, { DateUtils } from 'react-day-picker';
+import 'react-day-picker/lib/style.css';
 
-const currentYear = new Date().getFullYear()
-const fromMonth = new Date(currentYear - 8, 0)
-const toMonth = new Date(currentYear + 2, 11)
+const currentYear = new Date().getFullYear();
+const fromMonth = new Date(currentYear - 8, 0);
+const toMonth = new Date(currentYear + 2, 11);
 
 function YearMonthForm({ date, localeUtils, onChange }) {
-  const months = localeUtils.getMonths()
+  const months = localeUtils.getMonths();
 
-  const years = []
+  const years = [];
   for (let i = fromMonth.getFullYear(); i <= toMonth.getFullYear(); i += 1) {
-    years.push(i)
+    years.push(i);
   }
 
   const handleChange = function handleChange(e) {
-    const { year, month } = e.target.form
-    onChange(new Date(year.value, month.value))
-  }
+    const { year, month } = e.target.form;
+    onChange(new Date(year.value, month.value));
+  };
 
   return (
     <form className="DayPicker-Caption">
@@ -37,7 +37,7 @@ function YearMonthForm({ date, localeUtils, onChange }) {
         ))}
       </select>
     </form>
-  )
+  );
 }
 
 class Calendar extends React.Component {
@@ -45,37 +45,37 @@ class Calendar extends React.Component {
     month: null,
     from: null,
     to: null
-  }
+  };
 
   handleDayClick = day => {
-    const range = DateUtils.addDayToRange(day, this.state)
-    this.setState(range)
-  }
+    const range = DateUtils.addDayToRange(day, this.state);
+    this.setState(range);
+  };
 
   handleYearMonthChange = month => {
-    this.setState({ month })
-  }
+    this.setState({ month });
+  };
 
   handleResetClick = () => {
     this.setState({
       month: null,
       from: null,
       to: null
-    })
-  }
+    });
+  };
 
   handleApplyClick = () => {
-    const { from, to } = this.state
+    const { from, to } = this.state;
 
     this.props.changeFilterDate({
       dateStart: from.setHours(0, 0, 0),
       dateEnd: (to && to.setHours(23, 59, 59)) || from.setHours(23, 59, 59)
-    })
-    this.props.toggleFilterCalendar()
-  }
+    });
+    this.props.toggleFilterCalendar();
+  };
 
   render() {
-    const { month, from, to } = this.state
+    const { month, from, to } = this.state;
 
     return (
       <Modal
@@ -110,8 +110,8 @@ class Calendar extends React.Component {
           />
         </Modal.Actions>
       </Modal>
-    )
+    );
   }
 }
 
-export default Calendar
+export default Calendar;

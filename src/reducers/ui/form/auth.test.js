@@ -1,4 +1,4 @@
-import reducer from './auth'
+import reducer from './auth';
 import {
   changeEmail,
   changeCode,
@@ -8,7 +8,7 @@ import {
   verifyCode,
   verifyCodeSuccess,
   verifyCodeFailure
-} from '../../../actions/ui/form/auth'
+} from '../../../actions/ui/form/auth';
 
 it('returns default state', () => {
   expect(reducer(undefined, {})).toEqual({
@@ -19,26 +19,26 @@ it('returns default state', () => {
     isCodeSent: false,
     isVerifyingCode: false,
     isCodeValid: false
-  })
-})
+  });
+});
 
 it('changes email', () => {
   expect(reducer({ email: 'foo' }, changeEmail('foo@example'))).toEqual({
     email: 'foo@example'
-  })
-})
+  });
+});
 
 it('changes code', () => {
   expect(reducer({ code: 'bar' }, changeCode('baz'))).toEqual({
     code: 'baz'
-  })
-})
+  });
+});
 
 it('shows loader when send code requested', () => {
   expect(reducer({ isSendingCode: false }, sendCode())).toEqual({
     isSendingCode: true
-  })
-})
+  });
+});
 
 it('changes isCodeSent flag when code was sent', () => {
   expect(
@@ -46,8 +46,8 @@ it('changes isCodeSent flag when code was sent', () => {
   ).toEqual({
     isSendingCode: false,
     isCodeSent: true
-  })
-})
+  });
+});
 
 it('shows error if code was not sent', () => {
   expect(
@@ -58,14 +58,14 @@ it('shows error if code was not sent', () => {
   ).toEqual({
     isSendingCode: false,
     error: 'there was an error'
-  })
-})
+  });
+});
 
 it('shows loader when code verification is requested', () => {
   expect(reducer({ isVerifyingCode: false }, verifyCode())).toEqual({
     isVerifyingCode: true
-  })
-})
+  });
+});
 
 it('changes isCodeValid flag when code was verified', () => {
   expect(
@@ -73,8 +73,8 @@ it('changes isCodeValid flag when code was verified', () => {
   ).toEqual({
     isVerifyingCode: false,
     isCodeValid: true
-  })
-})
+  });
+});
 
 it('shows error if code was not verified', () => {
   expect(
@@ -85,5 +85,5 @@ it('shows error if code was not verified', () => {
   ).toEqual({
     isVerifyingCode: false,
     error: 'code not valid'
-  })
-})
+  });
+});

@@ -1,60 +1,62 @@
-import reducer from './tags'
+import reducer from './tags';
 import {
   loadExpenseTagsSuccess,
   loadIncomeTagsSuccess
-} from '../../actions/entities/tags'
-import { addTag } from '../../actions/ui/form/transaction'
-import { EXPENSE, TRANSFER, INCOME } from '../../entities/Transaction'
+} from '../../actions/entities/tags';
+import { addTag } from '../../actions/ui/form/transaction';
+import { TransationKindT } from '../../entities/Transaction';
+
+const { Expense, Transfer, Income } = TransationKindT;
 
 it('returns default state', () => {
   expect(reducer(undefined, {})).toEqual({
-    [EXPENSE]: [],
-    [TRANSFER]: [],
-    [INCOME]: []
-  })
-})
+    [Expense]: [],
+    [Transfer]: [],
+    [Income]: []
+  });
+});
 
 it('loads expense tags', () => {
   expect(
-    reducer({ [EXPENSE]: [] }, loadExpenseTagsSuccess(['food', 'groceries']))
+    reducer({ [Expense]: [] }, loadExpenseTagsSuccess(['food', 'groceries']))
   ).toEqual({
-    [EXPENSE]: ['food', 'groceries']
-  })
-})
+    [Expense]: ['food', 'groceries']
+  });
+});
 
 it('loads income tags', () => {
   expect(
-    reducer({ [INCOME]: [] }, loadIncomeTagsSuccess(['salary', 'dividends']))
+    reducer({ [Income]: [] }, loadIncomeTagsSuccess(['salary', 'dividends']))
   ).toEqual({
-    [INCOME]: ['salary', 'dividends']
-  })
-})
+    [Income]: ['salary', 'dividends']
+  });
+});
 
 it('adds tag to expense tags', () => {
   expect(
     reducer(
-      { [EXPENSE]: ['food', 'groceries'] },
-      addTag({ kind: EXPENSE, tag: 'rent' })
+      { [Expense]: ['food', 'groceries'] },
+      addTag({ kind: Expense, tag: 'rent' })
     )
-  ).toEqual({ [EXPENSE]: ['food', 'groceries', 'rent'] })
-})
+  ).toEqual({ [Expense]: ['food', 'groceries', 'rent'] });
+});
 
 it('adds tag to income tags', () => {
   expect(
     reducer(
-      { [INCOME]: ['salary'] },
-      addTag({ kind: INCOME, tag: 'dividends' })
+      { [Income]: ['salary'] },
+      addTag({ kind: Income, tag: 'dividends' })
     )
   ).toEqual({
-    [INCOME]: ['salary', 'dividends']
-  })
-})
+    [Income]: ['salary', 'dividends']
+  });
+});
 
 it('does not add used tag if it is already there', () => {
   expect(
     reducer(
-      { [EXPENSE]: ['food', 'groceries'] },
-      addTag({ kind: EXPENSE, tag: 'food' })
+      { [Expense]: ['food', 'groceries'] },
+      addTag({ kind: Expense, tag: 'food' })
     )
-  ).toEqual({ [EXPENSE]: ['food', 'groceries'] })
-})
+  ).toEqual({ [Expense]: ['food', 'groceries'] });
+});

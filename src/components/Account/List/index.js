@@ -1,13 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Group from './Group'
-import './index.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Group from './Group';
+import './index.css';
 
 class AccountsWidget extends React.Component {
-  toggle = group => () => this.props.toggleSectionCollapse(group)
+  toggle = group => () => this.props.toggleSectionCollapse(group);
 
   render() {
-    const groups = Object.keys(this.props.groups)
+    const groups = Object.keys(this.props.groups);
 
     return (
       groups.length > 0 && (
@@ -24,7 +24,7 @@ class AccountsWidget extends React.Component {
           ))}
         </div>
       )
-    )
+    );
   }
 }
 
@@ -34,6 +34,6 @@ AccountsWidget.propTypes = {
   collapsedGroups: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleSectionCollapse: PropTypes.func.isRequired,
   openAccountInModal: PropTypes.func
-}
+};
 
-export default AccountsWidget
+export default AccountsWidget;

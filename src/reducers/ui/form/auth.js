@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   changeEmail,
   changeCode,
@@ -8,7 +8,7 @@ import {
   verifyCode,
   verifyCodeSuccess,
   verifyCodeFailure
-} from '../../../actions/ui/form/auth'
+} from '../../../actions/ui/form/auth';
 
 export default handleActions(
   {
@@ -49,4 +49,4 @@ export default handleActions(
     isVerifyingCode: false,
     isCodeValid: false
   }
-)
+);

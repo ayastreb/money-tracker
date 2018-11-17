@@ -1,24 +1,24 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Button } from 'semantic-ui-react'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Button } from 'semantic-ui-react';
 import {
   loadAccounts,
   removeAccountRequest,
   removeAccount
-} from '../../actions/entities/accounts'
+} from '../../actions/entities/accounts';
 import {
   openAccountInModal,
   resetAccountForm
-} from '../../actions/ui/form/account'
-import { getForm, getModal } from '../../selectors/ui/form/account'
-import ModalForm from '../../components/Account/ModalForm'
-import AccountsList from './List'
-import AccountForm from './Form'
-import { getAccountsAsOptions } from '../../selectors/entities/accounts'
+} from '../../actions/ui/form/account';
+import { getForm, getModal } from '../../selectors/ui/form/account';
+import ModalForm from '../../components/Account/ModalForm';
+import AccountsList from './List';
+import AccountForm from './Form';
+import { getAccountsAsOptions } from '../../selectors/entities/accounts';
 
 class Accounts extends React.Component {
   componentWillMount() {
-    this.props.loadAccounts()
+    this.props.loadAccounts();
   }
 
   render() {
@@ -39,7 +39,7 @@ class Accounts extends React.Component {
         </div>
         <ModalForm {...this.props} />
       </div>
-    )
+    );
   }
 }
 
@@ -51,7 +51,7 @@ const mapStateToProps = state => ({
     option => option.key !== getForm(state).id
   ),
   EditForm: AccountForm
-})
+});
 
 export default connect(
   mapStateToProps,
@@ -62,4 +62,4 @@ export default connect(
     removeAccountRequest,
     removeAccount
   }
-)(Accounts)
+)(Accounts);

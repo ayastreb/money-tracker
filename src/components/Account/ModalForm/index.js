@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { Button, Header, Modal } from 'semantic-ui-react'
-import { DropdownOption } from '../../types'
-import DeleteStrategy from './DeleteStrategy'
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Button, Header, Modal } from 'semantic-ui-react';
+import { DropdownOption } from '../../types';
+import DeleteStrategy from './DeleteStrategy';
 
 class ModalForm extends React.Component {
   reset = () => {
-    if (this.props.modal.isDeleteRunning) return false
-    this.props.resetAccountForm()
-  }
+    if (this.props.modal.isDeleteRunning) return false;
+    this.props.resetAccountForm();
+  };
 
   render() {
     return (
@@ -32,11 +32,11 @@ class ModalForm extends React.Component {
         </Modal.Content>
         <Modal.Actions>{this.renderModalActions()}</Modal.Actions>
       </Modal>
-    )
+    );
   }
 
   renderModalActions() {
-    if (!this.props.isEdit) return
+    if (!this.props.isEdit) return;
 
     return this.props.modal.isDeleteRequest ? (
       <Button
@@ -54,7 +54,7 @@ class ModalForm extends React.Component {
         content="Delete"
         icon="trash"
       />
-    )
+    );
   }
 }
 
@@ -72,6 +72,6 @@ ModalForm.propTypes = {
   removeAccount: PropTypes.func,
   EditForm: PropTypes.func,
   accountOptions: PropTypes.arrayOf(DropdownOption).isRequired
-}
+};
 
-export default ModalForm
+export default ModalForm;

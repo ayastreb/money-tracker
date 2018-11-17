@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+import { handleActions } from 'redux-actions';
 import {
   openImportFile,
   discardImportFile,
@@ -6,7 +6,7 @@ import {
   importFileReadSuccess,
   importLineProcessed,
   importFailure
-} from '../../actions/ui/dataImport'
+} from '../../actions/ui/dataImport';
 
 const initialState = {
   isFileSelected: false,
@@ -15,7 +15,7 @@ const initialState = {
   isProcessing: false,
   linesToProcess: Infinity,
   linesProcessed: 0
-}
+};
 
 export default handleActions(
   {
@@ -47,4 +47,4 @@ export default handleActions(
     })
   },
   initialState
-)
+);

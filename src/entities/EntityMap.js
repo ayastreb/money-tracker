@@ -10,7 +10,7 @@ const EntityMap = {
    * @return {object}
    */
   fromArray(entities, keyPropName = 'id') {
-    return EntityMap.merge({ byKey: {}, keys: [] }, entities, keyPropName)
+    return EntityMap.merge({ byKey: {}, keys: [] }, entities, keyPropName);
   },
   /**
    * Merge given entities into given map.
@@ -24,8 +24,8 @@ const EntityMap = {
       byKey: {
         ...source.byKey,
         ...entities.reduce((acc, entity) => {
-          acc[entity[keyPropName]] = entity
-          return acc
+          acc[entity[keyPropName]] = entity;
+          return acc;
         }, {})
       },
       keys: [
@@ -36,7 +36,7 @@ const EntityMap = {
             .concat(source.keys)
         )
       ]
-    }
+    };
   },
   /**
    * Set given entity in map.
@@ -45,7 +45,7 @@ const EntityMap = {
    * @param {striobjectng} entity
    */
   set(source, entity, keyPropName = 'id') {
-    return EntityMap.merge(source, [entity], keyPropName)
+    return EntityMap.merge(source, [entity], keyPropName);
   },
   /**
    * Remove value by given key.
@@ -55,16 +55,16 @@ const EntityMap = {
    * @return {object}
    */
   remove(source, key) {
-    if (!source.byKey || !source.byKey[key]) return source
+    if (!source.byKey || !source.byKey[key]) return source;
 
-    const keys = source.keys.filter(originalKey => originalKey !== key)
+    const keys = source.keys.filter(originalKey => originalKey !== key);
     return {
       byKey: keys.reduce((acc, key) => {
-        acc[key] = source.byKey[key]
-        return acc
+        acc[key] = source.byKey[key];
+        return acc;
       }, {}),
       keys
-    }
+    };
   },
   /**
    * Retrieve value by given key.
@@ -73,7 +73,7 @@ const EntityMap = {
    * @param {string} key
    */
   get(source, key, fallback = {}) {
-    return (source.byKey && source.byKey[key]) || fallback
+    return (source.byKey && source.byKey[key]) || fallback;
   },
   /**
    * Map over all entities with given function and return array with results.
@@ -88,7 +88,7 @@ const EntityMap = {
   map(source, fn, limit = source.keys.length, offset = 0) {
     return source.keys
       .slice(offset, offset + limit)
-      .map(key => fn(source.byKey[key], key))
+      .map(key => fn(source.byKey[key], key));
   },
   /**
    * Filter source entires with given function and return array of entries matching the filter.
@@ -100,10 +100,10 @@ const EntityMap = {
   filter(source, fn) {
     return source.keys.reduce((acc, key) => {
       if (fn(source.byKey[key], key)) {
-        acc.push(source.byKey[key])
+        acc.push(source.byKey[key]);
       }
-      return acc
-    }, [])
+      return acc;
+    }, []);
   },
   /**
    * Apply given function to all entities and return new map with results.
@@ -115,12 +115,12 @@ const EntityMap = {
   apply(source, fn) {
     return {
       byKey: source.keys.reduce((acc, key) => {
-        acc[key] = fn(source.byKey[key], key)
-        return acc
+        acc[key] = fn(source.byKey[key], key);
+        return acc;
       }, {}),
       keys: source.keys
-    }
+    };
   }
-}
+};
 
-export default EntityMap
+export default EntityMap;

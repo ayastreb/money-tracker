@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Table } from 'semantic-ui-react'
-import Amount from '../../Amount'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
+import Amount from '../../Amount';
 
 const Footer = ({ base, income, expense }) => (
   <div className="transactions-list-footer">
@@ -28,12 +28,12 @@ const Footer = ({ base, income, expense }) => (
       </Table.Body>
     </Table>
   </div>
-)
+);
 
 Footer.propTypes = {
   base: PropTypes.string,
   income: PropTypes.number,
   expense: PropTypes.number
-}
+};
 
-export default Footer
+export default Footer;

@@ -1,16 +1,16 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { loadReport } from '../../actions/ui/report'
-import { loadAccounts } from '../../actions/entities/accounts'
-import { getBaseCurrencySymbol } from '../../selectors/settings'
-import Report from '../../components/Report'
-import Navigation from './Navigation'
-import Filter from './Filter'
+import React from 'react';
+import { connect } from 'react-redux';
+import { loadReport } from '../../actions/ui/report';
+import { loadAccounts } from '../../actions/entities/accounts';
+import { getBaseCurrencySymbol } from '../../selectors/settings';
+import Report from '../../components/Report';
+import Navigation from './Navigation';
+import Filter from './Filter';
 
 class Reports extends React.Component {
   componentWillMount() {
-    this.props.loadAccounts()
-    this.props.loadReport()
+    this.props.loadAccounts();
+    this.props.loadReport();
   }
 
   render() {
@@ -20,7 +20,7 @@ class Reports extends React.Component {
         <Report {...this.props} />
         <Filter />
       </div>
-    )
+    );
   }
 }
 
@@ -29,9 +29,9 @@ const mapStateToProps = state => ({
   currency: getBaseCurrencySymbol(state),
   kind: state.ui.report.kind,
   data: state.ui.report.data
-})
+});
 
 export default connect(
   mapStateToProps,
   { loadAccounts, loadReport }
-)(Reports)
+)(Reports);
