@@ -5,18 +5,18 @@ import {
   toggleFilterCalendar,
   toggleFilterModal,
   applyFilters
-} from '../../../actions/ui/transaction/filter';
+} from 'actions/ui/transaction/filter';
 import {
   loadFilterTransactions,
   loadFilterTransactionsSuccess
-} from '../../../actions/entities/transactions';
-import DateRange from '../../../entities/Transaction/FilterDateRange';
-import { rowsPerSearchPage } from '../../../entities/Transaction';
-import { toUtcTimestamp } from '../../../util/timezone';
+} from 'actions/entities/transactions';
+import { defaultStart, defaultEnd } from 'entities/Transaction/DateFilterRange';
+import { rowsPerSearchPage } from 'entities/Transaction';
+import { toUtcTimestamp } from 'util/timezone';
 
 const initialState = {
-  dateStart: toUtcTimestamp(DateRange.defaultStart),
-  dateEnd: toUtcTimestamp(DateRange.defaultEnd),
+  dateStart: toUtcTimestamp(defaultStart()),
+  dateEnd: toUtcTimestamp(defaultEnd()),
   isCalendarOpen: false,
   isFilterModalOpen: false,
   applied: {},

@@ -1,8 +1,8 @@
 import {
   AccountGroupT,
   defaultGroup,
-  groupOptions,
-  groupName,
+  getAccountGroupOptions,
+  getGroupName,
   formTostate,
   stateToForm,
   storageToState,
@@ -15,7 +15,7 @@ it('has default group', () => {
 });
 
 it('returns list of group options', () => {
-  const options = groupOptions();
+  const options = getAccountGroupOptions();
 
   expect(Array.isArray(options)).toBeTruthy();
   expect(options.length).toBeGreaterThanOrEqual(1);
@@ -25,8 +25,8 @@ it('returns list of group options', () => {
 });
 
 it('returns group name for given code', () => {
-  expect(groupName(AccountGroupT.Cash)).toEqual('Cash');
-  expect(groupName(AccountGroupT.Bank)).toEqual('Bank Account');
+  expect(getGroupName(AccountGroupT.Cash)).toEqual('Cash');
+  expect(getGroupName(AccountGroupT.Bank)).toEqual('Bank Account');
 });
 
 it('defaults id to current timestamp if not present in form', () => {

@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Checkbox } from 'semantic-ui-react';
+import { getAccountGroupOptions, formTostate } from 'entities/Account';
 import BalanceTable from './BalanceTable';
-import { groupOptions, formTostate } from '../../../entities/Account';
 import './index.css';
 
 class AccountForm extends React.Component {
   constructor(props) {
     super(props);
 
-    this.groups = groupOptions();
+    this.groups = getAccountGroupOptions();
   }
 
   handleNameChange = (event, { value }) => this.props.changeName(value);

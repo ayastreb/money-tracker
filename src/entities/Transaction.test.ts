@@ -2,7 +2,7 @@ import {
   TransationKindT,
   recentListLimit,
   defaultKind,
-  kindLabel,
+  getKindLabel,
   formToState,
   stateToForm,
   storageToState,
@@ -20,9 +20,9 @@ it('has default recent transactions list limit', () => {
 });
 
 it('returns kind label', () => {
-  expect(kindLabel(Expense)).toEqual('Expense');
-  expect(kindLabel(Transfer)).toEqual('Transfer');
-  expect(kindLabel(Income)).toEqual('Income');
+  expect(getKindLabel(Expense)).toEqual('Expense');
+  expect(getKindLabel(Transfer)).toEqual('Transfer');
+  expect(getKindLabel(Income)).toEqual('Income');
 });
 
 it('converts transaction date to timestamp', () => {

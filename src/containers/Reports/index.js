@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { loadReport } from '../../actions/ui/report';
-import { loadAccounts } from '../../actions/entities/accounts';
-import { getBaseCurrencySymbol } from '../../selectors/settings';
-import Report from '../../components/Report';
+import { loadReport } from 'actions/ui/report';
+import { loadAccounts } from 'actions/entities/accounts';
+import { getBaseCurrencySymbol } from 'selectors/settings';
+import Report from 'components/Report';
 import Navigation from './Navigation';
 import Filter from './Filter';
 

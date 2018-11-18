@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react';
-import { kindLabel, TransationKindT } from '../../../entities/Transaction';
+import { getKindLabel, TransationKindT } from 'entities/Transaction';
 
 const Header = ({ withTransfer, activeKind, changeKind }) => {
   const { Expense, Transfer, Income } = TransationKindT;
@@ -11,7 +11,7 @@ const Header = ({ withTransfer, activeKind, changeKind }) => {
         <Menu.Item
           key={kind}
           color={kind === Expense ? 'red' : kind === Income ? 'green' : 'black'}
-          name={kindLabel(kind)}
+          name={getKindLabel(kind)}
           active={kind === activeKind}
           onClick={() => changeKind(kind)}
         />

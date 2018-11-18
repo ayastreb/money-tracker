@@ -33,10 +33,10 @@ it('returns currency minimal amount', () => {
 });
 
 it('converts to currency subunit (cents)', () => {
-  expect(Currency.toCents(10.99, 'USD')).toEqual(1099); // $10.99 => 1099 cents
-  expect(Currency.toCents(9.5, 'USD')).toEqual(950); // $9.50 => 950 cents
-  expect(Currency.toCents(199, 'JPY')).toEqual(199); // 199 yen has no subunit, 1 yen is the minimum unit
-  expect(Currency.toCents(1.5, 'KWD')).toEqual(1500); // 1.5 Kuwaiti dinar => 1500 fils
+  expect(Currency.numberToCents(10.99, 'USD')).toEqual(1099); // $10.99 => 1099 cents
+  expect(Currency.numberToCents('9.50', 'USD')).toEqual(950); // $9.50 => 950 cents
+  expect(Currency.numberToCents(199, 'JPY')).toEqual(199); // 199 yen has no subunit, 1 yen is the minimum unit
+  expect(Currency.numberToCents(1.5, 'KWD')).toEqual(1500); // 1.5 Kuwaiti dinar => 1500 fils
 });
 
 it('converts from currency subunit (cents) back to float', () => {

@@ -8,12 +8,12 @@ import {
   loadReportSuccess,
   moveReportDateBackwards,
   moveReportDateForwards
-} from '../actions/ui/report';
-import Report from '../entities/Report';
-import { getNetWorth } from '../selectors/entities/accounts';
-import { getBaseCurrency, getExchangeRate } from '../selectors/settings';
-import { getReport } from '../selectors/ui/report';
-import TransactionsStorage from '../util/storage/transactions';
+} from 'actions/ui/report';
+import { transactionFilters, loadReportData } from 'entities/Report';
+import { getNetWorth } from 'selectors/entities/accounts';
+import { getBaseCurrency, getExchangeRate } from 'selectors/settings';
+import { getReport } from 'selectors/ui/report';
+import TransactionsStorage from 'util/storage/transactions';
 
 export function* loadReportSaga() {
   const report = yield select(getReport);
@@ -23,10 +23,10 @@ export function* loadReportSaga() {
   try {
     const transactions = yield call(
       TransactionsStorage.loadFiltered,
-      Report.transactionFilters(report)
+      transactionFilters(report)
     );
     const data = yield call(
-      Report.prepareData,
+      loadReportData,
       report,
       transactions,
       exchangeRate,

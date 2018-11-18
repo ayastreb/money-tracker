@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button, Dropdown, Input, Segment } from 'semantic-ui-react';
-import Header from './Header';
-import Account from './Account';
 import {
   TransationKindT,
-  kindLabel,
+  getKindLabel,
   formToState
-} from '../../../entities/Transaction';
-import { DropdownOption } from '../../types';
+} from 'entities/Transaction';
+import { DropdownOption } from 'components/types';
+import Header from './Header';
+import Account from './Account';
 import './index.css';
 
 const { Expense, Transfer, Income } = TransationKindT;
@@ -149,7 +149,7 @@ class TransactionForm extends React.Component {
                     disabled={parseFloat(this.props.form.amount) === 0}
                   >
                     {this.props.form.id ? 'Save' : 'Add'}{' '}
-                    {kindLabel(this.props.form.kind)}
+                    {getKindLabel(this.props.form.kind)}
                   </Button>
                 </div>
               </div>

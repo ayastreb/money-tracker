@@ -4,23 +4,28 @@ import { Dropdown, Button } from 'semantic-ui-react';
 import Calendar from './Calendar';
 import Filters from './Filters';
 import AppliedFilters from './AppliedFilters';
-import DateRange from '../../../entities/Transaction/FilterDateRange';
-import { DropdownOption } from '../../types';
+import {
+  DateFilterRangeT,
+  getDateRangeFilterOptions,
+  defaultDateFilterRange,
+  getDateFilterRangeStart,
+  getDateFilterRangeEnd
+} from 'entities/Transaction/DateFilterRange';
+import { DropdownOption } from 'components/types';
 import './index.css';
 
 class Filter extends React.Component {
-  options = DateRange.options();
-  lastValue = DateRange.defaultRange;
+  options = getDateRangeFilterOptions();
+  lastValue = defaultDateFilterRange;
 
-  handleDateRange = (event, { value }) => {
+  handleDateRange = (_, { value }) => {
     if (value === this.lastValue) return;
-
-    if (value === 'custom') {
+    if (value === DateFilterRangeT.custom) {
       this.props.toggleFilterCalendar();
     } else {
       this.props.changeFilterDate({
-        dateStart: DateRange.rangeStart(value),
-        dateEnd: DateRange.rangeEnd(value)
+        dateStart: getDateFilterRangeStart(value),
+        dateEnd: getDateFilterRangeEnd(value)
       });
       this.lastValue = value;
     }
@@ -41,7 +46,7 @@ class Filter extends React.Component {
               button
               className="icon"
               options={this.options}
-              defaultValue={DateRange.defaultRange}
+              defaultValue={defaultDateFilterRange}
               onChange={this.handleDateRange}
               text={this.props.dateRangeLabel}
               labeled

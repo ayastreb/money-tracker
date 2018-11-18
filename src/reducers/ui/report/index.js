@@ -9,7 +9,13 @@ import {
   loadReportSuccess,
   loadReportFailure
 } from 'actions/ui/report';
-import Report from 'entities/Report';
+import {
+  defaultKind,
+  defaultTimespan,
+  defaultDate,
+  moveDateBackwards,
+  moveDateForwards
+} from 'entities/Report';
 
 export default handleActions(
   {
@@ -17,7 +23,7 @@ export default handleActions(
     [changeReportTimespan]: (state, { payload }) => ({
       ...state,
       timespan: payload,
-      date: Report.defaultDate(payload)
+      date: defaultDate(payload)
     }),
     [changeReportAccounts]: (state, { payload }) => ({
       ...state,
@@ -25,7 +31,7 @@ export default handleActions(
     }),
     [moveReportDateBackwards]: state => ({
       ...state,
-      date: Report.moveDateBackwards(state.date, state.timespan),
+      date: moveDateBackwards(state.date, state.timespan),
       data: {
         ...state.data,
         netWorthEnd: state.data.netWorthStart
@@ -34,7 +40,7 @@ export default handleActions(
     }),
     [moveReportDateForwards]: state => ({
       ...state,
-      date: Report.moveDateForwards(state.date, state.timespan),
+      date: moveDateForwards(state.date, state.timespan),
       data: {
         ...state.data,
         netWorthEnd: state.netWorthStack[0]
@@ -52,9 +58,9 @@ export default handleActions(
   {
     isLoading: false,
     data: {},
-    kind: Report.defaultKind,
-    timespan: Report.defaultTimespan,
-    date: Report.defaultDate(),
+    kind: defaultKind,
+    timespan: defaultTimespan,
+    date: defaultDate(),
     accounts: [],
     netWorthStack: []
   }

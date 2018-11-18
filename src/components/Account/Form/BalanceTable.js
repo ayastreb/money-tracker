@@ -52,7 +52,10 @@ class BalanceTable extends React.Component {
           {this.props.form.id ? (
             <Amount
               code={code}
-              value={Currency.toCents(this.props.form.balance[code] || 0, code)}
+              value={Currency.numberToCents(
+                this.props.form.balance[code] || 0,
+                code
+              )}
             />
           ) : (
             <Input

@@ -2,15 +2,15 @@ import reducer from './filter';
 import {
   changeFilterDate,
   toggleFilterCalendar
-} from '../../../actions/ui/transaction/filter';
-import DateRange from '../../../entities/Transaction/FilterDateRange';
-import { rowsPerSearchPage } from '../../../entities/Transaction';
-import { toUtcTimestamp } from '../../../util/timezone';
+} from 'actions/ui/transaction/filter';
+import { defaultStart, defaultEnd } from 'entities/Transaction/DateFilterRange';
+import { rowsPerSearchPage } from 'entities/Transaction';
+import { toUtcTimestamp } from 'util/timezone';
 
 it('returns initial state', () => {
   expect(reducer(undefined, {})).toEqual({
-    dateStart: toUtcTimestamp(DateRange.defaultStart),
-    dateEnd: toUtcTimestamp(DateRange.defaultEnd),
+    dateStart: toUtcTimestamp(defaultStart()),
+    dateEnd: toUtcTimestamp(defaultEnd()),
     isCalendarOpen: false,
     isFilterModalOpen: false,
     applied: {},

@@ -2,9 +2,9 @@ import React from 'react';
 import { Button, Radio, Dropdown, Form, Progress } from 'semantic-ui-react';
 import {
   defaultDeleteStrategy,
-  deleteStartegyOptions,
+  getDeleteStartegyOptions,
   DeleteStrategyT
-} from '../../../entities/Account';
+} from 'entities/Account';
 
 class DeleteStrategy extends React.Component {
   state = {
@@ -40,7 +40,7 @@ class DeleteStrategy extends React.Component {
           What should we do with transactions linked to this account?
         </p>
         <Form>
-          {deleteStartegyOptions(hasMultipleAccounts).map(strategy => (
+          {getDeleteStartegyOptions(hasMultipleAccounts).map(strategy => (
             <Form.Field key={strategy.key}>
               <Radio
                 name="deleteStrategy"

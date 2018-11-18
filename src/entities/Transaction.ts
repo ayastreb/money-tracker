@@ -53,50 +53,57 @@ export const rowsPerSearchPage = 10;
 export const pagerSizeMobile = 5;
 export const pagerSizeDesktop = 9;
 
-export const kindLabel = (kind: TransationKindT) => TransactionKindToText[kind];
+export function getKindLabel(kind: TransationKindT) {
+  return TransactionKindToText[kind];
+}
 
-export const formToState = (data: TransactionFormT): TransactionStateT => {
-  const tags = data.tags && data.tags[data.kind];
+export function formToState(form: TransactionFormT): TransactionStateT {
+  const tags = form.tags && form.tags[form.kind];
+
   return {
-    ...data,
-    id: data.id || '',
-    amount: Currency.toCents(
-      parseFloat(data.amount) * (data.kind === Expense ? -1 : 1),
-      data.currency
+    ...form,
+    id: form.id || '',
+    amount: Currency.numberToCents(
+      parseFloat(form.amount) * (form.kind === Expense ? -1 : 1),
+      form.currency
     ),
     linkedAmount:
-      data.kind === Transfer && data.linkedCurrency && data.linkedAmount
-        ? Currency.toCents(data.linkedAmount, data.linkedCurrency)
+      form.kind === Transfer && form.linkedCurrency && form.linkedAmount
+        ? Currency.numberToCents(form.linkedAmount, form.linkedCurrency)
         : undefined,
-    note: data.note || undefined,
+    note: form.note || undefined,
     tags: tags && tags.length > 0 ? tags : undefined,
-    date: new Date(data.date).getTime()
+    date: new Date(form.date).getTime()
   };
-};
+}
 
-export const stateToForm = (data: TransactionStateT): TransactionFormT => {
+export function stateToForm(state: TransactionStateT): TransactionFormT {
   return {
-    ...data,
+    ...state,
     amount: Currency.centsToString(
-      data.amount * (data.kind === Expense ? -1 : 1),
-      data.currency,
+      state.amount * (state.kind === Expense ? -1 : 1),
+      state.currency,
       false
     ),
     linkedAmount:
-      data.kind === Transfer && data.linkedAmount && data.linkedCurrency
-        ? Currency.centsToString(data.linkedAmount, data.linkedCurrency, false)
+      state.kind === Transfer && state.linkedAmount && state.linkedCurrency
+        ? Currency.centsToString(
+            state.linkedAmount,
+            state.linkedCurrency,
+            false
+          )
         : undefined,
-    note: data.note || '',
+    note: state.note || '',
     tags: {
       [Expense]: [],
       [Income]: [],
-      [data.kind]: data.tags || []
+      [state.kind]: state.tags || []
     },
-    date: format(toLocalTimestamp(data.date), 'YYYY-MM-DD')
+    date: format(toLocalTimestamp(state.date), 'YYYY-MM-DD')
   };
-};
+}
 
-export const storageToState = ({
+export function storageToState({
   _id,
   kind,
   note,
@@ -107,27 +114,28 @@ export const storageToState = ({
   linkedAccountId,
   linkedAmount,
   linkedCurrency
-}: TransactionStorageT): TransactionStateT => {
+}: TransactionStorageT): TransactionStateT {
   if (!_id) throw new Error('Transaction storage object missing "_id"');
-  const match = _id.match(/T([0-9]+)-/);
-  if (!match) throw new Error('No date in Transaction ID!');
+  // date timestamp is encoded in transaction ID
+  const dateRegexMatch = _id.match(/T([0-9]+)-/);
+  if (!dateRegexMatch) throw new Error(`No date in Transaction ID "${_id}"`);
 
   return {
     id: _id,
+    date: parseInt(dateRegexMatch[1], 10),
     kind,
     note,
     tags,
     accountId,
     amount,
     currency,
-    date: parseInt(match[1], 10),
     linkedAccountId,
     linkedAmount,
     linkedCurrency
   };
-};
+}
 
-export const stateToStorage = ({
+export function stateToStorage({
   kind,
   note,
   tags,
@@ -137,7 +145,7 @@ export const stateToStorage = ({
   linkedAccountId,
   linkedAmount,
   linkedCurrency
-}: TransactionStateT): TransactionStorageT => {
+}: TransactionStateT): TransactionStorageT {
   return {
     kind,
     note,
@@ -151,4 +159,4 @@ export const stateToStorage = ({
       linkedCurrency
     })
   };
-};
+}

@@ -196,7 +196,7 @@ const Currency = {
    * Convert value to currency's subunit (e.g. cents for USD).
    * Subunit is the minimal currency unit and it is always whole integer.
    */
-  toCents(value: string | number, code: string) {
+  numberToCents(value: string | number, code: string) {
     return Math.round(parseFloat(`${value}e${CURRENCY[code].exp}`));
   },
   /**

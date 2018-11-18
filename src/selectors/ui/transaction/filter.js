@@ -11,7 +11,7 @@ export const getDateLabel = state => {
   const dateEnd = toLocalTimestamp(state.ui.transaction.filter.dateEnd);
   return format(dateStart, 'DD MMM') !== format(dateEnd, 'DD MMM')
     ? `${format(dateStart, 'DD MMM')} — ${format(dateEnd, 'DD MMM')}`
-    : format(dateStart, 'DD MMMM');
+    : format(dateStart, 'MMMM, Do');
 };
 
 export const getFilters = state => ({

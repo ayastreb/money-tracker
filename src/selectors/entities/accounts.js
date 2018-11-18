@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { getBaseCurrency, getExchangeRate } from '../settings';
-import { groupName } from '../../entities/Account';
+import { getGroupName } from '../../entities/Account';
 import Currency from '../../entities/Currency';
 import EntityMap from '../../entities/EntityMap';
 import sortByName from '../../util/sortByName';
@@ -69,7 +69,7 @@ const groupAccounts = (accounts, base, rate) => {
     const group = account.group;
     if (!grouped[group]) {
       grouped[group] = {
-        name: groupName(group),
+        name: getGroupName(group),
         accounts: [],
         total: 0
       };
@@ -119,7 +119,7 @@ export const getAccountsAsOptions = createSelector(
           key: account.id,
           value: account.id,
           text: account.name,
-          description: groupName(group)
+          description: getGroupName(group)
         });
       }
     }

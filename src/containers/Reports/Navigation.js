@@ -1,19 +1,19 @@
 import { connect } from 'react-redux';
-import Navigation from '../../components/Report/Navigation';
+import Navigation from 'components/Report/Navigation';
 import {
   changeReportKind,
   changeReportTimespan,
   moveReportDateBackwards,
   moveReportDateForwards
-} from '../../actions/ui/report';
-import { getTimespanLabel } from '../../selectors/ui/report';
-import Report from '../../entities/Report';
+} from 'actions/ui/report';
+import { getTimespanLabel } from 'selectors/ui/report';
+import { kindOptions, timespanOptions } from 'entities/Report';
 
 const mapStateToProps = state => ({
   kind: state.ui.report.kind,
-  kindOptions: Report.kindOptions(),
+  kindOptions: kindOptions(),
   timespan: state.ui.report.timespan,
-  timespanOptions: Report.timespanOptions(),
+  timespanOptions: timespanOptions(),
   timespanLabel: getTimespanLabel(state)
 });
 

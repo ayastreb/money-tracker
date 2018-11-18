@@ -10,9 +10,9 @@ import subYears from 'date-fns/sub_years';
 import { ExchangeRateT } from 'entities/Currency';
 import { toUtcTimestamp } from 'util/timezone';
 import { TransactionStateT } from './Transaction';
-import ExpenseIncomeData from './Report/ExpenseIncomeData';
-import NetWorthData from './Report/NetWorthData';
-import ExpenseTagsData from './Report/ExpenseTagsData';
+import ExpenseIncomeDataLoader from './Report/ExpenseIncomeData';
+import NetWorthDataLoader from './Report/NetWorthData';
+import ExpenseTagsDataLoader from './Report/ExpenseTagsData';
 
 export interface ReportDataT {
   labels: string[];
@@ -42,97 +42,100 @@ export enum ReportTimespanT {
   Monthly = 'monthly'
 }
 
-const { Yearly, Monthly } = ReportTimespanT;
-
 interface DateRangeT {
   start: number; // timestamp
   end: number; // timestamp
 }
 
-const Report = {
-  defaultKind: ReportKindT.ExpenseIncome,
-  defaultTimespan: Yearly,
-  defaultDate(timespan = Yearly) {
-    return dateRange(new Date(), timespan);
-  },
-  moveDateBackwards({ start }: DateRangeT, timespan: ReportTimespanT) {
-    return dateRange(
-      timespan === Yearly ? subYears(start, 1) : subMonths(start, 1),
-      timespan
-    );
-  },
-  moveDateForwards({ start }: DateRangeT, timespan: ReportTimespanT) {
-    return dateRange(
-      timespan === Yearly ? addYears(start, 1) : addMonths(start, 1),
-      timespan
-    );
-  },
-  kindOptions() {
-    return [
-      {
-        key: ReportKindT.ExpenseIncome,
-        value: ReportKindT.ExpenseIncome,
-        text: 'Expense & Income'
-      },
-      {
-        key: ReportKindT.ExpenseTags,
-        value: ReportKindT.ExpenseTags,
-        text: 'Expense by Tags'
-      },
-      {
-        key: ReportKindT.NetWorth,
-        value: ReportKindT.NetWorth,
-        text: 'Net Worth'
-      }
-    ];
-  },
-  timespanOptions() {
-    return [
-      {
-        key: Yearly,
-        value: Yearly,
-        text: 'Yearly'
-      },
-      {
-        key: Monthly,
-        value: Monthly,
-        text: 'Monthly'
-      }
-    ];
-  },
-  timespanLabel(date: Date, timespan: ReportTimespanT) {
-    return format(date, timespan === Yearly ? 'YYYY' : 'MMM, YYYY');
-  },
-  transactionFilters({ date, accounts }: ReportStateT) {
-    return { date, accounts };
-  },
-  prepareData(
-    report: ReportStateT,
-    transactions: TransactionStateT[],
-    exchangeRate: ExchangeRateT,
-    base: string,
-    netWorthEnd: number
-  ): ReportDataT {
-    switch (report.kind) {
-      case ReportKindT.ExpenseIncome:
-        return ExpenseIncomeData(report, transactions, exchangeRate, base);
-      case ReportKindT.NetWorth:
-        return NetWorthData(
-          report,
-          transactions,
-          exchangeRate,
-          base,
-          netWorthEnd
-        );
-      case ReportKindT.ExpenseTags:
-        return ExpenseTagsData(transactions, exchangeRate, base);
-      default:
-        throw new Error(`Unknown report kind "${report.kind}"`);
+const { Yearly, Monthly } = ReportTimespanT;
+export const defaultKind = ReportKindT.ExpenseIncome;
+export const defaultTimespan = Yearly;
+
+export function defaultDate(timespan = defaultTimespan) {
+  return dateRange(new Date(), timespan);
+}
+
+export function moveDateBackwards(
+  { start }: DateRangeT,
+  timespan: ReportTimespanT
+) {
+  return dateRange(
+    timespan === Yearly ? subYears(start, 1) : subMonths(start, 1),
+    timespan
+  );
+}
+
+export function moveDateForwards(
+  { start }: DateRangeT,
+  timespan: ReportTimespanT
+) {
+  return dateRange(
+    timespan === Yearly ? addYears(start, 1) : addMonths(start, 1),
+    timespan
+  );
+}
+
+export function kindOptions() {
+  return [
+    {
+      key: ReportKindT.ExpenseIncome,
+      value: ReportKindT.ExpenseIncome,
+      text: 'Expense & Income'
+    },
+    {
+      key: ReportKindT.ExpenseTags,
+      value: ReportKindT.ExpenseTags,
+      text: 'Expense by Tags'
+    },
+    {
+      key: ReportKindT.NetWorth,
+      value: ReportKindT.NetWorth,
+      text: 'Net Worth'
     }
-  }
+  ];
+}
+
+export function timespanOptions() {
+  return [
+    {
+      key: Yearly,
+      value: Yearly,
+      text: 'Yearly'
+    },
+    {
+      key: Monthly,
+      value: Monthly,
+      text: 'Monthly'
+    }
+  ];
+}
+
+export function timespanLabel(date: Date, timespan: ReportTimespanT) {
+  return format(date, timespan === Yearly ? 'YYYY' : 'MMM, YYYY');
+}
+
+export function transactionFilters({ date, accounts }: ReportStateT) {
+  return { date, accounts };
+}
+
+type DataLoaderFn = (
+  report: ReportStateT,
+  transactions: TransactionStateT[],
+  exchangeRate: ExchangeRateT,
+  base: string,
+  netWorthEnd: number
+) => ReportDataT;
+type DataLoaderMapT = { [kind in ReportKindT]: DataLoaderFn };
+
+const DataLoaderMap: DataLoaderMapT = {
+  [ReportKindT.ExpenseIncome]: ExpenseIncomeDataLoader,
+  [ReportKindT.ExpenseTags]: ExpenseTagsDataLoader,
+  [ReportKindT.NetWorth]: NetWorthDataLoader
 };
 
-export default Report;
+export const loadReportData: DataLoaderFn = (report, ...rest) => {
+  return DataLoaderMap[report.kind](report, ...rest);
+};
 
 function dateRange(date: Date | number, timespan: ReportTimespanT): DateRangeT {
   const startFn = timespan === Yearly ? startOfYear : startOfMonth;

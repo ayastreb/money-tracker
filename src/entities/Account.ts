@@ -46,40 +46,36 @@ export enum AccountGroupT {
   Credit = 'credit',
   Asset = 'asset'
 }
-type GroupCodeToTextTupleT = [AccountGroupT, string];
-type GroupCodeToTextMapT = { [code in AccountGroupT]?: string };
-const GroupCodeToTextTupleList: GroupCodeToTextTupleT[] = [
-  [AccountGroupT.Cash, 'Cash'],
-  [AccountGroupT.Bank, 'Bank Account'],
-  [AccountGroupT.Deposit, 'Deposit'],
-  [AccountGroupT.Credit, 'Credit'],
-  [AccountGroupT.Asset, 'Asset']
-];
-const GroupCodeToTextMap: GroupCodeToTextMapT = GroupCodeToTextTupleList.reduce(
-  (acc: GroupCodeToTextMapT, [code, text]) => {
-    acc[code] = text;
-    return acc;
-  },
-  {}
-);
-
-export const defaultGroup = AccountGroupT.Cash;
-export const groupName = (code: AccountGroupT) => GroupCodeToTextMap[code];
-export const groupOptions = () => {
-  return GroupCodeToTextTupleList.map(([code, text]) => ({
-    key: code,
-    value: code,
-    text
-  }));
-};
 
 export enum DeleteStrategyT {
   Archive,
   Cleanup,
   Move
 }
+
+const GroupToTextMap: { [code in AccountGroupT]?: string } = {
+  [AccountGroupT.Cash]: 'Cash',
+  [AccountGroupT.Bank]: 'Bank Account',
+  [AccountGroupT.Deposit]: 'Deposit',
+  [AccountGroupT.Credit]: 'Credit',
+  [AccountGroupT.Asset]: 'Asset'
+};
+
+export const defaultGroup = AccountGroupT.Cash;
 export const defaultDeleteStrategy = DeleteStrategyT.Archive;
-export const deleteStartegyOptions = (hasMultipleAccounts = false) => {
+
+export function getGroupName(code: AccountGroupT) {
+  return GroupToTextMap[code];
+}
+export function getAccountGroupOptions() {
+  return Object.entries(GroupToTextMap).map(([code, text]) => ({
+    key: code,
+    value: code,
+    text
+  }));
+}
+
+export function getDeleteStartegyOptions(hasMultipleAccounts = false) {
   const stratgies = [
     {
       key: DeleteStrategyT.Archive,
@@ -101,9 +97,9 @@ export const deleteStartegyOptions = (hasMultipleAccounts = false) => {
   }
 
   return stratgies;
-};
+}
 
-export const formTostate = ({
+export function formTostate({
   id,
   balance,
   name,
@@ -111,12 +107,12 @@ export const formTostate = ({
   currencies,
   on_dashboard,
   archived
-}: AccountFormT): AccountStateT => {
+}: AccountFormT): AccountStateT {
   return {
     id: id || `A${Date.now()}`,
     balance: Object.keys(balance).reduce(
       (acc: BalanceAsCentsT, code: string) => {
-        acc[code] = Currency.toCents(
+        acc[code] = Currency.numberToCents(
           balance[code] !== '' ? balance[code] : '0',
           code
         );
@@ -130,9 +126,9 @@ export const formTostate = ({
     on_dashboard,
     archived
   };
-};
+}
 
-export const stateToForm = (account: AccountStateT): AccountFormT => {
+export function stateToForm(account: AccountStateT): AccountFormT {
   return {
     ...account,
     balance: Object.keys(account.balance).reduce(
@@ -143,9 +139,9 @@ export const stateToForm = (account: AccountStateT): AccountFormT => {
       {}
     )
   };
-};
+}
 
-export const storageToState = ({
+export function storageToState({
   _id,
   name,
   group,
@@ -153,7 +149,7 @@ export const storageToState = ({
   currencies,
   on_dashboard,
   archived
-}: AccountStorageT): AccountStateT => {
+}: AccountStorageT): AccountStateT {
   return {
     id: _id,
     name,
@@ -163,24 +159,24 @@ export const storageToState = ({
     on_dashboard,
     archived
   };
-};
+}
 
-export const stateToStorage = ({
+export function stateToStorage({
   name,
   group,
   balance,
   currencies,
   on_dashboard,
   archived
-}: AccountStateT) => {
+}: AccountStateT) {
   return { name, group, balance, currencies, on_dashboard, archived };
-};
+}
 
-export const mutateBalance = (
+export function mutateBalance(
   account: AccountStorageT,
   currency: string,
   amount: number
-): AccountStorageT => {
+): AccountStorageT {
   return {
     ...account,
     currencies: [...new Set([...account.currencies, currency])],
@@ -189,4 +185,4 @@ export const mutateBalance = (
       [currency]: parseInt(`${account.balance[currency] || 0}`, 10) + amount
     }
   };
-};
+}

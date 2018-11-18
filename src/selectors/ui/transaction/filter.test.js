@@ -5,7 +5,7 @@ it('returns date label for same day', () => {
   const state = {
     ui: { transaction: { filter: { dateStart: date, dateEnd: date } } }
   };
-  expect(getDateLabel(state)).toEqual('25 September');
+  expect(getDateLabel(state)).toEqual('September, 25th');
 });
 
 it('returns date label for different days', () => {

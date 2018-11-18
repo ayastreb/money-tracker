@@ -1,8 +1,9 @@
 import Currency, { ExchangeRateT } from 'entities/Currency';
 import { TransactionStateT, TransationKindT } from 'entities/Transaction';
-import { ReportDataT } from 'entities/Report';
+import { ReportStateT, ReportDataT } from 'entities/Report';
 
 export default function ExpenseTagsData(
+  report: ReportStateT,
   transactions: TransactionStateT[],
   exchangeRate: ExchangeRateT,
   base: string
