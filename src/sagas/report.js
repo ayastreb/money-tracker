@@ -29,8 +29,8 @@ export function* loadReportSaga() {
       Report.prepareData,
       report,
       transactions,
-      base,
       exchangeRate,
+      base,
       netWorthEnd
     );
     yield put(loadReportSuccess(data));

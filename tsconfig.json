@@ -1,6 +1,7 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2017",
     "allowJs": true,
     "skipLibCheck": false,
     "esModuleInterop": true,
@@ -14,5 +15,7 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

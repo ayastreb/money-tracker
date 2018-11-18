@@ -1,16 +1,16 @@
-import Currency from './Currency';
+import Currency from 'entities/Currency';
 
-type AccountStateBalanceT = {
+type BalanceAsCentsT = {
   [currency: string]: number;
 };
 
-type AccountFormBalanceT = {
+type BalanceAsInputStringT = {
   [currency: string]: string;
 };
 
 interface AccountBaseT {
-  name: string;
   group: AccountGroupT;
+  name: string;
   currencies: string[];
   on_dashboard: boolean;
   archived?: boolean;
@@ -18,19 +18,19 @@ interface AccountBaseT {
 
 export interface AccountStateT extends AccountBaseT {
   id: string;
-  balance: AccountStateBalanceT;
+  balance: BalanceAsCentsT;
 }
 
 export interface AccountStorageT extends AccountBaseT {
   _id: string;
   _rev?: string;
   _conflicts?: string[];
-  balance: AccountStateBalanceT;
+  balance: BalanceAsCentsT;
 }
 
 export interface AccountFormT extends AccountBaseT {
   id?: string;
-  balance: AccountFormBalanceT;
+  balance: BalanceAsInputStringT;
   completed?: boolean;
   isModalOpen?: boolean;
   isDeleteRequest?: boolean;
@@ -79,7 +79,7 @@ export enum DeleteStrategyT {
   Move
 }
 export const defaultDeleteStrategy = DeleteStrategyT.Archive;
-export const deleteStartegies = (hasMultipleAccounts = false) => {
+export const deleteStartegyOptions = (hasMultipleAccounts = false) => {
   const stratgies = [
     {
       key: DeleteStrategyT.Archive,
@@ -105,20 +105,18 @@ export const deleteStartegies = (hasMultipleAccounts = false) => {
 
 export const formTostate = ({
   id,
+  balance,
   name,
   group,
-  balance,
   currencies,
   on_dashboard,
   archived
 }: AccountFormT): AccountStateT => {
   return {
     id: id || `A${Date.now()}`,
-    name,
-    group,
     balance: Object.keys(balance).reduce(
-      (acc: AccountStateBalanceT, code: string) => {
-        acc[code] = Currency.toInt(
+      (acc: BalanceAsCentsT, code: string) => {
+        acc[code] = Currency.toCents(
           balance[code] !== '' ? balance[code] : '0',
           code
         );
@@ -126,6 +124,8 @@ export const formTostate = ({
       },
       {}
     ),
+    name,
+    group,
     currencies,
     on_dashboard,
     archived
@@ -136,8 +136,8 @@ export const stateToForm = (account: AccountStateT): AccountFormT => {
   return {
     ...account,
     balance: Object.keys(account.balance).reduce(
-      (acc: AccountFormBalanceT, code: string) => {
-        acc[code] = Currency.toFloat(account.balance[code], code, false);
+      (acc: BalanceAsInputStringT, code: string) => {
+        acc[code] = Currency.centsToString(account.balance[code], code, false);
         return acc;
       },
       {}

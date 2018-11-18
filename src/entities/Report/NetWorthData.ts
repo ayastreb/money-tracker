@@ -1,33 +1,38 @@
 import format from 'date-fns/format';
 import getDaysInMonth from 'date-fns/get_days_in_month';
 import range from 'lodash/range';
-import { toUtcTimestamp } from '../../util/timezone';
-import Currency from '../Currency';
-import { TIMESPAN_YEARLY } from '../Report';
-import { TransationKindT } from '../Transaction';
+import { toUtcTimestamp } from 'util/timezone';
+import Currency, { ExchangeRateT } from 'entities/Currency';
+import { ReportStateT, ReportDataT, ReportTimespanT } from 'entities/Report';
+import { TransactionStateT, TransationKindT } from 'entities/Transaction';
 
 const { Expense, Income } = TransationKindT;
 
 export default function NetWorthData(
-  report,
-  transactions,
-  base,
-  exchangeRate,
-  netWorthEnd
-) {
+  report: ReportStateT,
+  transactions: TransactionStateT[],
+  exchangeRate: ExchangeRateT,
+  base: string,
+  netWorthEnd: number
+): ReportDataT {
   const labels =
-    report.timespan === TIMESPAN_YEARLY
+    report.timespan === ReportTimespanT.Yearly
       ? range(0, 12).map(month => format(new Date().setMonth(month), 'MMM'))
-      : range(1, getDaysInMonth(report.date.start) + 1);
+      : range(1, getDaysInMonth(report.date.start) + 1).map(day =>
+          `${day}`.padStart(2, '0')
+        );
+
   const data = [];
-  let lastPeriod;
+  let lastPeriod: number | undefined;
   for (const tx of transactions) {
     if (tx.kind !== Expense && tx.kind !== Income) continue;
 
     const period =
-      format(
-        toUtcTimestamp(tx.date),
-        report.timespan === TIMESPAN_YEARLY ? 'M' : 'D'
+      parseInt(
+        format(
+          toUtcTimestamp(tx.date),
+          report.timespan === ReportTimespanT.Yearly ? 'M' : 'D'
+        )
       ) - 1;
     if (period !== lastPeriod) {
       if (lastPeriod === undefined) {
@@ -47,7 +52,7 @@ export default function NetWorthData(
     );
   }
 
-  if (lastPeriod > 0) data[0] = data[lastPeriod];
+  if (lastPeriod && lastPeriod > 0) data[0] = data[lastPeriod];
   if (report.date.end < Date.now() && data.length < labels.length) {
     data[labels.length - 1] = data[data.length - 1];
   }
@@ -55,7 +60,7 @@ export default function NetWorthData(
   return {
     labels,
     series: [
-      data.map(amount => Math.floor(Currency.toFloat(amount, base, false)))
+      data.map(amount => Math.floor(Currency.centsToNumber(amount, base)))
     ],
     netWorthStart: data[0],
     netWorthEnd

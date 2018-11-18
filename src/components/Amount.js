@@ -6,7 +6,7 @@ const Amount = ({ value, code, showColor = true }) => (
   <span
     className={`mono ${showColor && (value >= 0 ? 'positive' : 'negative')}`}
   >
-    {Currency.toFloat(value, code)} {code}
+    {Currency.centsToString(value, code)} {code}
   </span>
 );
 

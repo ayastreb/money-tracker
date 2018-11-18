@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Loader } from 'semantic-ui-react';
-import {
-  REPORT_EXPENSE_INCOME,
-  REPORT_EXPENSE_TAGS,
-  REPORT_NET_WORTH
-} from '../../entities/Report';
+import { ReportKindT } from 'entities/Report';
 import ExpenseIncome from './Kind/ExpenseIncome';
 import ExpenseTags from './Kind/ExpenseTags';
 import NetWorth from './Kind/NetWorth';
@@ -24,11 +20,11 @@ class Report extends React.Component {
 
   renderReportByKind() {
     switch (this.props.kind) {
-      case REPORT_EXPENSE_INCOME:
+      case ReportKindT.ExpenseIncome:
         return <ExpenseIncome {...this.props} />;
-      case REPORT_NET_WORTH:
+      case ReportKindT.NetWorth:
         return <NetWorth {...this.props} />;
-      case REPORT_EXPENSE_TAGS:
+      case ReportKindT.ExpenseTags:
         return <ExpenseTags {...this.props} />;
       default:
         return 'Not available';

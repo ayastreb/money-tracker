@@ -162,6 +162,10 @@ const CURRENCY: AvailableCurrencyT = {
   XAU: { name: 'Gold, troy ounce', symbol: 'XAU', exp: 2 }
 };
 
+export interface ExchangeRateT {
+  [code: string]: number;
+}
+
 type CurrencyOptionT = {
   key: string;
   value: string;
@@ -192,16 +196,23 @@ const Currency = {
    * Convert value to currency's subunit (e.g. cents for USD).
    * Subunit is the minimal currency unit and it is always whole integer.
    */
-  toInt(value: string | number, code: string) {
+  toCents(value: string | number, code: string) {
     return Math.round(parseFloat(`${value}e${CURRENCY[code].exp}`));
   },
   /**
    * Convert value from subunit back to float representation with formatting.
    * For example 199001 USD becomes 1,990.01 USD
    */
-  toFloat(value: number, code: string, format: boolean = true): string {
+  centsToNumber(value: number, code: string): number {
     const exp = CURRENCY[code].exp;
     const num = Number(`${value}e-${exp}`);
+
+    return num;
+  },
+  centsToString(value: number, code: string, format: boolean = true): string {
+    const exp = CURRENCY[code].exp;
+    const num = Number(`${value}e-${exp}`);
+
     return format
       ? num.toLocaleString(undefined, {
           minimumFractionDigits: exp,

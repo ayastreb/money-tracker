@@ -1,5 +1,5 @@
 import getAccountsMutations from './AccountMutations';
-import { TransationKindT } from '../Transaction';
+import { TransationKindT } from 'entities/Transaction';
 
 const { Expense, Transfer, Income } = TransationKindT;
 
@@ -7,10 +7,12 @@ describe('create new transaction', () => {
   it('decreases amount for new expense', () => {
     const prev = undefined;
     const next = {
+      id: 'T1234',
       kind: Expense,
       accountId: 'A12345',
       amount: -100,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([
       {
@@ -24,10 +26,12 @@ describe('create new transaction', () => {
   it('increases amount for new income', () => {
     const prev = undefined;
     const next = {
+      id: 'T1234',
       kind: Income,
       accountId: 'A12345',
       amount: 101,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([
       {
@@ -41,13 +45,15 @@ describe('create new transaction', () => {
   it('decreases amount for new transfer source, increases for target', () => {
     const prev = undefined;
     const next = {
+      id: 'T1234',
       kind: Transfer,
       accountId: 'A12345',
       amount: 100,
       currency: 'USD',
       linkedAccountId: 'A12346',
       linkedAmount: 1070,
-      linkedCurrency: 'JPY'
+      linkedCurrency: 'JPY',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([
       {
@@ -66,13 +72,15 @@ describe('create new transaction', () => {
   it('does not mutate when new transfer source and target are the same', () => {
     const prev = undefined;
     const next = {
+      id: 'T1234',
       kind: Transfer,
       accountId: 'A12345',
       amount: 100,
       currency: 'USD',
       linkedAccountId: 'A12345',
       linkedAmount: 100,
-      linkedCurrency: 'USD'
+      linkedCurrency: 'USD',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([]);
   });
@@ -81,10 +89,12 @@ describe('create new transaction', () => {
 describe('remove transaction', () => {
   it('increases amount for expense', () => {
     const prev = {
+      id: 'T1234',
       kind: Expense,
       accountId: 'A12345',
       amount: -100,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     const next = undefined;
     expect(getAccountsMutations(prev, next)).toEqual([
@@ -98,10 +108,12 @@ describe('remove transaction', () => {
 
   it('decreases amount for income', () => {
     const prev = {
+      id: 'T1234',
       kind: Income,
       accountId: 'A12345',
       amount: 101,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     const next = undefined;
     expect(getAccountsMutations(prev, next)).toEqual([
@@ -115,13 +127,15 @@ describe('remove transaction', () => {
 
   it('increases amount for transfer source, decreases for target', () => {
     const prev = {
+      id: 'T1234',
       kind: Transfer,
       accountId: 'A12345',
       amount: 100,
       currency: 'USD',
       linkedAccountId: 'A12346',
       linkedAmount: 1070,
-      linkedCurrency: 'JPY'
+      linkedCurrency: 'JPY',
+      date: 1505865600000
     };
     const next = undefined;
     expect(getAccountsMutations(prev, next)).toEqual([
@@ -142,16 +156,20 @@ describe('remove transaction', () => {
 describe('update transaction', () => {
   it('removes expense, creates expense', () => {
     const prev = {
+      id: 'T1234',
       kind: Expense,
       accountId: 'A12345',
       amount: -100,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     const next = {
+      id: 'T1235',
       kind: Expense,
       accountId: 'A12345',
       amount: -150,
-      currency: 'USD'
+      currency: 'USD',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([
       {
@@ -169,22 +187,26 @@ describe('update transaction', () => {
 
   it('removes transfer, creates transfer', () => {
     const prev = {
+      id: 'T1234',
       kind: Transfer,
       accountId: 'A12345',
       amount: 100,
       currency: 'USD',
       linkedAccountId: 'A12346',
       linkedAmount: 1070,
-      linkedCurrency: 'JPY'
+      linkedCurrency: 'JPY',
+      date: 1505865600000
     };
     const next = {
+      id: 'T1235',
       kind: Transfer,
       accountId: 'A12345',
       amount: 150,
       currency: 'USD',
       linkedAccountId: 'A12346',
       linkedAmount: 1500,
-      linkedCurrency: 'JPY'
+      linkedCurrency: 'JPY',
+      date: 1505865600000
     };
     expect(getAccountsMutations(prev, next)).toEqual([
       {

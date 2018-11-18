@@ -1,23 +1,25 @@
 import format from 'date-fns/format';
 import getDaysInMonth from 'date-fns/get_days_in_month';
 import range from 'lodash/range';
-import Currency from '../Currency';
-import { TIMESPAN_YEARLY } from '../Report';
-import { TransationKindT } from '../Transaction';
-import { toUtcTimestamp } from '../../util/timezone';
+import Currency, { ExchangeRateT } from 'entities/Currency';
+import { ReportStateT, ReportDataT, ReportTimespanT } from 'entities/Report';
+import { TransactionStateT, TransationKindT } from 'entities/Transaction';
+import { toUtcTimestamp } from 'util/timezone';
 
 const { Expense, Income } = TransationKindT;
 
 export default function ExpenseIncomeData(
-  report,
-  transactions,
-  base,
-  exchangeRate
-) {
+  report: ReportStateT,
+  transactions: TransactionStateT[],
+  exchangeRate: ExchangeRateT,
+  base: string
+): ReportDataT {
   const labels =
-    report.timespan === TIMESPAN_YEARLY
+    report.timespan === ReportTimespanT.Yearly
       ? range(0, 12).map(month => format(new Date().setMonth(month), 'MMM'))
-      : range(1, getDaysInMonth(report.date.start) + 1);
+      : range(1, getDaysInMonth(report.date.start) + 1).map(day =>
+          `${day}`.padStart(2, '0')
+        );
   const data = [
     new Array(labels.length).fill(0), // income series
     new Array(labels.length).fill(0) // expense series
@@ -28,9 +30,9 @@ export default function ExpenseIncomeData(
 
     const period = format(
       toUtcTimestamp(tx.date),
-      report.timespan === TIMESPAN_YEARLY ? 'M' : 'D'
+      report.timespan === ReportTimespanT.Yearly ? 'M' : 'D'
     );
-    data[tx.kind === Income ? 0 : 1][period - 1] += Currency.convert(
+    data[tx.kind === Income ? 0 : 1][parseInt(period) - 1] += Currency.convert(
       Math.abs(tx.amount),
       exchangeRate[tx.currency],
       base,
@@ -41,7 +43,7 @@ export default function ExpenseIncomeData(
   return {
     labels,
     series: data.map(set =>
-      set.map(amount => Math.floor(Currency.toFloat(amount, base, false)))
+      set.map(amount => Math.floor(Currency.centsToNumber(amount, base)))
     )
   };
 }

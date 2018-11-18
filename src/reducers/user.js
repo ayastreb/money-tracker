@@ -1,10 +1,5 @@
 import { handleActions } from 'redux-actions';
-import {
-  userLoggedIn,
-  demoUser,
-  signOut,
-  signOutComplete
-} from '../actions/user';
+import { userLoggedIn, demoUser, signOut, signOutComplete } from 'actions/user';
 
 export default handleActions(
   {

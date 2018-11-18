@@ -1,12 +1,12 @@
-import Currency from '../Currency';
-import { TransationKindT } from '../Transaction';
+import Currency, { ExchangeRateT } from 'entities/Currency';
+import { TransactionStateT, TransationKindT } from 'entities/Transaction';
+import { ReportDataT } from 'entities/Report';
 
 export default function ExpenseTagsData(
-  report,
-  transactions,
-  base,
-  exchangeRate
-) {
+  transactions: TransactionStateT[],
+  exchangeRate: ExchangeRateT,
+  base: string
+): ReportDataT {
   const data = new Map();
 
   for (const tx of transactions) {
@@ -29,7 +29,7 @@ export default function ExpenseTagsData(
     labels: [...sorted.keys()],
     series: [
       [...sorted.values()].map(amount =>
-        Math.floor(Currency.toFloat(amount, base, false))
+        Math.floor(Currency.centsToNumber(amount, base))
       )
     ]
   };

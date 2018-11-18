@@ -1,26 +1,33 @@
-import { TransationKindT } from '../Transaction';
+import { TransactionStateT, TransationKindT } from 'entities/Transaction';
 
 const { Transfer } = TransationKindT;
 
-/**
- * Get all necessary accounts balance mutations for given transaction change.
- *
- * @param {Transaction} prev
- * @param {Transaction} next
- * @return {array}
- */
-export default function getAccountsMutations(prev, next) {
-  const isNew = !prev;
-  const isRemoved = !next;
-
-  if (isNew) return createTransaction(next);
-  if (isRemoved) return removeTransaction(prev);
-
-  return [...removeTransaction(prev), ...createTransaction(next)];
+export interface AccountMutationT {
+  accountId: string;
+  currency: string;
+  amount: number;
 }
 
-function createTransaction(transaction) {
-  const mutations = [];
+/**
+ * Get all necessary accounts balance mutations for given transaction change.
+ */
+export default function getAccountsMutations(
+  prev?: TransactionStateT,
+  next?: TransactionStateT
+): AccountMutationT[] {
+  if (!prev && next) {
+    return createTransaction(next);
+  } else if (prev && !next) {
+    return removeTransaction(prev);
+  } else if (prev && next) {
+    return [...removeTransaction(prev), ...createTransaction(next)];
+  } else {
+    return [];
+  }
+}
+
+function createTransaction(transaction: TransactionStateT): AccountMutationT[] {
+  const mutations: AccountMutationT[] = [];
   if (
     transaction.kind === Transfer &&
     transaction.accountId === transaction.linkedAccountId &&
@@ -34,7 +41,13 @@ function createTransaction(transaction) {
     currency: transaction.currency,
     amount: transaction.amount * (transaction.kind === Transfer ? -1 : 1)
   });
-  if (transaction.kind === Transfer) {
+
+  if (
+    transaction.kind === Transfer &&
+    transaction.linkedAccountId &&
+    transaction.linkedCurrency &&
+    transaction.linkedAmount
+  ) {
     mutations.push({
       accountId: transaction.linkedAccountId,
       currency: transaction.linkedCurrency,
@@ -45,14 +58,19 @@ function createTransaction(transaction) {
   return mutations;
 }
 
-function removeTransaction(transaction) {
+function removeTransaction(transaction: TransactionStateT): AccountMutationT[] {
   const mutations = [];
   mutations.push({
     accountId: transaction.accountId,
     currency: transaction.currency,
     amount: transaction.amount * (transaction.kind === Transfer ? 1 : -1)
   });
-  if (transaction.kind === Transfer) {
+  if (
+    transaction.kind === Transfer &&
+    transaction.linkedAccountId &&
+    transaction.linkedCurrency &&
+    transaction.linkedAmount
+  ) {
     mutations.push({
       accountId: transaction.linkedAccountId,
       currency: transaction.linkedCurrency,
