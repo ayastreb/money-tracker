@@ -15,7 +15,7 @@ import './index.css';
 class Auth extends React.Component {
   componentDidMount() {
     if (this.props.location.hash) {
-      this.props.finishAuth(this.props.location.hash);
+      this.props.finishAuth();
     }
   }
 

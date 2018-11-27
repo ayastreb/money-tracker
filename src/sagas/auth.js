@@ -72,9 +72,8 @@ export function* verifyCodeSaga() {
   }
 }
 
-export function* finishAuthSaga(action) {
-  const hash = action.payload;
-  const accessToken = yield call(Auth.parseHash, hash);
+export function* finishAuthSaga() {
+  const accessToken = yield call(Auth.parseHash);
   const userInfo = yield call(Auth.getUserInfo, accessToken);
   yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo));
 
