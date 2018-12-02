@@ -31,7 +31,7 @@ function sendCode(email) {
 
 function verifyCode(email, verificationCode) {
   return new Promise((resolve, reject) => {
-    auth0.passwordlessVerify(
+    auth0.passwordlessLogin(
       {
         connection: 'email',
         email,
@@ -42,9 +42,9 @@ function verifyCode(email, verificationCode) {
   });
 }
 
-function parseHash(hash) {
+function parseHash() {
   return new Promise((resolve, reject) => {
-    auth0.parseHash(hash, (error, authResult) => {
+    auth0.parseHash((error, authResult) => {
       if (error) return reject(error);
 
       resolve(authResult.accessToken);

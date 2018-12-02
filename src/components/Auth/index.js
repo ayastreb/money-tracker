@@ -64,7 +64,7 @@ class Auth extends React.Component {
             placeholder="Email Address"
             name="email"
             type="email"
-            icon="mail outline"
+            icon="mail"
             iconPosition="left"
             value={this.props.email}
             onChange={this.handleChange(this.props.changeEmail)}
