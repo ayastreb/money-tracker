@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Message, Button } from 'semantic-ui-react';
-import { isDemo } from '../selectors/user';
+import { isDemoUser } from 'features/user/state/User.selector';
 
 class DemoNotice extends React.Component {
   render() {
@@ -44,7 +44,7 @@ DemoNotice.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isVisible: isDemo(state)
+  isVisible: isDemoUser(state)
 });
 
 export default connect(mapStateToProps)(DemoNotice);

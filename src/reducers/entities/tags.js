@@ -1,10 +1,11 @@
 import { handleActions } from 'redux-actions';
+import { getType } from 'typesafe-actions';
 import {
   loadExpenseTagsSuccess,
   loadIncomeTagsSuccess
 } from '../../actions/entities/tags';
 import { addTag } from '../../actions/ui/form/transaction';
-import { signOutComplete } from '../../actions/user';
+import { signOutSuccess } from 'features/user/state/ui/SignOut.action';
 import { TransationKindT } from '../../entities/Transaction';
 
 const { Expense, Transfer, Income } = TransationKindT;
@@ -26,7 +27,7 @@ export default handleActions(
         ? state
         : { ...state, [kind]: state[kind].concat(tag) };
     },
-    [signOutComplete]: () => initialState
+    [getType(signOutSuccess)]: () => initialState
   },
   initialState
 );

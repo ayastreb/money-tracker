@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`returns default state 1`] = `
+Object {
+  "isDemoUser": false,
+  "isSignedIn": false,
+  "ui": Object {
+    "signIn": Object {
+      "code": "",
+      "email": "",
+    },
+    "signOut": Object {},
+  },
+}
+`;

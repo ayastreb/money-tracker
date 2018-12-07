@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, RouteProps } from 'react-router-dom';
 import {
   Header,
   Divider,
@@ -10,24 +9,47 @@ import {
   Message,
   Loader
 } from 'semantic-ui-react';
+import { AsyncOperationStateT } from 'typings/async';
+import {
+  changeEmail,
+  changeCode,
+  sendCode,
+  verifyCode,
+  finishAuth
+} from 'features/user/state/ui/SignIn.action';
 import './index.css';
 
-class Auth extends React.Component {
+export interface SignInPropsT {
+  isSignedIn: boolean;
+  sendCodeStatus?: AsyncOperationStateT;
+  verifyCodeStatus?: AsyncOperationStateT;
+  email: string;
+  code: string;
+  error?: string;
+  changeEmail: typeof changeEmail;
+  changeCode: typeof changeCode;
+  sendCode: typeof sendCode;
+  verifyCode: typeof verifyCode;
+  finishAuth: typeof finishAuth;
+}
+
+class Auth extends React.Component<SignInPropsT & RouteProps> {
   componentDidMount() {
-    if (this.props.location.hash) {
+    if (this.props.location && this.props.location.hash) {
       this.props.finishAuth();
     }
   }
 
   render() {
-    if (this.props.isAuthenticated) return <Redirect to="/" />;
-    if (this.props.location.hash)
+    if (this.props.isSignedIn) return <Redirect to="/" />;
+    if (this.props.location && this.props.location.hash) {
       return (
         <Loader
           active
           content="Synchronizing data, this might take a moment..."
         />
       );
+    }
 
     return (
       <div className="container-raised-desktop">
@@ -39,7 +61,7 @@ class Auth extends React.Component {
             <Message.Content>{this.props.error}</Message.Content>
           </Message>
         )}
-        {!this.props.isCodeSent
+        {this.props.sendCodeStatus !== 'SUCCESS'
           ? this.renderSendCodeForm()
           : this.renderVerifyCodeForm()}
         <Divider />
@@ -67,12 +89,12 @@ class Auth extends React.Component {
             icon="mail"
             iconPosition="left"
             value={this.props.email}
-            onChange={this.handleChange(this.props.changeEmail)}
-            disabled={this.props.isSendingCode}
+            onChange={(_, { value }) => this.props.changeEmail(value)}
+            disabled={this.props.sendCodeStatus === 'REQUEST'}
             action={{
               primary: true,
               content: 'Send Code',
-              loading: this.props.isSendingCode
+              loading: this.props.sendCodeStatus === 'REQUEST'
             }}
           />
         </div>
@@ -98,13 +120,13 @@ class Auth extends React.Component {
           icon="lock"
           iconPosition="left"
           value={this.props.code}
-          onChange={this.handleChange(this.props.changeCode)}
-          disabled={this.props.isVerifyingCode}
+          onChange={(_, { value }) => this.props.changeCode(value)}
+          disabled={this.props.verifyCodeStatus === 'REQUEST'}
           action={
             <Button
               primary
               content="Sign In"
-              loading={this.props.isVerifyingCode}
+              loading={this.props.verifyCodeStatus === 'REQUEST'}
             />
           }
         />
@@ -114,24 +136,6 @@ class Auth extends React.Component {
       </div>
     </Form>
   );
-
-  handleChange = handler => (event, { value }) => handler(value);
 }
-
-Auth.propTypes = {
-  isAuthenticated: PropTypes.bool,
-  isSendingCode: PropTypes.bool,
-  isCodeSent: PropTypes.bool,
-  isVerifyingCode: PropTypes.bool,
-  isCodeValid: PropTypes.bool,
-  error: PropTypes.string,
-  email: PropTypes.string,
-  code: PropTypes.string,
-  changeEmail: PropTypes.func,
-  changeCode: PropTypes.func,
-  sendCode: PropTypes.func,
-  verifyCode: PropTypes.func,
-  finishAuth: PropTypes.func
-};
 
 export default Auth;

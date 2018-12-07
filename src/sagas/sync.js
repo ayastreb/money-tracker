@@ -17,7 +17,7 @@ import {
 import { loadAccountsSaga } from './accounts';
 import { loadTagsSaga } from './tags';
 import { loadRecentTransactionsSaga } from './transactions';
-import { isDemo } from '../selectors/user';
+import { isDemoUser } from 'features/user/state/User.selector';
 import AccountsStorage from '../util/storage/accounts';
 import TransactionsStorage from '../util/storage/transactions';
 import TagsStorage from '../util/storage/tags';
@@ -25,7 +25,7 @@ import TagsStorage from '../util/storage/tags';
 export function* syncSaga() {
   yield put(syncRequest());
   try {
-    const readOnly = yield select(isDemo);
+    const readOnly = yield select(isDemoUser);
     yield call(AccountsStorage.sync, readOnly);
     yield call(TransactionsStorage.sync, readOnly);
     yield call(TagsStorage.sync, readOnly);

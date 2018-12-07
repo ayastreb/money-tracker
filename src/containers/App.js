@@ -5,7 +5,7 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import throttle from 'lodash/throttle';
 import routes from '../router/routes';
-import Auth from './Auth';
+import SignIn from 'features/user/containers/SignIn';
 import InitialSetup from './InitialSetup';
 import SidebarMenu from './SidebarMenu';
 import Header from '../components/Header';
@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <Router history={this.props.history}>
         <Switch>
-          <Route path="/auth" exact={true} component={Auth} />
+          <Route path="/auth" exact={true} component={SignIn} />
           {!this.props.isSetupComplete ? (
             <Route component={InitialSetup} />
           ) : (

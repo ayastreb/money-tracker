@@ -1,19 +1,18 @@
 import { select, call, put } from 'redux-saga/effects';
+import Auth from 'util/auth';
 import {
   sendCodeSuccess,
   sendCodeFailure,
   verifyCodeSuccess,
-  verifyCodeFailure,
-  finishAuth
-} from '../actions/ui/form/auth';
-import { sendCodeSaga, verifyCodeSaga } from './auth';
-import { getAuthEmail, getAuthCode } from '../selectors/ui/form/auth';
-import Auth from '../util/auth';
+  verifyCodeFailure
+} from './SignIn.action';
+import { sendCodeSaga, verifyCodeSaga } from './SignIn.saga';
+import { getSignInEmail, getSignInCode } from './SignIn.selector';
 
 describe('sending auth code', () => {
   it('sends code successfully', () => {
     const gen = sendCodeSaga();
-    expect(gen.next().value).toEqual(select(getAuthEmail));
+    expect(gen.next().value).toEqual(select(getSignInEmail));
     expect(gen.next('foo@example').value).toEqual(
       call(Auth.sendCode, 'foo@example')
     );
@@ -23,12 +22,14 @@ describe('sending auth code', () => {
 
   it('send code failure', () => {
     const gen = sendCodeSaga();
-    expect(gen.next().value).toEqual(select(getAuthEmail));
+    expect(gen.next().value).toEqual(select(getSignInEmail));
     expect(gen.next('foo@example').value).toEqual(
       call(Auth.sendCode, 'foo@example')
     );
     const error = new Error('Failed');
-    expect(gen.throw(error).value).toEqual(put(sendCodeFailure(error)));
+    if (gen.throw) {
+      expect(gen.throw(error).value).toEqual(put(sendCodeFailure(error)));
+    }
     expect(gen.next().done).toBeTruthy();
   });
 });
@@ -36,8 +37,8 @@ describe('sending auth code', () => {
 describe('verifying auth code', () => {
   it('verify code successfully', () => {
     const gen = verifyCodeSaga();
-    expect(gen.next().value).toEqual(select(getAuthEmail));
-    expect(gen.next('foo@example').value).toEqual(select(getAuthCode));
+    expect(gen.next().value).toEqual(select(getSignInEmail));
+    expect(gen.next('foo@example').value).toEqual(select(getSignInCode));
     expect(gen.next('code').value).toEqual(
       call(Auth.verifyCode, 'foo@example', 'code')
     );
@@ -47,13 +48,15 @@ describe('verifying auth code', () => {
 
   it('verify code failure', () => {
     const gen = verifyCodeSaga();
-    expect(gen.next().value).toEqual(select(getAuthEmail));
-    expect(gen.next('foo@example').value).toEqual(select(getAuthCode));
+    expect(gen.next().value).toEqual(select(getSignInEmail));
+    expect(gen.next('foo@example').value).toEqual(select(getSignInCode));
     expect(gen.next('code').value).toEqual(
       call(Auth.verifyCode, 'foo@example', 'code')
     );
     const error = new Error('failure');
-    expect(gen.throw(error).value).toEqual(put(verifyCodeFailure(error)));
+    if (gen.throw) {
+      expect(gen.throw(error).value).toEqual(put(verifyCodeFailure(error)));
+    }
     expect(gen.next().done).toBeTruthy();
   });
 });

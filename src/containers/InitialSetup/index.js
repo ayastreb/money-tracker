@@ -10,7 +10,7 @@ import AccountList from '../Accounts/List';
 import { completeSetup } from '../../actions/settings';
 import { loadAccounts } from '../../actions/entities/accounts';
 import { getAccountsList } from '../../selectors/entities/accounts';
-import { isUserAuthenticated } from '../../selectors/user';
+import { isSignedIn } from 'features/user/state/User.selector';
 
 class InitialSetup extends React.Component {
   componentDidMount() {
@@ -73,7 +73,7 @@ InitialSetup.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: isUserAuthenticated(state),
+  isAuthenticated: isSignedIn(state),
   accounts: getAccountsList(state)
 });
 

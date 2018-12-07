@@ -1,5 +1,6 @@
 import pick from 'lodash/pick';
 import { handleActions } from 'redux-actions';
+import { getType } from 'typesafe-actions';
 import {
   loadSettingsSuccess,
   changeSettingsCurrency,
@@ -7,7 +8,7 @@ import {
   toggleSectionCollapse,
   completeSetup
 } from '../actions/settings';
-import { signOutComplete } from '../actions/user';
+import { signOutSuccess } from 'features/user/state/ui/SignOut.action';
 import Currency from '../entities/Currency';
 
 const initialState = {
@@ -46,7 +47,7 @@ export default handleActions(
         : state.collapsedSections.concat(payload)
     }),
     [completeSetup]: state => ({ ...state, isSetupComplete: true }),
-    [signOutComplete]: () => initialState
+    [getType(signOutSuccess)]: () => initialState
   },
   initialState
 );

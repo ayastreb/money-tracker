@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Popup, Button } from 'semantic-ui-react';
-import { signOut } from '../../actions/user';
-import { isUserAuthenticated, isDemo } from '../../selectors/user';
+import { signOut } from 'features/user/state/ui/SignOut.action';
+import { isSignedIn, isDemoUser } from 'features/user/state/User.selector';
 
 class User extends React.Component {
   render() {
@@ -58,10 +58,10 @@ User.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isDemo: isDemo(state),
-  isAuthenticated: isUserAuthenticated(state),
-  isSignOutRunning: state.user.isSignOutRunning,
-  isSignOutComplete: state.user.isSignOutComplete
+  isDemo: isDemoUser(state),
+  isAuthenticated: isSignedIn(state),
+  isSignOutRunning: state.user.ui.signOut.signOutState === 'REQUEST',
+  isSignOutComplete: state.user.ui.signOut.signOutState === 'COMPLETE'
 });
 
 export default connect(

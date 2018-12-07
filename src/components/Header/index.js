@@ -5,7 +5,7 @@ import { Icon, Header } from 'semantic-ui-react';
 import Logo from '../Logo';
 import { toggleSidebar } from '../../actions/ui/sidebar';
 import { sync } from '../../actions/ui/sync';
-import { isUserAuthenticated } from '../../selectors/user';
+import { isSignedIn } from 'features/user/state/User.selector';
 import './index.css';
 
 const AppHeader = ({
@@ -49,7 +49,7 @@ AppHeader.propTypes = {
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps,
   isMobile: state.ui.isMobile,
-  isAuthenticated: isUserAuthenticated(state),
+  isAuthenticated: isSignedIn(state),
   isSyncRunning: state.ui.sync.isRunning,
   hasPendingChanges: state.ui.sync.hasPendingChanges
 });

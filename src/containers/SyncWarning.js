@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Message } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { dismissSyncWarning } from '../actions/ui/sync';
-import { isUserAuthenticated } from '../selectors/user';
+import { isSignedIn } from 'features/user/state/User.selector';
 
 class SyncWarning extends React.Component {
   render() {
@@ -31,7 +31,7 @@ SyncWarning.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isVisible: !isUserAuthenticated(state) && state.ui.sync.isWarningVisible
+  isVisible: !isSignedIn(state) && state.ui.sync.isWarningVisible
 });
 
 export default connect(

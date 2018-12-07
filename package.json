@@ -9,6 +9,8 @@
     "@types/node": "^10.12.9",
     "@types/react": "^16.7.6",
     "@types/react-dom": "^16.0.9",
+    "@types/react-redux": "^6.0.10",
+    "@types/react-router-dom": "^4.3.1",
     "auth0-js": "^9.8.1",
     "chartist": "^0.11.0",
     "chartist-plugin-tooltips": "0.0.17",
@@ -33,12 +35,17 @@
     "reselect": "^3.0.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.83.0",
-    "typescript": "^3.1.6"
+    "typesafe-actions": "^2.0.4",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
     "eslint-plugin-react": "^7.7.0",
     "react-test-renderer": "^16.6.1",
     "surge": "^0.20.1"
+  },
+  "engines": {
+    "node": ">=8.12",
+    "npm": ">=6"
   },
   "scripts": {
     "pretty": "prettier --write 'src/**/*.js'",

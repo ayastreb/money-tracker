@@ -1,4 +1,5 @@
 import { handleActions, combineActions } from 'redux-actions';
+import { getType } from 'typesafe-actions';
 import {
   loadAccountsSuccess,
   saveAccount,
@@ -6,7 +7,7 @@ import {
   updateAccount,
   removeAccountSuccess
 } from '../../actions/entities/accounts';
-import { signOutComplete } from '../../actions/user';
+import { signOutSuccess } from 'features/user/state/ui/SignOut.action';
 import EntityMap from '../../entities/EntityMap';
 
 const initialState = EntityMap.fromArray([]);
@@ -28,7 +29,7 @@ export default handleActions(
       const accountId = action.payload;
       return EntityMap.remove(state, accountId);
     },
-    [signOutComplete]: () => initialState
+    [getType(signOutSuccess)]: () => initialState
   },
   initialState
 );
