@@ -16,11 +16,8 @@ import { toggleSidebar } from '../actions/ui/sidebar';
 import { bootstrap } from '../actions/app';
 
 class App extends React.Component {
-  componentWillMount() {
-    window.addEventListener('resize', throttle(this.props.windowResize, 500));
-  }
-
   componentDidMount() {
+    window.addEventListener('resize', throttle(this.props.windowResize, 500));
     this.props.bootstrap();
   }
 
