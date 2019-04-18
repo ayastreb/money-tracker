@@ -1,6 +1,6 @@
 {
-  "short_name": "MoneyTracker",
-  "name": "Money Tracker",
+  "short_name": "ExpensesTracker",
+  "name": "ExpensesTracker",
   "icons": [
     {
       "src": "favicon-192.png",
