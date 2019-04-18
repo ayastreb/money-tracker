@@ -12,10 +12,12 @@ header {
 }
 
 header .ui.header {
+
   display: flex !important;
   flex-direction: row;
   align-items: stretch;
   vertical-align: middle;
+  
 }
 
 header .content {
