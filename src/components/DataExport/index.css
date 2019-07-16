@@ -1,0 +1,7 @@
+.mt-dataExport {
+  max-width: 680px;
+}
+
+.mt-dataExport input[type='file'] {
+  display: none;
+}

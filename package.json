@@ -15,11 +15,12 @@
     "chartist": "^0.11.0",
     "chartist-plugin-tooltips": "0.0.17",
     "date-fns": "^1.29.0",
+    "fs": "0.0.1-security",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "^4.17.11",
     "number-abbreviate": "^2.0.0",
-    "pouchdb": "^7.0.0",
+    "pouchdb": "^7.1.1",
     "prop-types": "^15.6.1",
     "react": "^16.7.0",
     "react-chartist": "^0.13.1",
@@ -33,6 +34,7 @@
     "redux-devtools-extension": "^2.13.5",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
+    "save-file": "^2.3.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.84.0",
     "typesafe-actions": "^2.0.4",
@@ -41,7 +43,7 @@
   "devDependencies": {
     "eslint-plugin-react": "^7.7.0",
     "react-test-renderer": "^16.6.1",
-    "surge": "^0.20.1"
+    "surge": "^0.21.3"
   },
   "engines": {
     "node": ">=8.12",
