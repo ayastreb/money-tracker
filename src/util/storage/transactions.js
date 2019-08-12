@@ -13,6 +13,7 @@ import intersection from 'lodash/intersection';
 export default {
   sync,
   load,
+  getAll,
   loadRecent,
   loadFiltered,
   save,
@@ -67,6 +68,18 @@ function loadRecent(limit = recentListLimit) {
       startkey: 'T\uffff',
       endkey: 'T',
       limit
+    })
+    .then(response => response.rows.map(row => row.doc))
+    .then(docs => docs.map(storageToState));
+}
+
+async function getAll() {
+  return transactionsDB()
+    .allDocs({
+      include_docs: true,
+      descending: true,
+      startkey: 'T\uffff',
+      endkey: 'T'
     })
     .then(response => response.rows.map(row => row.doc))
     .then(docs => docs.map(storageToState));
