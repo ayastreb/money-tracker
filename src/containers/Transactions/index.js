@@ -29,7 +29,7 @@ class Transactions extends React.Component {
   render() {
     return (
       <div className="container-full-page flat search-page">
-        <Filter />
+        <Filter selectedAccount={this.props.match.params.accountId} />
         <List />
         <Pager />
         <Footer />
@@ -38,12 +38,9 @@ class Transactions extends React.Component {
   }
 }
 
-export default connect(
-  undefined,
-  {
-    loadAccounts,
-    loadTags,
-    loadFilterTransactions,
-    applyFilters
-  }
-)(Transactions);
+export default connect(undefined, {
+  loadAccounts,
+  loadTags,
+  loadFilterTransactions,
+  applyFilters
+})(Transactions);

@@ -40,7 +40,13 @@ class Filter extends React.Component {
               icon="plus"
               labelPosition="left"
               content="New"
-              onClick={() => this.props.openTransactionInModal()}
+              onClick={() =>
+                this.props.openTransactionInModal({
+                  ...(this.props.selectedAccount
+                    ? { accountId: this.props.selectedAccount }
+                    : {})
+                })
+              }
             />
             <Dropdown
               button
@@ -68,6 +74,7 @@ Filter.propTypes = {
   dateRangeLabel: PropTypes.string,
   isCalendarOpen: PropTypes.bool,
   isFilterModalOpen: PropTypes.bool,
+  selectedAccount: PropTypes.string,
   appliedAccounts: PropTypes.arrayOf(PropTypes.string),
   accountOptions: PropTypes.arrayOf(DropdownOption),
   accountNameMap: PropTypes.object,
