@@ -33,13 +33,13 @@ Our software is distributed under the MIT License.
   * ```$ npm install react-scripts```
   * ```$ npm start```
 
-    At this point you can see the app running on 
+ At this point you can see the app running on 
 
-    ```http://localhost:3000```
+ ```http://localhost:3000```
 
-    And start developing for contribution.
+ And start developing for contribution.
  
-    If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
+ If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
 
 ## Contributing
 
