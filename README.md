@@ -26,9 +26,8 @@ Our software is distributed under the MIT License.
     ```npm install npm@latest –g```
 
 ### How to install
- * Clone the repo from this website, then
- * In command line:
-
+* Clone the repo from this website, then
+* In command line:
   * ```$ git clone https://github.com/ayastreb/money-tracker.git```
   * ```$ cd money-tracker```
   * ```$ npm install react-scripts```
