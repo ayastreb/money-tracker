@@ -29,10 +29,10 @@ Our software is distributed under the MIT License.
  * Clone the repo from this website, then
  * In command line:
 
-    ```$ git clone https://github.com/ayastreb/money-tracker.git```
-    ```$ cd money-tracker```
-    ```$ npm install react-scripts```
-    ```$ npm start```
+  * ```$ git clone https://github.com/ayastreb/money-tracker.git```
+  * ```$ cd money-tracker```
+  * ```$ npm install react-scripts```
+  * ```$ npm start```
 
     At this point you can see the app running on 
 
@@ -52,7 +52,7 @@ If you would like to contribute, please follow these steps:
 5.	Push to your ```featureDev_<YourFeaturedName>``` branch
 6.	Open a pull request (PR)
     
-As always, if any questions arise, please connect with us via our < communication channel > (see below).
+As always, if any questions arise, please connect with us via our `<communication channel>` (see below).
 
 ## Community Standards
 
@@ -66,7 +66,7 @@ Please keep in mind that everyone:
 
 ## Communication Channels
 
-< please add here your preferred communication channel >
+`<please add here your preferred communication channel>`
 
 ## Development Tracking
 
