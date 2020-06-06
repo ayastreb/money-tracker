@@ -30,10 +30,10 @@ Our software is distributed under the MIT License.
 * In command line:
   * ```$ git clone https://github.com/ayastreb/money-tracker.git```
   * ```$ cd money-tracker```
-  * ```$ npm install react-scripts```
+  * ```$ npm install```
   * ```$ npm start```
 
- At this point you can see the app running on 
+ At this point you should see the app running on 
 
  ```http://localhost:3000```
 
