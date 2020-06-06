@@ -15,17 +15,17 @@ Data is stored locally on device in [PouchDB](https://pouchdb.com/) database and
 
 Implemented with [React](https://github.com/facebook/react) and [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React)
 
-# # License
+## License
 Our software is distributed under the MIT License.
 
-# # Installation
+## Installation
 
-# # # Prerequisites
+### Prerequisites
 - npm, which you can install by running: 
 
-```npm install npm@latest –g```
+    ```npm install npm@latest –g```
 
-- How to install
+### How to install
  * Clone the repo from this website, then
  * In command line:
 
@@ -42,7 +42,7 @@ Our software is distributed under the MIT License.
  
     If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
 
-# # Contributing
+## Contributing
 
 If you would like to contribute, please follow these steps:
 1.	Open an issue explaining what you want to fix
@@ -54,20 +54,20 @@ If you would like to contribute, please follow these steps:
     
 As always, if any questions arise, please connect with us via our < communication channel > (see below).
 
-# # Community Standards
+## Community Standards
 
 It is our responsibility to build a strong and welcoming community for all developers. Everyone who is willing to contribute is welcome, and her or his work will be considered if it solves an issue. 
 
 Please keep in mind that everyone:
-    •	Must use a welcoming and inclusive language
-    •	Must be respectful of everyone’s programming skills/backgrounds
-    •	Must accept constructive criticism, and aim for continues improvement
-    •	Must support and show empathy towards other community members
+ * Must use a welcoming and inclusive language
+ * Must be respectful of everyone’s programming skills/backgrounds
+ * Must accept constructive criticism, and aim for continues improvement
+ * Must support and show empathy towards other community members
 
-# # Communication Channels
+## Communication Channels
 
 < please add here your preferred communication channel >
 
-# # Development Tracking
+## Development Tracking
 
 See the [open issues](https://github.com/ayastreb/money-tracker/issues) for a list of proposed features (and known issues).
