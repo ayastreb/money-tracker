@@ -27,6 +27,7 @@ export interface ReportStateT {
   date: DateRangeT;
   timespan: ReportTimespanT;
   accounts: string[];
+  excludeTags: string[];
   netWorthStack: number[];
   isLoading: boolean;
 }

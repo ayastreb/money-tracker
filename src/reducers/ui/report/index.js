@@ -3,6 +3,7 @@ import {
   changeReportKind,
   changeReportTimespan,
   changeReportAccounts,
+  changeReportExcludedTags,
   moveReportDateBackwards,
   moveReportDateForwards,
   loadReport,
@@ -28,6 +29,10 @@ export default handleActions(
     [changeReportAccounts]: (state, { payload }) => ({
       ...state,
       accounts: payload
+    }),
+    [changeReportExcludedTags]: (state, { payload }) => ({
+      ...state,
+      excludeTags: payload
     }),
     [moveReportDateBackwards]: state => ({
       ...state,
@@ -62,6 +67,7 @@ export default handleActions(
     timespan: defaultTimespan,
     date: defaultDate(),
     accounts: [],
-    netWorthStack: []
+    netWorthStack: [],
+    excludeTags: []
   }
 );

@@ -264,6 +264,14 @@ h5 {
   background: #f9fafb;
 }
 
+.container-full-page .container-footer > .ui.dropdown {
+  margin-bottom: 1em;
+}
+
+.container-full-page .container-footer > .ui.dropdown:last-child {
+  margin-bottom: 0;
+}
+
 .container-full-page .container-footer {
   padding: 1em;
   border-top: solid 1px #d4d4d5;

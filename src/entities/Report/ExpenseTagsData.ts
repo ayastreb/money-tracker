@@ -1,6 +1,6 @@
 import Currency, { ExchangeRateT } from 'entities/Currency';
 import { TransactionStateT, TransationKindT } from 'entities/Transaction';
-import { ReportStateT, ReportDataT } from 'entities/Report';
+import { ReportDataT, ReportStateT } from 'entities/Report';
 
 export default function ExpenseTagsData(
   report: ReportStateT,
@@ -9,9 +9,16 @@ export default function ExpenseTagsData(
   base: string
 ): ReportDataT {
   const data = new Map();
+  const excluded = new Set(report.excludeTags);
 
   for (const tx of transactions) {
-    if (tx.kind !== TransationKindT.Expense || !tx.tags) continue;
+    if (
+      tx.kind !== TransationKindT.Expense ||
+      !tx.tags ||
+      tx.tags.find(tag => excluded.has(tag))
+    ) {
+      continue;
+    }
     for (const tag of tx.tags) {
       const tagAmount = data.get(tag) || 0;
       const amount = Currency.convert(

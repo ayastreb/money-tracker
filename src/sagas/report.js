@@ -1,6 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   changeReportAccounts,
+  changeReportExcludedTags,
   changeReportKind,
   changeReportTimespan,
   loadReport,
@@ -48,6 +49,7 @@ export default [
   takeLatest(changeReportKind, refreshReportSaga),
   takeLatest(changeReportTimespan, refreshReportSaga),
   takeLatest(changeReportAccounts, refreshReportSaga),
+  takeLatest(changeReportExcludedTags, refreshReportSaga),
   takeLatest(moveReportDateBackwards, refreshReportSaga),
   takeLatest(moveReportDateForwards, refreshReportSaga)
 ];
