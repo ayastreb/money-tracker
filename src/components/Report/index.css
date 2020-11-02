@@ -38,3 +38,19 @@
 .chartist-tooltip:before {
   border-top-color: #d4d4d5;
 }
+
+.mt-report-net-income {
+  padding: 1em;
+  border-bottom: solid 1px;
+  border-bottom-color: #d4d4d5;
+}
+
+@media (max-width: 767px) {
+  .ui.statistic {
+    width: 100%;
+  }
+
+  .ui.statistic+.ui.statistic {
+    margin: 0 1.5em 1em;
+  }
+}

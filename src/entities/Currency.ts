@@ -220,6 +220,12 @@ const Currency = {
         })
       : num.toString();
   },
+  centsToDollar(value: number, code: string): string {
+    const exp = CURRENCY[code].exp;
+    const num = Number(`${value}e-${exp}`);
+
+    return num.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  },
   convert(value: number, rate: number, from: string, to: string) {
     return (value / rate) * Math.pow(10, CURRENCY[from].exp - CURRENCY[to].exp);
   }

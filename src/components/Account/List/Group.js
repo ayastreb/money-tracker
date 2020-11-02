@@ -14,7 +14,7 @@ const Group = ({
     <div className="account-widget-group__header" onClick={toggleGroupCollapse}>
       <span className="account-widget-group__name">{group.name}</span>
       <span className="account-widget-group__total">
-        <Amount value={group.total} code={baseCurrency} />
+        <Amount value={group.total} code={baseCurrency} showCents={false} />
       </span>
     </div>
     {!isCollapsed &&

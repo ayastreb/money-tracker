@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   base: getBaseCurrency(state),
   secondary: getSecondaryCurrency(state),
   exchangeRate: getExchangeRate(state),
-  isLoading: state.ui.settings.isExchangeLoading
+  isLoading: state.ui.settings.isExchangeLoading,
+  isMobile: state.ui.isMobile
 });
 
 export default connect(

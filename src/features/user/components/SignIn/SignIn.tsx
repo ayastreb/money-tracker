@@ -33,7 +33,7 @@ export interface SignInPropsT {
   finishAuth: typeof finishAuth;
 }
 
-class Auth extends React.Component<SignInPropsT & RouteProps> {
+class Auth extends React.Component<SignInPropsT & RouteProps, {}> {
   componentDidMount() {
     if (this.props.location && this.props.location.hash) {
       this.props.finishAuth();

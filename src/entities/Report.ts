@@ -34,6 +34,7 @@ export interface ReportStateT {
 
 export enum ReportKindT {
   ExpenseIncome = 'expense_income',
+  NetIncome = 'net_income',
   ExpenseTags = 'expense_tags',
   NetWorth = 'net_worth'
 }
@@ -89,6 +90,11 @@ export function kindOptions() {
       text: 'Expense by Tags'
     },
     {
+      key: ReportKindT.NetIncome,
+      value: ReportKindT.NetIncome,
+      text: 'Net Income'
+    },
+    {
       key: ReportKindT.NetWorth,
       value: ReportKindT.NetWorth,
       text: 'Net Worth'
@@ -130,6 +136,7 @@ type DataLoaderMapT = { [kind in ReportKindT]: DataLoaderFn };
 
 const DataLoaderMap: DataLoaderMapT = {
   [ReportKindT.ExpenseIncome]: ExpenseIncomeDataLoader,
+  [ReportKindT.NetIncome]: ExpenseIncomeDataLoader,
   [ReportKindT.ExpenseTags]: ExpenseTagsDataLoader,
   [ReportKindT.NetWorth]: NetWorthDataLoader
 };

@@ -6,7 +6,7 @@ import Amount from '../../components/Amount';
 
 const NetWorth = ({ netWorth, baseCurrency }) => (
   <div className="net-worth__total">
-    <Amount value={netWorth} code={baseCurrency} />
+    <Amount value={netWorth} code={baseCurrency} showCents={false} />
   </div>
 );
 

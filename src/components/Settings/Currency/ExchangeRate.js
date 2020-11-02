@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Segment, Dimmer, Loader, Responsive, Button } from 'semantic-ui-react';
+import { Segment, Dimmer, Loader, Button } from 'semantic-ui-react';
 import ExchangeRateGrid from './ExchangeRateGrid';
 import ExchangeRateTable from './ExchangeRateTable';
 import './index.css';
@@ -11,12 +11,11 @@ const ExchangeRate = props =>
       <Dimmer inverted active={props.isLoading}>
         <Loader />
       </Dimmer>
-      <Responsive minWidth={768}>
-        <ExchangeRateGrid {...props} />
-      </Responsive>
-      <Responsive maxWidth={767}>
+      {props.isMobile ? (
         <ExchangeRateTable {...props} />
-      </Responsive>
+      ) : (
+        <ExchangeRateGrid {...props} />
+      )}
       <Button
         basic
         content="Update exchange rate"
@@ -30,6 +29,7 @@ ExchangeRate.propTypes = {
   base: PropTypes.string,
   secondary: PropTypes.arrayOf(PropTypes.string),
   isLoading: PropTypes.bool,
+  isMobile: PropTypes.bool,
   exchangeRate: PropTypes.objectOf(PropTypes.number),
   updateExchangeRate: PropTypes.func
 };
