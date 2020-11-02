@@ -40,26 +40,13 @@ class ExpenseIncome extends React.Component {
                   <Amount
                     code={base}
                     value={Currency.numberToCents(
-                      Math.min(...nonEmptyValues),
+                      nonEmptyValues.reduce((sum, cur) => sum + cur, 0),
                       base
                     )}
                     showCents={false}
                   />
                 </Statistic.Value>
-                <Statistic.Label>Min net income</Statistic.Label>
-              </Statistic>
-              <Statistic>
-                <Statistic.Value>
-                  <Amount
-                    code={base}
-                    value={Currency.numberToCents(
-                      Math.max(...nonEmptyValues),
-                      base
-                    )}
-                    showCents={false}
-                  />
-                </Statistic.Value>
-                <Statistic.Label>Max net income</Statistic.Label>
+                <Statistic.Label>Total net income</Statistic.Label>
               </Statistic>
               <Statistic>
                 <Statistic.Value>
