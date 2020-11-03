@@ -33,7 +33,7 @@ class ExpenseIncome extends React.Component {
     return (
       <React.Fragment>
         {nonEmptyValues.length > 0 && (
-          <div className="mt-report-net-income">
+          <div className="mt-report-stats">
             <Statistic.Group size="mini">
               <Statistic>
                 <Statistic.Value>
