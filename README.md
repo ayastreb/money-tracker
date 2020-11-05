@@ -20,24 +20,52 @@ Our software is distributed under the MIT License.
 
 ## Installation
 
-### Prerequisites
-- npm, which you can install by running: 
-
-    ```npm install npm@latest –g```
-
 ### How to install
-* Clone the repo from this website, then
-* In command line:
-  * ```$ git clone https://github.com/ayastreb/money-tracker.git```
-  * ```$ cd money-tracker```
-  * ```$ npm install```
-  * ```$ npm start```
+1) Make sure to have the latest versions of Node.js and npm installed.
+    - Download Node.js if you do not have it already from:
+      
+      ```https://nodejs.org/```
+      
+    - You can then install the latest version of npm by running the following in your terminal:
+      
+      ```npm install npm@latest –g```
+      
+    - You can verify your current version of Node.js with:
+      
+      ```node –v```
+      
+    - You can verify your current version of npm with:
+     
+      ```npm –v```  
+    
+2) Make sure to have the latest version of Git or GitHub Desktop.
+    
+    - Download Git if you do not have it already from: 
+    
+    ```https://git-scm.com/download/```
+    
+    - You can verify your current version of Git with:
+    
+    ```git --version```
+    
+    ***OR***
+    
+    - Download GitHub Desktop from:
+      
+      ```https://desktop.github.com/```
+    
+3) Clone the repository to your local machine.
+    - In the terminal enter the following commands:
+        * ```$ git clone https://github.com/ayastreb/money-tracker.git```
+        * ```$ cd money-tracker```
+        * ```$ npm install```
+        * ```$ npm start```
 
- At this point you should see the app running on 
+ If the steps were followed correctly, the app will be running on: 
 
  ```http://localhost:3000```
 
- And start developing for contribution.
+ 
  
  If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
 
