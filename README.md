@@ -67,6 +67,23 @@ Please keep in mind that everyone:
 
 `<please add here your preferred communication channel>`
 
+## How To Guide
+How to import from a text/csv file:
+1. format of the file should be as follows:
+date;account;category;total;currency;description;transfer
+2. go to Settings -> DATA IMPORT -> Open File
+3. choose the text file or csv file to import
+
+###### Example File Without Transfers:
+
+![](public/exampleCsv.png)
+
+###### Example File With Transfer Between Accounts:
+
+![](public/transferCsv.png)
+
 ## Development Tracking
 
 See the [open issues](https://github.com/ayastreb/money-tracker/issues) for a list of proposed features (and known issues).
+
+https://github.com/ayastreb/money-tracker
