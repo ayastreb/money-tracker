@@ -31,7 +31,7 @@ class ExpenseTags extends React.Component {
       <ChartistGraph
         type="Bar"
         className="mt-report-expense-tags"
-        style={{ height: `${this.props.data.labels.length * 3}em` }}
+        style={{ height: `${this.props.data.labels.length * 6}em` }}
         data={this.props.data}
         options={options}
       />
