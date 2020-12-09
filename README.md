@@ -7,13 +7,41 @@
 
 **WORK IN PROGRESS**
 
-Money Tracker is an open-source progressive web app that allows you to track your income and expenses.
+Money Tracker is an all-in-one application that helps you budget and keep track of your finances. 
 
-This app can work offline on desktop, tablet and mobile.
+It is a robust web app that is capable of working offline on desktop, tablet, and mobile and can
 
-Data is stored locally on device in [PouchDB](https://pouchdb.com/) database and can be synced to the cloud.
+store data locally on device in [PouchDB](https://pouchdb.com/) or be synced to the cloud.
 
-Implemented with [React](https://github.com/facebook/react) and [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React)
+Implemented with [React](https://github.com/facebook/react) and [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React).
+
+## Features
+#### Dashboard
+See all of your most important information at a glance on a personalized dashboard.
+
+![Dashboard](https://i.imgur.com/G9wjkti.jpg)
+
+#### Transactions
+Keep track of income and expenses through individual transactions.
+
+![Transactions](https://i.imgur.com/lIvhtgX.jpg)
+
+#### Accounts
+Many different types of accounts can be added for easier tracking.
+
+![Accounts](https://i.imgur.com/npSuiW8.jpg)
+
+#### Reports
+View fully customizable and detailed reports to better understand your spending habits.
+
+![Reports](https://i.imgur.com/YOa8wj7.jpg)
+
+#### Settings
+Personalize your account with relevant currencies and by importing transactions. 
+You can also view current exchange rates and even export your data!
+
+![Settings](https://i.imgur.com/KhDl0CE.jpg)
+
 
 ## License
 Our software is distributed under the MIT License.
