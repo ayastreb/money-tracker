@@ -1,0 +1,27 @@
+version: 0.2
+workspace:
+  type: "kubernetes"
+  specs:
+    kubernetes:
+      image:
+        value: index.docker.io/coderenterprise/react
+      container-based-vm:
+        value: false
+      cpu:
+        value: 2
+      memory:
+        value: 4
+      disk:
+        value: 10
+      labels:
+        value: 
+          com.coder.custom.chargeback: "frontend_groupb25"
+  configure:
+    start:
+      value:
+        - name: setup money-tracker repo
+          directory: /home/coder/
+          shell: /bin/bash
+          command: |
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+            git clone git@github.com:IAmHughes/money-tracker.git
