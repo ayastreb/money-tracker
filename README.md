@@ -12,7 +12,7 @@ Implemented with [React](https://github.com/facebook/react) and [Semantic UI](ht
 
 ## Contributing
 
-[button](link-to-wac-build)
+[![Open in Coder](https://cdn.coder.com/embed-button.svg)](https://demo.cdr.dev/wac/build?template_oauth_service=github&template_url=https://github.com/IAmHughes/money-tracker&template_ref=main&template_filepath=.coder/coder.yaml)
 
 ## License
 Our software is distributed under the MIT License.
