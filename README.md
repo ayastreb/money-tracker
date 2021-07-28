@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/IAmHughes/money-tracker/actions/workflows/unit_tests.yml/badge.svg?branch=main)](https://github.com/IAmHughes/money-tracker/actions/workflows/unit_tests.yml)
+
 # Money Tracker
 
 [![Money Tracker](https://moneytracker.cc/assets/screenshot.png)](https://app.moneytracker.cc)
