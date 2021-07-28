@@ -25,7 +25,3 @@ workspace:
           command: |
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             git clone git@github.com:IAmHughes/money-tracker.git
-        - name: "Set default folder"
-          command: curl https://gist.githubusercontent.com/bpmct/b48b99007284444eea94fe9e96d4a329/raw/set_first_dir.sh | sh
-          env:
-            PROJECT_FOLDER: /home/coder/money-tracker
