@@ -65,7 +65,7 @@ export function formToState(form: TransactionFormT): TransactionStateT {
     id: form.id || '',
     amount: Currency.numberToCents(
       // TODO: Verify this math checks out
-      parseFloat(form.amount) * (form.kind === Expense ? 1 : -1),
+      parseFloat(form.amount) * (form.kind === Expense ? -1 : 1),
       form.currency
     ),
     linkedAmount:
