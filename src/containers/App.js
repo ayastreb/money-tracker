@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import throttle from 'lodash/throttle';
 import routes from '../router/routes';
 import SignIn from 'features/user/containers/SignIn';
+import CouchDB from 'features/user/containers/CouchDB';
 import InitialSetup from './InitialSetup';
 import SidebarMenu from './SidebarMenu';
 import Header from '../components/Header';
@@ -38,6 +39,7 @@ class App extends React.Component {
       <Router history={this.props.history}>
         <Switch>
           <Route path="/auth" exact={true} component={SignIn} />
+          <Route path="/couchdb" exact={true} component={CouchDB} />
           {!this.props.isSetupComplete ? (
             <Route component={InitialSetup} />
           ) : (

@@ -23,12 +23,21 @@ class InitialSetup extends React.Component {
         <Header as="h2" icon="settings" content="Money Tracker Setup" />
         <Divider />
         {!this.props.isAuthenticated && (
+          <>
+          <Header as="h2">Data Sync</Header>
           <p>
-            <Link to="/auth">Sign in</Link> if you want to sync your data with
-            the cloud. You may also use the tracker without signing in. Your
-            data will be stored only on current device in this case. You can
-            sign in and sync your data any time later.
+            There are two ways to sync your data with Money Tracker.
           </p>
+          <ul>
+            <li><Link to="/auth">Sign in</Link> if you want to sync your data with the cloud.</li>
+            <li><Link to="/couchdb">Private CouchDB</Link> if you want to sync your data with your own CouchDB server.</li>
+          </ul>
+          <p>
+            You may also use the tracker without data syncing.
+            Your data will be stored only on current device in this case. You can
+            turn on data syncing any time later.
+          </p>
+          </>
         )}
         <Header as="h2">Currencies</Header>
         <p>
