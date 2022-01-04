@@ -20,7 +20,10 @@ class CouchDB extends React.Component<CouchDBPropsT & RouteProps, {}> {
   render() {
     if (this.props.isSignedIn) return <Redirect to="/" />;
 
-    return (
+    return this.renderCouchDBForm();
+  }
+
+  renderCouchDBForm = () => (
       <div className="container-raised-desktop">
         <Header as="h2" icon="id card outline" content="CouchDB setup" />
         <Divider />
@@ -40,7 +43,7 @@ class CouchDB extends React.Component<CouchDBPropsT & RouteProps, {}> {
             <Form.Field>
             <label>CouchDB password</label>
               <Input
-                fluid required icon="protect" iconPosition="left"
+                fluid required icon="lock" iconPosition="left"
                 placeholder="Password"
                 name="password" type="password"
                 value={this.props.password}
@@ -66,7 +69,6 @@ class CouchDB extends React.Component<CouchDBPropsT & RouteProps, {}> {
         </p>
       </div>
     );
-  }
 }
 
 export default CouchDB;
