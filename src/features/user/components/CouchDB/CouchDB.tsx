@@ -10,16 +10,13 @@ export interface CouchDBPropsT {
   username: string;
   password: string;
   url: string;
-  saveUsername: typeof saveURL;
-  savePassword: typeof saveURL;
+  saveUsername: typeof saveUsername;
+  savePassword: typeof savePassword;
   saveURL: typeof saveURL;
   finishCouchDBSetting: typeof finishCouchDBSetting;
 };
 
 class CouchDB extends React.Component<CouchDBPropsT & RouteProps, {}> {
-  componentDidMount() {
-  }
-
   render() {
     if (this.props.isSignedIn) return <Redirect to="/" />;
 

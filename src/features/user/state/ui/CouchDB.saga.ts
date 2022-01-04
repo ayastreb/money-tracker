@@ -9,11 +9,12 @@ import { isUserLoggedIn } from '../User.saga';
 export function* finishCouchDBSettingSaga() {
   const couchDB = yield select(getCouchDBSetting);
   const userInfo = {
-    'accessToken': '',
-    "couchDB": { ...couchDB,
-      "transactions": couchDB.url + "/money_tracker_transactions_" + couchDB.username,
-      "accounts": couchDB.url + "/money_tracker_accounts_" + couchDB.username,
-      "settings": couchDB.url + "/money_tracker_settings_" + couchDB.username,
+    accessToken: '',
+    couchDB: { ...couchDB,
+      accounts: `${couchDB.url}/accounts_${couchDB.username}`,
+      settings: `${couchDB.url}/settings_${couchDB.username}`,
+      tags: `${couchDB.url}/tags_${couchDB.username}`,
+      transactions: `${couchDB.url}/transactions_${couchDB.username}`,
     }
   }
   yield call([localStorage, 'setItem'], 'userInfo', JSON.stringify(userInfo));
