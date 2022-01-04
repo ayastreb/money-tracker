@@ -27,27 +27,36 @@ class CouchDB extends React.Component<CouchDBPropsT & RouteProps, {}> {
         <p>Setup CouchDB.</p>
         <Form onSubmit={this.props.finishCouchDBSetting}>
           <div className="couchdb--input-field">
-            <Input
-              fluid required icon="hand point right outline" iconPosition="left"
-              placeholder="CouchDB Username"
-              name="username" type="text"
-              value={this.props.username}
-              onChange={(_, { value }) => this.props.saveUsername(value)}
-            />
-            <Input
-              fluid required icon="hand point right outline" iconPosition="left"
-              placeholder="CouchDB Password"
-              name="username" type="password"
-              value={this.props.password}
-              onChange={(_, { value }) => this.props.savePassword(value)}
-            />
-            <Input
-              fluid required icon="hand point right outline" iconPosition="left"
-              placeholder="CouchDB URL"
-              name="url" type="text"
-              value={this.props.url}
-              onChange={(_, { value }) => this.props.saveURL(value)}
-            />
+            <Form.Field>
+              <label>CouchDB Username</label>
+              <Input
+                fluid required icon="user" iconPosition="left"
+                placeholder="Username"
+                name="username" type="text"
+                value={this.props.username}
+                onChange={(_, { value }) => this.props.saveUsername(value)}
+              />
+            </Form.Field>
+            <Form.Field>
+            <label>CouchDB password</label>
+              <Input
+                fluid required icon="protect" iconPosition="left"
+                placeholder="Password"
+                name="password" type="password"
+                value={this.props.password}
+                onChange={(_, { value }) => this.props.savePassword(value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>CouchDB URL</label>
+              <Input
+                fluid required icon='linkify' iconPosition='left'
+                placeholder='URL, e.g. http://127.0.0.1:5984'
+                name='url' type='text'
+                value={this.props.url}
+                onChange={(_, { value }) => this.props.saveURL(value)}
+              />
+            </Form.Field>
             <button className="ui primary button" type="submit">Submit</button>
           </div>
         </Form>
