@@ -29,8 +29,8 @@ class InitialSetup extends React.Component {
             There are two ways to sync your data with Money Tracker.
           </p>
           <ul>
-            <li><Link to="/auth">Sign in</Link> if you want to sync your data with the cloud.</li>
-            <li><Link to="/couchdb">Private CouchDB</Link> if you want to sync your data with your own CouchDB server.</li>
+              <li><Link to="/auth">Sign in</Link> to sync with CouchDB server hosted on <a href="https://moneytracker.cc">moneytracker.cc</a>.</li>
+            <li><Link to="/couchdb">Private CouchDB</Link> to sync with your own CouchDB server.</li>
           </ul>
           <p>
             You may also use the tracker without data syncing.
