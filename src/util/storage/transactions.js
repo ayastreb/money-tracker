@@ -82,6 +82,7 @@ async function getAll() {
       endkey: 'T'
     })
     .then(response => response.rows.map(row => row.doc))
+    .then(docs => docs.filter(doc => doc._id && doc._id.match(/T([0-9]+)-/)))
     .then(docs => docs.map(storageToState));
 }
 
