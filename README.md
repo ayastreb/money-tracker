@@ -26,17 +26,39 @@ Our software is distributed under the MIT License.
     ```npm install npm@latest –g```
 
 ### How to install
-* Clone the repo from this website, then
-* In command line:
+* Clone the repo from this website
+	This is located on the top right green "code" button 
+	(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image0.png?raw=true)
+
+* Open up your command line system (will be using Mac's Terminal as an example) 
+
+* Input into command line:
   * ```$ git clone https://github.com/ayastreb/money-tracker.git```
+	Once you click enter, the command line will clone the program into your system.
+	(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image1.png?raw=true)
+
+* Enter into the directory: 
   * ```$ cd money-tracker```
+	The terminal will enter into the Money Tracker directory that you just cloned.
+	(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image2.png?raw=true)	
+
+* Install NPM:
   * ```$ npm install```
+	After entering into the directory, you will need to install NPM as mentioned in the prerequisites above. Onei Once you install into the directory, your command line system will run and produce results like the screenshot below. 
+	(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image3.png?raw=true)
+
+* Start NMP:
   * ```$ npm start```
+	After installing NPM, your app is ready to run. Enter the "npm start: and terminal will launch the program on your browser under your localhost. 
+	(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image4.png?raw=true)
 
  At this point you should see the app running on 
 
  ```http://localhost:3000```
 
+It will look like this: 
+
+(https://github.com/areebxsiddiqui/money-tracker/blob/add-areebxsiddiqui/image5.png?raw=true)
  And start developing for contribution.
  
  If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
