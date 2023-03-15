@@ -7,37 +7,93 @@
 
 **WORK IN PROGRESS**
 
-Money Tracker is an open-source progressive web app that allows you to track your income and expenses.
+Money Tracker is an all-in-one application that helps you budget and keep track of your finances. 
 
-This app can work offline on desktop, tablet and mobile.
+It is a robust web app that is capable of working offline on desktop, tablet, and mobile and can
 
-Data is stored locally on device in [PouchDB](https://pouchdb.com/) database and can be synced to the cloud.
+store data locally on device in [PouchDB](https://pouchdb.com/) or be synced to the cloud.
 
-Implemented with [React](https://github.com/facebook/react) and [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React)
+Implemented with [React](https://github.com/facebook/react) and [Semantic UI](https://github.com/Semantic-Org/Semantic-UI-React).
+
+## Features
+#### Dashboard
+See all of your most important information at a glance on a personalized dashboard.
+
+![Dashboard](https://i.imgur.com/G9wjkti.jpg)
+
+#### Transactions
+Keep track of income and expenses through individual transactions.
+
+![Transactions](https://i.imgur.com/lIvhtgX.jpg)
+
+#### Accounts
+Many different types of accounts can be added for easier tracking.
+
+![Accounts](https://i.imgur.com/npSuiW8.jpg)
+
+#### Reports
+View fully customizable and detailed reports to better understand your spending habits.
+
+![Reports](https://i.imgur.com/YOa8wj7.jpg)
+
+#### Settings
+Personalize your account with relevant currencies and by importing transactions. 
+You can also view current exchange rates and even export your data!
+
+![Settings](https://i.imgur.com/KhDl0CE.jpg)
+
 
 ## License
 Our software is distributed under the MIT License.
 
 ## Installation
 
-### Prerequisites
-- npm, which you can install by running: 
-
-    ```npm install npm@latest –g```
-
 ### How to install
-* Clone the repo from this website, then
-* In command line:
-  * ```$ git clone https://github.com/ayastreb/money-tracker.git```
-  * ```$ cd money-tracker```
-  * ```$ npm install```
-  * ```$ npm start```
+1) Make sure to have the latest versions of Node.js and npm installed.
+    - Download Node.js if you do not have it already from:
+      
+      ```https://nodejs.org/```
+      
+    - You can then install the latest version of npm by running the following in your terminal:
+      
+      ```npm install npm@latest –g```
+      
+    - You can verify your current version of Node.js with:
+      
+      ```node –v```
+      
+    - You can verify your current version of npm with:
+     
+      ```npm –v```  
+    
+2) Make sure to have the latest version of Git or GitHub Desktop.
+    
+    - Download Git if you do not have it already from: 
+    
+    ```https://git-scm.com/download/```
+    
+    - You can verify your current version of Git with:
+    
+    ```git --version```
+    
+    ***OR***
+    
+    - Download GitHub Desktop from:
+      
+      ```https://desktop.github.com/```
+    
+3) Clone the repository to your local machine.
+    - In the terminal enter the following commands:
+        * ```$ git clone https://github.com/ayastreb/money-tracker.git```
+        * ```$ cd money-tracker```
+        * ```$ npm install```
+        * ```$ npm start```
 
- At this point you should see the app running on 
+ If the steps were followed correctly, the app will be running on: 
 
  ```http://localhost:3000```
 
- And start developing for contribution.
+ 
  
  If any questions arise, please see the [open issues](https://github.com/ayastreb/money-tracker/issues) tab as some of them might have already been answered. 
 
