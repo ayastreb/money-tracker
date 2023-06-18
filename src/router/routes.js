@@ -4,6 +4,7 @@ import Accounts from '../containers/Accounts';
 import Reports from '../containers/Reports';
 import Settings from '../containers/Settings';
 import WorkInProgress from '../containers/WorkInProgress';
+import LoanCalculator from '../containers/LoanCalculator/index'
 
 export default [
   {
@@ -48,5 +49,12 @@ export default [
     label: 'Settings',
     icon: 'options',
     component: Settings
+  },
+  {
+    path: '/loan',
+    exact: false,
+    label: 'LoanCalculator',
+    icon: 'options',
+    component: LoanCalculator
   }
 ];
