@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Message } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 import { dismissSyncWarning } from '../actions/ui/sync';
 import { isSignedIn } from 'features/user/state/User.selector';
+import LoginButton from 'components/LoginButton';
 
 class SyncWarning extends React.Component {
   render() {
@@ -18,8 +18,8 @@ class SyncWarning extends React.Component {
           storage is cleared.
         </Message.Content>
         <Message.Content>
-          <Link to="/auth">Sign in</Link> if you want to sync your data with the
-          cloud and be able to access it from multiple devices.
+          <LoginButton /> if you want to sync your data with the cloud and be
+          able to access it from multiple devices.
         </Message.Content>
       </Message>
     );

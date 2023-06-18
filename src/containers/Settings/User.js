@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Popup, Button } from 'semantic-ui-react';
+import { withAuth0 } from '@auth0/auth0-react';
 import { signOut } from 'features/user/state/ui/SignOut.action';
 import { isSignedIn, isDemoUser } from 'features/user/state/User.selector';
 
 class User extends React.Component {
   render() {
     if (this.props.isSignOutComplete) return <Redirect to="/" />;
+    const { logout } = this.props.auth0;
 
     return (
       <Popup
@@ -29,7 +31,14 @@ class User extends React.Component {
             floated="right"
             loading={this.props.isSignOutRunning}
             disabled={this.props.isSignOutRunning}
-            onClick={this.props.signOut}
+            onClick={() => {
+              this.props.signOut();
+              logout({
+                logoutParams: {
+                  returnTo: window.location.origin
+                }
+              });
+            }}
           />
         }
       />
@@ -67,4 +76,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { signOut }
-)(User);
+)(withAuth0(User));
