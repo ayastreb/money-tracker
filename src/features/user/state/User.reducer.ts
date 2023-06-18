@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { ActionType, getType } from 'typesafe-actions';
+import { UserUiActionT, UserUiReducer, UserUiStateT } from './ui';
 import * as user from './User.action';
-import { UserUiReducer, UserUiStateT, UserUiActionT } from './ui';
 
 export interface UserStateT {
   readonly isDemoUser: boolean;

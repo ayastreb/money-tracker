@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { Button, Divider, Header } from 'semantic-ui-react';
 import CurrencyInput from '../Settings/Currency/Input';
 import CurrencyExchangeRate from '../Settings/Currency/ExchangeRate';
@@ -11,6 +10,7 @@ import { completeSetup } from '../../actions/settings';
 import { loadAccounts } from '../../actions/entities/accounts';
 import { getAccountsList } from '../../selectors/entities/accounts';
 import { isSignedIn } from 'features/user/state/User.selector';
+import LoginButton from 'components/LoginButton';
 
 class InitialSetup extends React.Component {
   componentDidMount() {
@@ -24,10 +24,10 @@ class InitialSetup extends React.Component {
         <Divider />
         {!this.props.isAuthenticated && (
           <p>
-            <Link to="/auth">Sign in</Link> if you want to sync your data with
-            the cloud. You may also use the tracker without signing in. Your
-            data will be stored only on current device in this case. You can
-            sign in and sync your data any time later.
+            <LoginButton /> if you want to sync your data with the cloud. You
+            may also use the tracker without signing in. Your data will be
+            stored only on current device in this case. You can sign in and sync
+            your data any time later.
           </p>
         )}
         <Header as="h2">Currencies</Header>

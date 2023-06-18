@@ -1,6 +1,6 @@
 import { createBrowserHistory } from 'history';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import * as Sentry from '@sentry/browser';
 import 'semantic-ui-css/semantic.min.css';
 import Root from './containers/Root';
@@ -14,10 +14,9 @@ Sentry.init({
 
 const store = configureStore();
 const history = createBrowserHistory();
-ReactDOM.render(
-  <Root store={store} history={history} />,
-  document.getElementById('root')
-);
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<Root store={store} history={history} />);
 
 registerServiceWorker();
 
