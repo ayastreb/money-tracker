@@ -14,7 +14,7 @@ class ExpenseTags extends React.Component {
         offset: 70
       },
       axisX: {
-        labelInterpolationFnc: value => abbreviate(value, 2)
+        labelInterpolationFnc: (value) => abbreviate(value, 2)
       },
       reverseData: true,
       horizontalBars: true,

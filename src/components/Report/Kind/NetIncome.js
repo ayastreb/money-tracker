@@ -14,7 +14,7 @@ class ExpenseIncome extends React.Component {
   render() {
     const options = {
       axisY: {
-        labelInterpolationFnc: value => abbreviate(value, 2)
+        labelInterpolationFnc: (value) => abbreviate(value, 2)
       },
       plugins: [
         Chartist.plugins.tooltip({
@@ -28,7 +28,7 @@ class ExpenseIncome extends React.Component {
     const series = data.series[0].map(
       (income, idx) => income - data.series[1][idx]
     );
-    const nonEmptyValues = series.filter(val => val !== 0);
+    const nonEmptyValues = series.filter((val) => val !== 0);
 
     return (
       <React.Fragment>
@@ -71,7 +71,7 @@ class ExpenseIncome extends React.Component {
           data={{ ...data, series: [series] }}
           options={options}
           listener={{
-            draw: data => {
+            draw: (data) => {
               if (data.type === 'bar' && data.value.y < 0) {
                 data.element.attr({ style: 'stroke: #f44336' });
               }

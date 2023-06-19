@@ -1,13 +1,13 @@
 import {
   AccountGroupT,
   defaultGroup,
+  formTostate,
   getAccountGroupOptions,
   getGroupName,
-  formTostate,
+  mutateBalance,
   stateToForm,
-  storageToState,
   stateToStorage,
-  mutateBalance
+  storageToState
 } from './Account';
 
 it('has default group', () => {
@@ -39,7 +39,7 @@ it('defaults id to current timestamp if not present in form', () => {
     currencies: ['USD'],
     on_dashboard: false
   };
-  Date.now = jest.fn(() => '1234');
+  Date.now = jest.fn(() => 1234);
   expect(formTostate(form)).toEqual({
     id: 'A1234',
     name: 'Test',

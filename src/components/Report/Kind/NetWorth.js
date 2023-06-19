@@ -13,7 +13,7 @@ class NetWorth extends React.Component {
       showArea: true,
       low: 0,
       axisY: {
-        labelInterpolationFnc: value => abbreviate(value, 2)
+        labelInterpolationFnc: (value) => abbreviate(value, 2)
       },
       plugins: [
         Chartist.plugins.tooltip({
