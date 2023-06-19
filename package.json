@@ -41,7 +41,6 @@
     "typescript": "^3.7.5"
   },
   "devDependencies": {
-    "react-test-renderer": "^16.6.1",
     "surge": "^0.23.1"
   },
   "engines": {
