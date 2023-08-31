@@ -71,6 +71,10 @@ Please keep in mind that everyone:
 
 `<please add here your preferred communication channel>`
 
+
+## For project How To Guide, see [HowToGuide.md](HowToGuide.md)._
+
+
 ## Development Tracking
 
 See the [open issues](https://github.com/ayastreb/money-tracker/issues) for a list of proposed features (and known issues).
