@@ -42,6 +42,8 @@ class AccountItem extends React.Component {
   }
 }
 
+export default React.Component;
+
 AccountItem.propTypes = {
   account: PropTypes.shape({
     name: PropTypes.string.isRequired,
